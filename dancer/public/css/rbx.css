@@ -1,3 +1,28 @@
+.navbar-default {
+    background-color: #000000;
+    border-color: #e7e7e7;
+}
+
+.navbar-default .navbar-brand {
+    color: #ffffff;
+}
+
+.nav.navbar-nav.navbar-right li a {
+    color: #ffffff;
+}
+
+.navbar-default .navbar-brand:hover, .navbar-default .navbar-brand:focus {
+    background-color: transparent;
+    color: #ffffff;
+}
+
+.navbar-default .navbar-nav .open .dropdown-menu>li>a, .navbar-default .navbar-nav .open .dropdown-menu {
+    background-color: #ffffff;
+    color:#000000;
+  }
+  
+.dropdown-menu > li a:focus { background-color: orange; background-image: none; filter: none; text-decoration: none; border: none; }
+
 .navbar-static-top {
   margin-bottom:20px;
 }
