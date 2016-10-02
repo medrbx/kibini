@@ -13,11 +13,10 @@ use YAML qw(LoadFile) ;
 use lib "$Bin/modules/" ;
 use fonctions ;
 use dbrequest ;
+use esrbx ;
 
 # On récupère l'adresse d'Elasticsearch
-my $fic_conf = "$Bin/../conf.yaml" ;
-my $conf = LoadFile($fic_conf);
-my $es_node = $conf->{elasticsearch}->{node} ;
+my $es_node = es_node() ;
 
 # On récupère la date de dernière mise à jour de statdb.stat_borrowers
 my $bdd = "statdb" ;

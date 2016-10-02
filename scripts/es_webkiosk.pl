@@ -13,11 +13,10 @@ use YAML qw(LoadFile) ;
 use lib "$Bin/modules/" ;
 use fonctions ;
 use dbrequest ;
+use esrbx ;
 
 # On récupère l'adresse d'Elasticsearch
-my $fic_conf = "$Bin/../conf.yaml" ;
-my $conf = LoadFile($fic_conf);
-my $es_node = $conf->{elasticsearch}->{node} ;
+my $es_node = es_node() ;
 
 my $es_maxdatetime = es_maxdatetime("webkiosk", "sessions", "session_heure_deb") ;
 print "webkiosk : $es_maxdatetime\n" ;
