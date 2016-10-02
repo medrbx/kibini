@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="[% request.uri_base %]/favicon.ico">
+
+    <title>[% settings.appname %]</title>
+
+<link rel="stylesheet" href="[% request.uri_base %]/css/roobstrap.css" />
+<link rel="stylesheet" href="[% request.uri_base %]/css/rbx.css"/>
+<link rel="stylesheet" href="[% request.uri_base %]/css/dataTables.bootstrap.min.css"/>
+<script src="[% request.uri_base %]/javascripts/jquery.js"></script>
+<script src="[% request.uri_base %]/javascripts/bootstrap.min.js"></script>
+<script src="[% request.uri_base %]/javascripts/d3.js"></script>
+<script src="[% request.uri_base %]/javascripts/queue.v1.min.js"></script>
+<script src="[% request.uri_base %]/javascripts/topojson.js"></script>
+<script src="[% request.uri_base %]/javascripts/scripts.js"></script>
+<script src="[% request.uri_base %]/javascripts/datatables.min.js"></script>
+<script src="[% request.uri_base %]/javascripts/dataTables.bootstrap.min.js"></script>
+
+</head>
+
+<body>
+  
+[% INCLUDE 'includes/navbar.tt' %]
+
+	<div class="container-fluid">
+		<div class="row">
+
+        [% content %]
+
+      </div>
+    </div>
+
+  </body>
+</html>

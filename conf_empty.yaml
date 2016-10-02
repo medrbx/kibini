@@ -1,0 +1,14 @@
+---
+database:
+    db: XXX
+    user: XXX
+    pwd: XXX
+elasticsearch:
+    node: XXX
+nedap:
+    url: XXX
+    user: XXX
+    pwd: 
+piwik:
+    url_api: XXX
+    token_auth: XXX
