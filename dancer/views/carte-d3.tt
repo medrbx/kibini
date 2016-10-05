@@ -2,7 +2,6 @@
 			
 		<script type="text/javascript">
 
-
 // On définit la taille du cadre
 	var width = 900, height = 600;
 

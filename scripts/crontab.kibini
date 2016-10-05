@@ -10,6 +10,9 @@ PERL5LIB=/home/stat/web/pc/src/modules
 # On charge sur preprod la version de koha_prod du jour
 00 01 * * * /home/kibini/kibini_prod/scripts/statdb_load_koha_prod.pl
 
+# On met à jour les stats web
+40 01 * * * /home/kibini/kibini_prod/scripts/web.sh
+
 # On incorpore dans statdb et ES les prêts de la veille
 45 01 * * * /home/kibini/kibini_prod/scripts/statdb_issues.pl
 55 01 * * * /home/kibini/kibini_prod/scripts/es_prets.pl
