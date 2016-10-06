@@ -139,6 +139,9 @@ sub reg_items {
 						},
 						'titre' => {
 							'type' => 'string'
+						},
+						'annee_publication' => {
+							'type' => 'integer'
 						}
 					}
 				}
@@ -185,7 +188,8 @@ SELECT
 	i.holdingbranch,
 	i.datelastborrowed,
 	i.onloan,
-	i.itemcallnumber
+	i.itemcallnumber,
+	bi.publicationyear
 FROM koha_prod.items i
 JOIN koha_prod.biblioitems bi ON bi.biblionumber = i.biblionumber
 JOIN koha_prod.biblio b ON b.biblionumber = i.biblionumber
@@ -197,7 +201,7 @@ SQL
 my $sth = $dbh->prepare($req);
 $sth->execute($itemnumbermax, $minitemnumber);
 while (my @row = $sth->fetchrow_array) {
-	my ($itemnumber, $biblionumber, $title, $itemtype, $dateaccessionned, $ccode, $lib1, $lib2, $lib3, $lib4, $barcode, $location, $notforloan, $damaged, $withdrawn, $itemlost, $homebranch, $holdingbranch, $datelastborrowed, $onloan, $itemcallnumber ) = @row ;
+	my ($itemnumber, $biblionumber, $title, $itemtype, $dateaccessionned, $ccode, $lib1, $lib2, $lib3, $lib4, $barcode, $location, $notforloan, $damaged, $withdrawn, $itemlost, $homebranch, $holdingbranch, $datelastborrowed, $onloan, $itemcallnumber, $publicationyear ) = @row ;
 
 	if (!defined $lib2) {
 		$lib2 = "NP" ;
@@ -273,7 +277,8 @@ while (my @row = $sth->fetchrow_array) {
 			site_detenteur => $holdingbranch,
 			date_dernier_pret => $datelastborrowed, 
 			emprunt => $onloan,
-			cote => $itemcallnumber
+			cote => $itemcallnumber,
+			annee_publication => $publicationyear
 		}
 	) ;
 	print "$itemnumber, $itemtype\n" ;
