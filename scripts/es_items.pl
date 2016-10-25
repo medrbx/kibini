@@ -37,7 +37,9 @@ sub reg_items {
 				"exemplaires" => {
 					properties => {
 						'abime' => {
-							'type' => 'string','index' => 'not_analyzed'},
+							'type' => 'string',
+							'index' => 'not_analyzed'
+						},
 						'itemnumber' => {
 							'type' => 'integer'
 						},
@@ -138,7 +140,8 @@ sub reg_items {
 							'index' => 'not_analyzed'
 						},
 						'titre' => {
-							'type' => 'string'
+							'type' => 'string',						,
+							'index' => 'not_analyzed'
 						},
 						'annee_publication' => {
 							'type' => 'integer'
@@ -189,7 +192,8 @@ SELECT
 	i.datelastborrowed,
 	i.onloan,
 	i.itemcallnumber,
-	bi.publicationyear
+	bi.publicationyear,
+	i.price
 FROM koha_prod.items i
 JOIN koha_prod.biblioitems bi ON bi.biblionumber = i.biblionumber
 JOIN koha_prod.biblio b ON b.biblionumber = i.biblionumber
@@ -201,7 +205,7 @@ SQL
 my $sth = $dbh->prepare($req);
 $sth->execute($itemnumbermax, $minitemnumber);
 while (my @row = $sth->fetchrow_array) {
-	my ($itemnumber, $biblionumber, $title, $itemtype, $dateaccessionned, $ccode, $lib1, $lib2, $lib3, $lib4, $barcode, $location, $notforloan, $damaged, $withdrawn, $itemlost, $homebranch, $holdingbranch, $datelastborrowed, $onloan, $itemcallnumber, $publicationyear ) = @row ;
+	my ($itemnumber, $biblionumber, $title, $itemtype, $dateaccessionned, $ccode, $lib1, $lib2, $lib3, $lib4, $barcode, $location, $notforloan, $damaged, $withdrawn, $itemlost, $homebranch, $holdingbranch, $datelastborrowed, $onloan, $itemcallnumber, $publicationyear, $price ) = @row ;
 
 	if (!defined $lib2) {
 		$lib2 = "NP" ;
@@ -278,7 +282,8 @@ while (my @row = $sth->fetchrow_array) {
 			date_dernier_pret => $datelastborrowed, 
 			emprunt => $onloan,
 			cote => $itemcallnumber,
-			annee_publication => $publicationyear
+			annee_publication => $publicationyear,
+			prix => $price
 		}
 	) ;
 	print "$itemnumber, $itemtype\n" ;
