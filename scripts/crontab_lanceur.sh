@@ -41,14 +41,14 @@ perl /home/kibini/kibini_prod/scripts/es_reservations.pl
 perl /home/kibini/kibini_prod/scripts/statdb_nedap.pl
 perl /home/kibini/kibini_prod/scripts/es_rfid.pl
 
-# Chaque mardi
+# CHAQUE MARDI
 if [ $dayofweek -eq 2 ]
 then
 	# On incorpore dans statdb des données sur les exemplaires et les adhérents
 	perl /home/kibini/kibini_prod/scripts/statdb_items_borrowers.pl
 fi
 
-# Chaque dimanche
+# CHAQUE DIMANCHE
 if [ $dayofweek -eq 7 ]
 then
 	# On recrée l'index items dans ES
