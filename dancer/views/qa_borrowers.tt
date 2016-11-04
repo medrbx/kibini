@@ -14,11 +14,9 @@
 				<tr>
 					<th>Expiration</th>
 					<th>Carte</th>
-					<th>Prénom</th>
-					<th>Date de naissance</th>
 					<th>Garant</th>
-					<th>Ville</th>
-					<th>Code postal</th>
+					<th>Complément adresse</th>
+					<th>DDN garant</th>
 					<th>ID Insee</th>
 					<th>Mobile</th>
 					<th>ID portail / WK</th>
@@ -36,8 +34,6 @@
 					<td>[% borrower.6 %]</td>
 					<td>[% borrower.7 %]</td>
 					<td>[% borrower.8 %]</td>
-					<td>[% borrower.9 %]</td>
-					<td>[% borrower.10 %]</td>
 				</tr>
 				[% END %]
 			</tbody>
