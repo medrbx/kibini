@@ -84,6 +84,10 @@ sub reg_index {
 							"type" => "string",
 							"index" => "not_analyzed"
 						},
+						"communication" => {
+							"type" => "string",
+							"index" => "not_analyzed"
+						},						
 						"communication_courriel" => {
 							"type" => "string",
 							"index" => "not_analyzed"
@@ -243,11 +247,18 @@ SQL
 			$age_lib2 = age($age, "trmedb") ;
 			$age_lib3 = age($age, "trinsee") ;
 		}
+	
+		my $communication ;
+		if (($email eq "X")||($mobile eq "X")||($phone eq "X")) {
+			$communication = "ok" ;
+		} else {
+			$communication = "ko" ;
+		}
 		
 		if ($email eq "X") {
 			$email = "courriel_renseigné" ;
 		} else {
-			$email = "courriel_renseigné" ;
+			$email = "courriel_non_renseigné" ;
 		}
 		
 		if ($phone eq "X") {
@@ -257,10 +268,11 @@ SQL
 		}
 
 		if ($mobile eq "X") {
-			$mobile = "mobile_enseigné" ;
+			$mobile = "mobile_renseigné" ;
 		} else {
 			$mobile = "mobile_non_renseigné" ;
 		}
+	
 		
 		if ($fidelite eq "NP") {
 			$fidelite = undef ;
@@ -291,6 +303,7 @@ SQL
 				geo_roubaix_iris => $iris,
 				geo_roubaix_nom_iris => $irisNom,
 				geo_roubaix_quartier => $quartier,
+				communication => $communication,
 				communication_courriel => $email,
 				communication_telephone_fixe => $phone,
 				communication_telephone_mobile => $mobile,
