@@ -15,6 +15,12 @@ use lib "$Bin/modules/" ;
 use dbrequest ;
 use fonctions ;
 
+my $log_message ;
+my $process = "statdb_web.pl" ;
+# On log le début de l'opération
+$log_message = "$process : début" ;
+log_file($log_message) ;
+
 # On récupère les infos de connexion à Piwik
 my $fic_conf = "$Bin/../conf.yaml" ;
 my $conf = LoadFile($fic_conf);
@@ -61,3 +67,7 @@ sub insertWebSessions {
 	$sth->finish() ;
 	$dbh->disconnect() ;
 }
+
+# On log la fin de l'opération
+$log_message = "$process : fin\n" ;
+log_file($log_message) ;

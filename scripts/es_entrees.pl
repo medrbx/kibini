@@ -15,12 +15,24 @@ use fonctions ;
 use dbrequest ;
 use esrbx ;
 
+my $log_message ;
+my $process = "es_entrees.pl" ;
+# On log le début de l'opération
+$log_message = "$process : début" ;
+log_file($log_message) ;
+
 # On récupère l'adresse d'Elasticsearch
 my $es_node = es_node() ;
 
 my $es_maxdatetime = es_maxdatetime("entrees", "camera", "entrees_date") ;
-print "$es_maxdatetime\n" ;
-entrees($es_maxdatetime, $es_node) ;
+my $i = entrees($es_maxdatetime, $es_node) ;
+
+# On log la fin de l'opération
+$log_message = "$process : $i lignes indexées" ;
+log_file($log_message) ;
+$log_message = "$process : fin\n" ;
+log_file($log_message) ;
+
 
 sub entrees {
 	my ($maxdatetime, $es_node) = @_ ;
@@ -42,6 +54,7 @@ SQL
 
 	my $sth = $dbh->prepare($req);
 	$sth->execute($maxdatetime);
+	$i = 0 ;
 	while (my @row = $sth->fetchrow_array) {
 		my ( $datetime, $entrees ) = @row ;
 
@@ -63,8 +76,9 @@ SQL
 		) ;
 
 		$e->index(%index) ;
-		print "$datetime, $entrees\n" ;
+		$i++ ;
 	}
 	$sth->finish();
 	$dbh->disconnect();
+	return $i ;
 }

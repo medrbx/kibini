@@ -8,6 +8,13 @@ use DateTime::Format::MySQL ;
 
 use lib "$Bin/modules/" ;
 use dbrequest ;
+use fonctions ;
+
+my $log_message ;
+my $process = "statdb_items_borrowers.pl" ;
+# On log le début de l'opération
+$log_message = "$process : début" ;
+log_file($log_message) ;
 
 my $dt = DateTime->today() ;
 my $date = DateTime::Format::MySQL->format_date($dt) ;
@@ -157,3 +164,7 @@ for my $column (@columns) {
 	$sth->finish();
 }
 $dbh->disconnect();
+
+# On log la fin de l'opération
+$log_message = "$process : fin\n" ;
+log_file($log_message) ;

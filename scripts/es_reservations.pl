@@ -14,13 +14,26 @@ use lib "$Bin/modules/" ;
 use fonctions ;
 use dbrequest ;
 
+my $log_message ;
+my $process = "es_reservations.pl" ;
+# On log le début de l'opération
+$log_message = "$process : début" ;
+log_file($log_message) ;
+
 # On récupère l'adresse d'Elasticsearch
 my $fic_conf = "$Bin/../conf.yaml" ;
 my $conf = LoadFile($fic_conf);
 my $es_node = $conf->{elasticsearch}->{node} ;
 
 my $date_veille = date_veille() ;
-reservations($date_veille, $es_node) ;
+my $i = reservations($date_veille, $es_node) ;
+
+# On log la fin de l'opération
+$log_message = "$process : $i lignes indexées" ;
+log_file($log_message) ;
+$log_message = "$process : fin\n" ;
+log_file($log_message) ;
+
 
 sub date_veille {
 	my $dt = DateTime->today() ;
@@ -75,6 +88,7 @@ SQL
 
 	my $sth = $dbh->prepare($req);
 	$sth->execute($date, $date);
+	my $i = 0 ;
 	while (my @row = $sth->fetchrow_array) {
 		my ( $reserve_id, $borrowernumber, $reservedate, $biblionumber, $branchcode, $notificationdate, $cancellationdate, $priority, $found, $timestamp, $itemnumber, $waitingdate, $etat, $espace, $age, $sexe, $ville, $iris, $branchcode_borrower, $categorycode, $fidelite, $motif_annulation, $courriel, $mobile, $annulation, $document_mis_cote ) = @row ;
 		
@@ -162,8 +176,9 @@ SQL
 		) ;
 
 		$e->index(%index) ;
-		print "$reserve_id, $reservedate, $timestamp\n" ;
+		$i++ ;
 	}
 	$sth->finish();
 	$dbh->disconnect();
+	return $i ;
 }

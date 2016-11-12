@@ -13,6 +13,12 @@ use fonctions ;
 use dbrequest ;
 use esrbx ;
 
+my $log_message ;
+my $process = "es_items.pl" ;
+# On log le début de l'opération
+$log_message = "$process : début" ;
+log_file($log_message) ;
+
 # On récupère l'adresse d'Elasticsearch
 my $es_node = es_node() ;
 
@@ -21,10 +27,20 @@ reg_items() ;
 
 my $itemnumbermax = itemnumbermax() ;
 my $delta = 100 ;
+
+my $nb = 0 ;
 while ( $itemnumbermax > 0 ) {
-	items($itemnumbermax, $delta, $es_node) ;
+	my $i = items($itemnumbermax, $delta, $es_node) ;
 	$itemnumbermax = $itemnumbermax - $delta ;
+	$nb = $nb + $i ;
 }
+
+# On log la fin de l'opération
+$log_message = "$process : $nb lignes indexées" ;
+log_file($log_message) ;
+$log_message = "$process : fin\n" ;
+log_file($log_message) ;
+
 
 sub reg_items {
 	my %params = ( nodes => $es_node ) ;
@@ -204,6 +220,7 @@ SQL
 
 my $sth = $dbh->prepare($req);
 $sth->execute($itemnumbermax, $minitemnumber);
+my $i = 0 ;
 while (my @row = $sth->fetchrow_array) {
 	my ($itemnumber, $biblionumber, $title, $itemtype, $dateaccessionned, $ccode, $lib1, $lib2, $lib3, $lib4, $barcode, $location, $notforloan, $damaged, $withdrawn, $itemlost, $homebranch, $holdingbranch, $datelastborrowed, $onloan, $itemcallnumber, $publicationyear, $price ) = @row ;
 
@@ -286,8 +303,9 @@ while (my @row = $sth->fetchrow_array) {
 			prix => $price
 		}
 	) ;
-	print "$itemnumber, $itemtype\n" ;
+	$i++ ;
 }
 $sth->finish();
 $dbh->disconnect();
+return $i ;
 }

@@ -14,13 +14,25 @@ use lib "$Bin/modules/" ;
 use fonctions ;
 use dbrequest ;
 
+my $log_message ;
+my $process = "es_prets.pl" ;
+# On log le début de l'opération
+$log_message = "$process : début" ;
+log_file($log_message) ;
+
 # On récupère l'adresse d'Elasticsearch
 my $fic_conf = "$Bin/../conf.yaml" ;
 my $conf = LoadFile($fic_conf);
 my $es_node = $conf->{elasticsearch}->{node} ;
 
 my $date_veille = date_veille() ;
-prets($date_veille, $es_node) ;
+my $i = prets($date_veille, $es_node) ;
+
+# On log la fin de l'opération
+$log_message = "$process : $i lignes indexées" ;
+log_file($log_message) ;
+$log_message = "$process : fin\n" ;
+log_file($log_message) ;
 
 sub prets {
 	my ( $date, $es_node ) = @_ ;
@@ -177,10 +189,9 @@ SQL
 		) ;
 
 		$e->index(%index) ;
-
-		print "$issuedate - $i - $id\n" ;
 		$i++ ;	
 	}
 	$sth->finish();
 	$dbh->disconnect();
+	return $i ;
 }

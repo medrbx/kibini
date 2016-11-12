@@ -14,6 +14,12 @@ use lib "$Bin/modules/" ;
 use fonctions ;
 use dbrequest ;
 
+my $log_message ;
+my $process = "es_rfid.pl" ;
+# On log le début de l'opération
+$log_message = "$process : début" ;
+log_file($log_message) ;
+
 # On récupère l'adresse d'Elasticsearch
 my $fic_conf = "$Bin/../conf.yaml" ;
 my $conf = LoadFile($fic_conf);
@@ -24,16 +30,24 @@ my $e = Search::Elasticsearch->new( %params ) ;
 
 my $dbh = dbh("statdb") ;
 
+my $i = 0 ;
+my $nb = $i ;
 my $es_maxdatetime_prets = es_maxdatetime("rfid", "prets", "date.datetime") ;
-print "prets : $es_maxdatetime_prets\n" ;
-#my $es_maxdatetime_prets = "2015-09-07" ;
-#my $es_maxdatetime_retours = "2015-09-07" ;
-es_rfid("prets", $es_maxdatetime_prets) ;
+$i = es_rfid("prets", $es_maxdatetime_prets) ;
+$nb = $nb + $i ;
 my $es_maxdatetime_retours = es_maxdatetime("rfid", "retours", "date.datetime") ;
-print "retours : $es_maxdatetime_retours\n" ;
-es_rfid("retours", $es_maxdatetime_retours) ;
+$i = es_rfid("retours", $es_maxdatetime_retours) ;
+$nb = $nb + $i ;
 
 $dbh->disconnect();
+
+# On log la fin de l'opération
+$log_message = "$process : $nb lignes indexées" ;
+log_file($log_message) ;
+$log_message = "$process : fin\n" ;
+log_file($log_message) ;
+
+
 
 sub es_rfid {
 	my ( $transaction, $date ) = @_ ;
@@ -59,7 +73,7 @@ WHERE operation = ?
 SQL
 	my $sth = $dbh->prepare($req);
 	$sth->execute($operation, $date);
-	
+	my $i = 0 ;
 	while (my @row = $sth->fetchrow_array) {
 		my ( $date_transaction, $borne, $etage, $nb_transaction ) = @row ;
 		my ( $year, $month, $week_number, $day, $jour_semaine, $hour ) = date_form($date_transaction) ;
@@ -85,7 +99,8 @@ SQL
 		
 		$e->index(%index) ;
 		
-		print "$transaction, $date_transaction, $borne, $year, $month, $day, $jour_semaine, $hour, $nb_transactions_champs\n" ;
+		$i++ ;
 	}
 	$sth->finish();
+	return $i ;
 }

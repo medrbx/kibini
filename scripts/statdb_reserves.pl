@@ -10,6 +10,14 @@ use FindBin qw( $Bin ) ;
 
 use lib "$Bin/modules/" ;
 use dbrequest ;
+use fonctions ;
+
+my $log_message ;
+my $process = "statdb_reserves.pl" ;
+# On log le début de l'opération
+$log_message = "$process : début" ;
+log_file($log_message) ;
+
 
 my $date_veille = date_veille() ;
 reserves_new($date_veille) ;
@@ -432,3 +440,7 @@ sub localisation {
 	} 
 	return $localisation ;
 }
+
+# On log la fin de l'opération
+$log_message = "$process : fin\n" ;
+log_file($log_message) ;

@@ -10,9 +10,11 @@ use lib "$Bin/modules/" ;
 use dbrequest ;
 use fonctions ;
 
+my $log_message ;
 # On log le début de l'opération
-my $dt = datetime() ;
-print "[$dt] : admin_sauv_bdd.pl : début\n" ;
+$log_message = "test : début" ;
+log_file($log_message) ;
+
 
 my $date = DateTime->now(time_zone => "local")->ymd('');
 
@@ -53,8 +55,5 @@ system( " mysqldump -u $user -p$pwd koha_prod | gzip > $koha_ano  " ) ;
 system( " mysqldump -u $user -p$pwd statdb | gzip > $statdb  " ) ;
 
 # On log la fin de l'opération
-$dt = datetime() ;
-print "[$dt] : admin_sauv_bdd.pl : fin\n" ;
-
-
-
+$log_message = "test : fin\n" ;
+log_file($log_message) ;

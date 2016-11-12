@@ -2,7 +2,7 @@ package fonctions ;
 
 use Exporter ;
 @ISA = qw(Exporter) ;
-@EXPORT = qw( age av branches category datetime date_form date_veille duree_pret es_maxdatetime getdataccode getdataitem getitemtype itemnumbermax lib_sll quartier_rbx retard type_carte ville15 ) ;
+@EXPORT = qw( age av branches category datetime date_form date_veille duree_pret es_maxdatetime getdataccode getdataitem getitemtype itemnumbermax lib_sll log_file quartier_rbx retard type_carte ville15 ) ;
 
 use strict ;
 use warnings ;
@@ -262,6 +262,17 @@ sub itemnumbermax {
 	return $sth->fetchrow_array ;
 	$sth->finish();
 	$dbh->disconnect();	
+}
+
+sub log_file {
+	my ($message) = @_ ;
+	my $date = DateTime->now->ymd("") ;
+	my $datetime = DateTime->now ;
+	$datetime = DateTime::Format::MySQL->format_datetime($datetime) ;
+	my $log = "[ $datetime ] $message\n" ;
+	open( my $fd, ">>", "../log/crontab/crontab_lanceur_$date.txt" ) ;
+	print ( $fd $log ) ;
+	close( $fd ) ;
 }
 
 sub quartier_rbx {

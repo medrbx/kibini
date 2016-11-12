@@ -6,6 +6,13 @@ use FindBin qw( $Bin ) ;
 
 use lib "$Bin/modules/" ;
 use dbrequest ;
+use fonctions ;
+
+my $log_message ;
+my $process = "statdb_issues.pl" ;
+# On log le début de l'opération
+$log_message = "$process : début" ;
+log_file($log_message) ;
 
 my $r1 = "UPDATE statdb.stat_issues SET cle = CONCAT(issuedate, '-', itemnumber) WHERE cle IS NULL ;" ;
 my $r2 = "ALTER TABLE koha_prod.old_issues ADD COLUMN cle VARCHAR(75) NULL DEFAULT NULL AFTER issuedate, ADD INDEX index_cle (cle ASC)" ;
@@ -32,3 +39,7 @@ for my $req (@req) {
 	$sth->finish();
 }
 $dbh->disconnect();
+
+# On log la fin de l'opération
+$log_message = "$process : fin\n" ;
+log_file($log_message) ;

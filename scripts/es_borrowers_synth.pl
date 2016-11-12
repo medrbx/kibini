@@ -15,9 +15,11 @@ use fonctions ;
 use dbrequest ;
 use esrbx ;
 
+my $log_message ;
+my $process = "es_borrowers_synth.pl" ;
 # On log le début de l'opération
-my $dt = datetime() ;
-print "[$dt] : es_borrowers_synth.pl : début\n" ;
+$log_message = "$process : début" ;
+log_file($log_message) ;
 
 # On récupère l'adresse d'Elasticsearch
 my $es_node = es_node() ;
@@ -33,7 +35,14 @@ $sth->finish();
 $dbh->disconnect();
 
 # On indexe :
-my $doc_index = borrowers_synth($date) ;
+my $i = borrowers_synth($date) ;
+
+# On log la fin de l'opération
+$log_message = "$process : $i lignes indexées" ;
+log_file($log_message) ;
+$log_message = "$process : fin\n" ;
+log_file($log_message) ;
+
 
 sub borrowers_synth {
 	my ( $date ) = @_ ;
@@ -59,7 +68,7 @@ SQL
 
 	my $sth = $dbh->prepare($req);
 	$sth->execute($date, $date);
-	my $i = 1 ;
+	my $i = 0 ;
 	while (my @row = $sth->fetchrow_array) {
 		my ( $roubaix, $categorycode, $age, $activite_emprunteur, $nb ) = @row ;
 		
@@ -99,7 +108,3 @@ SQL
 	$dbh->disconnect();
 	return $i ;
 }
-
-# On log la fin de l'opération
-my $dt = datetime() ;
-print "[$dt] : es_borrowers_synth.pl : fin / $doc_index documents indexés\n" ;

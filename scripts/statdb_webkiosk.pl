@@ -9,6 +9,13 @@ use FindBin qw( $Bin ) ;
 
 use lib "$Bin/modules/" ;
 use dbrequest ;
+use fonctions ;
+
+my $log_message ;
+my $process = "statdb_webkiosk.pl" ;
+# On log le début de l'opération
+$log_message = "$process : début" ;
+log_file($log_message) ;
 
 # Connexion à la base de données
 my $bdd = "statdb" ;
@@ -47,3 +54,7 @@ $sth->execute() ;
 
 $sth->finish();
 $dbh->disconnect();
+
+# On log la fin de l'opération
+$log_message = "$process : fin\n" ;
+log_file($log_message) ;
