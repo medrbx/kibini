@@ -8,6 +8,11 @@ use DateTime ;
 
 use lib "$Bin/modules/" ;
 use dbrequest ;
+use fonctions ;
+
+# On log le début de l'opération
+my $dt = datetime() ;
+print "[$dt] : admin_sauv_bdd.pl : début\n" ;
 
 my $date = DateTime->now(time_zone => "local")->ymd('');
 
@@ -46,3 +51,10 @@ my $koha_ano = "$dir/koha_ano_$date.sql.gz" ;
 my $statdb = "$dir/statdb_$date.sql.gz" ;
 system( " mysqldump -u $user -p$pwd koha_prod | gzip > $koha_ano  " ) ;
 system( " mysqldump -u $user -p$pwd statdb | gzip > $statdb  " ) ;
+
+# On log la fin de l'opération
+$dt = datetime() ;
+print "[$dt] : admin_sauv_bdd.pl : fin\n" ;
+
+
+

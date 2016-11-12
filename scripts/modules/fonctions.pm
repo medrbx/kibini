@@ -2,7 +2,7 @@ package fonctions ;
 
 use Exporter ;
 @ISA = qw(Exporter) ;
-@EXPORT = qw( age av branches category date_form date_veille duree_pret es_maxdatetime getdataccode getdataitem getitemtype itemnumbermax lib_sll quartier_rbx retard type_carte ville15 ) ;
+@EXPORT = qw( age av branches category datetime date_form date_veille duree_pret es_maxdatetime getdataccode getdataitem getitemtype itemnumbermax lib_sll quartier_rbx retard type_carte ville15 ) ;
 
 use strict ;
 use warnings ;
@@ -61,6 +61,12 @@ sub category {
 	return $sth->fetchrow_array ;
 	$sth->finish();
 	$dbh->disconnect();
+}
+
+sub datetime {
+	my $dt = DateTime->now ;
+	$dt = DateTime::Format::MySQL->format_datetime($dt) ;
+	return $dt ;
 }
 
 sub date_form {

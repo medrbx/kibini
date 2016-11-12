@@ -15,6 +15,10 @@ use fonctions ;
 use dbrequest ;
 use esrbx ;
 
+# On log le début de l'opération
+my $dt = datetime() ;
+print "[$dt] : es_borrowers.pl : début\n" ;
+
 # On récupère l'adresse d'Elasticsearch
 my $es_node = es_node() ;
 
@@ -328,3 +332,7 @@ SQL
 	$sth->finish();
 	$dbh->disconnect();
 }
+
+# On log la fin de l'opération
+my $dt = datetime() ;
+print "[$dt] : es_borrowers.pl : fin\n" ;

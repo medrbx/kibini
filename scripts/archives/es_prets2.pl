@@ -19,8 +19,14 @@ my $fic_conf = "$Bin/../conf.yaml" ;
 my $conf = LoadFile($fic_conf);
 my $es_node = $conf->{elasticsearch}->{node} ;
 
-my $date_veille = date_veille() ;
-prets($date_veille, $es_node) ;
+my $date = "2015-11-04" ;
+while ($date ne "2014-06-30") {
+	prets($date, $es_node) ;
+	$date = DateTime::Format::MySQL->parse_date($date) ;
+	$date = $date->subtract( days => 1	) ;
+	$date = DateTime::Format::MySQL->format_date($date) ;
+}
+
 
 sub prets {
 	my ( $date, $es_node ) = @_ ;
@@ -64,13 +70,13 @@ SELECT
     c.lib4
 FROM statdb.stat_issues iss
 JOIN statdb.lib_collections2 c ON iss.ccode = c.ccode
-WHERE(DATE(iss.returndate) >= ? OR DATE(iss.issuedate) >= ?)
+WHERE DATE(iss.issuedate) = ?
 SQL
 
 
 
 	my $sth = $dbh->prepare($req);
-	$sth->execute($date, $date);
+	$sth->execute($date);
 	my $i = 1 ; 
 	while (my @row = $sth->fetchrow_array) {
 		my ( $id, $issuedate, $date_due, $returndate, $biblionumber, $itemnumber, $renewals, $branch, $arret_bus, $borrowernumber, $age, $sexe, $ville, $iris, $branchcode, $categorycode, $fidelite, $itemtype, $homebranch, $location, $ccode, $itemcallnumber, $publicationyear, $dateaccessioned, $lib1, $lib2, $lib3, $lib4 ) = @row ;
