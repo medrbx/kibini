@@ -2,12 +2,13 @@ package fonctions ;
 
 use Exporter ;
 @ISA = qw(Exporter) ;
-@EXPORT = qw( age av branches category datetime date_form date_veille duree_pret es_maxdatetime getdataccode getdataitem getitemtype itemnumbermax lib_sll log_file quartier_rbx retard type_carte ville15 ) ;
+@EXPORT = qw( age av branches category ccodeniveaux datetime date_form date_veille duree_pret es_maxdatetime getdataccode getdataitem getitemtype itemnumbermax lib_sll log_file quartier_rbx retard type_carte ville15 ) ;
 
 use strict ;
 use warnings ;
 use DBI ;
 use utf8 ;
+use POSIX qw(strftime);
 use DateTime ;
 use DateTime::Format::MySQL ;
 use FindBin qw( $Bin );
@@ -61,6 +62,18 @@ sub category {
 	return $sth->fetchrow_array ;
 	$sth->finish();
 	$dbh->disconnect();
+}
+
+sub ccodeniveaux {
+	my ($ccode) = @_ ;
+	my $bdd = "statdb" ;
+	my $dbh = dbh($bdd) ;
+	my $req = "SELECT lib1, lib2, lib3, lib4 FROM lib_collections2 WHERE ccode = ?" ;
+	my $sth = $dbh->prepare($req);
+	$sth->execute($ccode);
+	return $sth->fetchrow_array ;
+	$sth->finish();
+	$dbh->disconnect();	
 }
 
 sub datetime {
@@ -266,9 +279,8 @@ sub itemnumbermax {
 
 sub log_file {
 	my ($message) = @_ ;
-	my $date = DateTime->now->ymd("") ;
-	my $datetime = DateTime->now ;
-	$datetime = DateTime::Format::MySQL->format_datetime($datetime) ;
+	my $date = strftime "%Y%m%d", localtime ;
+	my $datetime = strftime "%Y-%m-%d %H:%M:%S", localtime ;
 	my $log = "[ $datetime ] $message\n" ;
 	open( my $fd, ">>", "../log/crontab/crontab_lanceur_$date.txt" ) ;
 	print ( $fd $log ) ;

@@ -51,6 +51,8 @@ fi
 # CHAQUE DIMANCHE
 if [ $dayofweek -eq 7 ]
 then
-	# On recrée l'index items dans ES
+	# On recrée les index items et catalogue dans ES
 	perl /home/kibini/kibini_prod/scripts/es_items.pl
+	bash /home/kibini/kibini_prod/scripts/catmandu_es.sh
+
 fi

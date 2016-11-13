@@ -1,0 +1,44 @@
+store:
+  ES:
+    package: ElasticSearch
+    options:
+      index_name: catalogue
+      key_prefix: my_	  
+      index_mappings:
+        catalogue:
+          properties:
+            title:
+              type: string
+              index: not_analyzed
+            creator:
+              type: string
+              index: not_analyzed
+            contributor:
+              type: string
+              index: not_analyzed
+            subject:
+              type: string
+              index: not_analyzed
+            date:
+              type: integer
+            language:
+              type: string
+              index: not_analyzed
+            type:
+              type: string
+              index: not_analyzed
+            publisher:
+              type: string
+              index: not_analyzed
+            vd_bnf:
+              type: string
+              index: not_analyzed
+            vd_action:
+              type: string
+              index: not_analyzed
+            vd_date:
+              type: string
+              index: not_analyzed
+            identifier:
+              type: string
+              index: not_analyzed	

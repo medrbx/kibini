@@ -6,7 +6,7 @@ use utf8 ;
 use DBI ;
 use DateTime ;
 use DateTime::Format::MySQL ;
-use Search::Elasticsearch ; 
+use Search::Elasticsearch ;
 use FindBin qw( $Bin ) ;
 use YAML qw(LoadFile) ;
 
