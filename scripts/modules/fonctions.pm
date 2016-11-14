@@ -282,7 +282,7 @@ sub log_file {
 	my $date = strftime "%Y%m%d", localtime ;
 	my $datetime = strftime "%Y-%m-%d %H:%M:%S", localtime ;
 	my $log = "[ $datetime ] $message\n" ;
-	my $file = "../log/crontab/crontab_lanceur_$date.txt" ;
+	my $file = "/home/kibini/kibini_prod/log/crontab/crontab_lanceur_$date.txt" ;
 	open( my $fd, ">>", $file ) or die "Can't write to file '$file' [$!]\n" ;
 	print ( $fd $log ) ;
 	close( $fd ) ;
