@@ -11,6 +11,7 @@ use utf8 ;
 use POSIX qw(strftime);
 use DateTime ;
 use DateTime::Format::MySQL ;
+use YAML qw(LoadFile) ;
 use FindBin qw( $Bin );
 
 use lib "$Bin/../src/modules/" ;
@@ -279,10 +280,16 @@ sub itemnumbermax {
 
 sub log_file {
 	my ($message) = @_ ;
+	
 	my $date = strftime "%Y%m%d", localtime ;
 	my $datetime = strftime "%Y-%m-%d %H:%M:%S", localtime ;
+	
+	my $fic_conf = "$Bin/../conf.yaml" ;
+	my $conf = LoadFile($fic_conf);
+	my $directory = $conf->{log_crontab}->{directory} ;
+	my $file = "$directory/crontab_lanceur_$date.txt" ;
+	
 	my $log = "[ $datetime ] $message\n" ;
-	my $file = "/home/kibini/kibini_prod/log/crontab/crontab_lanceur_$date.txt" ;
 	open( my $fd, ">>", $file ) or die "Can't write to file '$file' [$!]\n" ;
 	print ( $fd $log ) ;
 	close( $fd ) ;

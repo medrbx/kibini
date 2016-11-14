@@ -12,3 +12,10 @@ nedap:
 piwik:
     url_api: XXX
     token_auth: XXX
+log_crontab:
+    directory: XXX
+suggestions:
+    acquereur_id:
+        borrowernumber: nom
+    acquereur_mail:
+        borrowernumber: adupont
