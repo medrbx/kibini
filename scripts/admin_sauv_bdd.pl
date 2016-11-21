@@ -11,8 +11,9 @@ use dbrequest ;
 use fonctions ;
 
 my $log_message ;
+my $process = "admin_sauv_bdd.pl" ;
 # On log le début de l'opération
-$log_message = "test : début" ;
+$log_message = "$process : début" ;
 log_file($log_message) ;
 
 
@@ -55,5 +56,5 @@ system( " mysqldump -u $user -p$pwd koha_prod | gzip > $koha_ano  " ) ;
 system( " mysqldump -u $user -p$pwd statdb | gzip > $statdb  " ) ;
 
 # On log la fin de l'opération
-$log_message = "test : fin\n" ;
+$log_message = "$process : fin\n" ;
 log_file($log_message) ;
