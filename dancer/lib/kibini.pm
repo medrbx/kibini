@@ -8,6 +8,7 @@ use lib "$Bin/../lib/modules/" ;
 use collections ;
 use qa ;
 use suggestions ;
+use frequentation ;
 
 
 our $VERSION = '0.1';
@@ -390,6 +391,35 @@ post 'suggestions/mod' => sub {
 		envoiCourriel($from, $to, $subject, $msg) ;
 		
 		redirect '/suggestions';
+};
+
+# Fréquentation étude
+get 'frequentation/etude' => sub {
+		my $lecteurs_presents = lecteurs_presents() ;
+        template 'frequentation', {
+                label1 => "Fréquentation de la salle d'étude",
+				lecteurs_presents => $lecteurs_presents
+        };
+};
+
+post 'frequentation/etude/post' => sub {
+        my $cardnumber = param "cardnumber" ;
+		my $action = "Attention : aucun code-barre n'a été saisi." ;
+		if ($cardnumber) {
+			my $entree = freq_etude($cardnumber) ;
+			if ($entree == 0) {
+				$action = "sortie" ;
+			} elsif ($entree == 1) {
+				$action = "entrée" ;
+			}
+		}
+		my $lecteurs_presents = lecteurs_presents() ;
+        template 'frequentation', {
+                label1 => "Fréquentation de la salle d'étude",
+				entree => $action,
+				cardnumber => $cardnumber,
+				lecteurs_presents => $lecteurs_presents
+        };
 };
 
 true;

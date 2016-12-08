@@ -2,7 +2,7 @@ package fonctions ;
 
 use Exporter ;
 @ISA = qw(Exporter) ;
-@EXPORT = qw( age av branches category ccodeniveaux datetime date_form date_veille duree_pret es_maxdatetime getdataccode getdataitem getitemtype itemnumbermax lib_sll log_file quartier_rbx retard type_carte ville15 ) ;
+@EXPORT = qw( age av branches category ccodeniveaux datetime date_form date_veille duree_pret duree es_maxdatetime getdataccode getdataitem getitemtype itemnumbermax lib_sll log_file quartier_rbx retard type_carte ville15 ) ;
 
 use strict ;
 use warnings ;
@@ -78,7 +78,7 @@ sub ccodeniveaux {
 }
 
 sub datetime {
-	my $dt = DateTime->now ;
+	my $dt = DateTime->now(time_zone=>'local') ;
 	$dt = DateTime::Format::MySQL->format_datetime($dt) ;
 	return $dt ;
 }
@@ -130,6 +130,14 @@ sub duree_pret {
 		my $duration = $dt_returndate->delta_days($dt_issuedate);
 		return $duration->days ;
 	}
+}
+
+sub duree {
+	my ( $datetime_debut, $datetime_fin ) = @_ ;
+	my $dt_datetime_fin = DateTime::Format::MySQL->parse_datetime($datetime_fin) ;
+	my $dt_datetime_debut = DateTime::Format::MySQL->parse_datetime($datetime_debut) ;
+	my $duration = $dt_datetime_fin->subtract_datetime_absolute($dt_datetime_debut);
+	return $duration ;
 }
 
 sub es_maxdatetime {
