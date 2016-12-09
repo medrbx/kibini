@@ -41,6 +41,9 @@ perl /home/kibini/kibini_prod/scripts/es_reservations.pl
 perl /home/kibini/kibini_prod/scripts/statdb_nedap.pl
 perl /home/kibini/kibini_prod/scripts/es_rfid.pl
 
+# On traite les données liées à la fréquentation de la salle d'étude
+perl /home/kibini/kibini_prod/scripts/statdb_freq_etude.pl
+
 # CHAQUE MARDI
 if [ $dayofweek -eq 2 ]
 then
