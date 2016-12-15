@@ -9,6 +9,7 @@ use collections ;
 use qa ;
 use suggestions ;
 use frequentation ;
+use action_culturelle ;
 
 
 our $VERSION = '0.1';
@@ -421,5 +422,33 @@ post 'frequentation/etude/post' => sub {
 				lecteurs_presents => $lecteurs_presents
         };
 };
+
+# Action culturelle
+get 'form/action_culturelle' => sub {
+		my $list_actions = list_actions() ;
+		template 'action_culturelle', {
+                label1 => "Action culturelle",
+				actions => $list_actions
+        };
+};
+
+post 'form/action_culturelle/post' => sub {
+        my $date = params->{'date'} ;
+		my $action = params->{'action'} ;
+		my $lieu = params->{'lieu'} ;
+		my $type = params->{'type'} ;
+		my $public = params->{'public'} ;
+		my $partenariat = params->{'partenariat'} ;
+		my $participants = params->{'participants'} ;
+		
+		insert_action_culturelle( $date, $action, $lieu, $type, $public, $partenariat, $participants ) ;
+		
+		my $list_actions = list_actions() ;
+        template 'action_culturelle', {
+                label1 => "Action culturelle",
+				actions => $list_actions
+        };
+};
+
 
 true;

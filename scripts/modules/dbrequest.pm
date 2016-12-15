@@ -59,7 +59,7 @@ sub dbh {
 		"dbi:mysql:dbname=$bdd", 
 		$user,                          
 		$pwd,                          
-		{ RaiseError => 1 },         
+		{ RaiseError => 1, mysql_enable_utf8 => 1},         
 	) or die $DBI::errstr;
 	return $dbh ;
 }

@@ -10,6 +10,8 @@
 <link rel="stylesheet" href="[% request.uri_base %]/css/bootstrap.css" />
 <link rel="stylesheet" href="[% request.uri_base %]/css/rbx.css"/>
 <link rel="stylesheet" href="[% request.uri_base %]/css/dataTables.bootstrap.min.css"/>
+<link rel="stylesheet" href="[% request.uri_base %]/css/jquery-ui.css"> 
+
 <script src="[% request.uri_base %]/javascripts/jquery.js"></script>
 <script src="[% request.uri_base %]/javascripts/bootstrap.min.js"></script>
 <script src="[% request.uri_base %]/javascripts/d3.js"></script>
@@ -18,6 +20,8 @@
 <script src="[% request.uri_base %]/javascripts/scripts.js"></script>
 <script src="[% request.uri_base %]/javascripts/datatables.min.js"></script>
 <script src="[% request.uri_base %]/javascripts/dataTables.bootstrap.min.js"></script>
+<script src="[% request.uri_base %]/javascripts/jquery-ui.js"></script>
+<script src="[% request.uri_base %]/javascripts/datepicker-fr.js"></script>
 
 </head>
 
