@@ -8,9 +8,7 @@ use strict ;
 use warnings ;
 use DateTime ;
 use DateTime::Format::Duration;
-use FindBin qw( $Bin );
 
-use lib "$Bin/../../scripts/modules/" ;
 use dbrequest ;
 use fonctions ;
 

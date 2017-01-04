@@ -49,7 +49,7 @@ sub dbh {
 	# On récupère les paramètres de connexion
 	# my $fic_conf = "$Bin/../conf.yaml" ; # on se place au niveau du script qui appelle 
 	# On met le chemi en absolu pour qu'il puisse être appelé depuis Dancer...
-	my $fic_conf = "/home/kibini/kibini_prod/conf.yaml" ;
+	my $fic_conf = "$Bin/../etc/kibini_conf.yaml" ;
 	my $conf = LoadFile($fic_conf);
 	my $user = $conf->{database}->{user} ;
 	my $pwd = $conf->{database}->{pwd} ;

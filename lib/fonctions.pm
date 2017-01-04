@@ -14,7 +14,6 @@ use DateTime::Format::MySQL ;
 use YAML qw(LoadFile) ;
 use FindBin qw( $Bin );
 
-use lib "$Bin/../src/modules/" ;
 use dbrequest ;
 
 sub age {
@@ -292,7 +291,7 @@ sub log_file {
 	my $date = strftime "%Y%m%d", localtime ;
 	my $datetime = strftime "%Y-%m-%d %H:%M:%S", localtime ;
 	
-	my $fic_conf = "$Bin/../conf.yaml" ;
+	my $fic_conf = "$Bin/../etc/kibini_conf.yaml" ;
 	my $conf = LoadFile($fic_conf);
 	my $directory = $conf->{log_crontab}->{directory} ;
 	my $file = "$directory/crontab_lanceur_$date.txt" ;

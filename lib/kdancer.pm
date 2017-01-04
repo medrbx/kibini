@@ -1,18 +1,31 @@
-package kibini;
+package kdancer;
 
 use Dancer2;
 use FindBin qw( $Bin ) ;
+use utf8 ;
 # use Data::Dumper ; # pour débugage
 
-use lib "$Bin/../lib/modules/" ;
 use collections ;
 use qa ;
 use suggestions ;
 use frequentation ;
 use action_culturelle ;
 
-
 our $VERSION = '0.1';
+
+# Paramètres globaux de Dancer : ceci remplace le fichier config.yaml
+set appname => "Kibini - les tableaux de bord de la Grand-Plage";
+set layout => "kibini";
+set charset => "UTF-8";
+set template => "template_toolkit";
+set engines => {
+   template => {
+     template_toolkit => {
+       start_tag => '[%',
+       end_tag => '%]'
+     }
+   }
+};
 
 ###################
 # Tableaux de bord

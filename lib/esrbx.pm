@@ -11,7 +11,7 @@ use YAML qw(LoadFile) ;
 
 # fonction permettant de récupérer le node d'Elasticsearch
 sub es_node {
-	my $fic_conf = "$Bin/../conf.yaml" ;
+	my $fic_conf = "$Bin/../etc/kibini_conf.yaml" ;
 	my $conf = LoadFile($fic_conf);
 	return $conf->{elasticsearch}->{node} ;
 }
