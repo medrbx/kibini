@@ -82,7 +82,7 @@ SQL
 		my %index = (
 			index   => $index,
 			type    => $type,
-			id      => $id,
+			#id      => $id,
 			body    => {
 				lecteur_age => $age,
 				lecteur_age_lib1 => $age_lib1,
