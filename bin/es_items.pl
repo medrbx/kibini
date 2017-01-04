@@ -3,12 +3,10 @@
 use strict ;
 use warnings ;
 use utf8 ;
-use DBI ;
 use Search::Elasticsearch ;
 use FindBin qw( $Bin ) ;
-use YAML qw(LoadFile) ;
 
-use lib "$Bin/modules/" ;
+use lib "$Bin/../lib" ;
 use fonctions ;
 use dbrequest ;
 use esrbx ;

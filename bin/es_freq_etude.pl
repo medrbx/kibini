@@ -1,17 +1,16 @@
 #!/usr/bin/perl
 
-#use strict ;
-#use warnings ;
-use DBI ;
+use strict ;
+use warnings ;
 use DateTime ;
 use DateTime::Format::MySQL ;
 use Search::Elasticsearch ; 
 use FindBin qw( $Bin ) ;
-use YAML qw(LoadFile) ;
 
-use lib "$Bin/modules/" ;
+use lib "$Bin/../lib" ;
 use fonctions ;
 use dbrequest ;
+use esrbx ;
 
 my $log_message ;
 my $process = "es_freq_etude.pl" ;
@@ -20,9 +19,7 @@ $log_message = "$process : début" ;
 log_file($log_message) ;
 
 # On récupère l'adresse d'Elasticsearch
-my $fic_conf = "$Bin/../conf.yaml" ;
-my $conf = LoadFile($fic_conf);
-my $es_node = $conf->{elasticsearch}->{node} ;
+my $es_node = es_node() ;
 
 my $i = es_freq_etude($es_node) ;
 

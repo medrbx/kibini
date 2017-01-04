@@ -2,11 +2,11 @@
 
 use strict ;
 use warnings ;
-use FindBin qw( $Bin ) ;
 use YAML qw(LoadFile);
 use DateTime ;
+use FindBin qw( $Bin ) ;
 
-use lib "$Bin/modules/" ;
+use lib "$Bin/../lib" ;
 use dbrequest ;
 use fonctions ;
 

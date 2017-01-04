@@ -6,7 +6,7 @@ use FindBin qw( $Bin ) ;
 use YAML qw(LoadFile);
 use DateTime ;
 
-use lib "$Bin/modules/" ;
+use lib "$Bin/../lib" ;
 use fonctions ;
 
 my $log_message ;
@@ -16,7 +16,7 @@ $log_message = "$process : début" ;
 log_file($log_message) ;
 
 # On récupère les éléments de connexion MySQL
-my $fic_conf = "$Bin/../conf.yaml" ;
+my $fic_conf = "$Bin/../etc/kibini_conf.yaml" ;
 my $conf = LoadFile($fic_conf);
 my $user = $conf->{database}->{user} ;
 my $pwd = $conf->{database}->{pwd} ;

@@ -3,12 +3,11 @@
 use warnings ;
 use strict ;
 use utf8 ;
-use DBI ;
 use DateTime ;
 use DateTime::Format::MySQL ;
 use FindBin qw( $Bin ) ;
 
-use lib "$Bin/modules/" ;
+use lib "$Bin/../lib" ;
 use dbrequest ;
 use fonctions ;
 

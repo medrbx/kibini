@@ -6,7 +6,7 @@ use FindBin qw( $Bin ) ;
 use DateTime ;
 use DateTime::Format::MySQL ;
 
-use lib "$Bin/modules/" ;
+use lib "$Bin/../lib" ;
 use dbrequest ;
 use fonctions ;
 

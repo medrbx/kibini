@@ -3,12 +3,10 @@
 use warnings ;
 use strict ;
 use utf8 ;
-use DBI ;
+use FindBin qw( $Bin );
 # use Data::Dumper
 
-use FindBin qw( $Bin );
-
-use lib "$Bin/modules/" ;
+use lib "$Bin/../lib" ;
 use dbrequest ;
 
 # On détermine le coef de correction
@@ -45,7 +43,7 @@ while(my $iris = $sth->fetchrow_hashref()) {
 $sth->finish();
 
 # On calcule pour chaque iris la part corrigée d'inscrits
-my $result = "$Bin/../dancer/public/data/iris_pourcentage.csv" ;
+my $result = "$Bin/../public/data/iris_pourcentage.csv" ;
 open( my $fic, ">", $result) ;
 print $fic "iris_id,pc_inscrits\n" ;
 

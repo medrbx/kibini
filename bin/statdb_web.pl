@@ -11,7 +11,7 @@ use FindBin qw( $Bin ) ;
 use YAML qw(LoadFile) ;
 use Data::Dumper ;
 
-use lib "$Bin/modules/" ;
+use lib "$Bin/../lib" ;
 use dbrequest ;
 use fonctions ;
 
