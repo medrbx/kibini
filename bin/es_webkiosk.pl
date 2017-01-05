@@ -121,7 +121,7 @@ SQL
 			}
 		) ;
 
-		$e->index(%index) ;
+		#$e->index(%index) ;
 		$i++ ;
 	}
 	$sth->finish();

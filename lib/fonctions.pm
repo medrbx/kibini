@@ -297,7 +297,7 @@ sub log_file {
 	my $file = "$directory/crontab_lanceur_$date.txt" ;
 	
 	my $log = "[ $datetime ] $message\n" ;
-	open( my $fd, ">>", $file ) or die "Can't write to file '$file' [$!]\n" ;
+	open( my $fd, ">>:encoding(utf8)", $file ) or die "Can't write to file '$file' [$!]\n" ;
 	print ( $fd $log ) ;
 	close( $fd ) ;
 }

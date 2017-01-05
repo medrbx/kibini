@@ -17,11 +17,11 @@ use fonctions ;
 
 my $log_message ;
 my $process = "statdb_web.pl" ;
-# On log le début de l'opération
-$log_message = "$process : début" ;
+# On log le dÃ©but de l'opÃ©ration
+$log_message = "$process : dÃ©but" ;
 log_file($log_message) ;
 
-# On récupère les infos de connexion à Piwik
+# On rÃ©cupÃ©re les infos de connexion Ã  Piwik
 my $fic_conf = "$Bin/../etc/kibini_conf.yaml" ;
 my $conf = LoadFile($fic_conf);
 my $piwik_url_api = $conf->{piwik}->{url_api} ;
@@ -68,6 +68,6 @@ sub insertWebSessions {
 	$dbh->disconnect() ;
 }
 
-# On log la fin de l'opération
+# On log la fin de l'opÃ©ration
 $log_message = "$process : fin\n" ;
 log_file($log_message) ;
