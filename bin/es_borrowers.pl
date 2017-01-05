@@ -337,7 +337,6 @@ SQL
 
 		$e->index(%index) ;
 		
-		print "$i\n" ;
 		$i++ ;
 	}
 	$sth->finish();
