@@ -16,7 +16,6 @@
 					<th>Carte</th>
 					<th>Garant</th>
 					<th>Complément adresse</th>
-					<th>DDN garant</th>
 					<th>ID Insee</th>
 					<th>Mobile</th>
 					<th>ID portail / WK</th>
@@ -33,7 +32,6 @@
 					<td>[% borrower.5 %]</td>
 					<td>[% borrower.6 %]</td>
 					<td>[% borrower.7 %]</td>
-					<td>[% borrower.8 %]</td>
 				</tr>
 				[% END %]
 			</tbody>
