@@ -70,7 +70,7 @@ sub suggestionInfos {
 # On envoie un mail à l'acquéreur
 sub constructionCourriel {
 	my ($managedby, $title) = @_ ;
-	my $fic_conf = "$Bin/../../conf.yaml" ;
+	my $fic_conf = "$Bin/../etc/kibini_conf.yaml" ;
 	my $conf = LoadFile($fic_conf);
 	my $acquereur_mail = $conf->{suggestions}->{acquereur_mail} ;
 	my %acquereur = %$acquereur_mail ;
