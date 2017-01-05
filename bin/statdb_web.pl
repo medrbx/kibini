@@ -22,7 +22,7 @@ $log_message = "$process : début" ;
 log_file($log_message) ;
 
 # On récupère les infos de connexion à Piwik
-my $fic_conf = "$Bin/../conf.yaml" ;
+my $fic_conf = "$Bin/../etc/kibini_conf.yaml" ;
 my $conf = LoadFile($fic_conf);
 my $piwik_url_api = $conf->{piwik}->{url_api} ;
 my $piwik_token_auth = $conf->{piwik}->{token_auth} ;

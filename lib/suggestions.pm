@@ -50,7 +50,7 @@ sub modSuggestion {
 
 sub acquereurs {
 	my ($managedby, $title) = @_ ;
-	my $fic_conf = "$Bin/../../conf.yaml" ;
+	my $fic_conf = "$Bin/../etc/kibini_conf.yaml" ;
 	my $conf = LoadFile($fic_conf);
 	my $acquereurs = $conf->{suggestions}->{acquereur_id} ;
 	return $acquereurs ;

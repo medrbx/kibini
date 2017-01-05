@@ -31,14 +31,6 @@ log_file($log_message) ;
 $log_message = "$process : fin\n" ;
 log_file($log_message) ;
 
-
-sub date_veille {
-	my $dt = DateTime->today() ;
-	my $date = $dt->subtract( days => 1	) ;
-	$date = DateTime::Format::MySQL->format_date($date) ;
-	return $date
-}
-
 sub reservations {
 	my ( $date, $es_node ) = @_ ;
 	my %params = ( nodes => $es_node ) ;
@@ -90,7 +82,7 @@ SQL
 		my ( $reserve_id, $borrowernumber, $reservedate, $biblionumber, $branchcode, $notificationdate, $cancellationdate, $priority, $found, $timestamp, $itemnumber, $waitingdate, $etat, $espace, $age, $sexe, $ville, $iris, $branchcode_borrower, $categorycode, $fidelite, $motif_annulation, $courriel, $mobile, $annulation, $document_mis_cote ) = @row ;
 		
 		my ($itemtype, $location, $homebranch, $ccode, $lib1, $lib2, $lib3, $lib4 ) = "NC" ;
-		if (length itemnumber) {
+		if (length $itemnumber) {
 			$itemtype = getitemtype($biblionumber) ;
 			$itemtype = av($itemtype, "ccode") ;
 			

@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 
-use strict ;
-use warnings ;
+#use strict ;
+#use warnings ;
 use utf8 ;
 use DateTime ;
 use DateTime::Format::MySQL ;
@@ -225,6 +225,7 @@ WHERE
 	s.categorycode IN ('BIBL', 'MEDA', 'MEDB', 'MEDC', 'CSVT', 'CSLT', 'MEDPERS', 'CLAS', 'COLD', 'COLI', 'COLS', 'ECOL')
 	AND s.dateexpiry >= ?
 	AND s.date = ?
+ORDER BY s.dateexpiry DESC
 SQL
 
 	my $sth = $dbh->prepare($req);
@@ -336,6 +337,7 @@ SQL
 
 		$e->index(%index) ;
 		
+		print "$i\n" ;
 		$i++ ;
 	}
 	$sth->finish();

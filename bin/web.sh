@@ -1,4 +1,6 @@
 #! /bin/bash
 
-perl /home/kibini/kibini_prod/scripts/statdb_web.pl ;
-perl /home/kibini/kibini_prod/scripts/es_web.pl ;
+dir='/home/kibini/kibini_prod/bin'
+
+perl $dir/statdb_web.pl ;
+perl $dir/es_web.pl ;

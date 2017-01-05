@@ -20,7 +20,7 @@ $log_message = "$process : début" ;
 log_file($log_message) ;
 
 # On récupère les infos de connexion à Librixonline
-my $fic_conf = "$Bin/../conf.yaml" ;
+my $fic_conf = "$Bin/../etc/kibini_conf.yaml" ;
 my $conf = LoadFile($fic_conf);
 my $url = $conf->{nedap}->{url} ;
 my $user = $conf->{nedap}->{user} ;

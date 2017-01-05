@@ -15,11 +15,11 @@ use esrbx ;
 
 my $log_message ;
 my $process = "es_web.pl" ;
-# On log le début de l'opération
-$log_message = "$process : début" ;
+# On log le dÃ©but de l'opÃ©ration
+$log_message = "$process : dÃ©but" ;
 log_file($log_message) ;
 
-# On récupère l'adresse d'Elasticsearch
+# On rÃ©cupÃ©re l'adresse d'Elasticsearch
 my $es_node = es_node() ;
 my $index = "web" ;
 my @types = qw( site bn-r ) ;
@@ -31,8 +31,8 @@ for my $type (@types) {
 	$nb = $nb + $i ;
 }
 
-# On log la fin de l'opération
-$log_message = "$process : $nb lignes indexées" ;
+# On log la fin de l'opÃ©ration
+$log_message = "$process : $nb lignes indexÃ©es" ;
 log_file($log_message) ;
 $log_message = "$process : fin\n" ;
 log_file($log_message) ;

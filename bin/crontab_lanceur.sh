@@ -3,7 +3,7 @@
 dayofweek=`date +%u`
 dayofmonth=`date +%e`
 
-dir='/home/kibini/kibini_dev/bin/'
+dir='/home/kibini/kibini_prod/bin/'
 
 # CHAQUE MERCREDI
 if [ $dayofweek -eq 3 ]
