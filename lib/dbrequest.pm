@@ -1,5 +1,7 @@
 package dbrequest ;
 
+# Ne plus utiliser : recourir à Kibini::DB
+
 use Exporter ;
 @ISA = qw( Exporter ) ;
 @EXPORT = qw( dbh fetchrow_array fetchrow_arrayref fetchrow_hashref fetchall_arrayref find ) ;
