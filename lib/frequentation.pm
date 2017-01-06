@@ -10,6 +10,7 @@ use DateTime ;
 use DateTime::Format::Duration;
 
 use dbrequest ;
+use Kibini::DB ;
 use fonctions ;
 
 sub freq_etude {
@@ -102,8 +103,7 @@ FROM stat_freq_etude
 WHERE DATE(datetime_entree) = CURDATE()
 ORDER BY datetime_entree DESC
 SQL
-	my $bdd = 'statdb';
-	return fetchall_arrayref($bdd, $req);
+	return Kibini::DB->new()->get_all_arrayref($req);
 }
 
 1;
