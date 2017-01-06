@@ -49,7 +49,7 @@ my $fic_conf = "$Bin/../conf.yaml" ;
 my $conf = LoadFile($fic_conf);
 my $user = $conf->{database}->{user} ;
 my $pwd = $conf->{database}->{pwd} ;
-my $dir = "$Bin/../dumps" ;
+my $dir = "$Bin/../data" ;
 my $koha_ano = "$dir/koha_ano_$date.sql.gz" ;
 my $statdb = "$dir/statdb_$date.sql.gz" ;
 system( " mysqldump -u $user -p$pwd koha_prod | gzip > $koha_ano  " ) ;
