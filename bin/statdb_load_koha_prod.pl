@@ -22,7 +22,7 @@ my $user = $conf->{database}->{user} ;
 my $pwd = $conf->{database}->{pwd} ;
 
 my $date = DateTime->now(time_zone => "local")->ymd('');
-my $dir = "$Bin/../dumps" ;
+my $dir = "$Bin/../data" ;
 my $file = "$dir/koha_prod_$date.sql" ;
 
 # script initialement écrit en bash : on récupère tel quel...
