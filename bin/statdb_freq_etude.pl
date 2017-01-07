@@ -5,9 +5,8 @@ use strict ;
 use FindBin qw( $Bin ) ;
 
 use lib "$Bin/../lib" ;
-use salleEtude::stadb ;
-use fonctions ;
-
+use kibini::log ;
+use salleEtude::statdb ;
 
 my $log_message ;
 my $process = "statdb_freq_etude.pl" ;
@@ -16,7 +15,7 @@ $log_message = "$process : début" ;
 log_file($log_message) ;
 
 # On enrichit les données
-ModEntranceAddingData() ;
+my $i = ModEntranceAddingData() ;
 
 # On log la fin de l'opération
 $log_message = "$process : $i lignes intégrées" ;

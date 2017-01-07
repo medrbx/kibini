@@ -23,7 +23,7 @@ use warnings ;
 use DateTime ;
 use DateTime::Format::Duration;
 
-use Kibini::DB ;
+use kibini::db ;
 use fonctions ;
 
 =head1 FONCTIONS EXPORTEES
@@ -32,7 +32,7 @@ use fonctions ;
 sub IsEntrance {
 	my ($cardnumber) = @_ ;
 	my $datetime = datetime() ;
-	my $dbh = Kibini::DB->new->get_dbh ;
+	my $dbh = GetDbh() ;
 	my $borrowerTodayLastEntranceId = _GetBorrowerTodayLastEntranceId($dbh, $cardnumber) ;
 	my $entrance ;
 	if (length $borrowerTodayLastEntranceId) {
@@ -64,7 +64,7 @@ FROM stat_freq_etude
 WHERE DATE(datetime_entree) = CURDATE()
 ORDER BY datetime_entree DESC
 SQL
-	return Kibini::DB->new()->get_all_arrayref($req);
+	return GetAllArrayRef($req);
 }
 
 =head1 FONCTIONS INTERNES

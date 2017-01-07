@@ -1,51 +1,58 @@
-package Kibini::DB ;
+package kibini::db ;
 
-use Moo ;
+=pod
+
+=encoding UTF-8
+
+=head1 NOM
+
+kibini::db
+
+=head1 DESCRIPTION
+
+Ce module fournit des fonctions permettant d'accéder aux bases de données de Kibini.
+
+=cut
+
+use Exporter ;
+@ISA = qw(Exporter) ;
+@EXPORT = qw( GetDbh GetAllArrayRef ) ;
+
+use strict ;
+use warnings ;
 use DBI ;
 
-use Kibini::Config ;
+use kibini::config ;
 
-has 'dbh' => ( is  => 'ro' ) ;
-
-around BUILDARGS => sub {
-    my $orig = shift ;
-    my $class = shift ;
-
-    my $conf_database = Kibini::Config->new('database')->get_conf() ;
-
+sub GetDbh {
+	# On récupère les paramètres de connexion
+	my $conf_database = GetConfig('database') ;
 	my $db = $conf_database->{db} ;
 	my $user = $conf_database->{user} ;
 	my $pwd = $conf_database->{pwd} ;
-
+ 
+	# On se connecte à la base de données
 	my $dbh = DBI->connect(          
 		"dbi:mysql:dbname=$db", 
 		$user,                          
 		$pwd,                          
 		{ RaiseError => 1, mysql_enable_utf8 => 1},         
 	) or die $DBI::errstr;
-	
-    return $class->$orig( 
-		dbh => $dbh
-	);
-};
-
-sub get_dbh {
-    my $self = shift;
-    if(@_) {
-        $self->{dbh} = $_[0];
-    }
-    return $self->{dbh};
+	return $dbh ;
 }
 
-sub get_all_arrayref {
-    my $self = shift ;
+
+sub GetAllArrayRef {
     my ($req) = @_ ;
-    my $dbh = $self->{dbh} ;
-    my $sth = $dbh->prepare($req) ;
+	
+	my $dbh = GetDbh() ;
+	my $sth = $dbh->prepare($req) ;
     $sth->execute() ; 
-    return $sth->fetchall_arrayref({}) ;
-    $sth->finish() ;
-    $dbh->disconnect() ;
+    my $result = $sth->fetchall_arrayref({}) ;
+	$sth->finish() ;
+	$dbh->disconnect() ;
+
+	return $result ;    
 }
 
 1;
