@@ -16,7 +16,7 @@ Ce module fournit des fonctions permettant de remplir des fichiers de log.
 
 use Exporter ;
 @ISA = qw(Exporter) ;
-@EXPORT = qw( log_file ) ;
+@EXPORT = qw( AddCrontabLog ) ;
 
 use strict ;
 use warnings ;
@@ -24,7 +24,7 @@ use POSIX qw(strftime);
 
 use kibini::config ;
 
-sub log_file {
+sub AddCrontabLog {
 	my ($message) = @_ ;
 	
 	my $date = strftime "%Y%m%d", localtime ;
