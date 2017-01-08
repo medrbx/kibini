@@ -45,7 +45,7 @@ sub GetConfig {
     if ( defined $k ) {
         my %config = (
             database => $file_conf->{'database'},
-            elasticsearch => $file_conf->{'conf'}->{'elasticsearch'}
+            elasticsearch => $file_conf->{'conf'}->{'elasticsearch'},
             nedap => $file_conf->{'conf'}->{'nedap'},
             piwik => $file_conf->{'conf'}->{'piwik'},
             log_crontab => $file_conf->{'conf'}->{'log_crontab'},
