@@ -1,0 +1,141 @@
+    <div id="sidebar">
+		[% INCLUDE 'includes/sidebar.tt' %]
+	</div>
+	<div class="col-sm-9">
+	
+		<div class="panel panel-primary">
+                <div class="panel-heading">
+                    <strong>
+					[% label1 %]<span>   </span><i class="glyphicon glyphicon-chevron-right"></i><span>   </span>[% label2 %]<span>   </span><i class="glyphicon glyphicon-chevron-right"></i><span>   </span>[% label3 %]
+					</strong>
+				</div>
+           </div>
+	
+		<table class="table table-bordered">
+			<thead>
+				<tr>
+					<th class="col1">Collections</th>
+					<th align="right" width="60px">Exemplaires</th>
+					<th align="right" width="60px">Exemplaires empruntables</th>
+					<th align="right" vertical-align="middle" width="60px">Prêts</th>
+					<th align="right" width="60px">Documents distincts empruntés</th>
+					<th align="right" width="60px">Tx rotation</th>
+					<th align="right" width="60px">Tx fonds actif</th>
+					<th align="right" width="60px">Emprunteurs uniques</th>
+				</tr>
+			</thead>
+			
+			<tbody>
+[% FOREACH n1 IN indicateurs %]
+	[% FOREACH val IN n1.value %]
+				<tr class="n1">
+					<td class="col1">[% val.libelle %]</td>
+					<td class="ex" align="right">[% val.nbExemplaires %]</td>
+					<td align="right">[% val.nbExemplairesEmpruntables %]</td>
+					<td align="right">[% val.nbPrets %]</td>
+					<td align="right">[% val.nbDocPrets %]</td>
+					<td align="right">[% val.txRotation %]</td>
+					<td align="right">[% val.txFondsActif %] %</td>
+					<td align="right">[% val.nbEmprUniques %]</td>
+				</tr>
+		[% FOREACH n2 IN val %]
+			[% FOREACH val2 IN n2.value %]				
+				<tr class="n2">
+					<td style="padding-left:30px;">[% val2.libelle %]</td>
+					<td class="ex" align="right">[% val2.nbExemplaires %]</td>
+					<td align="right">[% val2.nbExemplairesEmpruntables %]</td>
+					<td align="right">[% val2.nbPrets %]</td>
+					<td align="right">[% val2.nbDocPrets %]</td>
+					<td align="right">[% val2.txRotation %]</td>
+					<td align="right">[% val2.txFondsActif %] %</td>
+					<td align="right">[% val2.nbEmprUniques %]</td>
+				</tr>
+				[% FOREACH n3 IN val2 %]
+					[% FOREACH val3 IN n3.value %]	
+				<tr class="n3">
+					<td style="padding-left:60px;">[% val3.libelle %]</td>
+					<td class="ex" align="right">[% val3.nbExemplaires %]</td>
+					<td align="right">[% val3.nbExemplairesEmpruntables %]</td>
+					<td align="right">[% val3.nbPrets %]</td>
+					<td align="right">[% val3.nbDocPrets %]</td>
+					<td align="right">[% val3.txRotation %]</td>
+					<td align="right">[% val3.txFondsActif %] %</td>
+					<td align="right">[% val3.nbEmprUniques %]</td>
+				</tr>
+						[% FOREACH n4 IN val3 %]
+							[% FOREACH val4 IN n4.value %]	
+				<tr class="n4">
+					<td style="padding-left:90px;">[% val4.libelle %]</td>
+					<td class="ex" align="right">[% val4.nbExemplaires %]</td>
+					<td align="right">[% val4.nbExemplairesEmpruntables %]</td>
+					<td align="right">[% val4.nbPrets %]</td>
+					<td align="right">[% val4.nbDocPrets %]</td>
+					<td align="right">[% val4.txRotation %]</td>
+					<td align="right">[% val4.txFondsActif %] %</td>
+					<td align="right">[% val4.nbEmprUniques %]</td>
+				</tr>
+				
+								[% FOREACH n5 IN val4 %]
+									[% FOREACH val5 IN n5.value %]	
+				<tr class="n5">
+					<td style="padding-left:120px;">[% val5.libelle %]</td>
+					<td class="ex" align="right">[% val5.nbExemplaires %]</td>
+					<td align="right">[% val5.nbExemplairesEmpruntables %]</td>
+					<td align="right">[% val5.nbPrets %]</td>
+					<td align="right">[% val5.nbDocPrets %]</td>
+					<td align="right">[% val5.txRotation %]</td>
+					<td align="right">[% val5.txFondsActif %] %</td>
+					<td align="right">[% val5.nbEmprUniques %]</td>
+				</tr>
+									[% END %]
+								[% END %]
+							[% END %]
+						[% END %]
+					[% END %]
+				[% END %]
+			[% END %]
+		[% END %] 
+	[% END %]
+[% END %]				
+				
+			</tbody>
+		</table>
+	</div>
+
+
+    <script type="text/javascript">
+/* On supprime les lignes vides du tableau */
+for ( j = 0 ; j < 6 ; j++ ) {
+	var td = document.getElementsByClassName("ex") ;
+	var i ;
+	for ( i = 0 ; i < td.length ; i++ ) {
+		if (td[i].textContent == "" ) {
+			var tr = td[i].parentElement ;
+			tr.parentNode.removeChild(tr);
+		}
+	}	
+}
+
+/* On ajoute un séparateur de milliers 
+var td = element.getElementsByTagName(balise)("td") ;
+var i ;
+for ( i = 0 ; i < td.length ; i++ ) {
+		td[i].textcontent = formatMillier(td[i].textcontent) ;
+	}
+}	
+
+function formatMillier( nombre){
+  nombre += '';
+  var sep = ' ';
+  var reg = /(\d+)(\d{3})/;
+  while( reg.test( nombre)) {
+    nombre = nombre.replace( reg, '$1' +sep +'$2');
+  }
+  return nombre;
+}
+*/
+
+/* On masque la bar de navigation
+$( "#sidebar" ).hide() ;  */
+    </script>
+

@@ -1,0 +1,43 @@
+#marc_map(003,identifier)
+
+marc_map(200aef,title, join:", ")
+
+marc_map(700ab,creator.$append, join:", ")
+marc_map(701ab,creator.$append, join:", ")
+marc_map(710a,creator.$append, join:", ")
+marc_map(711a,creator.$append, join:", ")
+
+marc_map(702ab,contributor.$append, join:", ")
+marc_map(712a,contributor.$append, join:", ")
+
+#marc_map(020a,isbn.$append)
+#marc_map(022a,issn.$append)
+
+#replace_all(isbn.," .","")
+#replace_all(issn.," .","")
+
+marc_map(210c,publisher)
+# replace_all(publisher,",$","")
+
+marc_map('100/9-12','date')
+# replace_all(date,"\D+","")
+
+marc_map(606a,subject.$append)
+
+marc_map(099t, type)
+lookup("type","catmandu_lk.txt", sep_char:'|',default:'NONE')
+
+
+if marc_match("033a","catalogue.bnf.fr")
+  set_field('vd_bnf','ok')
+else
+	set_field('vd_bnf','ko')
+end
+
+marc_map(091a,'vd_action')
+lookup("vd_action","catmandu_lk.txt", sep_char:'|',default:'NONE')
+marc_map(091b,'vd_date')
+
+copy_field(_id,identifier)
+
+retain(identifier, title, creator, contributor, publisher, date, type, vd_bnf, vd_action, vd_date)

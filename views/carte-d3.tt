@@ -1,0 +1,116 @@
+	<div id="map"></div>
+			
+		<script type="text/javascript">
+
+// On définit la taille du cadre
+	var width = 900, height = 600;
+
+// On définit le spectre de couleurs et les intervalles de valeurs
+	var color_domain = [0.02, 0.04, 0.06, 0.08, 0.1, 0.12, 0.14, 0.16];
+	var ext_color_domain = [0, 0.02, 0.04, 0.06, 0.08, 0.1, 0.12, 0.14, 0.16];
+	var legend_labels = ["< 2 %", "4 %", "6 %", "8 %", "10 %", "12 %", "14 %", "16 %", "> 18 %"];           
+	var color = d3.scale.threshold()
+		.domain(color_domain)
+		.range(['rgb(255,255,229)','rgb(255,247,188)','rgb(254,227,145)','rgb(254,196,79)','rgb(254,153,41)','rgb(236,112,20)','rgb(204,76,2)','rgb(153,52,4)','rgb(102,37,6)']);
+
+// On prépare la création de la carte
+	var projection = d3.geo.mercator()
+		.center([3.175412, 50.690361])
+		.scale(475000)
+		.translate([width / 2, height / 2]);
+
+	var path = d3.geo.path()
+		.projection(projection);
+	
+	var svg = d3.select('#map').append("svg")
+		.attr("width", width)
+		.attr("height", height);
+
+        var tooltip = d3.select('body').append('div')
+		.attr('class', 'hidden tooltip');
+ 
+	var iris = svg
+		.append("g")
+		.attr("id", "iris");
+
+// On lit les fichiers de données
+	queue()
+		.defer(d3.json, '[% request.uri_base %]/data/rbx.geojson')
+		.defer(d3.csv, '[% request.uri_base %]/data/iris_pourcentage.csv')
+		.await(ready);
+
+// On dessine la carte
+
+	function ready(error, carte, donnees) {
+		
+		var pairRateWithId = {};
+		donnees.forEach(function(d) {pairRateWithId[d.iris_id] = +d.pc_inscrits; });
+
+		var features = iris
+			.selectAll("path")
+			.data(carte.features);
+
+		features.enter()	
+			.append("path")
+			.attr("class", function(d) {return 'iris ' + d.properties.dcomiris;})
+			.style ( "fill" , function (d) {return color (pairRateWithId[d.properties.dcomiris]);})
+			.attr("d", path)
+	
+
+// On ajoute la visualisation via la souris
+
+       			.on('mousemove', function(d) {
+				var mouse = d3.mouse(svg.node()).map(function(d) {return parseInt(d);});
+               			tooltip.classed('hidden', false)
+                        	.attr('style', 'left:' + (mouse[0] + 250) + 'px; top:' + (mouse[1] + 225) + 'px')
+                        	.html(d.properties.nom_iris + ' : ' + Math.floor((pairRateWithId[d.properties.dcomiris] *100) + 0.5) + ' %');
+                	})
+			.on('mouseout', function() {tooltip.classed('hidden', true);});  	
+	}
+
+// On ajoute la position de la médiathèque
+	d3.csv('[% request.uri_base %]/data/rbx_pt.csv', function(points) {
+		var placePoints = svg.selectAll("g.circle").data(points);
+		var placeText = svg.selectAll("g.text").data(points);
+
+		placePoints.enter()
+			.append('circle')
+			.attr('cx', function(d) {return projection([d.lon, d.lat])[0]})
+			.attr('cy', function(d) {return projection([d.lon, d.lat])[1]})
+			.attr('r', 4)
+			.attr('fill', 'black');
+
+		placeText.enter()
+			.append('text')
+			.attr('class', 'point')
+			.attr('x', function(d) {return projection([d.lon, d.lat])[0]})
+			.attr('y', function(d) {return projection([d.lon, d.lat])[1]})
+			.attr('dx', 5)
+			.attr('dy', 3)
+			.text(function(d) {return d.name});
+	});
+
+// On crée la légende
+	var legend = svg.selectAll("g.legend")
+		.data(ext_color_domain)
+		.enter().append("g")
+		.attr("class", "legend");
+
+	var ls_w = 20, ls_h = 20;
+
+	legend.append("rect")
+		.attr("x", 20)
+		.attr("y", function(d, i){ return height - (i*ls_h) - 2*ls_h;})
+		.attr("width", ls_w)
+		.attr("height", ls_h)
+		.style("fill", function(d, i) { return color(d); })
+		.style("opacity", 0.8);
+
+	legend.append("text")
+		.attr("x", 50)
+		.attr("y", function(d, i){ return height - (i*ls_h) - ls_h - 4;})
+		.text(function(d, i){ return legend_labels[i]; });
+
+		
+
+		</script>
