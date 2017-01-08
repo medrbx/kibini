@@ -15,7 +15,7 @@ sub GetDateTime {
 	
     my $dt = DateTime->now(time_zone=>'local') ;
 	
-	if ( defined $k ) {
+    if ( defined $k ) {
         if ( $k eq 'now' ) {
             $datetime = DateTime::Format::MySQL->format_datetime($dt) ; # YYYY-MM-DD HH:MM:SS
 	    } elsif ( $k eq 'today' ) {
@@ -24,8 +24,8 @@ sub GetDateTime {
             $datetime = $dt->ymd('') ; # YYYYMMDD
 	    } elsif ( $k eq 'yesterday' ) {
             $dt = $dt->subtract( days => 1 ) ;
-			$datetime = $dt->ymd() ; # YYYY-MM-DD
-	    }
+            $datetime = $dt->ymd() ; # YYYY-MM-DD
+        }
     } else {
         $datetime = DateTime::Format::MySQL->format_datetime($dt) ; # YYYY-MM-DD HH:MM:SS
     }
@@ -62,7 +62,7 @@ sub GetSplitDateTime {
         5 => "5 Vendredi",
         6 => "6 Samedi",
         7 => "7 Dimanche"
-        ) ;
+    ) ;
     $dow = $dowfr{$dow} ;
 	
     my $hour = $dt->hour() ;
