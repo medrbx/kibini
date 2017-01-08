@@ -1,25 +1,8 @@
 package kibini::time ;
 
-=pod
-
-=encoding UTF-8
-
-=head1 NOM
-
-kibini::time
-
-=head1 DESCRIPTION
-
-Ce module fournit des fonctions de gérer les dates et durée.
-Sont nécessaires l'obtention de :
-- durée en jour
-- durée en minute
-
-=cut
-
 use Exporter ;
 @ISA = qw(Exporter) ;
-@EXPORT = qw( GetDateTime GetSplitDateTime GetDuration ) ; # duree_pret duree
+@EXPORT = qw( GetDateTime GetSplitDateTime GetDuration ) ;
 
 use strict ;
 use warnings ;
@@ -49,6 +32,7 @@ sub GetDateTime {
 
     return $datetime ;
 }
+
 
 sub GetSplitDateTime {
     my ($datetime) = @_ ;
@@ -111,3 +95,82 @@ sub GetDuration {
 }
 
 1 ;
+
+__END__
+
+=pod
+
+=encoding UTF-8
+
+
+=head1 NOM
+
+kibini::time
+
+
+=head1 DESCRIPTION
+
+Ce module fournit des fonctions permettant de gérer les dates et durée.
+
+
+=head1 FONCTIONS EXPORTEES
+
+=over 4
+
+=item * GetDateTime
+
+Cette fonction renvoie une date ou un datetime.
+
+=over 4
+
+=item *  C<$datetime = GetDateTime('now') ;>
+
+renvoie le datetime au format YYYY-MM-DD HH:MM:SS
+
+=item *  C<$date = GetDateTime('today') ;>
+
+renvoie la date au format YYYY-MM-DD
+
+=item *  C<$date = GetDateTime('today YYYYMMDD') ;>
+
+renvoie la date au format YYYYMMDD
+
+=item *  C<$date = GetDateTime('yesterday') ;>
+
+renvoie la date de la veille au format YYYY-MM-DD
+
+=back
+
+=item * GetSplitDateTime
+
+Cette fonction renvoie, à partir d'un datetime passé en paramètre, les différents éléments de date et d'heure.
+
+=over 4
+
+=item *  C<($year, $month, $week_number, $day, $dayofweek, $hour) = GetSplitDateTime($datetime) ;>
+
+=back
+
+=item * GetDuration
+
+Cette fonction renvoie à partir d'un datetime de début et de fin une durée en jours, heures ou minutes.
+
+=over 4
+
+=item *  C<$duration = GetDuration($datetime1, $datetime2, 'days')>
+
+renvoie la durée en jours
+
+=item *  C<$duration = GetDuration($datetime1, $datetime2, 'hours')>
+
+renvoie la durée en heures
+
+=item *  C<$duration = GetDuration($datetime1, $datetime2, 'minutes')>
+
+renvoie la durée en minutes
+
+=back
+
+=back
+
+=cut
