@@ -18,11 +18,11 @@ sub GetDateTime {
     if ( defined $k ) {
         if ( $k eq 'now' ) {
             $datetime = DateTime::Format::MySQL->format_datetime($dt) ; # YYYY-MM-DD HH:MM:SS
-	    } elsif ( $k eq 'today' ) {
+        } elsif ( $k eq 'today' ) {
             $datetime = $dt->ymd() ; # YYYY-MM-DD
-	    } elsif ( $k eq 'today YYYYMMDD' ) {
+        } elsif ( $k eq 'today YYYYMMDD' ) {
             $datetime = $dt->ymd('') ; # YYYYMMDD
-	    } elsif ( $k eq 'yesterday' ) {
+        } elsif ( $k eq 'yesterday' ) {
             $dt = $dt->subtract( days => 1 ) ;
             $datetime = $dt->ymd() ; # YYYY-MM-DD
         }
@@ -83,11 +83,11 @@ sub GetDuration {
         my $dt2 = DateTime::Format::MySQL->parse_datetime($datetime2) ;
 		
         if ( $type eq 'days' ) {
-			$duration = $dt1->delta_days($dt2)->in_units('days') ;
+            $duration = $dt1->delta_days($dt2)->in_units('days') ;
         } elsif ( $type eq 'hours' ) {
-			$duration = $dt1->delta_ms($dt2)->in_units('hours') ;
+            $duration = $dt1->delta_ms($dt2)->in_units('hours') ;
         } elsif ( $type eq 'minutes' ) {
-			$duration = $dt1->delta_ms($dt2)->in_units('minutes') ;
+            $duration = $dt1->delta_ms($dt2)->in_units('minutes') ;
         }
     }
 	
