@@ -1,52 +1,28 @@
-package Kibini::Log ;
+package kibini::log ;
 
-use Moo ;
-use DBI ;
+=pod
 
-use Kibini::Config ;
+=encoding UTF-8
 
-has 'log' => ( is  => 'ro' ) ;
+=head1 NOM
 
-around BUILDARGS => sub {
-    my $orig = shift ;
-    my $class = shift ;
+kibini::log
 
-    my $conf_database = Kibini::Config->new('database')->get_conf() ;
+=head1 DESCRIPTION
 
-	my $db = $conf_database->{db} ;
-	my $user = $conf_database->{user} ;
-	my $pwd = $conf_database->{pwd} ;
+Ce module fournit des fonctions permettant de remplir des fichiers de log.
 
-	my $dbh = DBI->connect(          
-		"dbi:mysql:dbname=$db", 
-		$user,                          
-		$pwd,                          
-		{ RaiseError => 1, mysql_enable_utf8 => 1},         
-	) or die $DBI::errstr;
-	
-    return $class->$orig( 
-		dbh => $dbh
-	);
-};
+=cut
 
-sub get_dbh {
-    my $self = shift;
-    if(@_) {
-        $self->{dbh} = $_[0];
-    }
-    return $self->{dbh};
-}
+use Exporter ;
+@ISA = qw(Exporter) ;
+@EXPORT = qw( log_file ) ;
 
-sub get_all_arrayref {
-    my $self = shift ;
-    my ($req) = @_ ;
-    my $dbh = $self->{dbh} ;
-    my $sth = $dbh->prepare($req) ;
-    $sth->execute() ; 
-    return $sth->fetchall_arrayref({}) ;
-    $sth->finish() ;
-    $dbh->disconnect() ;
-}
+use strict ;
+use warnings ;
+use POSIX qw(strftime);
+
+use kibini::config ;
 
 sub log_file {
 	my ($message) = @_ ;
@@ -54,9 +30,8 @@ sub log_file {
 	my $date = strftime "%Y%m%d", localtime ;
 	my $datetime = strftime "%Y-%m-%d %H:%M:%S", localtime ;
 	
-	my $fic_conf = "$Bin/../etc/kibini_conf.yaml" ;
-	my $conf = LoadFile($fic_conf);
-	my $directory = $conf->{log_crontab}->{directory} ;
+	my $conf = GetConfig('log_crontab')
+	my $directory = $conf->{directory} ;
 	my $file = "$directory/crontab_lanceur_$date.txt" ;
 	
 	my $log = "[ $datetime ] $message\n" ;
@@ -64,7 +39,5 @@ sub log_file {
 	print ( $fd $log ) ;
 	close( $fd ) ;
 }
-
-
 
 1;

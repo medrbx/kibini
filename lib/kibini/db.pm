@@ -25,34 +25,35 @@ use DBI ;
 use kibini::config ;
 
 sub GetDbh {
-	# On récupère les paramètres de connexion
-	my $conf_database = GetConfig('database') ;
-	my $db = $conf_database->{db} ;
-	my $user = $conf_database->{user} ;
-	my $pwd = $conf_database->{pwd} ;
+    my $conf_database = GetConfig('database') ;
+    my $db = $conf_database->{db} ;
+    my $user = $conf_database->{user} ;
+    my $pwd = $conf_database->{pwd} ;
  
-	# On se connecte à la base de données
-	my $dbh = DBI->connect(          
-		"dbi:mysql:dbname=$db", 
-		$user,                          
-		$pwd,                          
-		{ RaiseError => 1, mysql_enable_utf8 => 1},         
-	) or die $DBI::errstr;
-	return $dbh ;
+    my $dbh = DBI->connect(          
+        "dbi:mysql:dbname=$db", 
+        $user,
+        $pwd,                          
+        {
+            RaiseError => 1,
+            mysql_enable_utf8 => 1
+        },         
+    ) or die $DBI::errstr;
+
+    return $dbh ;
 }
 
 
 sub GetAllArrayRef {
-    my ($req) = @_ ;
-	
-	my $dbh = GetDbh() ;
-	my $sth = $dbh->prepare($req) ;
+    my ($req) = @_ ;	
+    my $dbh = GetDbh() ;
+    my $sth = $dbh->prepare($req) ;
     $sth->execute() ; 
     my $result = $sth->fetchall_arrayref({}) ;
-	$sth->finish() ;
-	$dbh->disconnect() ;
+    $sth->finish() ;
+    $dbh->disconnect() ;
 
-	return $result ;    
+    return $result ;    
 }
 
 1;

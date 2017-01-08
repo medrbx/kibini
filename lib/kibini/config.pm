@@ -40,16 +40,16 @@ sub GetConfig {
 
     my $file = "$Bin/../etc/kibini_conf.yaml" ;
     my $file_conf = LoadFile($file);
-	my %config = (
-		database => $file_conf->{'database'},
-		piwik => $file_conf->{'conf'}->{'piwik'} 
-	) ;
 	
     my $conf ;
     if ( defined $k ) {
         my %config = (
             database => $file_conf->{'database'},
-            piwik => $file_conf->{'conf'}->{'piwik'} 
+            elasticsearch => $file_conf->{'conf'}->{'elasticsearch'}
+            nedap => $file_conf->{'conf'}->{'nedap'},
+            piwik => $file_conf->{'conf'}->{'piwik'},
+            log_crontab => $file_conf->{'conf'}->{'log_crontab'},
+            suggestions => $file_conf->{'conf'}->{'suggestions'}
         ) ;
         $conf = $config{$k} ;
     } else {
