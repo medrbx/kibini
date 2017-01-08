@@ -39,7 +39,7 @@ sub GetSplitDateTime {
 
     my $dt = DateTime::Format::MySQL->parse_datetime($datetime) ;
 	
-	my $year =  $dt->year() ;
+    my $year =  $dt->year() ;
 	
     my $month = $dt->month() ;
     if ($month < 10 ) {
@@ -51,7 +51,7 @@ sub GetSplitDateTime {
         $week_number = "0".$week_number ;
     }
 	
-	my $day = $dt->day() ;
+    my $day = $dt->day() ;
 	
     my $dow = $dt->dow() ;
     my %dowfr = (
