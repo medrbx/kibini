@@ -23,7 +23,7 @@ sub GetEsMappingConf {
 
     my $conf_elasticsearch = GetConfig('elasticsearch') ;
     my $mappings_file = $conf_elasticsearch->{mappings_file} ;
-	my $mappings_data = LoadFile($mappings_file) ;
+    my $mappings_data = LoadFile($mappings_file) ;
     my $mappings = $mappings_data->{$mapping_name} ;
 	
     return $mappings ;
