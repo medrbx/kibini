@@ -2,40 +2,38 @@
 
 use strict ;
 use warnings ;
-use utf8 ;
-use DateTime ;
-use DateTime::Format::MySQL ;
 use Search::Elasticsearch ; 
 use FindBin qw( $Bin ) ;
 
 use lib "$Bin/../lib" ;
-use fonctions ;
-use dbrequest ;
-use esrbx ;
+use kibini::db ;
+use kibini::elasticsearch ;
+use kibini::time ;
+use kibini::log ;
 
 my $log_message ;
 my $process = "es_web.pl" ;
 # On log le début de l'opération
-$log_message = "$process : début" ;
-log_file($log_message) ;
+$log_message = "$process : beginning" ;
+AddCrontabLog($log_message) ;
 
 # On récupére l'adresse d'Elasticsearch
-my $es_node = es_node() ;
+my $es_node = GetEsNode() ;
 my $index = "web" ;
 my @types = qw( site bn-r ) ;
 
 my $nb = 0 ;
 for my $type (@types) {
-	my $es_maxdatetime = es_maxdatetime("web", $type, "date") ;
+	my $es_maxdatetime = GetEsMaxDateTime("web", $type, "date") ;
 	my $i = web( $es_maxdatetime, $es_node, $index, $type ) ;
 	$nb = $nb + $i ;
 }
 
 # On log la fin de l'opération
-$log_message = "$process : $nb lignes indexées" ;
-log_file($log_message) ;
-$log_message = "$process : fin\n" ;
-log_file($log_message) ;
+$log_message = "$process : $nb rows indexed" ;
+AddCrontabLog($log_message) ;
+$log_message = "$process : ending\n" ;
+AddCrontabLog($log_message) ;
 	
 sub web {
 	my ( $date, $es_node, $index, $type ) = @_ ;
@@ -43,8 +41,7 @@ sub web {
 
 	my $e = Search::Elasticsearch->new( %params ) ;
 
-	my $bdd = "statdb" ;
-	my $dbh = dbh($bdd) ;
+	my $dbh = GetDbh() ;
 	my $req = <<SQL;
 SELECT
 	date,

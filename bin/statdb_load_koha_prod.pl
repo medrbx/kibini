@@ -3,25 +3,24 @@
 use strict ;
 use warnings ;
 use FindBin qw( $Bin ) ;
-use YAML qw(LoadFile);
-use DateTime ;
 
 use lib "$Bin/../lib" ;
-use fonctions ;
+use kibini::config ;
+use kibini::time ;
+use kibini::log ;
 
 my $log_message ;
 my $process = "statdb_load_koha_prod.pl" ;
 # On log le début de l'opération
-$log_message = "$process : début" ;
-log_file($log_message) ;
+$log_message = "$process : beginning" ;
+AddCrontabLog($log_message) ;
 
 # On récupère les éléments de connexion MySQL
-my $fic_conf = "$Bin/../etc/kibini_conf.yaml" ;
-my $conf = LoadFile($fic_conf);
-my $user = $conf->{database}->{user} ;
-my $pwd = $conf->{database}->{pwd} ;
+my $conf = GetConfig('database') ;
+my $user = $conf->{user} ;
+my $pwd = $conf->{pwd} ;
 
-my $date = DateTime->now(time_zone => "local")->ymd('');
+my $date = GetDateTime('today YYYYMMDD') ;
 my $dir = "$Bin/../data" ;
 my $file = "$dir/koha_prod_$date.sql" ;
 
@@ -35,5 +34,5 @@ system( "mysql -u $user -p$pwd koha_prod -e \"UPDATE koha_prod.items s JOIN stat
 system( "rm $file" ) ;
 
 # On log la fin de l'opération
-$log_message = "$process : fin\n" ;
-log_file($log_message) ;
+$log_message = "$process : ending\n" ;
+AddCrontabLog($log_message) ;

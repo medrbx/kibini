@@ -9,7 +9,6 @@ use warnings ;
 
 use kibini::config ;
 
-# fonction permettant de récupérer le node d'Elasticsearch
 sub GetEsNode {
     my $conf_elasticsearch = GetConfig('elasticsearch') ;
     my $node = $conf_elasticsearch->{node} ;
@@ -18,3 +17,19 @@ sub GetEsNode {
 }
 
 1;
+
+__END__
+
+=pod
+
+=encoding UTF-8
+
+=head1 NOM
+
+kibini::elasticsearch
+
+=head1 DESCRIPTION
+
+Ce module fournit des fonctions permettant de travailler avec l'instance Elasticsearch de Kibini.
+
+=cut

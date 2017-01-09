@@ -1,19 +1,5 @@
 package kibini::db ;
 
-=pod
-
-=encoding UTF-8
-
-=head1 NOM
-
-kibini::db
-
-=head1 DESCRIPTION
-
-Ce module fournit des fonctions permettant d'accéder aux bases de données de Kibini.
-
-=cut
-
 use Exporter ;
 @ISA = qw(Exporter) ;
 @EXPORT = qw( GetDbh GetAllArrayRef ) ;
@@ -57,3 +43,19 @@ sub GetAllArrayRef {
 }
 
 1;
+
+__END__
+
+=pod
+
+=encoding UTF-8
+
+=head1 NOM
+
+kibini::db
+
+=head1 DESCRIPTION
+
+Ce module fournit des fonctions permettant d'accéder aux bases de données de Kibini.
+
+=cut

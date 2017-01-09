@@ -5,14 +5,14 @@ use warnings ;
 use FindBin qw( $Bin ) ;
 
 use lib "$Bin/../lib" ;
-use dbrequest ;
-use fonctions ;
+use kibini::db ;
+use kibini::log ;
 
 my $log_message ;
 my $process = "statdb_issues.pl" ;
 # On log le début de l'opération
-$log_message = "$process : début" ;
-log_file($log_message) ;
+$log_message = "$process : beginning" ;
+AddCrontabLog($log_message) ;
 
 my $r1 = "UPDATE statdb.stat_issues SET cle = CONCAT(issuedate, '-', itemnumber) WHERE cle IS NULL ;" ;
 my $r2 = "ALTER TABLE koha_prod.old_issues ADD COLUMN cle VARCHAR(75) NULL DEFAULT NULL AFTER issuedate, ADD INDEX index_cle (cle ASC)" ;
@@ -32,20 +32,19 @@ my $r7 = "UPDATE statdb.stat_issues SET arret_bus = CASE WHEN DAYOFWEEK(issuedat
 # on corrige les ccodes des périodiques
 my $r8 = "UPDATE statdb.stat_issues s JOIN statdb.lib_periodiques p ON s.biblionumber = p.biblionumber SET s.ccode = p.ccode WHERE DATE(s.issuedate) = CURDATE() - INTERVAL 1 DAY" ;
 
-my $bdd = "statdb" ;
-my $dbh = dbh($bdd) ;
+my $dbh = GetDbh() ;
 my @req = ( $r1, $r2, $r3, $r4, $r5, $r6, $r7, $r8 ) ;
 my $i = 1;
 for my $req (@req) {
-	$log_message = "$process : lancement requête $i" ;
-	log_file($log_message) ;
-	my $sth = $dbh->prepare($req);
-	$sth->execute();
-	$sth->finish();
-	$i++ ;
+    $log_message = "$process : executing query $i" ;
+    AddCrontabLog($log_message) ;
+    my $sth = $dbh->prepare($req);
+    $sth->execute();
+    $sth->finish();
+    $i++ ;
 }
 $dbh->disconnect();
 
 # On log la fin de l'opération
-$log_message = "$process : fin\n" ;
-log_file($log_message) ;
+$log_message = "$process : ending\n" ;
+AddCrontabLog($log_message) ;

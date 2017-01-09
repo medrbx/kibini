@@ -8,27 +8,29 @@ use Search::Elasticsearch ;
 use FindBin qw( $Bin ) ;
 
 use lib "$Bin/../lib" ;
+use kibini::db ;
+use kibini::elasticsearch ;
+use kibini::log ;
+use kibini::time ;
 use fonctions ;
-use dbrequest ;
-use esrbx ;
 
 my $log_message ;
 my $process = "es_prets.pl" ;
 # On log le début de l'opération
-$log_message = "$process : début" ;
-log_file($log_message) ;
+$log_message = "$process : beginning" ;
+AddCrontabLog($log_message) ;
 
 # On récupère l'adresse d'Elasticsearch
-my $es_node = es_node() ;
+my $es_node = GetEsNode() ;
 
-my $date_veille = date_veille() ;
+my $date_veille = GetDateTime('yesterday') ;
 my $i = prets($date_veille, $es_node) ;
 
 # On log la fin de l'opération
-$log_message = "$process : $i lignes indexées" ;
+$log_message = "$process : $i rows indexed" ;
 log_file($log_message) ;
-$log_message = "$process : fin\n" ;
-log_file($log_message) ;
+$log_message = "$process : ending\n" ;
+AddCrontabLog($log_message) ;
 
 sub prets {
 	my ( $date, $es_node ) = @_ ;
@@ -38,8 +40,7 @@ sub prets {
 
 	my $e = Search::Elasticsearch->new( %params ) ;
 
-	my $bdd = "statdb" ;
-	my $dbh = dbh($bdd) ;
+	my $dbh = GetDbh ;
 	my $req = <<SQL;
 SELECT
     iss.issue_id,
@@ -96,8 +97,8 @@ SQL
 			($irisNom, $quartier) = quartier_rbx($iris) ;
 		}
 	
-		my $duree_pret = duree_pret($issuedate, $returndate) ;
-		my $retard = retard($issuedate, $date_due) ;
+		my $duree_pret = GetDuration($issuedate, $returndate, 'days') ;
+		my $retard = GetDuration($date_due, $returndate, 'days') ; # Nécessite d'abord une comparaison  des deux dates
 	
 		my ( $age_lib1, $age_lib2, $age_lib3 ) ;
 		if ( $age eq "NP" ) { 

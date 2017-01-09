@@ -2,12 +2,14 @@ package kibini::time ;
 
 use Exporter ;
 @ISA = qw(Exporter) ;
-@EXPORT = qw( GetDateTime GetSplitDateTime GetDuration ) ;
+@EXPORT = qw( GetDateTime GetSplitDateTime GetDuration GetEsMaxDateTime ) ;
 
 use strict ;
 use warnings ;
 use DateTime ;
 use DateTime::Format::MySQL ;
+
+use kibini::elasticsearch ;
 
 sub GetDateTime {
     my ($k) = @_ ;
@@ -94,6 +96,30 @@ sub GetDuration {
     return $duration ;
 }
 
+sub GetEsMaxDateTime {
+    my ( $index, $type, $field ) = @_ ;
+    my $nodes = GetEsNode() ;
+    my %params = ( nodes => $nodes ) ;
+
+    my $e = Search::Elasticsearch->new( %params ) ;
+
+    my $result =  $e->search(
+        index => $index,
+        type  => $type,
+        body    => {
+            aggs       => {
+                max_datetime => {
+                    max => {
+                        field => $field
+                    }
+                }
+            }
+        }
+    );
+
+    return $result->{aggregations}->{max_datetime}->{value_as_string} ; 
+}
+
 1 ;
 
 __END__
@@ -168,6 +194,16 @@ renvoie la durée en heures
 =item *  C<$duration = GetDuration($datetime1, $datetime2, 'minutes')>
 
 renvoie la durée en minutes
+
+=back
+
+=item * GetEsMaxDateTime
+
+Cette fonction renvoie la date maximale pour un champ donné d'un index d'Elasticsearch.
+
+=over 4
+
+=item *  C<$esMaxDateTime = GetEsMaxDateTime($index, $type, $field)>
 
 =back
 
