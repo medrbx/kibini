@@ -1,0 +1,994 @@
+---
+adherents:
+  mappings:
+    inscrits:
+      properties:
+        action:
+          index: not_analyzed
+          type: string
+        activite_emprunteur:
+          index: not_analyzed
+          type: string
+        activite_emprunteur_bus:
+          index: not_analyzed
+          type: string
+        activite_emprunteur_med:
+          index: not_analyzed
+          type: string
+        activite_utilisateur_webkiosk:
+          index: not_analyzed
+          type: string
+        adherent:
+          index: not_analyzed
+          type: string
+        ages_age:
+          type: integer
+        ages_lib1:
+          index: not_analyzed
+          type: string
+        ages_lib2:
+          index: not_analyzed
+          type: string
+        ages_lib3:
+          index: not_analyzed
+          type: string
+        borrowernumber:
+          index: not_analyzed
+          type: string
+        communication:
+          index: not_analyzed
+          type: string
+        communication_courriel:
+          index: not_analyzed
+          type: string
+        communication_telephone_fixe:
+          index: not_analyzed
+          type: string
+        communication_telephone_mobile:
+          index: not_analyzed
+          type: string
+        date:
+          format: strict_date_optional_time||epoch_millis
+          type: date
+        geo_code_postal:
+          index: not_analyzed
+          type: string
+        geo_pays:
+          index: not_analyzed
+          type: string
+        geo_roubaix_iris:
+          index: not_analyzed
+          type: string
+        geo_roubaix_nom_iris:
+          index: not_analyzed
+          type: string
+        geo_roubaix_quartier:
+          index: not_analyzed
+          type: string
+        geo_ville:
+          index: not_analyzed
+          type: string
+        geo_ville15:
+          index: not_analyzed
+          type: string
+        inscription_carte:
+          index: not_analyzed
+          type: string
+        inscription_date_expiration:
+          format: yyyy-MM-dd
+          type: date
+        inscription_date_inscription:
+          format: yyyy-MM-dd
+          type: date
+        inscription_fidelite:
+          type: integer
+        inscription_personnalite:
+          index: not_analyzed
+          type: string
+        inscription_site_inscription:
+          index: not_analyzed
+          type: string
+        inscription_type_carte:
+          index: not_analyzed
+          type: string
+        sexe:
+          index: not_analyzed
+          type: string
+adherents2015:
+  mappings:
+    inscrits:
+      properties:
+        action:
+          index: not_analyzed
+          type: string
+        activite_emprunteur:
+          index: not_analyzed
+          type: string
+        activite_emprunteur_bus:
+          index: not_analyzed
+          type: string
+        activite_emprunteur_med:
+          index: not_analyzed
+          type: string
+        activite_utilisateur_webkiosk:
+          index: not_analyzed
+          type: string
+        adherent:
+          index: not_analyzed
+          type: string
+        ages_age:
+          type: integer
+        ages_lib1:
+          index: not_analyzed
+          type: string
+        ages_lib2:
+          index: not_analyzed
+          type: string
+        ages_lib3:
+          index: not_analyzed
+          type: string
+        borrowernumber:
+          index: not_analyzed
+          type: string
+        communication_courriel:
+          index: not_analyzed
+          type: string
+        communication_telephone_fixe:
+          index: not_analyzed
+          type: string
+        communication_telephone_mobile:
+          index: not_analyzed
+          type: string
+        date:
+          format: strict_date_optional_time||epoch_millis
+          type: date
+        geo_code_postal:
+          index: not_analyzed
+          type: string
+        geo_pays:
+          index: not_analyzed
+          type: string
+        geo_roubaix_iris:
+          index: not_analyzed
+          type: string
+        geo_roubaix_nom_iris:
+          index: not_analyzed
+          type: string
+        geo_roubaix_quartier:
+          index: not_analyzed
+          type: string
+        geo_ville:
+          index: not_analyzed
+          type: string
+        geo_ville15:
+          index: not_analyzed
+          type: string
+        inscription_carte:
+          index: not_analyzed
+          type: string
+        inscription_date_expiration:
+          format: yyyy-MM-dd
+          type: date
+        inscription_date_inscription:
+          format: yyyy-MM-dd
+          type: date
+        inscription_fidelite:
+          type: integer
+        inscription_personnalite:
+          index: not_analyzed
+          type: string
+        inscription_site_inscription:
+          index: not_analyzed
+          type: string
+        inscription_type_carte:
+          index: not_analyzed
+          type: string
+        sexe:
+          index: not_analyzed
+          type: string
+adherents_synth:
+  mappings:
+    inscrits:
+      properties:
+        activite_emprunteur:
+          index: not_analyzed
+          type: string
+        activite_emprunteur_bus:
+          index: not_analyzed
+          type: string
+        ages_age:
+          index: not_analyzed
+          type: string
+        ages_lib1:
+          index: not_analyzed
+          type: string
+        ages_lib2:
+          index: not_analyzed
+          type: string
+        ages_lib3:
+          index: not_analyzed
+          type: string
+        date:
+          format: strict_date_optional_time||epoch_millis
+          type: date
+        geo_ville:
+          index: not_analyzed
+          type: string
+        inscription_carte:
+          index: not_analyzed
+          type: string
+        nb_inscrits:
+          type: integer
+        personnalite:
+          type: string
+adherents_tout:
+  mappings:
+    inscrits:
+      properties:
+        action:
+          type: string
+        activite_emprunteur:
+          index: not_analyzed
+          type: string
+        activite_emprunteur_bus:
+          index: not_analyzed
+          type: string
+        activite_emprunteur_med:
+          index: not_analyzed
+          type: string
+        activite_utilisateur_webkiosk:
+          index: not_analyzed
+          type: string
+        adherent:
+          type: string
+        ages_age:
+          type: integer
+        ages_lib1:
+          index: not_analyzed
+          type: string
+        ages_lib2:
+          index: not_analyzed
+          type: string
+        ages_lib3:
+          index: not_analyzed
+          type: string
+        borrowernumber:
+          index: not_analyzed
+          type: string
+        communication_courriel:
+          index: not_analyzed
+          type: string
+        communication_telephone_fixe:
+          index: not_analyzed
+          type: string
+        communication_telephone_mobile:
+          index: not_analyzed
+          type: string
+        date:
+          format: yyyy-MM-dd
+          type: date
+        geo_code_postal:
+          index: not_analyzed
+          type: string
+        geo_iris:
+          type: string
+        geo_nom_iris:
+          type: string
+        geo_pays:
+          index: not_analyzed
+          type: string
+        geo_quartier:
+          type: string
+        geo_roubaix_iris:
+          index: not_analyzed
+          type: string
+        geo_roubaix_nom_iris:
+          index: not_analyzed
+          type: string
+        geo_roubaix_quartier:
+          index: not_analyzed
+          type: string
+        geo_ville:
+          index: not_analyzed
+          type: string
+        geo_ville15:
+          index: not_analyzed
+          type: string
+        inscription_carte:
+          index: not_analyzed
+          type: string
+        inscription_date_expiration:
+          format: yyyy-MM-dd
+          type: date
+        inscription_date_inscription:
+          format: yyyy-MM-dd
+          type: date
+        inscription_fidelite:
+          type: integer
+        inscription_personnalite:
+          index: not_analyzed
+          type: string
+        inscription_site_inscription:
+          index: not_analyzed
+          type: string
+        inscription_type_carte:
+          index: not_analyzed
+          type: string
+        sexe:
+          index: not_analyzed
+          type: string
+catalogue:
+  mappings:
+    catalogue:
+      properties:
+        contributor:
+          index: not_analyzed
+          type: string
+        creator:
+          index: not_analyzed
+          type: string
+        date:
+          type: integer
+        identifier:
+          index: not_analyzed
+          type: string
+        language:
+          index: not_analyzed
+          type: string
+        publisher:
+          index: not_analyzed
+          type: string
+        subject:
+          index: not_analyzed
+          type: string
+        title:
+          index: not_analyzed
+          type: string
+        type:
+          index: not_analyzed
+          type: string
+        vd_action:
+          index: not_analyzed
+          type: string
+        vd_bnf:
+          index: not_analyzed
+          type: string
+        vd_date:
+          index: not_analyzed
+          type: string
+    koha:
+      properties:
+        contributor:
+          index: not_analyzed
+          type: string
+        creator:
+          index: not_analyzed
+          type: string
+        date:
+          type: integer
+        identifier:
+          index: not_analyzed
+          type: string
+        my_id:
+          type: string
+        publisher:
+          index: not_analyzed
+          type: string
+        title:
+          index: not_analyzed
+          type: string
+        type:
+          index: not_analyzed
+          type: string
+        vd_action:
+          index: not_analyzed
+          type: string
+        vd_bnf:
+          index: not_analyzed
+          type: string
+        vd_date:
+          index: not_analyzed
+          type: string
+documents_synth:
+  mappings:
+    documents:
+      properties:
+        annee:
+          type: integer
+        nb_documents:
+          type: integer
+        support:
+          index: not_analyzed
+          type: string
+eliminations:
+  mappings:
+    exemplaires:
+      properties:
+        abime:
+          index: not_analyzed
+          type: string
+        annee_elimination:
+          type: integer
+        biblionumber:
+          type: integer
+        code_barre:
+          type: string
+        collection_ccode:
+          index: not_analyzed
+          type: string
+        collection_lib1:
+          index: not_analyzed
+          type: string
+        collection_lib2:
+          index: not_analyzed
+          type: string
+        collection_lib3:
+          index: not_analyzed
+          type: string
+        collection_lib4:
+          index: not_analyzed
+          type: string
+        cote:
+          index: not_analyzed
+          type: string
+        date_creation:
+          format: yyyy-MM-dd
+          type: date
+        date_dernier_pret:
+          format: yyyy-MM-dd
+          type: date
+        emprunt:
+          index: not_analyzed
+          type: string
+        itemnumber:
+          type: string
+        localisation:
+          index: not_analyzed
+          type: string
+        perdu:
+          index: not_analyzed
+          type: string
+        prix:
+          type: float
+        prix_rempla:
+          type: float
+        retire_collection:
+          index: not_analyzed
+          type: string
+        site_detenteur:
+          index: not_analyzed
+          type: string
+        site_rattach:
+          index: not_analyzed
+          type: string
+        sll_acces:
+          index: not_analyzed
+          type: string
+        sll_collection:
+          index: not_analyzed
+          type: string
+        sll_prets:
+          index: not_analyzed
+          type: string
+        sll_prets_coll:
+          index: not_analyzed
+          type: string
+        sll_public:
+          index: not_analyzed
+          type: string
+        statut:
+          index: not_analyzed
+          type: string
+        support:
+          index: not_analyzed
+          type: string
+        titre:
+          type: string
+entrees:
+  mappings:
+    camera:
+      properties:
+        entrees_date:
+          format: yyyy-MM-dd HH:mm:ss
+          type: date
+        entrees_date_annee:
+          index: not_analyzed
+          type: string
+        entrees_date_heure:
+          index: not_analyzed
+          type: string
+        entrees_date_jour:
+          index: not_analyzed
+          type: string
+        entrees_date_jour_semaine:
+          index: not_analyzed
+          type: string
+        entrees_date_mois:
+          index: not_analyzed
+          type: string
+        entrees_date_semaine:
+          index: not_analyzed
+          type: string
+        nb_entrees:
+          type: integer
+freq_etude:
+  mappings:
+    consultations:
+      properties:
+        consultation_duree:
+          type: integer
+        date:
+          format: yyyy-MM-dd HH:mm:ss
+          type: date
+        lecteur_age:
+          index: not_analyzed
+          type: string
+        lecteur_age_lib1:
+          index: not_analyzed
+          type: string
+        lecteur_age_lib2:
+          index: not_analyzed
+          type: string
+        lecteur_age_lib3:
+          index: not_analyzed
+          type: string
+        lecteur_carte:
+          index: not_analyzed
+          type: string
+        lecteur_id:
+          index: not_analyzed
+          type: string
+        lecteur_rbx_iris:
+          index: not_analyzed
+          type: string
+        lecteur_rbx_nom_iris:
+          index: not_analyzed
+          type: string
+        lecteur_rbx_quartier:
+          index: not_analyzed
+          type: string
+        lecteur_sexe:
+          index: not_analyzed
+          type: string
+        lecteur_type_carte:
+          index: not_analyzed
+          type: string
+        lecteur_ville:
+          index: not_analyzed
+          type: string
+frequentation:
+  mappings:
+    tests:
+      properties:
+        espace:
+          index: not_analyzed
+          type: string
+        heure:
+          type: integer
+        jour:
+          index: not_analyzed
+          type: string
+        nb_personnes:
+          type: integer
+        periode:
+          index: not_analyzed
+          type: string
+        position:
+          index: not_analyzed
+          type: string
+        type_periode:
+          index: not_analyzed
+          type: string
+inscrits_synth_carte:
+  mappings:
+    inscrits:
+      properties:
+        annee:
+          type: integer
+        carte:
+          index: not_analyzed
+          type: string
+        nb_inscrits:
+          type: integer
+items:
+  mappings:
+    exemplaires:
+      properties:
+        abime:
+          index: not_analyzed
+          type: string
+        annee_publication:
+          type: integer
+        biblionumber:
+          type: integer
+        code_barre:
+          type: string
+        collection_ccode:
+          index: not_analyzed
+          type: string
+        collection_lib1:
+          index: not_analyzed
+          type: string
+        collection_lib2:
+          index: not_analyzed
+          type: string
+        collection_lib3:
+          index: not_analyzed
+          type: string
+        collection_lib4:
+          index: not_analyzed
+          type: string
+        cote:
+          index: not_analyzed
+          type: string
+        date_creation:
+          format: yyyy-MM-dd
+          type: date
+        date_dernier_pret:
+          format: yyyy-MM-dd
+          type: date
+        emprunt:
+          index: not_analyzed
+          type: string
+        itemnumber:
+          type: integer
+        localisation:
+          index: not_analyzed
+          type: string
+        perdu:
+          index: not_analyzed
+          type: string
+        prix:
+          type: float
+        prix_rempla:
+          type: float
+        retire_collection:
+          index: not_analyzed
+          type: string
+        site_detenteur:
+          index: not_analyzed
+          type: string
+        site_rattach:
+          index: not_analyzed
+          type: string
+        sll_acces:
+          index: not_analyzed
+          type: string
+        sll_collection:
+          index: not_analyzed
+          type: string
+        sll_prets:
+          index: not_analyzed
+          type: string
+        sll_prets_coll:
+          index: not_analyzed
+          type: string
+        sll_public:
+          index: not_analyzed
+          type: string
+        statut:
+          index: not_analyzed
+          type: string
+        support:
+          index: not_analyzed
+          type: string
+        titre:
+          index: not_analyzed
+          type: string
+reservations:
+  mappings:
+    reserves:
+      properties:
+        annulation:
+          type: string
+        biblionumber:
+          type: integer
+        collection_ccode:
+          index: not_analyzed
+          type: string
+        collection_lib1:
+          index: not_analyzed
+          type: string
+        collection_lib2:
+          index: not_analyzed
+          type: string
+        collection_lib3:
+          index: not_analyzed
+          type: string
+        collection_lib4:
+          index: not_analyzed
+          type: string
+        date_annulation:
+          format: yyyy-MM-dd
+          type: date
+        date_mise_cote:
+          format: yyyy-MM-dd
+          type: date
+        date_notification:
+          format: yyyy-MM-dd
+          type: date
+        document_mis_cote:
+          type: string
+        espace:
+          index: not_analyzed
+          type: string
+        etat:
+          index: not_analyzed
+          type: string
+        found:
+          index: not_analyzed
+          type: string
+        localisation:
+          index: not_analyzed
+          type: string
+        motif_annulation:
+          index: not_analyzed
+          type: string
+        reserve_id:
+          type: integer
+        reservedate:
+          format: yyyy-MM-dd
+          type: date
+        reserveur_age:
+          index: not_analyzed
+          type: string
+        reserveur_age_lib1:
+          index: not_analyzed
+          type: string
+        reserveur_age_lib2:
+          index: not_analyzed
+          type: string
+        reserveur_age_lib3:
+          index: not_analyzed
+          type: string
+        reserveur_carte:
+          index: not_analyzed
+          type: string
+        reserveur_courriel:
+          type: string
+        reserveur_id:
+          index: not_analyzed
+          type: string
+        reserveur_mobile:
+          type: string
+        reserveur_nb_annee_inscription:
+          type: integer
+        reserveur_personnalite:
+          index: not_analyzed
+          type: string
+        reserveur_rbx_iris:
+          index: not_analyzed
+          type: string
+        reserveur_rbx_nom_iris:
+          index: not_analyzed
+          type: string
+        reserveur_rbx_quartier:
+          index: not_analyzed
+          type: string
+        reserveur_sexe:
+          type: string
+        reserveur_site_inscription:
+          index: not_analyzed
+          type: string
+        reserveur_type_carte:
+          index: not_analyzed
+          type: string
+        reserveur_ville:
+          index: not_analyzed
+          type: string
+        site_rattach:
+          index: not_analyzed
+          type: string
+        site_retrait:
+          index: not_analyzed
+          type: string
+        support:
+          index: not_analyzed
+          type: string
+rfid:
+  mappings:
+    prets:
+      properties:
+        borne:
+          index: not_analyzed
+          type: string
+        date:
+          properties:
+            annee:
+              type: integer
+            datetime:
+              format: yyyy-MM-dd HH:mm:ss
+              type: date
+            heure:
+              type: integer
+            jour:
+              type: integer
+            jour_semaine:
+              index: not_analyzed
+              type: string
+            mois:
+              type: integer
+            numero_semaine:
+              type: integer
+        etage:
+          index: not_analyzed
+          type: string
+        nb_prets:
+          type: integer
+    retours:
+      properties:
+        borne:
+          index: not_analyzed
+          type: string
+        date:
+          properties:
+            annee:
+              type: integer
+            datetime:
+              format: yyyy-MM-dd HH:mm:ss
+              type: date
+            heure:
+              type: integer
+            jour:
+              type: integer
+            jour_semaine:
+              index: not_analyzed
+              type: string
+            mois:
+              type: integer
+            numero_semaine:
+              type: integer
+        etage:
+          index: not_analyzed
+          type: string
+        nb_retours:
+          type: integer
+syntheses:
+  mappings:
+    prets:
+      properties:
+        annee:
+          type: integer
+        nb_prets:
+          type: integer
+        public:
+          index: not_analyzed
+          type: string
+        support:
+          index: not_analyzed
+          type: string
+titres:
+  mappings:
+    titles:
+      properties:
+        biblionumber:
+          type: integer
+        titre:
+          analyzer: french
+          type: string
+web:
+  mappings:
+    bn-r:
+      properties:
+        date:
+          format: strict_date_optional_time||epoch_millis
+          type: date
+        nb_pages_vues:
+          type: integer
+        nb_sessions:
+          type: integer
+        site:
+          index: not_analyzed
+          type: string
+    site:
+      properties:
+        date:
+          format: strict_date_optional_time||epoch_millis
+          type: date
+        nb_pages_vues:
+          type: integer
+        nb_sessions:
+          type: integer
+        site:
+          index: not_analyzed
+          type: string
+webkiosk:
+  mappings:
+    sessions:
+      properties:
+        adherent_age:
+          index: not_analyzed
+          type: string
+        adherent_age_lib1:
+          index: not_analyzed
+          type: string
+        adherent_age_lib2:
+          index: not_analyzed
+          type: string
+        adherent_age_lib3:
+          index: not_analyzed
+          type: string
+        adherent_carte:
+          index: not_analyzed
+          type: string
+        adherent_id:
+          index: not_analyzed
+          type: string
+        adherent_nb_annee_inscription:
+          type: integer
+        adherent_personnalite:
+          index: not_analyzed
+          type: string
+        adherent_rbx_iris:
+          index: not_analyzed
+          type: string
+        adherent_rbx_nom_iris:
+          index: not_analyzed
+          type: string
+        adherent_rbx_quartier:
+          index: not_analyzed
+          type: string
+        adherent_sexe:
+          index: not_analyzed
+          type: string
+        adherent_site_inscription:
+          index: not_analyzed
+          type: string
+        adherent_type_carte:
+          index: not_analyzed
+          type: string
+        adherent_ville:
+          index: not_analyzed
+          type: string
+        session_duree:
+          type: integer
+        session_espace:
+          index: not_analyzed
+          type: string
+        session_etage:
+          index: not_analyzed
+          type: string
+        session_groupe:
+          type: string
+        session_heure_deb:
+          format: yyyy-MM-dd HH:mm:ss
+          type: date
+        session_heure_deb_annee:
+          index: not_analyzed
+          type: string
+        session_heure_deb_heure:
+          index: not_analyzed
+          type: string
+        session_heure_deb_jour:
+          index: not_analyzed
+          type: string
+        session_heure_deb_jour_semaine:
+          index: not_analyzed
+          type: string
+        session_heure_deb_mois:
+          index: not_analyzed
+          type: string
+        session_heure_deb_semaine:
+          index: not_analyzed
+          type: string
+        session_heure_fin:
+          format: yyyy-MM-dd HH:mm:ss
+          type: date
+        session_heure_fin_annee:
+          index: not_analyzed
+          type: string
+        session_heure_fin_heure:
+          index: not_analyzed
+          type: string
+        session_heure_fin_jour:
+          index: not_analyzed
+          type: string
+        session_heure_fin_mois:
+          index: not_analyzed
+          type: string
+        session_heure_fin_semaine:
+          index: not_analyzed
+          type: string
+        session_poste:
+          index: not_analyzed
+          type: string
