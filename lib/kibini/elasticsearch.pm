@@ -26,7 +26,7 @@ sub GetEsMappingConf {
 	my $mappings_data = LoadFile($mappings_file) ;
     my $mappings = $mappings_data->{$mapping_name} ;
 	
-	return $mappings ;
+    return $mappings ;
 }
 
 sub RegenerateIndex {
@@ -38,9 +38,7 @@ sub RegenerateIndex {
         index => $index_name,
         body => $mappings
     ) ;
-    
-    my $index_conf = \%index_conf ;
-    
+
     my $e = Search::Elasticsearch->new( %params ) ;
     $e->indices->delete( index => $index_name );
     my $result = $e->indices->create( %index_conf );
