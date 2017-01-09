@@ -8,19 +8,25 @@ use DateTime::Format::MySQL ;
 use FindBin qw( $Bin ) ;
 
 use lib "$Bin/../lib" ;
-use dbrequest ;
+use kibini::db ;
+use kibini::log ;
+use kibini::time ;
 use fonctions ;
 
 my $log_message ;
 my $process = "statdb_reserves.pl" ;
 # On log le début de l'opération
-$log_message = "$process : début" ;
-log_file($log_message) ;
+$log_message = "$process : beginning" ;
+AddCrontabLog($log_message) ;
 
 
-my $date_veille = date_veille() ;
+my $date_veille = GetDateTime('yesterday') ;
 reserves_new($date_veille) ;
 reserves_maj($date_veille) ;
+
+# On log la fin de l'opération
+$log_message = "$process : ending\n" ;
+AddCrontabLog($log_message) ;
 
 # my @new_reserve_id = new_reserve_id($date_veille) ;
 # foreach my $new_reserve_id (@new_reserve_id) {
@@ -30,19 +36,12 @@ reserves_maj($date_veille) ;
 #	print "$new_reserve_id, $statutReservation, $localisation\n" ;
 # }
 
-sub date_veille {
-	my $dt = DateTime->today() ;
-	my $date = $dt->subtract( days => 1 ) ;
-	$date = DateTime::Format::MySQL->format_date($date) ;
-	return $date
-}
-
 ##################################################################
 # On insère les réservations de la veille
 sub reserves_new {
 	my ( $date ) = @_ ;
-	my $bdd = "statdb" ;
-	my $dbh = dbh($bdd) ;
+	
+	my $dbh = GetDbh() ;
 	my $req ;
 	my $sth ;
 	my @tables = qw( reserves old_reserves ) ;
@@ -87,8 +86,8 @@ SQL
 # On met à jour les champs ayant été modifiés la veille
 sub reserves_maj {
 	my ( $date ) = @_ ;
-	my $bdd = "statdb" ;
-	my $dbh = dbh($bdd) ;
+
+	my $dbh = GetDbh() ;
 	my $req ;
 	my $sth ;
 	
@@ -124,7 +123,7 @@ SQL
 		$sth = $dbh->prepare($req);
 		foreach my $reserve_id (@reserve_id) {
 			$sth->execute($reserve_id);
-			print "$reserve_id\n" ;
+			# print "$reserve_id\n" ;
 		}
 		$sth->finish();
 	}
@@ -137,8 +136,8 @@ SQL
 # On récupère les reserve_id créés la veille
 sub new_reserve_id {
 	my ( $date ) = @_ ;
-	my $bdd = "statdb" ;
-	my $dbh = dbh($bdd) ;
+
+	my $dbh = GetDbh() ;
 	my $req = "SELECT reserve_id FROM statdb.stat_reserves WHERE reservedate = ? " ;
 	my $sth = $dbh->prepare($req);
 	$sth->execute($date);
@@ -154,8 +153,8 @@ sub new_reserve_id {
 # On récupère des informations sur la réservation
 sub reserves_infos {
 	my ( $reserve_id ) = @_ ;
-	my $bdd = "statdb" ;
-	my $dbh = dbh($bdd) ;
+
+	my $dbh = GetDbh() ;
 	my $req = "SELECT branchcode, biblionumber FROM statdb.stat_reserves WHERE reserve_id = ? " ;
 	my $sth = $dbh->prepare($req);
 	$sth->execute($reserve_id);
@@ -175,9 +174,8 @@ sub ExReservables {
 		$notloc = "location != 'MED0A'" ;
 	}
 	my @itemnumber ;
-	my $bdd = "koha_prod" ;
-	my $req = "SELECT itemnumber FROM items WHERE biblionumber = ? AND notforloan IN (0, -1, -2, -3, -4) AND itemlost = 0 AND ".$notloc ;
-	my $dbh = dbh($bdd) ;
+	my $req = "SELECT itemnumber FROM koha_prod.items WHERE biblionumber = ? AND notforloan IN (0, -1, -2, -3, -4) AND itemlost = 0 AND ".$notloc ;
+	my $dbh = GetDbh() ;
 	my $sth = $dbh->prepare($req);
 	$sth->execute($biblionumber);
 	while ( my $itemnumber = $sth->fetchrow_array ) {
@@ -197,17 +195,17 @@ sub ExPasTrait {
 	} elsif ( $branch eq "BUS" ) {
 		$notloc = "('MED0A')" ;
 	}
-	my $bdd = "koha_prod" ;
+
 	my $req = <<SQL;
 SELECT COUNT(*)
-FROM items
+FROM koha_prod.items
 WHERE 
 	itemnumber = ?
 	AND location NOT IN $notloc
     AND notforloan = 0
     AND itemlost = 0
 SQL
-	my $dbh = dbh($bdd) ;
+	my $dbh = GetDbh() ;
 	my $sth = $dbh->prepare($req);
 	$sth->execute($itemnumber );
 	my $count = $sth->fetchrow_array ;
@@ -231,17 +229,16 @@ sub ExTrait {
 	} elsif ( $branch eq "BUS" ) {
 		$notloc = "('MED0A')" ;
 	}
-	my $bdd = "koha_prod" ;
 	my $req = <<SQL;
 SELECT COUNT(*)
-FROM items
+FROM koha_prod.items
 WHERE 
 	itemnumber = ?
 	AND location NOT IN $notloc
     AND notforloan IN (-1, -2, -3, -4)
     AND itemlost = 0
 SQL
-	my $dbh = dbh($bdd) ;
+	my $dbh = GetDbh() ;
 	my $sth = $dbh->prepare($req);
 	$sth->execute($itemnumber );
 	my $count = $sth->fetchrow_array ;
@@ -260,9 +257,8 @@ SQL
 sub testExEmpruntes {
 	my ( $itemnumber ) = @_ ;
 	my $test ;
-	my $bdd = "koha_prod" ;
-	my $req = "SELECT COUNT(*) FROM issues WHERE itemnumber = ?" ;
-	my $dbh = dbh($bdd) ;
+	my $req = "SELECT COUNT(*) FROM koha_prod.issues WHERE itemnumber = ?" ;
+	my $dbh = GetDbh() ;
 	my $sth = $dbh->prepare($req);
 	$sth->execute($itemnumber );
 	my $count = $sth->fetchrow_array ;
@@ -280,9 +276,8 @@ sub testExEmpruntes {
 sub testExAttenteRetrait {
 	my ( $itemnumber ) = @_ ;
 	my $test ;
-	my $bdd = "koha_prod" ;
-	my $req = "SELECT COUNT(*) FROM reserves WHERE found = 'W' AND itemnumber = ?" ;
-	my $dbh = dbh($bdd) ;
+	my $req = "SELECT COUNT(*) FROM koha_prod.reserves WHERE found = 'W' AND itemnumber = ?" ;
+	my $dbh = GetDbh() ;
 	my $sth = $dbh->prepare($req);
 	$sth->execute($itemnumber );
 	my $count = $sth->fetchrow_array ;
@@ -398,8 +393,7 @@ sub statutReservation {
 # On renseigne le statut
 sub updateStatutLocReservation {
 	my ($reserve_id, $statutReservation, $localisation) = @_ ;
-	my $bdd = "statdb" ;
-	my $dbh = dbh($bdd) ;
+	my $dbh = GetDbh() ;
 	my $req = <<SQL ;
 UPDATE statdb.stat_reserves s 
 SET etat = ?, espace = ?
@@ -414,9 +408,8 @@ SQL
 # On récupère la localisation de l'exemplaire
 sub localisation {
 	my ( $itemnumber ) = @_ ;
-	my $bdd = "koha_prod" ;
-	my $req = "SELECT location FROM items WHERE itemnumber = ? " ;
-	my $dbh = dbh($bdd) ;
+	my $req = "SELECT location FROM koha_prod.items WHERE itemnumber = ? " ;
+	my $dbh = GetDbh() ;
 	my $sth = $dbh->prepare($req);
 	$sth->execute($itemnumber);
 	my $localisation = $sth->fetchrow_array ;
@@ -439,7 +432,3 @@ sub localisation {
 	} 
 	return $localisation ;
 }
-
-# On log la fin de l'opération
-$log_message = "$process : fin\n" ;
-log_file($log_message) ;

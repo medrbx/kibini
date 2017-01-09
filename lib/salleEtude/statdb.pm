@@ -1,19 +1,5 @@
 package salleEtude::statdb ;
 
-=pod
-
-=encoding UTF-8
-
-=head1 NOM
-
-salleEtude::stadb
-
-=head1 DESCRIPTION
-
-Ce module fournit des fonctions permettant de gérer la table statdb.stat_freq_etude.
-
-=cut
-
 use Exporter ;
 @ISA = qw( Exporter ) ;
 @EXPORT = qw( ModEntranceAddingData ) ;
@@ -24,14 +10,11 @@ use warnings ;
 use kibini::db ;
 use fonctions ;
 
-=head1 FONCTIONS EXPORTEES
-=cut
-
 sub ModEntranceAddingData {
     my $dbh = GetDbh() ;
 
-    # On récupère l'ensemble des fréquentants de la veille
-    my $req = "SELECT DISTINCT cardnumber FROM statdb.stat_freq_etude WHERE DATE(datetime_entree) <= (CURDATE() - INTERVAL 1 DAY)" ;
+    # On récupère l'ensemble des fréquentants de la dernière semaine
+    my $req = "SELECT DISTINCT cardnumber FROM statdb.stat_freq_etude WHERE DATE(datetime_entree) >= (CURDATE() - INTERVAL 7 DAY)" ;
     my $sth = $dbh->prepare($req);
     $sth->execute();
 
@@ -86,7 +69,19 @@ SQL
 	return $i ;
 }
 
-=head1 FONCTIONS INTERNES
-=cut
-
 1;
+
+__END__
+=pod
+
+=encoding UTF-8
+
+=head1 NOM
+
+salleEtude::stadb
+
+=head1 DESCRIPTION
+
+Ce module fournit des fonctions permettant de gérer la table statdb.stat_freq_etude.
+
+=cut

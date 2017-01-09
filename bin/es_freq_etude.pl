@@ -2,43 +2,44 @@
 
 use strict ;
 use warnings ;
-use DateTime ;
-use DateTime::Format::MySQL ;
 use Search::Elasticsearch ; 
 use FindBin qw( $Bin ) ;
 
 use lib "$Bin/../lib" ;
+use kibini::db ;
+use kibini::elasticsearch ;
+use kibini::log ;
+use kibini::time ;
 use fonctions ;
-use dbrequest ;
-use esrbx ;
 
 my $log_message ;
 my $process = "es_freq_etude.pl" ;
 # On log le début de l'opération
-$log_message = "$process : début" ;
-log_file($log_message) ;
+$log_message = "$process : beginning" ;
+AddCrontabLog($log_message) ;
 
 # On récupère l'adresse d'Elasticsearch
-my $es_node = es_node() ;
+my $es_node = GetEsNode() ; ;
 
 my $i = es_freq_etude($es_node) ;
 
 # On log la fin de l'opération
-$log_message = "$process : $i lignes indexées" ;
-log_file($log_message) ;
-$log_message = "$process : fin\n" ;
-log_file($log_message) ;
+$log_message = "$process : $i rows indexed" ;
+AddCrontabLog($log_message) ;
+$log_message = "$process : ending\n" ;
+AddCrontabLog($log_message) ;
 
 sub es_freq_etude {
 	my ( $es_node ) = @_ ;
 	my %params = ( nodes => $es_node ) ;
 	my $index = "freq_etude" ;
 	my $type = "consultations" ;
+	
+    my $esMaxEntranceDateTime = GetEsMaxDateTime($index, $type, 'date') ;
 
 	my $e = Search::Elasticsearch->new( %params ) ;
 
-	my $bdd = "statdb" ;
-	my $dbh = dbh($bdd) ;
+	my $dbh = GetDbh() ;
 	my $req = <<SQL;
 SELECT
 	datetime_entree,
@@ -50,11 +51,11 @@ SELECT
 	ville,
 	iris
 FROM statdb.stat_freq_etude
-WHERE DATE(datetime_entree) = (CURDATE() - INTERVAL 1 DAY)
+WHERE DATE(datetime_entree) >= ?
 SQL
 
 	my $sth = $dbh->prepare($req);
-	$sth->execute();
+	$sth->execute($esMaxEntranceDateTime);
 	my $i = 0 ; 
 	while (my @row = $sth->fetchrow_array) {
 		my ( $datetime_entree, $duree, $borrowernumber, $sexe, $age, $categorycode, $ville, $iris ) = @row ;
@@ -74,10 +75,8 @@ SQL
 		my ( $carte, $personnalite ) = category($categorycode) ;
 		
 		my $type_carte = type_carte($categorycode) ;
-		
-		#my ($pret_year, $pret_month, $pret_week_number, $pret_day, $pret_jour_semaine, $pret_hour) = date_form($issuedate) ;
 
-		$duree = time_to_minutes($duree) ;
+		$duree = GetMinutesFromTime($duree) ;
 	
 		my %index = (
 			index   => $index,
@@ -107,10 +106,4 @@ SQL
 	$sth->finish();
 	$dbh->disconnect();
 	return $i ;
-}
-
-sub time_to_minutes {
-    my ($time_str) = @_;
-    my ($hours, $minutes, $seconds) = split(/:/, $time_str);
-    return $hours * 60 + $minutes ;
 }

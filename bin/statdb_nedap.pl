@@ -10,40 +10,48 @@ use FindBin qw( $Bin ) ;
 use YAML qw(LoadFile) ;
 
 use lib "$Bin/../lib" ;
-use dbrequest ;
+use kibini::config ;
+use kibini::db ;
+use kibini::log ;
+use kibini::time ;
 use fonctions ;
 
 my $log_message ;
 my $process = "statdb_nedap.pl" ;
 # On log le début de l'opération
-$log_message = "$process : début" ;
-log_file($log_message) ;
+$log_message = "$process : beginning" ;
+AddCrontabLog($log_message) ;
 
 # On récupère les infos de connexion à Librixonline
-my $fic_conf = "$Bin/../etc/kibini_conf.yaml" ;
-my $conf = LoadFile($fic_conf);
-my $url = $conf->{nedap}->{url} ;
-my $user = $conf->{nedap}->{user} ;
-my $pwd = $conf->{nedap}->{pwd} ;
+my $conf = GetConfig('nedap') ;
+my $url = $conf->{url} ;
+my $user = $conf->{user} ;
+my $pwd = $conf->{pwd} ;
 
 my @transType = qw( pret retour );
 my $filename = "statdb_nedapV2.txt" ;
 
 my ( $date_deb, $date_fin ) = dates() ;
+print "$date_deb, $date_fin\n" ;
 foreach my $transType (@transType) {
 	nedapTransDoc( $transType, $date_deb, $date_fin, $filename, $url, $user, $pwd ) ;
 	insertNedapStatdb( $transType, $filename ) ;
 }
 unlink($filename);
 
+# On log la fin de l'opération
+$log_message = "$process : ending\n" ;
+AddCrontabLog($log_message) ;
+
 
 sub dates {
-    my $date_fin = DateTime->today()->subtract( days => 1 );
-    $date_fin = DateTime::Format::MySQL->format_date($date_fin) ;
+    my $date_fin = GetDateTime('yesterday') ;
 
-    my $bdd = "statdb" ;
-    my $req = "SELECT DATE(MAX(date)) FROM stat_nedap" ;
-    my $date_deb = fetchrow_array( $bdd, $req ) ;
+    my $dbh = GetDbh() ;
+    my $req = "SELECT DATE(MAX(date)) FROM statdb.stat_nedap" ;
+	my $sth = $dbh->prepare($req) ;
+	$sth->execute() ;
+    my $date_deb = $sth->fetchrow_array() ;
     $date_deb = DateTime::Format::MySQL->parse_date($date_deb) ;
     $date_deb->add( days => 1 );
     $date_deb = DateTime::Format::MySQL->format_date($date_deb) ;
@@ -91,8 +99,7 @@ sub nedapTransDoc {
 sub insertNedapStatdb {
 	my ( $transType, $filename ) = @_ ;
 	
-	my $bdd = "statdb" ;
-	my $dbh = dbh($bdd) ;
+	my $dbh = GetDbh() ;
 	open my $fic, "<", $filename ;
 	while ( my $ligne = <$fic> ) {
 		my ( @donnees ) = split /\;/, $ligne ;
@@ -101,7 +108,7 @@ sub insertNedapStatdb {
 			for ( my $i = 1 ; $i <= 9 ; $i++) { 
 				if ($donnees[$i] != 0 ) {
 					my $automate = "Automate $i" ;
-					my $req = "INSERT INTO stat_nedap VALUES (?, \"$automate\", ?, \"$transType\")" ;
+					my $req = "INSERT INTO statdb.stat_nedap VALUES (?, \"$automate\", ?, \"$transType\")" ;
 					my $sth = $dbh->prepare($req) ;	
 					$sth->execute($donnees[0], $donnees[$i]) ;
 					$sth->finish() ;
@@ -113,7 +120,3 @@ sub insertNedapStatdb {
 	$dbh->disconnect() ;
 	close $fic ;
 }
-
-# On log la fin de l'opération
-$log_message = "$process : fin\n" ;
-log_file($log_message) ;

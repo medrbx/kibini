@@ -3,46 +3,46 @@
 use strict ;
 use warnings ;
 use utf8 ;
-use DateTime ;
-use DateTime::Format::MySQL ;
 use Search::Elasticsearch ;
 use FindBin qw( $Bin ) ;
 
 use lib "$Bin/../lib" ;
-use fonctions ;
-use dbrequest ;
-use esrbx ;
+use kibini::db ;
+use kibini::elasticsearch ;
+use kibini::log ;
+use kibini::time ;
+
 
 my $log_message ;
 my $process = "es_rfid.pl" ;
 # On log le début de l'opération
-$log_message = "$process : début" ;
-log_file($log_message) ;
+$log_message = "$process : beginning" ;
+AddCrontabLog($log_message) ;
 
 # On récupère l'adresse d'Elasticsearch
-my $es_node = es_node() ;
+my $es_node = GetEsNode() ;
 
 my %params = ( nodes => , $es_node ) ;
 my $e = Search::Elasticsearch->new( %params ) ;
 
-my $dbh = dbh("statdb") ;
+my $dbh = GetDbh() ;
 
 my $i = 0 ;
 my $nb = $i ;
-my $es_maxdatetime_prets = es_maxdatetime("rfid", "prets", "date.datetime") ;
+my $es_maxdatetime_prets = GetEsMaxDateTime("rfid", "prets", "date.datetime") ;
 $i = es_rfid("prets", $es_maxdatetime_prets) ;
 $nb = $nb + $i ;
-my $es_maxdatetime_retours = es_maxdatetime("rfid", "retours", "date.datetime") ;
+my $es_maxdatetime_retours = GetEsMaxDateTime("rfid", "retours", "date.datetime") ;
 $i = es_rfid("retours", $es_maxdatetime_retours) ;
 $nb = $nb + $i ;
 
 $dbh->disconnect();
 
 # On log la fin de l'opération
-$log_message = "$process : $nb lignes indexées" ;
-log_file($log_message) ;
-$log_message = "$process : fin\n" ;
-log_file($log_message) ;
+$log_message = "$process : $i rows indexed" ;
+AddCrontabLog($log_message) ;
+$log_message = "$process : ending\n" ;
+AddCrontabLog($log_message) ;
 
 
 
@@ -73,7 +73,7 @@ SQL
 	my $i = 0 ;
 	while (my @row = $sth->fetchrow_array) {
 		my ( $date_transaction, $borne, $etage, $nb_transaction ) = @row ;
-		my ( $year, $month, $week_number, $day, $jour_semaine, $hour ) = date_form($date_transaction) ;
+		my ( $year, $month, $week_number, $day, $jour_semaine, $hour ) = GetSplitDateTime($date_transaction) ;
 		
 		my %index = (
 			index   => "rfid",

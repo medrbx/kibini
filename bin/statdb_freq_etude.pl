@@ -11,14 +11,14 @@ use salleEtude::statdb ;
 my $log_message ;
 my $process = "statdb_freq_etude.pl" ;
 # On log le début de l'opération
-$log_message = "$process : début" ;
-log_file($log_message) ;
+$log_message = "$process : beginning" ;
+AddCrontabLog($log_message) ;
 
 # On enrichit les données
 my $i = ModEntranceAddingData() ;
 
 # On log la fin de l'opération
-$log_message = "$process : $i lignes intégrées" ;
-log_file($log_message) ;
-$log_message = "$process : fin\n" ;
-log_file($log_message) ;
+$log_message = "$process : $i rows modified" ;
+AddCrontabLog($log_message) ;
+$log_message = "$process : ending\n" ;
+AddCrontabLog($log_message) ;

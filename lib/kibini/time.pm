@@ -2,12 +2,13 @@ package kibini::time ;
 
 use Exporter ;
 @ISA = qw(Exporter) ;
-@EXPORT = qw( GetDateTime GetSplitDateTime GetDuration GetEsMaxDateTime ) ;
+@EXPORT = qw( GetDateTime GetSplitDateTime GetDuration GetEsMaxDateTime GetMinutesFromTime ) ;
 
 use strict ;
 use warnings ;
 use DateTime ;
 use DateTime::Format::MySQL ;
+use DateTime::Format::Duration ;
 
 use kibini::elasticsearch ;
 
@@ -90,11 +91,19 @@ sub GetDuration {
             $duration = $dt1->delta_ms($dt2)->in_units('hours') ;
         } elsif ( $type eq 'minutes' ) {
             $duration = $dt1->delta_ms($dt2)->in_units('minutes') ;
+        } elsif ( $type eq 'HH:MM:SS' ) {
+            $duration = $dt1->delta_ms($dt2) ;
+            my $formatter = DateTime::Format::Duration->new(
+                pattern     => "%H:%M:%S",
+                normalize   => 1,
+            );
+            $duration = $formatter->format_duration($duration);
         }
     }
 	
     return $duration ;
 }
+
 
 sub GetEsMaxDateTime {
     my ( $index, $type, $field ) = @_ ;
@@ -118,6 +127,13 @@ sub GetEsMaxDateTime {
     );
 
     return $result->{aggregations}->{max_datetime}->{value_as_string} ; 
+}
+
+
+sub GetMinutesFromTime {
+    my ($time_str) = @_;
+    my ($hours, $minutes, $seconds) = split(/:/, $time_str);
+    return $hours * 60 + $minutes ;
 }
 
 1 ;
@@ -179,7 +195,7 @@ Cette fonction renvoie, à partir d'un datetime passé en paramètre, les diffé
 
 =item * GetDuration
 
-Cette fonction renvoie à partir d'un datetime de début et de fin une durée en jours, heures ou minutes.
+Cette fonction renvoie une durée à partir d'un datetime de début et de fin.
 
 =over 4
 
@@ -195,6 +211,10 @@ renvoie la durée en heures
 
 renvoie la durée en minutes
 
+=item *  C<$duration = GetDuration($datetime1, $datetime2, 'HH:MM:SS')>
+
+renvoie la durée au format HH:MM:SS
+
 =back
 
 =item * GetEsMaxDateTime
@@ -204,6 +224,16 @@ Cette fonction renvoie la date maximale pour un champ donné d'un index d'Elasti
 =over 4
 
 =item *  C<$esMaxDateTime = GetEsMaxDateTime($index, $type, $field)>
+
+=back
+
+=item * GetMinutesFromTime
+
+Cette fonction renvoie le nombre de minutes à partir d'une heure au format HH:MM:SS.
+
+=over 4
+
+=item *  C<$nb_minutes = GetMinutesFromTime($time)>
 
 =back
 

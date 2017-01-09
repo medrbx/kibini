@@ -3,46 +3,43 @@
 use strict ;
 use warnings ;
 use utf8 ;
-use DateTime ;
-use DateTime::Format::MySQL ;
 use Search::Elasticsearch ; 
 use FindBin qw( $Bin ) ;
 
 use lib "$Bin/../lib" ;
+use kibini::db ;
+use kibini::elasticsearch ;
+use kibini::log ;
+use kibini::time ;
 use fonctions ;
-use dbrequest ;
-use esrbx ;
 
 my $log_message ;
 my $process = "es_reservations.pl" ;
 # On log le début de l'opération
-$log_message = "$process : début" ;
-log_file($log_message) ;
+$log_message = "$process : beginning" ;
+AddCrontabLog($log_message) ;
 
 # On récupère l'adresse d'Elasticsearch
-my $es_node = es_node() ;
+my $es_node = GetEsNode() ;
 
-my $date_veille = date_veille() ;
+my $date_veille = GetDateTime('yesterday') ;
 my $i = reservations($date_veille, $es_node) ;
 
 # On log la fin de l'opération
-$log_message = "$process : $i lignes indexées" ;
-log_file($log_message) ;
-$log_message = "$process : fin\n" ;
-log_file($log_message) ;
+$log_message = "$process : $i rows indexed" ;
+AddCrontabLog($log_message) ;
+$log_message = "$process : ending\n" ;
+AddCrontabLog($log_message) ;
 
 sub reservations {
 	my ( $date, $es_node ) = @_ ;
 	my %params = ( nodes => $es_node ) ;
 	my $index = "reservations" ;
 	my $type = "reserves" ;
-	
-	print "$date\n" ;
 
 	my $e = Search::Elasticsearch->new( %params ) ;
 
-	my $bdd = "statdb" ;
-	my $dbh = dbh($bdd) ;
+	my $dbh = GetDbh() ;
 	my $req = <<SQL;
 SELECT
 	r.reserve_id,

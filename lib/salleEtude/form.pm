@@ -1,37 +1,18 @@
 package salleEtude::form ;
 
-=pod
-
-=encoding UTF-8
-
-=head1 NOM
-
-salleEtude::form
-
-=head1 DESCRIPTION
-
-Ce module fournit des fonctions permettant de gérer le formulaire de fréquentation de la salle d'étude.
-
-=cut
-
 use Exporter ;
 @ISA = qw( Exporter ) ;
 @EXPORT = qw( IsEntrance GetTodayEntrance ) ;
 
 use strict ;
 use warnings ;
-use DateTime ;
-use DateTime::Format::Duration;
 
 use kibini::db ;
-use fonctions ;
-
-=head1 FONCTIONS EXPORTEES
-=cut
+use kibini::time ;
 
 sub IsEntrance {
 	my ($cardnumber) = @_ ;
-	my $datetime = datetime() ;
+	my $datetime = GetDateTime() ;
 	my $dbh = GetDbh() ;
 	my $borrowerTodayLastEntranceId = _GetBorrowerTodayLastEntranceId($dbh, $cardnumber) ;
 	my $entrance ;
@@ -67,8 +48,6 @@ SQL
 	return GetAllArrayRef($req);
 }
 
-=head1 FONCTIONS INTERNES
-=cut
 
 sub _GetBorrowerTodayLastEntranceId {
 	my ($dbh, $cardnumber) = @_ ;
@@ -108,23 +87,31 @@ sub _AddEntrance {
 sub _ModEntranceWithExit {
 	my ($dbh, $id, $datetime_sortie) = @_ ;
 	my $datetime_entree = _GetDatetimeEntranceById($dbh, $id) ;
-	my $duree = _GetDuration($datetime_entree, $datetime_sortie) ;
+	my $duree = GetDuration($datetime_entree, $datetime_sortie, 'HH:MM:SS') ;
 	my $req = "UPDATE stat_freq_etude SET datetime_sortie = ?, duree = ? WHERE id = ?" ;
 	my $sth = $dbh->prepare($req);
 	$sth->execute($datetime_sortie, $duree, $id);
 	$sth->finish();
 }
 
-# A sortir de ce module vers un module plus général de gestion du temps
-sub _GetDuration {
-	my ($entree, $sortie) = @_ ;
-	my $duree = duree($entree, $sortie) ;
-	my $formatter = DateTime::Format::Duration->new(
-        pattern     => "%H:%M:%S",
-        normalize   => 1,
-    );
-	$duree = $formatter->format_duration($duree);
-	return $duree ;
-}
-
 1;
+
+__END__
+
+=pod
+
+=encoding UTF-8
+
+=head1 NOM
+
+salleEtude::form
+
+=head1 DESCRIPTION
+
+Ce module fournit des fonctions permettant de gérer le formulaire de fréquentation de la salle d'étude.
+
+=head1 FONCTIONS EXPORTEES
+
+=head1 FONCTIONS INTERNES
+
+=cut
