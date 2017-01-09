@@ -14,7 +14,7 @@ my $process = "statdb_freq_etude.pl" ;
 $log_message = "$process : beginning" ;
 AddCrontabLog($log_message) ;
 
-# On enrichit les données
+# On complète les données
 my $i = ModEntranceAddingData() ;
 
 # On log la fin de l'opération
