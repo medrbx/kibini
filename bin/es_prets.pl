@@ -2,8 +2,6 @@
 
 use strict ;
 use warnings ;
-use DateTime ;
-use DateTime::Format::MySQL ;
 use Search::Elasticsearch ; 
 use FindBin qw( $Bin ) ;
 
