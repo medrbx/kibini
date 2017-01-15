@@ -31,49 +31,49 @@ AddCrontabLog($log_message) ;
 
 
 sub entrees {
-	my ($maxdatetime, $es_node) = @_ ;
-	my %params = ( nodes => $es_node ) ;
-	my $index = "entrees" ;
-	my $type = "camera" ;
+    my ($maxdatetime, $es_node) = @_ ;
+    my %params = ( nodes => $es_node ) ;
+    my $index = "entrees" ;
+    my $type = "camera" ;
 
-	my $e = Search::Elasticsearch->new( %params ) ;
+    my $e = Search::Elasticsearch->new( %params ) ;
 
     my $dbh = GetDbh() ;
-	my $req = <<SQL;
+    my $req = <<SQL;
 SELECT
-	datetime,
-	entrees
+    datetime,
+    entrees
 FROM statdb.stat_entrees
 WHERE datetime > ?
 SQL
 
-	my $sth = $dbh->prepare($req);
-	$sth->execute($maxdatetime);
-	$i = 0 ;
-	while (my @row = $sth->fetchrow_array) {
-		my ( $datetime, $entrees ) = @row ;
+    my $sth = $dbh->prepare($req);
+    $sth->execute($maxdatetime);
+    $i = 0 ;
+    while (my @row = $sth->fetchrow_array) {
+        my ( $datetime, $entrees ) = @row ;
 
-		my ($entrees_year, $entrees_month, $entrees_week_number, $entrees_day, $entrees_jour_semaine, $entrees_hour) = GetSplitDateTime($datetime) ;
-	
-		my %index = (
-			index   => $index,
-			type    => $type,
-			body    => {
-				entrees_date => $datetime,
-				entrees_date_annee => $entrees_year,
-				entrees_date_mois => $entrees_month,
-				entrees_date_semaine => $entrees_week_number,
-				entrees_date_jour => $entrees_day,
-				entrees_date_jour_semaine => $entrees_jour_semaine,
-				entrees_date_heure => $entrees_hour,
-				nb_entrees => $entrees
-			}
-		) ;
+        my ($entrees_year, $entrees_month, $entrees_week_number, $entrees_day, $entrees_jour_semaine, $entrees_hour) = GetSplitDateTime($datetime) ;
+    
+        my %index = (
+            index   => $index,
+            type    => $type,
+            body    => {
+                entrees_date => $datetime,
+                entrees_date_annee => $entrees_year,
+                entrees_date_mois => $entrees_month,
+                entrees_date_semaine => $entrees_week_number,
+                entrees_date_jour => $entrees_day,
+                entrees_date_jour_semaine => $entrees_jour_semaine,
+                entrees_date_heure => $entrees_hour,
+                nb_entrees => $entrees
+            }
+        ) ;
 
-		$e->index(%index) ;
-		$i++ ;
-	}
-	$sth->finish();
-	$dbh->disconnect();
-	return $i ;
+        $e->index(%index) ;
+        $i++ ;
+    }
+    $sth->finish();
+    $dbh->disconnect();
+    return $i ;
 }

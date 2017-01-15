@@ -1,10 +1,8 @@
 #!/usr/bin/perl
 
-#use strict ;
-#use warnings ;
+use strict ;
+use warnings ;
 use utf8 ;
-use DateTime ;
-use DateTime::Format::MySQL ;
 use Search::Elasticsearch ;
 use FindBin qw( $Bin ) ;
 
