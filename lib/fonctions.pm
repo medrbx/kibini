@@ -2,7 +2,7 @@ package fonctions ;
 
 use Exporter ;
 @ISA = qw(Exporter) ;
-@EXPORT = qw( age av branches category ccodeniveaux datetime date_form date_veille duree_pret duree es_maxdatetime getdataccode getdataitem getitemtype itemnumbermax lib_sll log_file quartier_rbx retard type_carte ville15 ) ;
+@EXPORT = qw( age av branches category ccodeniveaux datetime date_form date_veille duree_pret duree es_maxdatetime espace getdataccode getdataitem getitemtype itemnumbermax lib_sll log_file quartier_rbx retard type_carte ville15 ) ;
 
 use strict ;
 use warnings ;
@@ -160,6 +160,25 @@ sub es_maxdatetime {
 	);
 
 	return $result->{aggregations}->{max_datetime}->{value_as_string} ; 
+}
+
+sub espace {
+	my ($groupe) = @_ ;
+	my %espaces = (
+		'Atelier' => 'Multimédia',
+		'Disco' => 'Phare',
+		'Etude' => 'Etude',
+		'Jeux' => 'Jeunesse',
+		'Lecture' => '1er étage',
+		'Jeunesse' => 'Jeunesse',
+		'Devoir' => 'Jeunesse',
+		'Rdc' => 'Rez-de-chaussée',
+		'Reussir' => 'Phare',
+		'Cafe' => 'Rez-de-chaussée',
+		'Rdc Ascenceur' => 'Rez-de-chaussée'
+	) ;
+	my $espace = $espaces{$groupe} ;
+	return $espace ;
 }
 
 sub getdataccode {

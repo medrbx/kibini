@@ -2,25 +2,25 @@
 
 use strict ;
 use warnings ;
-use YAML qw(LoadFile);
-use DateTime ;
 use FindBin qw( $Bin ) ;
 
 use lib "$Bin/../lib" ;
-use dbrequest ;
-use fonctions ;
+use kibini::config ;
+use kibini::db ;
+use kibini::time ;
+use kibini::log ;
 
 my $log_message ;
 my $process = "admin_sauv_bdd.pl" ;
 # On log le début de l'opération
-$log_message = "$process : début" ;
-log_file($log_message) ;
+$log_message = "$process : beginning" ;
+AddCrontabLog($log_message) ;
 
 
-my $date = DateTime->now(time_zone => "local")->ymd('');
+my $date = GetDateTime('today YYYYMMDD') ;
 
 # On anonymise les données Koha
-my $dbh = dbh('koha_prod') ;
+my $dbh = GetDbh() ;
 
 # On anonymise la plupart des colonnes avec un X pour indiquer qu'elles ont été complétées
 my @columns = qw( surname firstname othernames address address2 state email phone mobile emailpro phonepro B_address B_address2 B_state B_email B_phone contactname contactfirstname userid altcontactsurname altcontactfirstname altcontactaddress1 altcontactaddress2 altcontactaddress3 altcontactstate altcontactphone smsalertnumber ) ;
@@ -45,10 +45,9 @@ $sth->finish();
 $dbh->disconnect();
 
 # On sauvegarde les deux bases
-my $fic_conf = "$Bin/../conf.yaml" ;
-my $conf = LoadFile($fic_conf);
-my $user = $conf->{database}->{user} ;
-my $pwd = $conf->{database}->{pwd} ;
+my $conf = GetConfig('database') ;
+my $user = $conf->{user} ;
+my $pwd = $conf->{pwd} ;
 my $dir = "$Bin/../data" ;
 my $koha_ano = "$dir/koha_ano_$date.sql.gz" ;
 my $statdb = "$dir/statdb_$date.sql.gz" ;
@@ -56,5 +55,5 @@ system( " mysqldump -u $user -p$pwd koha_prod | gzip > $koha_ano  " ) ;
 system( " mysqldump -u $user -p$pwd statdb | gzip > $statdb  " ) ;
 
 # On log la fin de l'opération
-$log_message = "$process : fin\n" ;
-log_file($log_message) ;
+$log_message = "$process : ending\n" ;
+AddCrontabLog($log_message) ;

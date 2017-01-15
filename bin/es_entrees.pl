@@ -2,33 +2,32 @@
 
 use strict ;
 use warnings ;
-use DateTime ;
-use DateTime::Format::MySQL ;
 use Search::Elasticsearch ; 
 use FindBin qw( $Bin ) ;
 
 use lib "$Bin/../lib" ;
-use fonctions ;
-use dbrequest ;
-use esrbx ;
+use kibini::db ;
+use kibini::elasticsearch ;
+use kibini::log ;
+use kibini::time ;
 
 my $log_message ;
 my $process = "es_entrees.pl" ;
 # On log le début de l'opération
-$log_message = "$process : début" ;
-log_file($log_message) ;
+$log_message = "$process : beginning" ;
+AddCrontabLog($log_message) ;
 
 # On récupère l'adresse d'Elasticsearch
-my $es_node = es_node() ;
+my $es_node = GetEsNode() ;
 
-my $es_maxdatetime = es_maxdatetime("entrees", "camera", "entrees_date") ;
+my $es_maxdatetime = GetEsMaxDateTime("entrees", "camera", "entrees_date") ;
 my $i = entrees($es_maxdatetime, $es_node) ;
 
 # On log la fin de l'opération
-$log_message = "$process : $i lignes indexées" ;
-log_file($log_message) ;
-$log_message = "$process : fin\n" ;
-log_file($log_message) ;
+$log_message = "$process : $i rows indexed" ;
+AddCrontabLog($log_message) ;
+$log_message = "$process : ending\n" ;
+AddCrontabLog($log_message) ;
 
 
 sub entrees {
@@ -39,8 +38,7 @@ sub entrees {
 
 	my $e = Search::Elasticsearch->new( %params ) ;
 
-	my $bdd = "statdb" ;
-	my $dbh = dbh($bdd) ;
+    my $dbh = GetDbh() ;
 	my $req = <<SQL;
 SELECT
 	datetime,
@@ -55,7 +53,7 @@ SQL
 	while (my @row = $sth->fetchrow_array) {
 		my ( $datetime, $entrees ) = @row ;
 
-		my ($entrees_year, $entrees_month, $entrees_week_number, $entrees_day, $entrees_jour_semaine, $entrees_hour) = date_form($datetime) ;
+		my ($entrees_year, $entrees_month, $entrees_week_number, $entrees_day, $entrees_jour_semaine, $entrees_hour) = GetSplitDateTime($datetime) ;
 	
 		my %index = (
 			index   => $index,
