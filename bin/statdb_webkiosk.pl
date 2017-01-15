@@ -2,27 +2,25 @@
 
 use warnings;
 use strict;
-use utf8;
 use Text::CSV ;
 use FindBin qw( $Bin ) ;
 
 use lib "$Bin/../lib" ;
-use dbrequest ;
-use fonctions ;
+use kibini::db ;
+use kibini::log ;
 
 my $log_message ;
 my $process = "statdb_webkiosk.pl" ;
 # On log le début de l'opération
-$log_message = "$process : début" ;
-log_file($log_message) ;
+$log_message = "$process : beginning" ;
+AddCrontabLog($log_message) ;
 
 # Connexion à la base de données
-my $bdd = "statdb" ;
-my $dbh = dbh($bdd) ;
+my $dbh = GetDbh() ;
 
 # Requête à effectuer
 my $req = <<"SQL";
-INSERT INTO stat_webkiosk (heure_deb, heure_fin, espace, poste, id)
+INSERT INTO statdb.stat_webkiosk (heure_deb, heure_fin, espace, poste, id)
 VALUES (?, ?, ?, ?, ?)
 SQL
 
@@ -55,5 +53,5 @@ $sth->finish();
 $dbh->disconnect();
 
 # On log la fin de l'opération
-$log_message = "$process : fin\n" ;
-log_file($log_message) ;
+$log_message = "$process : ending\n" ;
+AddCrontabLog($log_message) ;

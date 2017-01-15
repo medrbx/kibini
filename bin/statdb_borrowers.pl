@@ -94,7 +94,7 @@ $sth->finish();
 $dbh->disconnect();
 
 # On log la fin de l'opération
-$log_message = "$process : $i rows indexed" ;
+$log_message = "$process : $i rows added" ;
 AddCrontabLog($log_message) ;
 $log_message = "$process : ending\n" ;
 AddCrontabLog($log_message) ;

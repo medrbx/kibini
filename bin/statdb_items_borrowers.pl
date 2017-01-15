@@ -3,22 +3,19 @@
 use strict ;
 use warnings ;
 use FindBin qw( $Bin ) ;
-use DateTime ;
-use DateTime::Format::MySQL ;
 
 use lib "$Bin/../lib" ;
-use dbrequest ;
-use fonctions ;
+use kibini::db ;
+use kibini::log ;
+use kibini::time ;
 
 my $log_message ;
 my $process = "statdb_items_borrowers.pl" ;
 # On log le début de l'opération
-$log_message = "$process : début" ;
-log_file($log_message) ;
+$log_message = "$process : beginning" ;
+AddCrontabLog($log_message) ;
 
-my $dt = DateTime->today() ;
-my $date = DateTime::Format::MySQL->format_date($dt) ;
-
+my $date = GetDateTime('today') ;
 
 # On complète la table statdb.stat_docentrees
 my $stat_docentrees = <<SQL;
@@ -143,7 +140,7 @@ SET
 WHERE date = CURDATE();
 SQL
 
-my $dbh = dbh('koha_prod') ;
+my $dbh = GetDbh() ;
 
 my @req = ( $stat_docentrees, $stat_docex, $stat_borrowers_1, $stat_borrowers_2 ) ;
 for my $req (@req) {
@@ -166,5 +163,5 @@ for my $column (@columns) {
 $dbh->disconnect();
 
 # On log la fin de l'opération
-$log_message = "$process : fin\n" ;
-log_file($log_message) ;
+$log_message = "$process : ending\n" ;
+AddCrontabLog($log_message) ;
