@@ -50,6 +50,9 @@ perl $dir/es_rfid.pl
 perl $dir/statdb_freq_etude.pl
 perl $dir/es_freq_etude.pl
 
+# On récupère les logs du portail
+perl $dir/logs_portail.pl
+
 # CHAQUE MARDI
 if [ $dayofweek -eq 2 ]
 then
