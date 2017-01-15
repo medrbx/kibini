@@ -2,7 +2,7 @@ package suggestions ;
 
 use Exporter ;
 @ISA = qw( Exporter ) ;
-@EXPORT = qw( suggestions modSuggestion suggestionInfos constructionCourriel envoiCourriel acquereurs ) ;
+@EXPORT = qw( suggestions modSuggestion suggestionInfos constructionCourriel acquereurs ) ;
 
 use strict ;
 use warnings ;
@@ -81,25 +81,6 @@ sub constructionCourriel {
 	my $subject = "Nouvelle suggestion : $title" ;
 	my $msg = "Nouvelle suggestion : $title\n\nVoir http://koha.ntrbx.local/cgi-bin/koha/suggestion/suggestion.pl#ASKED" ;
 	return $from, $to, $subject, $msg ;
-}
-
-sub envoiCourriel {
-	my ($from, $to, $subject, $msg) = @_;    
-	$from = Encode::encode('MIME-Q', $from);
-	$to = Encode::encode('MIME-Q', $to);
-	$subject = Encode::encode('MIME-Q', $subject);
-
-	open (SENDMAIL, "| /usr/sbin/sendmail -t") or die("Failed to open pipe to sendmail: $!");
-	binmode(SENDMAIL, ":utf8");
-	print SENDMAIL <<"EOF";
-Content-Transfer-Encoding: 8bit
-Content-type: text/plain; charset=UTF-8
-Subject: $subject
-From: $from
-To: $to
-$msg
-EOF
-	close (SENDMAIL);
 }
 
 1;

@@ -1,28 +1,14 @@
 package website::dancer ;
 
-=pod
-
-=encoding UTF-8
-
-=head1 NOM
-
-website::dancer
-
-=head1 DESCRIPTION
-
-Ce module est basé sur dancer2 et permet de gérer les différentes "routes" du site web.
-
-=cut
-
 use Dancer2;
 use FindBin qw( $Bin ) ;
 use utf8 ;
 # use Data::Dumper ; # pour débugage
 
+use kibini::email ;
 use collections ;
 use qa ;
 use suggestions ;
-#use frequentation ;
 use salleEtude::form ;
 use action_culturelle ;
 
@@ -417,7 +403,7 @@ post 'suggestions/mod' => sub {
 		modSuggestion($suggestionid, $managedby) ;
 			
 		my ($from, $to, $subject, $msg) = constructionCourriel($managedby, $title) ;
-		envoiCourriel($from, $to, $subject, $msg) ;
+		SendEmail($from, $to, $subject, $msg) ;
 		
 		redirect '/suggestions';
 };
@@ -480,3 +466,19 @@ post 'form/action_culturelle/post' => sub {
 
 
 true;
+
+__END__
+
+=pod
+
+=encoding UTF-8
+
+=head1 NOM
+
+website::dancer
+
+=head1 DESCRIPTION
+
+Ce module est basé sur dancer2 et permet de gérer les différentes "routes" du site web.
+
+=cut
