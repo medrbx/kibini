@@ -22,7 +22,8 @@ sub GetConfig {
             piwik => $file_conf->{'piwik'},
             log_crontab => $file_conf->{'log_crontab'},
             ftp_logs_portail => $file_conf->{'ftp_logs_portail'},
-            suggestions => $file_conf->{'suggestions'}
+            suggestions => $file_conf->{'suggestions'},
+            koha => $file_conf->{'koha'}
         ) ;
         $conf = $config{$k} ;
     } else {
