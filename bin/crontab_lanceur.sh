@@ -4,6 +4,7 @@ dayofweek=`date +%u`
 dayofmonth=`date +%e`
 
 dir='/home/kibini/kibini_prod/bin/'
+dir_log='/home/kibini/kibini_prod/log/crontab/'
 
 # CHAQUE MERCREDI
 if [ $dayofweek -eq 3 ]
@@ -64,3 +65,7 @@ then
 	bash $dir/catmandu_es.sh
 
 fi
+
+# CHAQUE JOUR
+# On supprime les logs crontab de plus de 30 jours
+find $dir_log/crontab_lanceur_*.txt  -ctime +30 -exec rm "{}" \;
