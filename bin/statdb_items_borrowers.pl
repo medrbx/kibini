@@ -110,9 +110,9 @@ SELECT
   COUNT(IF(i.notforloan = -1, i.itemnumber, NULL)),
   COUNT(IF(i.notforloan = 4, i.itemnumber, NULL)),
   COUNT(IF(i.notforloan = 3, i.itemnumber, NULL)),
-  COUNT(IF(i.notforloan != 4 AND i.itemlost = 1 AND i.itemnumber NOT IN (SELECT itemnumber FROM issues), i.itemnumber, NULL)),
-  COUNT(IF(i.notforloan = 0 AND i.itemlost = 1 AND i.itemnumber IN (SELECT itemnumber FROM issues), i.itemnumber, NULL)),
-  COUNT(IF(i.notforloan = 0 AND i.itemnumber IN (SELECT itemnumber FROM issues), i.itemnumber, NULL))
+  COUNT(IF(i.notforloan != 4 AND i.itemlost = 1 AND i.itemnumber NOT IN (SELECT itemnumber FROM koha_prod.issues), i.itemnumber, NULL)),
+  COUNT(IF(i.notforloan = 0 AND i.itemlost = 1 AND i.itemnumber IN (SELECT itemnumber FROM koha_prod.issues), i.itemnumber, NULL)),
+  COUNT(IF(i.notforloan = 0 AND i.itemnumber IN (SELECT itemnumber FROM koha_prod.issues), i.itemnumber, NULL))
 FROM koha_prod.items i
 INNER JOIN koha_prod.biblioitems bi ON i.biblionumber = bi.biblionumber
 GROUP BY i.ccode, i.location, bi.itemtype;
