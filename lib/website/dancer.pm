@@ -7,6 +7,8 @@ use utf8 ;
 
 use kibini::email ;
 use collections ;
+use collections::poldoc ;
+use collections::details ;
 use qa ;
 use suggestions ;
 use salleEtude::form ;
@@ -126,6 +128,30 @@ get '/grand-plage/collections/prets' => sub {
                 label2 => 'Collections',
                 label3 => 'Prêts',
                 iframe => '<iframe src="http://129.1.0.237:5601/app/kibana#/dashboard/Pr%C3%AAts-Grand-Plage?embed=true&_g=(refreshInterval:(display:Off,pause:!f,value:0),time:(from:now-1y,mode:quick,to:now))&_a=(filters:!(),options:(darkTheme:!f),panels:!((col:1,id:Nombre-de-pr%C3%AAts,panelIndex:15,row:1,size_x:6,size_y:2,type:visualization),(col:1,id:Nombre-de-pr%C3%AAts-par-collection,panelIndex:24,row:3,size_x:12,size_y:9,type:visualization),(col:7,id:\'Nombre-d!\'emprunteurs-totaux\',panelIndex:25,row:1,size_x:6,size_y:2,type:visualization)),query:(query_string:(analyze_wildcard:!t,query:\'*\')),title:\'Pr%C3%AAts%20Grand%20Plage\',uiState:())" height="1400" width="900"></iframe>'
+        };
+};
+
+get '/grand-plage/collections/collection' => sub {
+        template 'poldoc_collection_choose', {
+                label1 => 'La Grand-Plage',
+                label2 => 'Collections',
+                label3 => 'Détail par collection'
+        };
+};
+
+get '/grand-plage/collections/collection/details' => sub {
+		my $ccode = params->{'ccode'} ;
+		my $site = params->{'site'} ;
+		my $composition = GetCcodeDetailsComposition($ccode, $site) ;
+		my $ccodesLib = GetCcode() ;
+		my $lib_ccode = GetLibAV( $ccode, 'COLLECTION' ) ;
+        template 'poldoc_collection', {
+                label1 => 'La Grand-Plage',
+                label2 => 'Collections',
+                label3 => 'Détail par collection',
+				ccodesLib => $ccodesLib,
+				ccode => $lib_ccode,
+				composition => $composition
         };
 };
 

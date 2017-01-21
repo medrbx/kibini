@@ -11,6 +11,7 @@ use kibini::db ;
 use kibini::elasticsearch ;
 use kibini::log ;
 use fonctions ;
+use collections::poldoc ;
 
 my $log_message ;
 my $process = "es_items.pl" ;
@@ -135,6 +136,8 @@ SQL
         $damaged = av($damaged, "DAMAGED") ;
         $withdrawn = av($withdrawn, "RETIRECOLL") ;
         $itemlost = av($itemlost, "LOST") ;
+		
+		my $pret12 = IsLoanedByItemnumber($itemnumber, 12) ;
 
         $e->index(
             index   => $index,
@@ -168,7 +171,8 @@ SQL
                 emprunt => $onloan,
                 cote => $itemcallnumber,
                 annee_publication => $publicationyear,
-                prix => $price
+                prix => $price,
+				pret12 => $pret12
             }
         ) ;
         $i++ ;
