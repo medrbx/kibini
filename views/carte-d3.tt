@@ -6,13 +6,13 @@
 	var width = 900, height = 600;
 
 // On définit le spectre de couleurs et les intervalles de valeurs
-<!--	var color_domain = [0.02, 0.04, 0.06, 0.08, 0.1, 0.12, 0.14, 0.16]
-<!--		var ext_color_domain = [0, 0.02, 0.04, 0.06, 0.08, 0.1, 0.12, 0.14, 0.16]
-<!--		var legend_labels = ["< 2 %", "4 %", "6 %", "8 %", "10 %", "12 %", "14 %", "16 %", "> 18 %"] -->  
+	var color_domain = [0.02, 0.04, 0.06, 0.08, 0.1, 0.12, 0.14, 0.16]
+	var ext_color_domain = [0, 0.02, 0.04, 0.06, 0.08, 0.1, 0.12, 0.14, 0.16]
+	var legend_labels = ["< 2 %", "4 %", "6 %", "8 %", "10 %", "12 %", "14 %", "16 %", "> 18 %"]
 	
-	var color_domain = [0.04, 0.08, 0.12, 0.16, 0.20, 0.24, 0.28, 0.32]
-	var ext_color_domain = [0, 0.04, 0.08, 0.12, 0.16, 0.20, 0.24, 0.28, 0.32]
-	var legend_labels = ["< 4 %", "8 %", "12 %", "16 %", "20 %", "24 %", "28 %", "32 %", "> 36 %"]
+<!--		var color_domain = [0.04, 0.08, 0.12, 0.16, 0.20, 0.24, 0.28, 0.32] -->
+<!--		var ext_color_domain = [0, 0.04, 0.08, 0.12, 0.16, 0.20, 0.24, 0.28, 0.32] -->
+<!--		var legend_labels = ["< 4 %", "8 %", "12 %", "16 %", "20 %", "24 %", "28 %", "32 %", "> 36 %"] -->
 	
 	var color = d3.scale.threshold()
 		.domain(color_domain)
@@ -41,7 +41,7 @@
 // On lit les fichiers de données
 	queue()
 		.defer(d3.json, '[% request.uri_base %]/data/rbx.geojson')
-		.defer(d3.csv, '[% request.uri_base %]/data/iris_pourcentage_jeunes.csv')
+		.defer(d3.csv, '[% request.uri_base %]/data/iris_pourcentage.csv')
 		.await(ready);
 
 // On dessine la carte
