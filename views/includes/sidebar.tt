@@ -20,7 +20,7 @@
                     </ul>
                 </li>
                 <li class="nav-header"> <a>Collections</a></li>
-                        <li><a href="/grand-plage/collections/details"><span class="sd">Principaux indicateurs</span></a></li>
+ <!--                       <li><a href="/grand-plage/collections/details"><span class="sd">Principaux indicateurs</span></a></li>	-->
                         <li><a href="/grand-plage/collections/prets"><span class="sd">Prêts</span></a></li>
 		<li class="nav-header"> <a href="/grand-plage/web/connexions">Sites web : bn-r et portail</a></li>
             </ul>

@@ -2,7 +2,7 @@ package kibini::elasticsearch ;
 
 use Exporter ;
 @ISA = qw( Exporter ) ;
-@EXPORT = qw( GetEsNode RegenerateIndex ) ;
+@EXPORT = qw( GetEsNode RegenerateIndex GetEsMappingConf ) ;
 
 use strict ;
 use warnings ;
