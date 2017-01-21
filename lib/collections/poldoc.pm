@@ -2,7 +2,7 @@ package collections::poldoc ;
 
 use Exporter ;
 @ISA = qw( Exporter ) ;
-@EXPORT = qw( GetLibAV GetLibBranches GetCcodeLibLevels GetDataCcodeFromItemnumber GetDataItemsFromItemnumber GetItemtypeFromBiblionumber GetLibSLL GetRbxSite GetCcode ) ;
+@EXPORT = qw( GetLibAV GetLibBranches GetCcodeLibLevels GetDataCcodeFromItemnumber GetDataItemsFromItemnumber GetItemtypeFromBiblionumber GetLibSLL GetRbxSite GetCcode IsLoanedByItemnumber ) ;
 
 use strict ;
 use warnings ;
@@ -172,6 +172,21 @@ sub GetRbxSite {
 		$site = 'Médiathèque' ;
 	}
 	return $site ;
+}
+
+sub IsLoanedByItemnumber {
+	my ($itemnumber, $months) = @_ ;
+	my $req = "SELECT COUNT(itemnumber) FROM statdb.stat_issues WHERE itemnumber = ? AND DATE(issuedate) >= CURDATE() - INTERVAL ? MONTH" ;
+	my $dbh = GetDbh() ;
+	my $sth = $dbh->prepare($req) ;
+	$sth->execute($itemnumber, $months) ;
+	my $count = $sth->fetchrow_array() ;
+	
+	my $loaned = "non" ;
+	if ( $count > 0 ) {
+		$loaned = "oui" ;
+	}
+	return $loaned ;
 }
 
 1;
