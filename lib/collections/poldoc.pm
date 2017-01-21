@@ -1,8 +1,8 @@
-package collections::categories ;
+package collections::poldoc ;
 
 use Exporter ;
 @ISA = qw( Exporter ) ;
-@EXPORT = qw( GetLibAV GetLibBranches GetCcodeLibLevels GetDataCcodeFromItemnumber GetDataItemsFromItemnumber GetItemtypeFromBiblionumber GetLibSLL GetRbxSite ) ;
+@EXPORT = qw( GetLibAV GetLibBranches GetCcodeLibLevels GetDataCcodeFromItemnumber GetDataItemsFromItemnumber GetItemtypeFromBiblionumber GetLibSLL GetRbxSite GetCcode ) ;
 
 use strict ;
 use warnings ;
@@ -11,9 +11,8 @@ use kibini::db ;
 
 sub GetLibAV {
 	my ($av, $cat) = @_ ;
-	my $bdd = "koha_prod" ;
-	my $dbh = dbh($bdd) ;
-	my $req = "SELECT lib FROM authorised_values WHERE authorised_value = ? AND category = ?" ;
+	my $dbh = GetDbh() ;
+	my $req = "SELECT lib FROM koha_prod.authorised_values WHERE authorised_value = ? AND category = ?" ;
 	my $sth = $dbh->prepare($req);
 	$sth->execute($av, $cat);
 	return $sth->fetchrow_array ;
@@ -23,9 +22,8 @@ sub GetLibAV {
 
 sub GetLibBranches {
 	my ($branchcode) = @_ ;
-	my $bdd = "koha_prod" ;
-	my $dbh = dbh($bdd) ;
-	my $req = "SELECT branchname FROM branches WHERE branchcode = ?" ;
+	my $dbh = GetDbh() ;
+	my $req = "SELECT koha_prod.branchname FROM branches WHERE branchcode = ?" ;
 	my $sth = $dbh->prepare($req);
 	$sth->execute($branchcode);
 	return $sth->fetchrow_array ;
@@ -33,11 +31,20 @@ sub GetLibBranches {
 	$dbh->disconnect();
 }
 
+sub GetCcode {
+	my $dbh = GetDbh() ;
+	my $req = "SELECT ccode, lib, lib1, lib2, lib3, lib4 FROM statdb.lib_collections2 WHERE ccode IS NOT NULL AND ccode != ''" ;
+	my $sth = $dbh->prepare($req);
+	$sth->execute();
+	return $sth->fetchall_arrayref({}) ;
+	$sth->finish();
+	$dbh->disconnect();	
+}
+
 sub GetCcodeLibLevels {
 	my ($ccode) = @_ ;
-	my $bdd = "statdb" ;
-	my $dbh = dbh($bdd) ;
-	my $req = "SELECT lib1, lib2, lib3, lib4 FROM lib_collections2 WHERE ccode = ?" ;
+	my $dbh = GetDbh() ;
+	my $req = "SELECT lib1, lib2, lib3, lib4 FROM statdb.lib_collections2 WHERE ccode = ?" ;
 	my $sth = $dbh->prepare($req);
 	$sth->execute($ccode);
 	return $sth->fetchrow_array ;
@@ -47,8 +54,7 @@ sub GetCcodeLibLevels {
 
 sub GetDataCcodeFromItemnumber {
 	my ($itemnumber) = @_ ;
-	my $bdd = "koha_prod" ;
-	my $dbh = dbh($bdd) ;
+	my $dbh = GetDbh() ;
 	my $req = "SELECT i.ccode, c.lib1, c.lib2, c.lib3, c.lib4 FROM koha_prod.items i JOIN statdb.lib_collections2 c ON i.ccode = c.ccode WHERE i.itemnumber = ?" ;
 	my $sth = $dbh->prepare($req);
 	$sth->execute($itemnumber);
@@ -59,9 +65,8 @@ sub GetDataCcodeFromItemnumber {
 
 sub GetDataItemsFromItemnumber {
 	my ($itemnumber) = @_ ;
-	my $bdd = "koha_prod" ;
-	my $dbh = dbh($bdd) ;
-	my $req = "SELECT location, homebranch, ccode FROM items WHERE itemnumber = ?" ;
+	my $dbh = GetDbh() ;
+	my $req = "SELECT location, homebranch, ccode FROM koha_prod.items WHERE itemnumber = ?" ;
 	my $sth = $dbh->prepare($req);
 	$sth->execute($itemnumber);
 	return $sth->fetchrow_array ;
@@ -71,9 +76,8 @@ sub GetDataItemsFromItemnumber {
 
 sub GetItemtypeFromBiblionumber {
 	my ($biblionumber) = @_ ;
-	my $bdd = "koha_prod" ;
-	my $dbh = dbh($bdd) ;
-	my $req = "SELECT itemtype FROM biblioitems WHERE biblionumber = ?" ;
+	my $dbh = GetDbh() ;
+	my $req = "SELECT itemtype FROM koha_prod.biblioitems WHERE biblionumber = ?" ;
 	my $sth = $dbh->prepare($req);
 	$sth->execute($biblionumber);
 	return $sth->fetchrow_array ;
@@ -179,7 +183,7 @@ __END__
 
 =head1 NOM
 
-collections::categories
+collections::poldoc
 
 =head1 DESCRIPTION
 

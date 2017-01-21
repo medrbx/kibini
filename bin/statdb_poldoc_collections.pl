@@ -9,7 +9,7 @@ use lib "$Bin/../lib" ;
 use kibini::db ;
 use kibini::log ;
 use kibini::time ;
-use collections::categories ;
+use collections::poldoc ;
 
 my $log_message ;
 my $process = "statdb_poldoc_collections.pl" ;
@@ -29,9 +29,10 @@ my %siteClauseWhere = (
 	"CL" => "i.location = 'MED0A'"
 ) ;
 
+
 foreach $site (@sites) {
 	my $req = <<SQL;
-INSERT INTO statdb.stat_poldoc_collections(date, site, ccode, support, location, nb_exemplaires, nb_exemplaires_empruntables)
+INSERT INTO statdb.stat_poldoc_collections(date, site, ccode, support, location, nb_exemplaires, nb_exemplaires_empruntables, nb_exemplaires_excluspret, nb_exemplaires_traitement, nb_exemplaires_abimes, nb_exemplaires_reparation_retrait, nb_exemplaires_perdus, nb_exemplaires_non_restitues)
 SELECT
 	CURDATE(),
 	"$site",
@@ -39,7 +40,13 @@ SELECT
 	bi.itemtype,
 	i.location,
 	COUNT(i.itemnumber),
-	COUNT(IF(i.notforloan = 0, i.itemnumber, NULL))
+	COUNT(IF(i.notforloan = 0 AND i.itemlost = 0 AND i.damaged = 0, i.itemnumber, NULL)),
+	COUNT(IF(i.notforloan = 2 AND i.itemlost = 0 AND i.damaged = 0, i.itemnumber, NULL)),
+	COUNT(IF(i.notforloan = -2 AND i.itemlost = 0 AND i.damaged = 0, i.itemnumber, NULL)),
+	COUNT(IF(i.itemlost = 0 AND i.damaged = 1, i.itemnumber, NULL)),
+	COUNT(IF(i.notforloan = -3 OR i.notforloan = -4 AND i.itemlost = 0 AND i.damaged = 0, i.itemnumber, NULL)),
+	COUNT(IF(i.itemlost = 2 AND i.damaged = 0, i.itemnumber, NULL)),
+	COUNT(IF(i.itemlost = 1 AND i.damaged = 0, i.itemnumber, NULL))	
 FROM koha_prod.items i
 JOIN koha_prod.biblioitems bi ON bi.biblionumber = i.biblionumber
 WHERE i.location != 'MUS1A'
@@ -49,7 +56,10 @@ GROUP BY i.ccode, bi.itemtype, i.location
 SQL
 	my $sth = $dbh->prepare($req);
 	$sth->execute();
+	$sth-> finish() ;
 }
+
+$dbh->disconnect() ;
 
 
 
