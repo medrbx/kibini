@@ -1,0 +1,49 @@
+	<div class="col-md-6 ">
+	<br/>
+	<strong>Enregistrer une entrée ou une sortie :<br></strong>
+		<div>
+			<form method="post" action="/frequentation/etude/post">
+				<input type="text" name="cardnumber"><br>
+				<input type="submit" value="Valider">
+			</form>
+		</div>
+
+		<div>
+			[% IF (cardnumber) %]
+				[% IF entree == "entrée" %]
+					<br><strong class="text-success">[% cardnumber %] : [% entree %]</strong>
+				[% ELSIF entree == "sortie" %]
+					<br><strong class="text-warning">[% cardnumber %] : [% entree %]</strong>
+				[% END %]
+			[% ELSE %]
+				<br><strong class="text-danger">[% entree %]</strong>
+			[% END %]
+		</div>
+	</div>
+		
+		
+	<div class="col-md-6 ">
+	<br/>
+		<strong>Lecteurs du jour :</strong>
+		<table class="table table-bordered table-striped table-condensed">
+				
+				<thead>
+							<tr>
+								<th>Carte</th>
+								<th>Heure d'entrée</th>
+								<th>Heure de sortie</th>
+								<th>Temps de présence</th>
+							</tr>
+				</thead>
+				<tbody>
+							[% FOREACH lecteur IN lecteurs_presents %]
+							<tr>
+								<td>[% lecteur.cardnumber %]</td>
+								<td>[% lecteur.entree %]</td>
+								<td>[% lecteur.sortie %]</td>
+								<td>[% lecteur.duree %]</td>
+							</tr>
+							[% END %]
+				</tbody>
+		</table>		
+	</div>

@@ -14,7 +14,8 @@
                 <li role="separator" class="divider"></li>
                 <li><a href="/qa/inscrits">Inscrits</a></li>
                 <li role="separator" class="divider"></li>
-                <li><a href="/frequentation/etude">Fréquentation étude</a></li>				
+                <li><a href="/frequentation/etude">Fréquentation étude</a></li>	
+				<li><a href="frequentation/etude/visites">Salle d'étude : nombre de visites</a></li>			
               </ul>
             </li>
             <li><a href="https://github.com/medrbx/kibini/wiki">?</a></li>

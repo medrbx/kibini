@@ -1,3 +1,5 @@
+		<h2>Composition</h2>
+		 
 		<table class="table table-bordered table-striped table-condensed" id="mytable">
 				
 				<thead>
@@ -15,18 +17,18 @@
 							</tr>
 				</thead>
 				<tbody>
-							[% FOREACH composition_row IN composition %]
+							[% FOREACH collection_row IN collection %]
 							<tr>
-								<td>[% composition_row.support %]</td>
-								<td>[% composition_row.location %]</td>
-								<td>[% composition_row.nb_exemplaires %]</td>
-								<td>[% composition_row.nb_exemplaires_empruntables %]</td>
-								<td>[% composition_row.nb_exemplaires_excluspret %]</td>
-								<td>[% composition_row.nb_exemplaires_traitement %]</td>
-								<td>[% composition_row.nb_exemplaires_abimes %]</td>
-								<td>[% composition_row.nb_exemplaires_reparation_retrait %]</td>
-								<td>[% composition_row.nb_exemplaires_perdus %]</td>
-								<td>[% composition_row.nb_exemplaires_non_restitues %]</td>
+								<td>[% collection_row.support %]</td>
+								<td>[% collection_row.location %]</td>
+								<td>[% collection_row.nb_exemplaires %]</td>
+								<td>[% collection_row.nb_exemplaires_empruntables %]</td>
+								<td>[% collection_row.nb_exemplaires_excluspret %]</td>
+								<td>[% collection_row.nb_exemplaires_traitement %]</td>
+								<td>[% collection_row.nb_exemplaires_abimes %]</td>
+								<td>[% collection_row.nb_exemplaires_reparation_retrait %]</td>
+								<td>[% collection_row.nb_exemplaires_perdus %]</td>
+								<td>[% collection_row.nb_exemplaires_non_restitues %]</td>
 							</tr>    
 							[% END %]
 				</tbody>

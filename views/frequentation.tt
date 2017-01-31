@@ -7,52 +7,24 @@
 			</div>
         </div>
 		
-	<div class="col-md-6 ">
-	<strong>Enregistrer une entrée ou une sortie :<br></strong>
-		<div>
-			<form method="post" action="/frequentation/etude/post">
-				<input type="text" name="cardnumber"><br>
-				<input type="submit" value="Valider">
-			</form>
-		</div>
+		<div class="container">
+		<ul class="nav nav-tabs">
+			<li class="nav active"><a href="#A" data-toggle="tab">Entrées journalières</a></li>
+			<li class="nav"><a href="#B" data-toggle="tab">Récapitulatif</a></li>
+		</ul>
 
-		<div>
-			[% IF (cardnumber) %]
-				[% IF entree == "entrée" %]
-					<br><strong class="text-success">[% cardnumber %] : [% entree %]</strong>
-				[% ELSIF entree == "sortie" %]
-					<br><strong class="text-warning">[% cardnumber %] : [% entree %]</strong>
-				[% END %]
-			[% ELSE %]
-				<br><strong class="text-danger">[% entree %]</strong>
-			[% END %]
+    <!-- Tab panes -->
+		<div class="tab-content">
+			<div class="tab-pane fade in active" id="A">
+				<div class="container">
+					[% INCLUDE frequentation_form.tt %]
+				</div>
+			</div>
+		
+			<div class="tab-pane fade" id="B">
+				<div class="container">
+					[% INCLUDE frequentation_synth.tt %]
+				</div>			
+			<div>
 		</div>
-	</div>
-		
-		
-		<div class="col-md-6 ">
-		<strong>Lecteurs du jour :</strong>
-		<table class="table table-bordered table-striped table-condensed">
-				
-				<thead>
-							<tr>
-								<th>Carte</th>
-								<th>Heure d'entrée</th>
-								<th>Heure de sortie</th>
-								<th>Temps de présence</th>
-							</tr>
-				</thead>
-				<tbody>
-							[% FOREACH lecteur IN lecteurs_presents %]
-							<tr>
-								<td>[% lecteur.cardnumber %]</td>
-								<td>[% lecteur.entree %]</td>
-								<td>[% lecteur.sortie %]</td>
-								<td>[% lecteur.duree %]</td>
-							</tr>
-							[% END %]
-				</tbody>
-		</table>
-		</div>
-		
 	</div>

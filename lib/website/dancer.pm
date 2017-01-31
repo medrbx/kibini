@@ -142,7 +142,7 @@ get '/grand-plage/collections/collection' => sub {
 get '/grand-plage/collections/collection/details' => sub {
 		my $ccode = params->{'ccode'} ;
 		my $site = params->{'site'} ;
-		my $composition = GetCcodeDetailsComposition($ccode, $site) ;
+		my $collection = GetCcodeDetails($ccode, $site) ;
 		my $ccodesLib = GetCcode() ;
 		my $lib_ccode = GetLibAV( $ccode, 'COLLECTION' ) ;
         template 'poldoc_collection', {
@@ -151,7 +151,7 @@ get '/grand-plage/collections/collection/details' => sub {
                 label3 => 'Détail par collection',
 				ccodesLib => $ccodesLib,
 				ccode => $lib_ccode,
-				composition => $composition
+				collection => $collection
         };
 };
 
@@ -437,9 +437,11 @@ post 'suggestions/mod' => sub {
 # Fréquentation étude
 get 'frequentation/etude' => sub {
 		my $lecteurs_presents = GetTodayEntrance() ;
+		my $jours = GetPastEntrances() ;
         template 'frequentation', {
                 label1 => "Fréquentation de la salle d'étude",
-				lecteurs_presents => $lecteurs_presents
+				lecteurs_presents => $lecteurs_presents,
+				jours => $jours
         };
 };
 
@@ -455,12 +457,23 @@ post 'frequentation/etude/post' => sub {
 			}
 		}
 		my $lecteurs_presents = GetTodayEntrance() ;
+		my $jours = GetPastEntrances() ;
         template 'frequentation', {
                 label1 => "Fréquentation de la salle d'étude",
 				entree => $action,
 				cardnumber => $cardnumber,
-				lecteurs_presents => $lecteurs_presents
+				lecteurs_presents => $lecteurs_presents,
+				jours => $jours
         };
+};
+
+get 'frequentation/etude/visites' => sub {
+	template 'kibana', {
+		label1 => 'La Grand-Plage',
+		label2 => 'Salle d\'étude',
+		label3 => 'Nombre de visites par jour',
+		iframe => '<iframe src="http://129.1.0.237:5601/app/kibana#/dashboard/Salle-d\'%C3%A9tude?embed=true&_g=(refreshInterval:(display:Off,pause:!f,value:0),time:(from:now-7d,mode:quick,to:now))&_a=(filters:!(),options:(darkTheme:!f),panels:!((col:1,id:\'Entr%C3%A9es-par-jour-en-salle-d!\'%C3%A9tude\',panelIndex:1,row:1,size_x:12,size_y:3,type:visualization),(col:7,id:Nombre-de-visiteurs-uniques-par-jour,panelIndex:3,row:4,size_x:6,size_y:4,type:visualization),(col:1,id:\'Nombre-d!\'entr%C3%A9es-par-jour-dans-la-salle-d!\'%C3%A9tude\',panelIndex:4,row:4,size_x:6,size_y:4,type:visualization)),query:(query_string:(analyze_wildcard:!t,query:\'*\')),title:\'Salle%20d!\'%C3%A9tude\',uiState:(P-1:(vis:(legendOpen:!f))))" height="900" width="900"></iframe>'
+	};
 };
 
 # Action culturelle

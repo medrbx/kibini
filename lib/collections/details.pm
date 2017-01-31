@@ -2,7 +2,7 @@ package collections::details ;
 
 use Exporter ;
 @ISA = qw( Exporter ) ;
-@EXPORT = qw( GetCcodeDetailsComposition ) ;
+@EXPORT = qw( GetCcodeDetails ) ;
 
 use strict ;
 use warnings ;
@@ -10,11 +10,11 @@ use warnings ;
 use kibini::db ;
 use collections::poldoc ;
 
-sub GetCcodeDetailsComposition {
+sub GetCcodeDetails {
 	my ($ccode, $site) = @_ ;
 	my $dbh = GetDbh() ;
 	my $statPoldocCollectionsMaxDate = _GetStatPoldocCollectionsMaxDate($dbh) ;
-	my $req = "SELECT * FROM statdb.stat_poldoc_collections WHERE date = ? AND ccode = ? AND site = ?" ;
+	my $req = "SELECT * FROM statdb.stat_poldoc_collections WHERE date = ? AND ccode = ? AND site = ? AND nb_exemplaires > 10" ;
 	my $sth = $dbh->prepare($req) ;
 	$sth->execute($statPoldocCollectionsMaxDate, $ccode, $site) ;
 	my @rows ;
