@@ -995,3 +995,27 @@ webkiosk:
         session_poste:
           index: not_analyzed
           type: string
+action_culturelle:
+  mappings:
+    actions:
+      properties:
+        date:
+          format: yyyy-MM-dd
+          type: date
+        action:
+          index: not_analyzed
+          type: string
+        lieu:
+          index: not_analyzed
+          type: string
+        type_action:
+          index: not_analyzed
+          type: string
+        public:
+          index: not_analyzed
+          type: string
+        partenariat:
+          index: not_analyzed
+          type: string
+        nb_participants:
+          type: integer
