@@ -94,6 +94,8 @@ adherents:
         sexe:
           index: not_analyzed
           type: string
+        nb_venues_pret:
+          type: integer
 adherents2015:
   mappings:
     inscrits:

@@ -11,6 +11,7 @@ use kibini::db ;
 use kibini::elasticsearch ;
 use kibini::log ;
 use kibini::time ;
+use adherents ;
 use fonctions ;
 
 my $log_message ;
@@ -152,6 +153,8 @@ SQL
         }
         
         my $id = $date.$borrowernumber ;
+		
+		my $nb_venues_pret = GetCountVisitsByLoans($borrowernumber) ;
         
         my %index = (
             index   => $index,
@@ -186,7 +189,8 @@ SQL
                 activite_emprunteur_med => $emprunteur_med,
                 activite_emprunteur_bus => $emprunteur_bus,
                 activite_utilisateur_webkiosk => $utilisateur_webkiosk,
-                action => $attribute
+                action => $attribute,
+				nb_venues_pret => $nb_venues_pret
             }
         ) ;
 
