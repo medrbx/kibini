@@ -153,8 +153,8 @@ SQL
         }
         
         my $id = $date.$borrowernumber ;
-		
-		my $nb_venues_pret = GetCountVisitsByLoans($borrowernumber) ;
+        
+        my $nb_venues_pret = GetCountVisitsByLoans($borrowernumber) ;
         
         my %index = (
             index   => $index,
@@ -190,7 +190,7 @@ SQL
                 activite_emprunteur_bus => $emprunteur_bus,
                 activite_utilisateur_webkiosk => $utilisateur_webkiosk,
                 action => $attribute,
-				nb_venues_pret => $nb_venues_pret
+                nb_venues_pret => $nb_venues_pret
             }
         ) ;
 

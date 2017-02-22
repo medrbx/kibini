@@ -30,80 +30,80 @@ $log_message = "$process : ending\n" ;
 AddCrontabLog($log_message) ;
 
 sub es_freq_etude {
-	my ( $es_node ) = @_ ;
-	my %params = ( nodes => $es_node ) ;
-	my $index = "freq_etude" ;
-	my $type = "consultations" ;
-	
+    my ( $es_node ) = @_ ;
+    my %params = ( nodes => $es_node ) ;
+    my $index = "freq_etude" ;
+    my $type = "consultations" ;
+    
     my $esMaxEntranceDateTime = GetEsMaxDateTime($index, $type, 'date') ;
 
-	my $e = Search::Elasticsearch->new( %params ) ;
+    my $e = Search::Elasticsearch->new( %params ) ;
 
-	my $dbh = GetDbh() ;
-	my $req = <<SQL;
+    my $dbh = GetDbh() ;
+    my $req = <<SQL;
 SELECT
-	datetime_entree,
-	duree,
-	SHA1(borrowernumber),
-	sexe,
-	age,
-	categorycode,
-	ville,
-	iris
+    datetime_entree,
+    duree,
+    SHA1(borrowernumber),
+    sexe,
+    age,
+    categorycode,
+    ville,
+    iris
 FROM statdb.stat_freq_etude
 WHERE DATE(datetime_entree) >= ?
 SQL
 
-	my $sth = $dbh->prepare($req);
-	$sth->execute($esMaxEntranceDateTime);
-	my $i = 0 ; 
-	while (my @row = $sth->fetchrow_array) {
-		my ( $datetime_entree, $duree, $borrowernumber, $sexe, $age, $categorycode, $ville, $iris ) = @row ;
+    my $sth = $dbh->prepare($req);
+    $sth->execute($esMaxEntranceDateTime);
+    my $i = 0 ; 
+    while (my @row = $sth->fetchrow_array) {
+        my ( $datetime_entree, $duree, $borrowernumber, $sexe, $age, $categorycode, $ville, $iris ) = @row ;
 
-		my ( $irisNom, $quartier ) = undef ;
-		if (defined $iris) {
-			($irisNom, $quartier) = quartier_rbx($iris) ;
-		}
-	
-		my ( $age_lib1, $age_lib2, $age_lib3 ) ;
-		if ( defined $age ) { 
-			$age_lib1 = age($age, "trmeda") ;
-			$age_lib2 = age($age, "trmedb") ;
-			$age_lib3 = age($age, "trinsee") ;
-		}
+        my ( $irisNom, $quartier ) = undef ;
+        if (defined $iris) {
+            ($irisNom, $quartier) = quartier_rbx($iris) ;
+        }
+    
+        my ( $age_lib1, $age_lib2, $age_lib3 ) ;
+        if ( defined $age ) { 
+            $age_lib1 = age($age, "trmeda") ;
+            $age_lib2 = age($age, "trmedb") ;
+            $age_lib3 = age($age, "trinsee") ;
+        }
 
-		my ( $carte, $personnalite ) = category($categorycode) ;
-		
-		my $type_carte = type_carte($categorycode) ;
+        my ( $carte, $personnalite ) = category($categorycode) ;
+        
+        my $type_carte = type_carte($categorycode) ;
 
-		$duree = GetMinutesFromTime($duree) ;
-	
-		my %index = (
-			index   => $index,
-			type    => $type,
-			#id      => $id,
-			body    => {
-				lecteur_age => $age,
-				lecteur_age_lib1 => $age_lib1,
-				lecteur_age_lib2 => $age_lib2,
-				lecteur_age_lib3 => $age_lib3,
-				lecteur_carte => $carte,
-				lecteur_id => $borrowernumber,
-				lecteur_rbx_iris => $iris,
-				lecteur_rbx_nom_iris => $irisNom,
-				lecteur_rbx_quartier => $quartier,
-				lecteur_sexe => $sexe,
-				lecteur_type_carte => $type_carte,
-				lecteur_ville => $ville,
-				date => $datetime_entree,
-				consultation_duree => $duree
-			}
-		) ;
+        $duree = GetMinutesFromTime($duree) ;
+    
+        my %index = (
+            index   => $index,
+            type    => $type,
+            #id      => $id,
+            body    => {
+                lecteur_age => $age,
+                lecteur_age_lib1 => $age_lib1,
+                lecteur_age_lib2 => $age_lib2,
+                lecteur_age_lib3 => $age_lib3,
+                lecteur_carte => $carte,
+                lecteur_id => $borrowernumber,
+                lecteur_rbx_iris => $iris,
+                lecteur_rbx_nom_iris => $irisNom,
+                lecteur_rbx_quartier => $quartier,
+                lecteur_sexe => $sexe,
+                lecteur_type_carte => $type_carte,
+                lecteur_ville => $ville,
+                date => $datetime_entree,
+                consultation_duree => $duree
+            }
+        ) ;
 
-		$e->index(%index) ;
-		$i++ ;	
-	}
-	$sth->finish();
-	$dbh->disconnect();
-	return $i ;
+        $e->index(%index) ;
+        $i++ ;    
+    }
+    $sth->finish();
+    $dbh->disconnect();
+    return $i ;
 }
