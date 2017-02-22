@@ -7,28 +7,27 @@ use FindBin qw( $Bin );
 # use Data::Dumper
 
 use lib "$Bin/../lib" ;
-use dbrequest ;
+use kibini::db ;
 
 # On détermine le coef de correction
-my $bdd = "statdb" ;
-my $dbh = dbh($bdd) ;
+my $dbh = GetDbh() ; ;
 my $req = <<SQL;
 SELECT COUNT(IF(altcontactcountry LIKE '59%', borrowernumber, NULL)) / COUNT(borrowernumber)
 FROM koha_prod.borrowers
 WHERE city = 'ROUBAIX'
-	AND categorycode IN ('BIBL', 'CSVT', 'CSLT', 'MEDA', 'MEDB', 'MEDC')
-	AND dateexpiry >= CURDATE()
+    AND categorycode IN ('BIBL', 'CSVT', 'CSLT', 'MEDA', 'MEDB', 'MEDC')
+    AND dateexpiry >= CURDATE()
 SQL
 
 my $sth = $dbh->prepare($req);
-$sth->execute(); 	
+$sth->execute();     
 my $coeff = $sth->fetchrow_array;
 $sth->finish();
 
 # On calcule le nb de personnes par iris
 $req = <<SQL;
 SELECT
-	irisInsee,
+    irisInsee,
     SUM(nb_hab) AS hab
 FROM statdb.iris_pop
 GROUP BY irisInsee
@@ -38,7 +37,7 @@ $sth = $dbh->prepare($req);
 $sth->execute();
 my %irisHab ;
 while(my $iris = $sth->fetchrow_hashref()) {
-	$irisHab{$iris->{irisInsee}} = $iris->{hab} ;
+    $irisHab{$iris->{irisInsee}} = $iris->{hab} ;
 }
 $sth->finish();
 
@@ -49,20 +48,20 @@ print $fic "iris_id,pc_inscrits\n" ;
 
 foreach my $k (keys(%irisHab)) {
 
-	$req = <<SQL;
-	SELECT 
-		COUNT(borrowernumber) / $coeff / $irisHab{$k}
-	FROM koha_prod.borrowers
-	WHERE city = 'ROUBAIX'
-		AND categorycode IN ('BIBL', 'CSVT', 'CSLT', 'MEDA', 'MEDB', 'MEDC')
-		AND dateexpiry >= CURDATE()
-		AND altcontactcountry = $k
+    $req = <<SQL;
+    SELECT 
+        COUNT(borrowernumber) / $coeff / $irisHab{$k}
+    FROM koha_prod.borrowers
+    WHERE city = 'ROUBAIX'
+        AND categorycode IN ('BIBL', 'CSVT', 'CSLT', 'MEDA', 'MEDB', 'MEDC')
+        AND dateexpiry >= CURDATE()
+        AND altcontactcountry = $k
 SQL
-	$sth = $dbh->prepare($req);
-	$sth->execute();
-	my $count = $sth->fetchrow_array;
-	my $arrondi = arrondi($count, 2) ;
-	print $fic "$k,$arrondi\n" ;
+    $sth = $dbh->prepare($req);
+    $sth->execute();
+    my $count = $sth->fetchrow_array;
+    my $arrondi = arrondi($count, 2) ;
+    print $fic "$k,$arrondi\n" ;
 
 }
 $sth->finish();
