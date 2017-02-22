@@ -8,7 +8,6 @@ use strict ;
 use warnings ;
 
 use kibini::db ;
-use fonctions ;
 
 sub ModEntranceAddingData {
     my $dbh = GetDbh() ;

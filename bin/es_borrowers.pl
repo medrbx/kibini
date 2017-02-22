@@ -12,7 +12,7 @@ use kibini::elasticsearch ;
 use kibini::log ;
 use kibini::time ;
 use adherents ;
-use fonctions ;
+use collections::poldoc ;
 
 my $log_message ;
 my $process = "es_borrowers.pl" ;
@@ -90,9 +90,9 @@ SQL
     while (my @row = $sth->fetchrow_array) {
         my ( $date, $borrowernumber, $sexe, $age, $city, $zipcode, $country, $iris, $email, $phone, $mobile, $branchcode, $categorycode, $dateenrolled, $dateexpiry, $fidelite, $emprunteur, $emprunteur_med, $emprunteur_bus, $utilisateur_webkiosk, $attribute ) = @row ;
         
-        my $ville15 = ville15($city) ;
+        my $ville15 = GetCity15($city) ;
         
-        my ( $carte, $personnalite ) = category($categorycode) ;
+        my ( $carte, $personnalite ) = GetCategoryDesc($categorycode) ;
         
         if ( $personnalite eq "C" ) {
             $personnalite = "Personne" ;
@@ -100,22 +100,22 @@ SQL
             $personnalite = "Collectivité" ;
         }
         
-        my $type_carte = type_carte($categorycode) ;
+        my $type_carte = GetCardType($categorycode) ;
         
-        my $branch = branches($branchcode) ;
+        my $branch = GetLibBranches($branchcode) ;
 
         my ( $irisNom, $quartier ) = undef ;
         if (defined $iris) {
-            ($irisNom, $quartier) = quartier_rbx($iris) ;
+            ($irisNom, $quartier) = GetGeoRBX($iris) ;
         }
     
         my ( $age_lib1, $age_lib2, $age_lib3 ) ;
         if ( $age eq "NP" ) { 
             $age = undef ;
         } else {
-            $age_lib1 = age($age, "trmeda") ;
-            $age_lib2 = age($age, "trmedb") ;
-            $age_lib3 = age($age, "trinsee") ;
+            $age_lib1 = GetAgeLib($age, "trmeda") ;
+            $age_lib2 = GetAgeLib($age, "trmedb") ;
+            $age_lib3 = GetAgeLib($age, "trinsee") ;
         }
     
         my $communication ;
@@ -149,7 +149,7 @@ SQL
         }
         
         if (length $attribute) {
-            $attribute = av($attribute, "ACTION") ;
+            $attribute = GetLibAV($attribute, "ACTION") ;
         }
         
         my $id = $date.$borrowernumber ;

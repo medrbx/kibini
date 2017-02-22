@@ -4,6 +4,30 @@ use Exporter ;
 @ISA = qw(Exporter) ;
 @EXPORT = qw( age av branches category ccodeniveaux datetime date_form date_veille duree_pret duree es_maxdatetime espace getdataccode getdataitem getitemtype itemnumbermax lib_sll log_file quartier_rbx retard type_carte ville15 ) ;
 
+# Ne plus utiliser ce module. Voir la correspondance suivante :
+#    age => adherents::GetAgeLib
+#    av => collections::poldoc::GetLibAv
+#    branches => collections::poldoc::GetLibBranches
+#    category => adherents::GetCategoryDesc
+#    ccodeniveaux => collections::poldoc::GetCcodeLibLevels
+#    datetime => kibini::time::GetDateTime('now')
+#    date_form => kibini::time::GetSplitDateTime
+#    date_veille => kibini::time::GetDateTime('yesterday')
+#    duree_pret => kibini::time::GetDuration
+#    duree => kibini::time::GetDuration
+#    es_maxdatetime => kibini::time::GetEsMaxDateTime
+#    espace => webkiosk::GetWkLocation
+#    getdataccode => collections::poldoc::GetDataCcodeFromItemnumber
+#    getdataitem => collections::poldoc::GetDataItemsFromItemnumber
+#    getitemtype => collections::poldoc::GetItemtypeFromBiblionumber
+#    itemnumbermax => 
+#    lib_sll => collections::poldoc::GetLibSLL
+#    log_file => kibini::log::AddCrontabLog
+#    quartier_rbx => 
+#    retard => kibini::time::GetDuration
+#    type_carte => adherents::GetCardType
+#    ville15 => adherents::GetCity15
+
 use strict ;
 use warnings ;
 use DBI ;
