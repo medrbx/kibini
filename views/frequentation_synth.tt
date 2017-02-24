@@ -1,26 +1,26 @@
-	<div class="col-md-6 ">
-		<br/>
-		<strong>Récapitulatif des 10 derniers jours :</strong>
+    <div class="col-md-6 ">
+        <br/>
+        <strong>Récapitulatif des 10 derniers jours :</strong>
 
-		<table class="table table-bordered table-striped table-condensed">
-				
-				<thead>
-							<tr>
-								<th>Date</th>
-								<th>Nb entrées</th>
-								<th>Nb utilisateurs distincts</th>
-							</tr>
-				</thead>
-				<tbody>
-							[% FOREACH jour IN jours %]
-							<tr>
-								<td>[% jour.date %]</td>
-								<td>[% jour.nb_entrees %]</td>
-								<td>[% jour.nb_utilisateurs %]</td>
-							</tr>
-							[% END %]
-				</tbody>
-				
-		</table>
-		
-	</div>
+        <table class="table table-bordered table-striped table-condensed">
+                
+                <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Nb entrées</th>
+                                <th>Nb utilisateurs distincts</th>
+                            </tr>
+                </thead>
+                <tbody>
+                            [% FOREACH jour IN jours %]
+                            <tr>
+                                <td>[% jour.date %]</td>
+                                <td>[% jour.nb_entrees %]</td>
+                                <td>[% jour.nb_utilisateurs %]</td>
+                            </tr>
+                            [% END %]
+                </tbody>
+                
+        </table>
+        
+    </div>

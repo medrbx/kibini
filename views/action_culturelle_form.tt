@@ -1,108 +1,108 @@
-			<form method="post" action="/form/action_culturelle/post">
+            <form method="post" action="/form/action_culturelle/post">
 
-				<div class="form-group ">
-					<label class="control-label" for="date">
-						Date
-					</label>
-					<input class="form-control" id="datepicker" name="date" type="text"/>
-				</div>
-				
-				<div class="form-group ">
-					<label class="control-label" for="action">
-						Nom de l'action
-					</label>
-					<input class="form-control" id="action" name="action" type="text"/>
-				</div>
-				
-				<div class="form-group ">
-					<label class="control-label" for="lieu">
-						Lieu de l'action
-					</label>
-					<select class="form-control" name="lieu" id="lieu">
-						<option selected="selected"></option>
-						<option value="La Criée">La Criée</option>
-						<option value="Espace RDC">Espace RDC</option>
-						<option value="Coffeebook">Coffeebook</option>
-						<option value="Patio">Patio</option>
-						<option value="Espace 1er étage">Espace 1er étage</option>
-						<option value="Espace Jeunesse">Espace Jeunesse</option>
-						<option value="Salle d'heure du conte">Salle d'heure du conte</option>
-						<option value="Salle d'aide aux devoirs">Salle d'aide aux devoirs</option>
-						<option value="Salle d'étude">Salle d'étude</option>
-						<option value="Phare">Phare</option>
-						<option value="Espace multimédia">Espace multimédia</option>
-						<option value="Salle VDM">Salle VDM</option>
-						<option value="Hors les murs">Hors les murs</option>
-					</select>
-				</div>
+                <div class="form-group ">
+                    <label class="control-label" for="date">
+                        Date
+                    </label>
+                    <input class="form-control" id="datepicker" name="date" type="text"/>
+                </div>
+                
+                <div class="form-group ">
+                    <label class="control-label" for="action">
+                        Nom de l'action
+                    </label>
+                    <input class="form-control" id="action" name="action" type="text"/>
+                </div>
+                
+                <div class="form-group ">
+                    <label class="control-label" for="lieu">
+                        Lieu de l'action
+                    </label>
+                    <select class="form-control" name="lieu" id="lieu">
+                        <option selected="selected"></option>
+                        <option value="La Criée">La Criée</option>
+                        <option value="Espace RDC">Espace RDC</option>
+                        <option value="Coffeebook">Coffeebook</option>
+                        <option value="Patio">Patio</option>
+                        <option value="Espace 1er étage">Espace 1er étage</option>
+                        <option value="Espace Jeunesse">Espace Jeunesse</option>
+                        <option value="Salle d'heure du conte">Salle d'heure du conte</option>
+                        <option value="Salle d'aide aux devoirs">Salle d'aide aux devoirs</option>
+                        <option value="Salle d'étude">Salle d'étude</option>
+                        <option value="Phare">Phare</option>
+                        <option value="Espace multimédia">Espace multimédia</option>
+                        <option value="Salle VDM">Salle VDM</option>
+                        <option value="Hors les murs">Hors les murs</option>
+                    </select>
+                </div>
 
-				<div class="form-group ">
-					<label class="control-label" for="type">
-						Type d'action
-					</label>
-					<select class="form-control" name="type" id="type">
-						<option selected="selected"></option>
-						<option value="Lecture">Lecture</option>
-						<option value="Atelier">Atelier</option>
-						<option value="Jeux">Jeux</option>
-						<option value="Rencontre">Rencontre</option>
-						<option value="Danse">Danse</option>
-						<option value="Spectacle">Spectacle</option>
-						<option value="Théâtre">Théâtre</option>
-						<option value="Concert">Concert</option>
-						<option value="Vente">Vente</option>
-						<option value="Journée festive">Journée festive</option>
-						<option value="Conférence musicale">Conférence musicale</option>
-						<option value="Concert dessiné">Concert dessiné</option>
-						<option value="Exposition">Exposition</option>
-						<option value="Diffusion">Diffusion</option>
-						<option value="Création ressources">Création ressources</option>
-						<option value="Autre">Autre</option>
-					</select>
-				</div>				
+                <div class="form-group ">
+                    <label class="control-label" for="type">
+                        Type d'action
+                    </label>
+                    <select class="form-control" name="type" id="type">
+                        <option selected="selected"></option>
+                        <option value="Lecture">Lecture</option>
+                        <option value="Atelier">Atelier</option>
+                        <option value="Jeux">Jeux</option>
+                        <option value="Rencontre">Rencontre</option>
+                        <option value="Danse">Danse</option>
+                        <option value="Spectacle">Spectacle</option>
+                        <option value="Théâtre">Théâtre</option>
+                        <option value="Concert">Concert</option>
+                        <option value="Vente">Vente</option>
+                        <option value="Journée festive">Journée festive</option>
+                        <option value="Conférence musicale">Conférence musicale</option>
+                        <option value="Concert dessiné">Concert dessiné</option>
+                        <option value="Exposition">Exposition</option>
+                        <option value="Diffusion">Diffusion</option>
+                        <option value="Création ressources">Création ressources</option>
+                        <option value="Autre">Autre</option>
+                    </select>
+                </div>                
 
-				<div class="form-group ">
-					<label class="control-label" for="public">
-						Public cible
-					</label>
-					<select class="form-control" name="public" id="public">
-						<option selected="selected"></option>
-						<option value="Tout public">Tout public</option>
-						<option value="Familles">Familles</option>
-						<option value="Enfants">Enfants</option>
-						<option value="Adultes">Adultes</option>
-						<option value="Adolescents">Adolescents</option>
-						<option value="Petite enfance">Petite enfance</option>
-						<option value="Parents">Parents</option>
-					</select>
-				</div>					
-				
-				<div class="form-group ">
-					<label class="control-label" for="partenariat">
-						Partenariat
-					</label>
-					<input class="form-control" id="partenariat" name="partenariat" type="text"/>
-				</div>				
+                <div class="form-group ">
+                    <label class="control-label" for="public">
+                        Public cible
+                    </label>
+                    <select class="form-control" name="public" id="public">
+                        <option selected="selected"></option>
+                        <option value="Tout public">Tout public</option>
+                        <option value="Familles">Familles</option>
+                        <option value="Enfants">Enfants</option>
+                        <option value="Adultes">Adultes</option>
+                        <option value="Adolescents">Adolescents</option>
+                        <option value="Petite enfance">Petite enfance</option>
+                        <option value="Parents">Parents</option>
+                    </select>
+                </div>                    
+                
+                <div class="form-group ">
+                    <label class="control-label" for="partenariat">
+                        Partenariat
+                    </label>
+                    <input class="form-control" id="partenariat" name="partenariat" type="text"/>
+                </div>                
 
-				<div class="form-group ">
-					<label class="control-label" for="participants">
-						Nombre de participants
-					</label>
-					<input class="form-control" id="participants" name="participants" type="text"/>
-				</div>				
+                <div class="form-group ">
+                    <label class="control-label" for="participants">
+                        Nombre de participants
+                    </label>
+                    <input class="form-control" id="participants" name="participants" type="text"/>
+                </div>                
 
-				<div class="form-group">
-					<div>
-						<button class="btn btn-primary " name="submit" type="submit">
-							Valider
-						</button>
-					</div>
-				</div>
-			</form>
-			
-	<script>
-		$( function() {
-			$.datepicker.setDefaults($.datepicker.regional["fr"]);
-			$( "#datepicker" ).datepicker({dateFormat: "yy-mm-dd"});
-		} );
-	</script>
+                <div class="form-group">
+                    <div>
+                        <button class="btn btn-primary " name="submit" type="submit">
+                            Valider
+                        </button>
+                    </div>
+                </div>
+            </form>
+            
+    <script>
+        $( function() {
+            $.datepicker.setDefaults($.datepicker.regional["fr"]);
+            $( "#datepicker" ).datepicker({dateFormat: "yy-mm-dd"});
+        } );
+    </script>

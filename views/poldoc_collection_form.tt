@@ -1,36 +1,36 @@
-			<form method="get" action="/grand-plage/collections/collection/details">
+            <form method="get" action="/grand-plage/collections/collection/details">
 
-				<div class="form-group col-sm-3">
-					<label class="control-label" for="Site">
-						Site
-					</label>
-					<select class="form-control" name="site" id="site">
-						<option value="GP">Grand-Plage</option>
-						<option selected value="MD">Médiathèque</option>
-						<option value="ZB">Zèbre</option>
-						<option value="CL">Collectivités</option>
-					</select>
-				</div>
+                <div class="form-group col-sm-3">
+                    <label class="control-label" for="Site">
+                        Site
+                    </label>
+                    <select class="form-control" name="site" id="site">
+                        <option value="GP">Grand-Plage</option>
+                        <option selected value="MD">Médiathèque</option>
+                        <option value="ZB">Zèbre</option>
+                        <option value="CL">Collectivités</option>
+                    </select>
+                </div>
 
-				<div class="form-group col-sm-6">
-					<label class="control-label" for="ccode">
-						Code de collection
-					</label>
-					<select class="form-control" name="ccode" id="ccode">
-						<option selected="selected"></option>
-						[% FOREACH ccodeLib IN ccodesLib %]
-						<option value="[% ccodeLib.ccode %]">[% ccodeLib.lib %]</option>
-						[% END %]
-					</select>
-				</div>								
+                <div class="form-group col-sm-6">
+                    <label class="control-label" for="ccode">
+                        Code de collection
+                    </label>
+                    <select class="form-control" name="ccode" id="ccode">
+                        <option selected="selected"></option>
+                        [% FOREACH ccodeLib IN ccodesLib %]
+                        <option value="[% ccodeLib.ccode %]">[% ccodeLib.lib %]</option>
+                        [% END %]
+                    </select>
+                </div>                                
 
-		
-				<div>
-					</br>
-					<button class="btn btn-primary " name="submit" type="submit">
-						Valider
-					</button>
-				</div>
-				
-			</form>
-			
+        
+                <div>
+                    </br>
+                    <button class="btn btn-primary " name="submit" type="submit">
+                        Valider
+                    </button>
+                </div>
+                
+            </form>
+            

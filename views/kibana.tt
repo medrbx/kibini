@@ -1,26 +1,26 @@
         <div id="sidebar">
-			[% INCLUDE 'includes/sidebar.tt' %]
-		</div>
+            [% INCLUDE 'includes/sidebar.tt' %]
+        </div>
         <div class="col-sm-9">
 <!-- Utile si on veut mettre un message en page d'accueil
-			<div class="panel panel-danger">
-				<div class="panel-heading">En juillet, Kibini se permet quelques écarts de conduite : entrées et données webkiosk pas à jour entre le 19 et le 31/07. Désolés !</div>
-			</div>
--->			
+            <div class="panel panel-danger">
+                <div class="panel-heading">En juillet, Kibini se permet quelques écarts de conduite : entrées et données webkiosk pas à jour entre le 19 et le 31/07. Désolés !</div>
+            </div>
+-->            
             <div class="panel panel-primary">
 
                 <div class="panel-heading">
                     <strong>
-					[% label1 %]<span>   </span><i class="glyphicon glyphicon-chevron-right"></i><span>   </span>[% label2 %]<span>   </span><i class="glyphicon glyphicon-chevron-right"></i><span>   </span>[% label3 %]
-					</strong>
-				</div>
-				<div class="panel-body">
-				
-				    <div class="embed-responsive embed-responsive-4by3" style="padding-bottom: [% dashboard.height %];">
-					    <iframe class="embed-responsive-item" src="[% dashboard.src %]"></iframe>
-				    </div>
-				
-				</div>
+                    [% label1 %]<span>   </span><i class="glyphicon glyphicon-chevron-right"></i><span>   </span>[% label2 %]<span>   </span><i class="glyphicon glyphicon-chevron-right"></i><span>   </span>[% label3 %]
+                    </strong>
+                </div>
+                <div class="panel-body">
+                
+                    <div class="embed-responsive embed-responsive-4by3" style="padding-bottom: [% dashboard.height %];">
+                        <iframe class="embed-responsive-item" src="[% dashboard.src %]"></iframe>
+                    </div>
+                
+                </div>
             </div>
-			
+            
         </div>

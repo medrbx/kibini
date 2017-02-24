@@ -1,36 +1,36 @@
-		<h2>Evolution</h2>
-		 
-		<table class="table table-bordered table-striped table-condensed" id="mytable">
-				
-				<thead>
-							<tr>
-								<th>Support</th>
-								<th>Localisation</th>
-								<th>Exemplaires</th>
-								<th>Ex. empruntables</th>
-								<th>Ex. exclus du prêt</th>
-								<th>Ex. en traitement</th>
-								<th>Ex. abîmés</th>
-								<th>Ex. en réparation / retrait</th>
-								<th>Ex. perdus</th>
-								<th>Ex. non restitués</th>								
-							</tr>
-				</thead>
-				<tbody>
-							[% FOREACH collection_row IN collection %]
-							<tr>
-								<td>[% collection_row.support %]</td>
-								<td>[% collection_row.location %]</td>
-								<td>[% collection_row.nb_exemplaires %]</td>
-								<td>[% collection_row.nb_exemplaires_empruntables %]</td>
-								<td>[% collection_row.nb_exemplaires_excluspret %]</td>
-								<td>[% collection_row.nb_exemplaires_traitement %]</td>
-								<td>[% collection_row.nb_exemplaires_abimes %]</td>
-								<td>[% collection_row.nb_exemplaires_reparation_retrait %]</td>
-								<td>[% collection_row.nb_exemplaires_perdus %]</td>
-								<td>[% collection_row.nb_exemplaires_non_restitues %]</td>
-							</tr>    
-							[% END %]
-				</tbody>
-		</table>
-		
+        <h2>Evolution</h2>
+         
+        <table class="table table-bordered table-striped table-condensed" id="mytable">
+                
+                <thead>
+                            <tr>
+                                <th>Support</th>
+                                <th>Localisation</th>
+                                <th>Exemplaires</th>
+                                <th>Ex. empruntables</th>
+                                <th>Ex. exclus du prêt</th>
+                                <th>Ex. en traitement</th>
+                                <th>Ex. abîmés</th>
+                                <th>Ex. en réparation / retrait</th>
+                                <th>Ex. perdus</th>
+                                <th>Ex. non restitués</th>                                
+                            </tr>
+                </thead>
+                <tbody>
+                            [% FOREACH collection_row IN collection %]
+                            <tr>
+                                <td>[% collection_row.support %]</td>
+                                <td>[% collection_row.location %]</td>
+                                <td>[% collection_row.nb_exemplaires %]</td>
+                                <td>[% collection_row.nb_exemplaires_empruntables %]</td>
+                                <td>[% collection_row.nb_exemplaires_excluspret %]</td>
+                                <td>[% collection_row.nb_exemplaires_traitement %]</td>
+                                <td>[% collection_row.nb_exemplaires_abimes %]</td>
+                                <td>[% collection_row.nb_exemplaires_reparation_retrait %]</td>
+                                <td>[% collection_row.nb_exemplaires_perdus %]</td>
+                                <td>[% collection_row.nb_exemplaires_non_restitues %]</td>
+                            </tr>    
+                            [% END %]
+                </tbody>
+        </table>
+        

@@ -1,31 +1,31 @@
         <div id="sidebar">
-			[% INCLUDE 'includes/sidebar.tt' %]
-		</div>
+            [% INCLUDE 'includes/sidebar.tt' %]
+        </div>
         <div class="col-sm-9">
             <div class="panel panel-primary">
 
                 <div class="panel-heading">
                     <strong>
-					[% label1 %]<span>   </span><i class="glyphicon glyphicon-chevron-right"></i><span>   </span>[% label2 %]<span>   </span><i class="glyphicon glyphicon-chevron-right"></i><span>   </span>[% label3 %]
-					</strong>
-				</div>
-				<div class="panel-body">
-				
-				[% INCLUDE poldoc_collection_form.tt %]
-				
-				[% IF ccode %]
-				
-				<h1>[% ccode %]</h1>
-				
-				[% INCLUDE poldoc_collection_composition.tt %]
-				
-				[% INCLUDE poldoc_collection_evolution.tt %]
-				
-				[% INCLUDE poldoc_collection_usages.tt %]
-				
-				[% END %]
-				
-				</div>
+                    [% label1 %]<span>   </span><i class="glyphicon glyphicon-chevron-right"></i><span>   </span>[% label2 %]<span>   </span><i class="glyphicon glyphicon-chevron-right"></i><span>   </span>[% label3 %]
+                    </strong>
+                </div>
+                <div class="panel-body">
+                
+                [% INCLUDE poldoc_collection_form.tt %]
+                
+                [% IF ccode %]
+                
+                <h1>[% ccode %]</h1>
+                
+                [% INCLUDE poldoc_collection_composition.tt %]
+                
+                [% INCLUDE poldoc_collection_evolution.tt %]
+                
+                [% INCLUDE poldoc_collection_usages.tt %]
+                
+                [% END %]
+                
+                </div>
             </div>
-			
+            
         </div>

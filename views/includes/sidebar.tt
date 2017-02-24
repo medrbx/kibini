@@ -1,9 +1,9 @@
         <div class="col-sm-3">
             <div class="panel panel-primary">
-			<div class="panel-heading">
+            <div class="panel-heading">
                     <strong>Tableaux de bord<strong>
-			</div>
-			<div class="panel-body">
+            </div>
+            <div class="panel-body">
             <p class="sdtitre"><strong>La Grand-Plage</strong></p>
 
 
@@ -11,8 +11,8 @@
                 <li class="nav-header"><a>Inscrits</a>
                     <ul class="nav nav-stacked" id="userMenu1">
                         <li><a href="/grand-plage/inscrits/mois"><span class="sd">Inscrits par mois</span></a></li>
-						<li><a href="/grand-plage/inscrits/nouveaux"><span class="sd">Nouveaux inscrits</span></a></li>
-			<li><a href="/grand-plage/inscrits/ensemble"><span class="sd">Inscrits et actifs</span></a></li>
+                        <li><a href="/grand-plage/inscrits/nouveaux"><span class="sd">Nouveaux inscrits</span></a></li>
+            <li><a href="/grand-plage/inscrits/ensemble"><span class="sd">Inscrits et actifs</span></a></li>
                         <li><a href="/grand-plage/inscrits/age"><span class="sd">Inscrits par âge</span></a></li>
                         <li><a href="/grand-plage/inscrits/carte"><span class="sd">Inscrits par types de carte</span></a></li>
                         <li><a href="/grand-plage/inscrits/villes"><span class="sd">Inscrits par villes et quartiers</span></a></li>
@@ -20,9 +20,9 @@
                     </ul>
                 </li>
                 <li class="nav-header"> <a>Collections</a></li>
- <!--                       <li><a href="/grand-plage/collections/details"><span class="sd">Principaux indicateurs</span></a></li>	-->
+ <!--                       <li><a href="/grand-plage/collections/details"><span class="sd">Principaux indicateurs</span></a></li>    -->
                         <li><a href="/grand-plage/collections/prets"><span class="sd">Prêts</span></a></li>
-		<li class="nav-header"> <a href="/grand-plage/web/connexions">Sites web : bn-r et portail</a></li>
+        <li class="nav-header"> <a href="/grand-plage/web/connexions">Sites web : bn-r et portail</a></li>
             </ul>
 
             <hr>
@@ -41,12 +41,12 @@
                         <li><a href="/mediatheque/collections/ensemble"><span class="sd">Point sur les collections</span></a></li>
                         <li><a href="/mediatheque/collections/emprunteurs"><span class="sd">Profil des emprunteurs</span></a></li>
                         <li><a href="/mediatheque/collections/prets/totaux"><span class="sd">Prêts sur 12 mois</span></a></li>
-			<li><a href="/mediatheque/collections/prets/details"><span class="sd">Prêts par semaine et par mois</span></a></li>
-                        <li><a href="/mediatheque/collections/transactions"><span class="sd">Transactions par heures et espaces</span></a></li>		
-						<li><a href="/mediatheque/collections/reservations"><span class="sd">Réservations</span></a></li>
-						<li><a href="/mediatheque/collections/reservations/utilisateurs"><span class="sd">Profil des utilisateurs du service réservations</span></a></li>
-                    </ul>				
-				</li>
+            <li><a href="/mediatheque/collections/prets/details"><span class="sd">Prêts par semaine et par mois</span></a></li>
+                        <li><a href="/mediatheque/collections/transactions"><span class="sd">Transactions par heures et espaces</span></a></li>        
+                        <li><a href="/mediatheque/collections/reservations"><span class="sd">Réservations</span></a></li>
+                        <li><a href="/mediatheque/collections/reservations/utilisateurs"><span class="sd">Profil des utilisateurs du service réservations</span></a></li>
+                    </ul>                
+                </li>
                 <li class="nav-header"> <a> Usages des postes informatiques</a>
                     <ul class="nav nav-stacked" id="userMenu2c">
                         <li class="active"><a href="/mediatheque/postes/utilisateurs"><span class="sd">Profil des utilisateurs</span></a></li>
@@ -54,7 +54,7 @@
                     </ul>
                 </li>
             </ul>
-			
+            
             <hr>
 
             <p class="sdtitre"><strong>Le Zèbre : activités et usages</strong></p>
@@ -64,13 +64,13 @@
                 <li><a href="/zebre/collections/ensemble">Point sur les collections</a></li>
                 <li><a href="/zebre/collections/emprunteurs">Profil des emprunteurs</a></li>
                 <li><a href="/zebre/collections/prets/totaux">Prêts sur 12 mois</a></li>
-				<li><a href="/zebre/collections/prets/details">Prêts par semaine et par mois</a></li>
+                <li><a href="/zebre/collections/prets/details">Prêts par semaine et par mois</a></li>
                 <li><a href="/zebre/collections/transactions">Transactions par arrêts</a></li>
                 <li><a href="/zebre/collections/reservations">Réservations</a></li>
             </ul>
 
             <hr>
-			
+            
             <p class="sdtitre"><strong>Les Collectivités : activités et usages</strong></p>
 
             <ul class="nav nav-stacked">
@@ -78,11 +78,11 @@
                 <li><a href="/collectivites/collections/ensemble">Point sur les collections</a></li>
                 <li><a href="/collectivites/collections/emprunteurs">Profil des emprunteurs</a></li>
                 <li><a href="/collectivites/collections/prets/totaux">Prêts sur 12 mois</a></li>
-				<li><a href="/collectivites/collections/prets/details">Prêts par semaine et par mois</a></li>
+                <li><a href="/collectivites/collections/prets/details">Prêts par semaine et par mois</a></li>
             </ul>
 
             <hr>
-			
+            
             <p class="sdtitre"><strong>La Grand-Plage : synthèses pluri-annuelles</strong></p>
 
             <ul class="nav nav-stacked">
@@ -91,7 +91,7 @@
                 <li><a href="/grand-plage/syntheses/collections">Collections</a></li>
                 <li><a href="/grand-plage/syntheses/prets">Prêts</a></li>
             </ul>
-			
+            
         </div>
-		</div>
-		</div>
+        </div>
+        </div>

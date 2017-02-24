@@ -29,8 +29,8 @@
   
 [% INCLUDE 'includes/navbar.tt' %]
 
-	<div class="container-fluid">
-		<div class="row">
+    <div class="container-fluid">
+        <div class="row">
 
         [% content %]
 
