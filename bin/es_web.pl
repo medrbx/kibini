@@ -24,9 +24,9 @@ my @types = qw( site bn-r ) ;
 
 my $nb = 0 ;
 for my $type (@types) {
-	my $es_maxdatetime = GetEsMaxDateTime("web", $type, "date") ;
-	my $i = web( $es_maxdatetime, $es_node, $index, $type ) ;
-	$nb = $nb + $i ;
+    my $es_maxdatetime = GetEsMaxDateTime("web", $type, "date") ;
+    my $i = web( $es_maxdatetime, $es_node, $index, $type ) ;
+    $nb = $nb + $i ;
 }
 
 # On log la fin de l'opération
@@ -34,46 +34,46 @@ $log_message = "$process : $nb rows indexed" ;
 AddCrontabLog($log_message) ;
 $log_message = "$process : ending\n" ;
 AddCrontabLog($log_message) ;
-	
+    
 sub web {
-	my ( $date, $es_node, $index, $type ) = @_ ;
-	my %params = ( nodes => $es_node ) ;
+    my ( $date, $es_node, $index, $type ) = @_ ;
+    my %params = ( nodes => $es_node ) ;
 
-	my $e = Search::Elasticsearch->new( %params ) ;
+    my $e = Search::Elasticsearch->new( %params ) ;
 
-	my $dbh = GetDbh() ;
-	my $req = <<SQL;
+    my $dbh = GetDbh() ;
+    my $req = <<SQL;
 SELECT
-	date,
-	site,
-	nb_sessions,
-	nb_pages_vues
+    date,
+    site,
+    nb_sessions,
+    nb_pages_vues
 FROM statdb.stat_web
 WHERE site = ? AND date > ?
 SQL
 
-	my $sth = $dbh->prepare($req);
-	$sth->execute($type, $date);
-	my $i = 0 ;
-	while (my @row = $sth->fetchrow_array) {
-		my ( $date, $site, $nb_sessions, $nb_pages_vues ) = @row ;
-		
-		my %index = (
-			index   => $index,
-			type    => $type,
-			body    => {
-				date => $date,
-				site => $site,
-				nb_sessions => $nb_sessions,
-				nb_pages_vues => $nb_pages_vues
-			}
-		) ;
+    my $sth = $dbh->prepare($req);
+    $sth->execute($type, $date);
+    my $i = 0 ;
+    while (my @row = $sth->fetchrow_array) {
+        my ( $date, $site, $nb_sessions, $nb_pages_vues ) = @row ;
+        
+        my %index = (
+            index   => $index,
+            type    => $type,
+            body    => {
+                date => $date,
+                site => $site,
+                nb_sessions => $nb_sessions,
+                nb_pages_vues => $nb_pages_vues
+            }
+        ) ;
 
-		$e->index(%index) ;
+        $e->index(%index) ;
 
-		$i++ ;	
-	}
-	$sth->finish();
-	$dbh->disconnect();
-	return $i ;
+        $i++ ;    
+    }
+    $sth->finish();
+    $dbh->disconnect();
+    return $i ;
 }

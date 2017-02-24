@@ -28,9 +28,9 @@ SQL
 open my $fic, "<", "/home/kibini/webkioskAccessLog.csv";
 
 my $csv = Text::CSV->new ({
-	binary    => 1, # permet caractères spéciaux (?)
-	auto_diag => 1, # permet diagnostic immédiat des erreurs
-	});
+    binary    => 1, # permet caractères spéciaux (?)
+    auto_diag => 1, # permet diagnostic immédiat des erreurs
+    });
 
 my $sth = $dbh->prepare($req);
 

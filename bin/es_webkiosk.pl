@@ -7,11 +7,13 @@ use Search::Elasticsearch ;
 use FindBin qw( $Bin ) ;
 
 use lib "$Bin/../lib" ;
-use fonctions ;
 use kibini::db ;
 use kibini::elasticsearch ;
 use kibini::log ;
 use kibini::time ;
+use collections::poldoc ;
+use adherents ;
+use webkiosk ;
 
 my $log_message ;
 my $process = "es_webkiosk.pl" ;
@@ -68,29 +70,29 @@ SQL
         if (length $heure_fin) {
             $duree = GetDuration( $heure_deb, $heure_fin, "minutes" ) ;
         }
-        my $espace = espace($groupe) ;
+        my $espace = GetWkLocation($groupe) ;
         
         my ( $age_lib1, $age_lib2, $age_lib3 ) ;
         if ( $age eq "NP" ) { 
             $age = undef ;
         } else {
-            $age_lib1 = age($age, "trmeda") ;
-            $age_lib2 = age($age, "trmedb") ;
-            $age_lib3 = age($age, "trinsee") ;
+            $age_lib1 = GetAgeLib($age, "trmeda") ;
+            $age_lib2 = GetAgeLib($age, "trmedb") ;
+            $age_lib3 = GetAgeLib($age, "trinsee") ;
         }
-        my ( $carte, $personnalite ) = category($categorycode) ;
+        my ( $carte, $personnalite ) = GetCategoryDesc($categorycode) ;
         if ( $personnalite eq "C" )    {
             $personnalite = "Personne" ;
         } else {
             $personnalite = "Collectivité" ;
         }
         
-        my $type_carte = type_carte($categorycode) ;
+        my $type_carte = GetCardType($categorycode) ;
         
-        $branchcode = branches($branchcode) ;
+        $branchcode = GetLibBranches($branchcode) ;
         my ( $irisNom, $quartier ) = undef ;
         if (defined $iris) {
-            ($irisNom, $quartier) = quartier_rbx($iris) ;
+            ($irisNom, $quartier) = GetRbxDistrict($iris) ;
         }
         
         my %index = (

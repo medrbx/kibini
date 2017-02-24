@@ -11,7 +11,7 @@ use kibini::db ;
 use kibini::elasticsearch ;
 use kibini::log ;
 use kibini::time ;
-use fonctions ;
+use adherents ;
 
 my $log_message ;
 my $process = "es_borrowers_synth.pl" ;
@@ -68,15 +68,15 @@ SQL
     while (my @row = $sth->fetchrow_array) {
         my ( $roubaix, $categorycode, $age, $activite_emprunteur, $nb ) = @row ;
         
-        my ( $carte, $personnalite ) = category($categorycode) ;
+        my ( $carte, $personnalite ) = GetCategoryDesc($categorycode) ;
         
         my ( $age_lib1, $age_lib2, $age_lib3 ) ;
         if ( $age eq "NP" ) { 
             $age = undef ;
         } else {
-            $age_lib1 = age($age, "trmeda") ;
-            $age_lib2 = age($age, "trmedb") ;
-            $age_lib3 = age($age, "trinsee") ;
+            $age_lib1 = GetAgeLib($age, "trmeda") ;
+            $age_lib2 = GetAgeLib($age, "trmedb") ;
+            $age_lib3 = GetAgeLib($age, "trinsee") ;
         }
         
         my %index = (

@@ -31,7 +31,7 @@ sub GetDbh {
 
 
 sub GetAllArrayRef {
-    my ($req) = @_ ;	
+    my ($req) = @_ ;    
     my $dbh = GetDbh() ;
     my $sth = $dbh->prepare($req) ;
     $sth->execute() ; 

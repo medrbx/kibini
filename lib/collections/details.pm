@@ -11,29 +11,29 @@ use kibini::db ;
 use collections::poldoc ;
 
 sub GetCcodeDetails {
-	my ($ccode, $site) = @_ ;
-	my $dbh = GetDbh() ;
-	my $statPoldocCollectionsMaxDate = _GetStatPoldocCollectionsMaxDate($dbh) ;
-	my $req = "SELECT * FROM statdb.stat_poldoc_collections WHERE date = ? AND ccode = ? AND site = ? AND nb_exemplaires > 10" ;
-	my $sth = $dbh->prepare($req) ;
-	$sth->execute($statPoldocCollectionsMaxDate, $ccode, $site) ;
-	my @rows ;
-	while ( my $row = $sth->fetchrow_hashref ) {
-		$row->{'support'} = GetLibAV( $row->{'support'}, 'ccode' ) ;
-		$row->{'location'} = GetLibAV( $row->{'location'}, 'LOC' ) ;
-		push @rows, $row ;
-	}
-	$sth->finish() ;
-	return \@rows ;
+    my ($ccode, $site) = @_ ;
+    my $dbh = GetDbh() ;
+    my $statPoldocCollectionsMaxDate = _GetStatPoldocCollectionsMaxDate($dbh) ;
+    my $req = "SELECT * FROM statdb.stat_poldoc_collections WHERE date = ? AND ccode = ? AND site = ? AND nb_exemplaires > 10" ;
+    my $sth = $dbh->prepare($req) ;
+    $sth->execute($statPoldocCollectionsMaxDate, $ccode, $site) ;
+    my @rows ;
+    while ( my $row = $sth->fetchrow_hashref ) {
+        $row->{'support'} = GetLibAV( $row->{'support'}, 'ccode' ) ;
+        $row->{'location'} = GetLibAV( $row->{'location'}, 'LOC' ) ;
+        push @rows, $row ;
+    }
+    $sth->finish() ;
+    return \@rows ;
 }
 
 sub _GetStatPoldocCollectionsMaxDate {
-	my ($dbh) = @_ ;
-	my $req = "SELECT MAX(date) FROM statdb.stat_poldoc_collections" ;
-	my $sth = $dbh->prepare($req) ;
-	$sth->execute() ;
-	return $sth->fetchrow_array() ;
-	$sth->finish() ;
+    my ($dbh) = @_ ;
+    my $req = "SELECT MAX(date) FROM statdb.stat_poldoc_collections" ;
+    my $sth = $dbh->prepare($req) ;
+    $sth->execute() ;
+    return $sth->fetchrow_array() ;
+    $sth->finish() ;
 }
 
 

@@ -15,9 +15,9 @@ use kibini::elasticsearch ;
 sub GetDateTime {
     my ($k) = @_ ;
     my $datetime ;
-	
+    
     my $dt = DateTime->now(time_zone=>'local') ;
-	
+    
     if ( defined $k ) {
         if ( $k eq 'now' ) {
             $datetime = DateTime::Format::MySQL->format_datetime($dt) ; # YYYY-MM-DD HH:MM:SS
@@ -41,21 +41,21 @@ sub GetSplitDateTime {
     my ($datetime) = @_ ;
 
     my $dt = DateTime::Format::MySQL->parse_datetime($datetime) ;
-	
+    
     my $year =  $dt->year() ;
-	
+    
     my $month = $dt->month() ;
     if ($month < 10 ) {
         $month = "0".$month ;
     }
-	
+    
     my $week_number = $dt->week_number() ;
     if ($week_number < 10 ) {
         $week_number = "0".$week_number ;
     }
-	
+    
     my $day = $dt->day() ;
-	
+    
     my $dow = $dt->dow() ;
     my %dowfr = (
         1 => "1 Lundi",
@@ -67,12 +67,12 @@ sub GetSplitDateTime {
         7 => "7 Dimanche"
     ) ;
     $dow = $dowfr{$dow} ;
-	
+    
     my $hour = $dt->hour() ;
     if ($hour < 10 ) {
         $hour = "0".$hour ;
     }
-	
+    
     return $year, $month, $week_number, $day, $dow, $hour ;
 }
 
@@ -84,7 +84,7 @@ sub GetDuration {
     if ( defined $datetime1 && defined $datetime2 ) {
         my $dt1 = DateTime::Format::MySQL->parse_datetime($datetime1) ;
         my $dt2 = DateTime::Format::MySQL->parse_datetime($datetime2) ;
-		
+        
         if ( $type eq 'days' ) {
             $duration = $dt1->delta_days($dt2)->in_units('days') ;
         } elsif ( $type eq 'hours' ) {
@@ -100,7 +100,7 @@ sub GetDuration {
             $duration = $formatter->format_duration($duration);
         }
     }
-	
+    
     return $duration ;
 }
 

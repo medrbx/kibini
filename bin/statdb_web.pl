@@ -5,8 +5,6 @@ use warnings ;
 use JSON ;
 use WWW::Mechanize;
 use HTTP::Cookies ;
-use DateTime ;
-use DateTime::Format::MySQL ;
 use FindBin qw( $Bin ) ;
 use YAML qw(LoadFile) ;
 use Data::Dumper ;
@@ -44,27 +42,27 @@ sub portail_veille_sessions {
     my $period = "day" ;
     my $format = "json" ;
     my $url_stat = "$piwik_url_api&method=$method&idSite=$idSite&period=$period&date=$date&format=$format&token_auth=$piwik_token_auth" ;
-	
+    
     my $mech = WWW::Mechanize->new(
         agent      => 'MedRbx',
         cookie_jar => HTTP::Cookies->new( autosave       => 1 )
     ) ;
-	
+    
     $mech->get($url_stat);
     my $result = $mech->response()->decoded_content() ;
     $result = decode_json $result ;
     my %result = %$result ;
     my $value = $result{'value'} ;
-	
+    
     return $value ;
 }
 
 sub insertWebSessions {
     my ( $date, $site, $nbSessions ) = @_ ;
-	
+    
     my $dbh = GetDbh() ;
     my $req = "INSERT INTO statdb.stat_web (date, site, nb_sessions) VALUES (?, ?, ?)" ;
-    my $sth = $dbh->prepare($req) ;	
+    my $sth = $dbh->prepare($req) ;    
     $sth->execute($date, $site, $nbSessions ) ;
     $sth->finish() ;
     $dbh->disconnect() ;

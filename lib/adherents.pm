@@ -2,7 +2,7 @@ package adherents ;
 
 use Exporter ;
 @ISA = qw(Exporter) ;
-@EXPORT = qw( GetAgeLib GetCategoryDesc GetCountVisitsByLoans GetCardType GetCity15 ) ;
+@EXPORT = qw( GetAgeLib GetCategoryDesc GetCountVisitsByLoans GetCardType GetCity15 GetRbxDistrict ) ;
 
 use strict ;
 use warnings ;
@@ -21,14 +21,14 @@ sub GetAgeLib {
 }
 
 sub GetCategoryDesc {
-	my ($categorycode) = @_ ;
-	my $dbh = GetDbh() ;
-	my $req = "SELECT description, category_type FROM koha_prod.categories WHERE categorycode = ? " ;
-	my $sth = $dbh->prepare($req);
-	$sth->execute($categorycode);
-	return $sth->fetchrow_array ;
-	$sth->finish();
-	$dbh->disconnect();
+    my ($categorycode) = @_ ;
+    my $dbh = GetDbh() ;
+    my $req = "SELECT description, category_type FROM koha_prod.categories WHERE categorycode = ? " ;
+    my $sth = $dbh->prepare($req);
+    $sth->execute($categorycode);
+    return $sth->fetchrow_array ;
+    $sth->finish();
+    $dbh->disconnect();
 }
 
 sub GetCountVisitsByLoans {
@@ -74,6 +74,18 @@ sub GetCity15 {
         $ville15 = "AUTRE" ;
     }
     return $ville15 ;
+}
+
+sub GetRbxDistrict {
+    my ($iris) = @_ ;
+    my $bdd = "statdb" ;
+    my $dbh = dbh($bdd) ;
+    my $req = "SELECT irisNom, quartier FROM iris_lib WHERE irisInsee = ?" ;
+    my $sth = $dbh->prepare($req);
+    $sth->execute($iris);
+    return $sth->fetchrow_array ;
+    $sth->finish();
+    $dbh->disconnect();
 }
 
 1 ;

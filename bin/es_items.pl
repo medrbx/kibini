@@ -10,7 +10,6 @@ use lib "$Bin/../lib" ;
 use kibini::db ;
 use kibini::elasticsearch ;
 use kibini::log ;
-use fonctions ;
 use collections::poldoc ;
 
 my $log_message ;
@@ -25,7 +24,7 @@ my $es_node = GetEsNode() ;
 # On supprime l'index items puis on le recrée :
 my $result = RegenerateIndex($es_node, "items") ;
 
-my $itemnumbermax = itemnumbermax() ;
+my $itemnumbermax = GetMaxItemnumber() ;
 my $delta = 100 ;
 
 my $nb = 0 ;
@@ -103,8 +102,8 @@ SQL
             $lib4 = "NP" ;
         }
 
-        $homebranch = branches($homebranch) ;
-        $holdingbranch = branches($holdingbranch) ;
+        $homebranch = GetLibBranches($homebranch) ;
+        $holdingbranch = GetLibBranches($holdingbranch) ;
 
 #    if (!defined $price) {
 #        $price = 0 ;
@@ -128,16 +127,16 @@ SQL
             $itemcallnumber = "Non renseigné" ;
         }
     
-        my ( $sll_public, $sll_acces, $sll_collection, $sll_prets_coll, $sll_prets ) = lib_sll( $ccode, $location, $itemtype ) ;
+        my ( $sll_public, $sll_acces, $sll_collection, $sll_prets_coll, $sll_prets ) = GetLibSLL( $ccode, $location, $itemtype ) ;
 
-        $itemtype = av($itemtype, "ccode") ;
-        $location = av($location, "LOC") ;
-        $notforloan = av($notforloan, "ETAT") ;
-        $damaged = av($damaged, "DAMAGED") ;
-        $withdrawn = av($withdrawn, "RETIRECOLL") ;
-        $itemlost = av($itemlost, "LOST") ;
-		
-		my $pret12 = IsLoanedByItemnumber($itemnumber, 12) ;
+        $itemtype = GetLibAV($itemtype, "ccode") ;
+        $location = GetLibAV($location, "LOC") ;
+        $notforloan = GetLibAV($notforloan, "ETAT") ;
+        $damaged = GetLibAV($damaged, "DAMAGED") ;
+        $withdrawn = GetLibAV($withdrawn, "RETIRECOLL") ;
+        $itemlost = GetLibAV($itemlost, "LOST") ;
+        
+        my $pret12 = IsLoanedByItemnumber($itemnumber, 12) ;
 
         $e->index(
             index   => $index,
@@ -172,7 +171,7 @@ SQL
                 cote => $itemcallnumber,
                 annee_publication => $publicationyear,
                 prix => $price,
-				pret12 => $pret12
+                pret12 => $pret12
             }
         ) ;
         $i++ ;
@@ -180,4 +179,14 @@ SQL
     $sth->finish();
     $dbh->disconnect();
     return $i ;
+}
+
+sub GetMaxItemnumber {
+    my $dbh = GetDbh() ;
+    my $req = "SELECT max(itemnumber) FROM koha_prod.items" ;
+    my $sth = $dbh->prepare($req);
+    $sth->execute();
+    return $sth->fetchrow_array ;
+    $sth->finish();
+    $dbh->disconnect();    
 }

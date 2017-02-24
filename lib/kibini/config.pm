@@ -8,11 +8,11 @@ use FindBin qw( $Bin );
 use YAML qw(LoadFile) ;
 
 sub GetConfig {
-	my ($k) = @_ ;
+    my ($k) = @_ ;
 
     my $file = "$Bin/../etc/kibini_conf.yaml" ;
     my $file_conf = LoadFile($file);
-	
+    
     my $conf ;
     if ( defined $k ) {
         my %config = (

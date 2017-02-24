@@ -10,7 +10,7 @@ use kibini::db ;
 use kibini::elasticsearch ;
 use kibini::log ;
 use kibini::time ;
-use fonctions ;
+use adherents ;
 
 my $log_message ;
 my $process = "es_freq_etude.pl" ;
@@ -62,19 +62,19 @@ SQL
 
         my ( $irisNom, $quartier ) = undef ;
         if (defined $iris) {
-            ($irisNom, $quartier) = quartier_rbx($iris) ;
+            ($irisNom, $quartier) = GetRbxDistrict($iris) ;
         }
     
         my ( $age_lib1, $age_lib2, $age_lib3 ) ;
         if ( defined $age ) { 
-            $age_lib1 = age($age, "trmeda") ;
-            $age_lib2 = age($age, "trmedb") ;
-            $age_lib3 = age($age, "trinsee") ;
+            $age_lib1 = GetAgeLib($age, "trmeda") ;
+            $age_lib2 = GetAgeLib($age, "trmedb") ;
+            $age_lib3 = GetAgeLib($age, "trinsee") ;
         }
 
-        my ( $carte, $personnalite ) = category($categorycode) ;
+        my ( $carte, $personnalite ) = GetCategoryDesc($categorycode) ;
         
-        my $type_carte = type_carte($categorycode) ;
+        my $type_carte = GetCardType($categorycode) ;
 
         $duree = GetMinutesFromTime($duree) ;
     

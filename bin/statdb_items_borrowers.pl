@@ -20,53 +20,53 @@ my $date = GetDateTime('today') ;
 # On complète la table statdb.stat_docentrees
 my $stat_docentrees = <<SQL;
 INSERT INTO statdb.stat_docentrees (
-	date_extraction,
-	biblionumber,
-	bibdatecreated,
-	itemtype,
-	itemnumber,
-	itemdateaccessioned,	
-	homebranch,
-	location,
-	itemcallnumber,
-	barcode,
-	datelastborrowed,
-	datelastseen,
-	notforloan,
-	damaged,
-	itemlost,
-	withdrawn,
-	issues,
-	renewals,
-	reserves,
-	onloan,
-	ccode,
-	price,
-	timestamp)
+    date_extraction,
+    biblionumber,
+    bibdatecreated,
+    itemtype,
+    itemnumber,
+    itemdateaccessioned,    
+    homebranch,
+    location,
+    itemcallnumber,
+    barcode,
+    datelastborrowed,
+    datelastseen,
+    notforloan,
+    damaged,
+    itemlost,
+    withdrawn,
+    issues,
+    renewals,
+    reserves,
+    onloan,
+    ccode,
+    price,
+    timestamp)
 SELECT
-	$date,
-	i.biblionumber,
-	b.datecreated,
-	bi.itemtype,
-	i.itemnumber,
-	i.dateaccessioned,	
-	i.homebranch,
-	i.location,
-	i.itemcallnumber,
-	i.barcode,
-	i.datelastborrowed,
-	i.datelastseen,
-	i.notforloan,
-	i.damaged,
-	i.itemlost,
-	i.withdrawn,
-	i.issues,
-	i.renewals,
-	i.reserves,
-	i.onloan,
-	i.ccode,
-	i.price,
-	i.timestamp
+    $date,
+    i.biblionumber,
+    b.datecreated,
+    bi.itemtype,
+    i.itemnumber,
+    i.dateaccessioned,    
+    i.homebranch,
+    i.location,
+    i.itemcallnumber,
+    i.barcode,
+    i.datelastborrowed,
+    i.datelastseen,
+    i.notforloan,
+    i.damaged,
+    i.itemlost,
+    i.withdrawn,
+    i.issues,
+    i.renewals,
+    i.reserves,
+    i.onloan,
+    i.ccode,
+    i.price,
+    i.timestamp
 FROM koha_prod.items i
 INNER JOIN koha_prod.biblio b ON b.biblionumber = i.biblionumber
 INNER JOIN koha_prod.biblioitems bi ON bi.biblionumber = i.biblionumber
@@ -144,21 +144,21 @@ my $dbh = GetDbh() ;
 
 my @req = ( $stat_docentrees, $stat_docex, $stat_borrowers_1, $stat_borrowers_2 ) ;
 for my $req (@req) {
-	my $sth = $dbh->prepare($req);
-	$sth->execute();
-	$sth->finish();
+    my $sth = $dbh->prepare($req);
+    $sth->execute();
+    $sth->finish();
 }
 
 # On anonymise stat_borrowers
 my @columns = qw( state email phone mobile contactname contactfirstname ) ;
 for my $column (@columns) { 
-	my $req = "UPDATE statdb.stat_borrowers SET $column = NULL WHERE $column = '' AND date = CURDATE()" ;
-	my $sth = $dbh->prepare($req);
-	$sth->execute();
-	$req =  "UPDATE statdb.stat_borrowers SET $column = 'X' WHERE $column IS NOT NULL AND date = CURDATE();" ;
-	$sth = $dbh->prepare($req);
-	$sth->execute();
-	$sth->finish();
+    my $req = "UPDATE statdb.stat_borrowers SET $column = NULL WHERE $column = '' AND date = CURDATE()" ;
+    my $sth = $dbh->prepare($req);
+    $sth->execute();
+    $req =  "UPDATE statdb.stat_borrowers SET $column = 'X' WHERE $column IS NOT NULL AND date = CURDATE();" ;
+    $sth = $dbh->prepare($req);
+    $sth->execute();
+    $sth->finish();
 }
 $dbh->disconnect();
 

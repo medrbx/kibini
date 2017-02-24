@@ -7,7 +7,6 @@ use FindBin qw( $Bin ) ;
 use lib "$Bin/../lib" ;
 use kibini::db ;
 use kibini::log ;
-use fonctions ;
 
 my $log_message ;
 my $process = "statdb_borrowers.pl" ;
@@ -31,19 +30,19 @@ $sth->execute($date);
 
 my $i = 0 ;
 while (my $borrowernumber = $sth->fetchrow_array) {
-	# On cherche la date du dernier prêt
-	my $req = "SELECT MAX(DATE(issuedate)) FROM statdb.stat_issues WHERE borrowernumber = ? AND DATE(issuedate) < ? " ;
-	my $sth = $dbh->prepare($req);
-	$sth->execute($borrowernumber, $date);
-	my $date_dernier_pret = $sth->fetchrow_array ;
-	$sth->finish();
+    # On cherche la date du dernier prêt
+    my $req = "SELECT MAX(DATE(issuedate)) FROM statdb.stat_issues WHERE borrowernumber = ? AND DATE(issuedate) < ? " ;
+    my $sth = $dbh->prepare($req);
+    $sth->execute($borrowernumber, $date);
+    my $date_dernier_pret = $sth->fetchrow_array ;
+    $sth->finish();
 
-	# On cherche la date de la dernière connexion webkiosk
-	$req = "SELECT MAX(DATE(heure_deb)) FROM statdb.stat_webkiosk WHERE borrowernumber = ? AND DATE(heure_deb) < ? " ;
-	$sth = $dbh->prepare($req);
-	$sth->execute($borrowernumber, $date);
-	my $date_dernier_conn = $sth->fetchrow_array ;
-	$sth->finish();
+    # On cherche la date de la dernière connexion webkiosk
+    $req = "SELECT MAX(DATE(heure_deb)) FROM statdb.stat_webkiosk WHERE borrowernumber = ? AND DATE(heure_deb) < ? " ;
+    $sth = $dbh->prepare($req);
+    $sth->execute($borrowernumber, $date);
+    my $date_dernier_conn = $sth->fetchrow_array ;
+    $sth->finish();
 
     # On cherche la date de dernier prêt à la médiathèque
     $req = "SELECT MAX(DATE(issuedate)) FROM statdb.stat_issues WHERE borrowernumber = ? AND DATE(issuedate) < ? AND branch = 'MED'" ;
@@ -59,20 +58,20 @@ while (my $borrowernumber = $sth->fetchrow_array) {
     my $date_dernier_pret_bus = $sth->fetchrow_array ;
     $sth->finish();
 
-	
-	if (length $date_dernier_pret) {
-		my $req = "UPDATE statdb.stat_borrowers SET date_dernier_pret = ? WHERE borrowernumber = ? AND date = ?" ;
-		my $sth = $dbh->prepare($req);
-		$sth->execute($date_dernier_pret, $borrowernumber, $date);
-		$sth->finish();
-	}
+    
+    if (length $date_dernier_pret) {
+        my $req = "UPDATE statdb.stat_borrowers SET date_dernier_pret = ? WHERE borrowernumber = ? AND date = ?" ;
+        my $sth = $dbh->prepare($req);
+        $sth->execute($date_dernier_pret, $borrowernumber, $date);
+        $sth->finish();
+    }
 
-	if (length $date_dernier_conn) {
-		my $req = "UPDATE statdb.stat_borrowers SET date_dernier_conn = ? WHERE borrowernumber = ? AND date = ?" ;
-		my $sth = $dbh->prepare($req);
-		$sth->execute($date_dernier_conn, $borrowernumber, $date);
-		$sth->finish();
-	}
+    if (length $date_dernier_conn) {
+        my $req = "UPDATE statdb.stat_borrowers SET date_dernier_conn = ? WHERE borrowernumber = ? AND date = ?" ;
+        my $sth = $dbh->prepare($req);
+        $sth->execute($date_dernier_conn, $borrowernumber, $date);
+        $sth->finish();
+    }
 
     if (length $date_dernier_pret_med) {
         my $req = "UPDATE statdb.stat_borrowers SET date_dernier_pret_med = ? WHERE borrowernumber = ? AND date = ? " ;
@@ -88,7 +87,7 @@ while (my $borrowernumber = $sth->fetchrow_array) {
         $sth->finish();
     }
 
-	$i++ ;
+    $i++ ;
 }
 $sth->finish();
 $dbh->disconnect();
