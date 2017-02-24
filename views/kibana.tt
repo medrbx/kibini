@@ -16,7 +16,9 @@
 				</div>
 				<div class="panel-body">
 				
-				[% iframe %]
+				    <div class="embed-responsive embed-responsive-4by3" style="padding-bottom: [% dashboard.height %];">
+					    <iframe class="embed-responsive-item" src="[% dashboard.src %]"></iframe>
+				    </div>
 				
 				</div>
             </div>
