@@ -6,11 +6,11 @@ use utf8 ;
 # use Data::Dumper ; # pour débugage
 
 use kibini::email ;
+use adherents::qa ;
 use collections ;
 use collections::poldoc ;
 use collections::details ;
-use adherents::qa ;
-use suggestions ;
+use collectionssuggestions ;
 use salleEtude::form ;
 use action_culturelle ;
 
