@@ -29,9 +29,9 @@ lookup("type","catmandu_lk.txt", sep_char:'|',default:'NONE')
 
 
 if marc_match("033a","catalogue.bnf.fr")
-  set_field('vd_bnf','ok')
+    set_field('vd_bnf','ok')
 else
-	set_field('vd_bnf','ko')
+    set_field('vd_bnf','ko')
 end
 
 marc_map(091a,'vd_action')
