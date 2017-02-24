@@ -9,7 +9,7 @@ use kibini::email ;
 use collections ;
 use collections::poldoc ;
 use collections::details ;
-use qa ;
+use adherents::qa ;
 use suggestions ;
 use salleEtude::form ;
 use action_culturelle ;

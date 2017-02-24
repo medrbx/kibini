@@ -12,7 +12,7 @@ use kibini::elasticsearch ;
 use kibini::log ;
 use kibini::time ;
 use collections::poldoc ;
-use adherents ;
+use adherents::details ;
 
 my $log_message ;
 my $process = "es_reservations.pl" ;

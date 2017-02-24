@@ -11,6 +11,7 @@ use kibini::elasticsearch ;
 use kibini::log ;
 use kibini::time ;
 use collections::poldoc ;
+use adherents::details ;
 
 my $log_message ;
 my $process = "es_prets.pl" ;

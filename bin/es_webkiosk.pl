@@ -12,7 +12,7 @@ use kibini::elasticsearch ;
 use kibini::log ;
 use kibini::time ;
 use collections::poldoc ;
-use adherents ;
+use adherents::details ;
 use webkiosk ;
 
 my $log_message ;

@@ -11,7 +11,7 @@ use kibini::db ;
 use kibini::elasticsearch ;
 use kibini::log ;
 use kibini::time ;
-use adherents ;
+use adherents::details ;
 
 my $log_message ;
 my $process = "es_borrowers_synth.pl" ;
