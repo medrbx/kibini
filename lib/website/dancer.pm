@@ -7,10 +7,9 @@ use utf8 ;
 
 use kibini::email ;
 use adherents::qa ;
-use collections ;
 use collections::poldoc ;
 use collections::details ;
-use collectionssuggestions ;
+use collections::suggestions ;
 use salleEtude::form ;
 use action_culturelle ;
 
@@ -134,7 +133,7 @@ get '/grand-plage/inscrits/quartiers' => sub {
 
 # Collections
 get '/grand-plage/collections/details' => sub {
-    my $indicateurs = dataCollections(0) ;    
+    my $indicateurs = GetDataCollections(0) ;    
     template 'collections', {
         label1 => 'La Grand-Plage',
         label2 => 'Collections',
@@ -223,7 +222,7 @@ get '/mediatheque/frequentation/espaces' => sub {
 
 # Usages des collections
 get '/mediatheque/collections/ensemble' => sub {
-    my $indicateurs = dataCollections(1) ;    
+    my $indicateurs = GetDataCollections(1) ;    
     template 'collections', {
         label1 => 'Médiathèque',
         label2 => 'Collections',
@@ -330,7 +329,7 @@ get '/mediatheque/postes/connexions' => sub {
 # PARTIE 3 - Le Zèbre : activités et usages
 
 get '/zebre/collections/ensemble' => sub {
-    my $indicateurs = dataCollections(2) ;    
+    my $indicateurs = GetDataCollections(2) ;    
     template 'collections', {
         label1 => 'Le Zèbre',
         label2 => 'Collections',
@@ -397,7 +396,7 @@ get '/zebre/collections/reservations' => sub {
 # PARTIE 4 - Le service Collectivités : activités et usages
 
 get '/collectivites/collections/ensemble' => sub {
-    my $indicateurs = dataCollections(3) ;    
+    my $indicateurs = GetDataCollections(3) ;    
     template 'collections', {
         label1 => 'Collectivités',
         label2 => 'Collections',

@@ -2,10 +2,13 @@ package collections::details ;
 
 use Exporter ;
 @ISA = qw( Exporter ) ;
-@EXPORT = qw( GetCcodeDetails ) ;
+@EXPORT = qw( GetCcodeDetails GetDataCollections ) ;
 
 use strict ;
 use warnings ;
+use Encode qw(encode);
+use JSON ;
+use FindBin qw( $Bin );
 
 use kibini::db ;
 use collections::poldoc ;
@@ -25,6 +28,16 @@ sub GetCcodeDetails {
     }
     $sth->finish() ;
     return \@rows ;
+}
+
+sub GetDataCollections {
+    my ($index) = @_ ;
+    my $file = "$Bin/../public/data/collections.json";
+    open my $fic, "<", $file ;
+    my $json = <$fic> ;
+    close $fic;
+    my $collections_data = decode_json $json ;
+    return $collections_data->{'collection'}->[$index] ;
 }
 
 sub _GetStatPoldocCollectionsMaxDate {
