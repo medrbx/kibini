@@ -488,67 +488,67 @@ get '/grand-plage/syntheses/prets' => sub {
 
 # Contrôle qualité des inscriptions
 get '/qa/inscrits' => sub {
-        my $borrowers = qa_borrowers() ;
-        template 'qa_borrowers', {
-                label1 => 'Qualité du fichier adhérents',
-                borrowers => $borrowers
-        };
+    my $borrowers = qa_borrowers() ;
+    template 'qa_borrowers', {
+        label1 => 'Qualité du fichier adhérents',
+        borrowers => $borrowers
+    };
 };
 
 # Suggestions
 get 'suggestions' => sub {
-        my $suggestions = suggestions() ;
-        my $acquereurs = acquereurs() ;
-        template 'suggestions', {
-                label1 => 'Suggestions',
-                suggestions => $suggestions,
-                acquereurs => $acquereurs
-        };
+    my $suggestions = suggestions() ;
+    my $acquereurs = acquereurs() ;
+    template 'suggestions', {
+        label1 => 'Suggestions',
+        suggestions => $suggestions,
+        acquereurs => $acquereurs
+    };
 };
 
 post 'suggestions/mod' => sub {
-        my $suggestionid = param "suggestionid" ;
-        my $managedby = param "borrnummanagedby" ;
-        my $title = param "title" ;
-        modSuggestion($suggestionid, $managedby) ;
+    my $suggestionid = param "suggestionid" ;
+    my $managedby = param "borrnummanagedby" ;
+    my $title = param "title" ;
+    modSuggestion($suggestionid, $managedby) ;
             
-        my ($from, $to, $subject, $msg) = constructionCourriel($managedby, $title) ;
-        SendEmail($from, $to, $subject, $msg) ;
+    my ($from, $to, $subject, $msg) = constructionCourriel($managedby, $title) ;
+    SendEmail($from, $to, $subject, $msg) ;
         
-        redirect '/suggestions';
+    redirect '/suggestions';
 };
 
 # Fréquentation étude
 get 'frequentation/etude' => sub {
-        my $lecteurs_presents = GetTodayEntrance() ;
-        my $jours = GetPastEntrances() ;
-        template 'frequentation', {
-                label1 => "Fréquentation de la salle d'étude",
-                lecteurs_presents => $lecteurs_presents,
-                jours => $jours
-        };
+    my $lecteurs_presents = GetTodayEntrance() ;
+    my $jours = GetPastEntrances() ;
+    template 'frequentation', {
+        label1 => "Fréquentation de la salle d'étude",
+        lecteurs_presents => $lecteurs_presents,
+        jours => $jours
+    };
 };
 
 post 'frequentation/etude/post' => sub {
-        my $cardnumber = param "cardnumber" ;
-        my $action = "Attention : aucun code-barre n'a été saisi." ;
-        if ($cardnumber) {
-            my $entree = IsEntrance($cardnumber) ;
-            if ($entree == 0) {
-                $action = "sortie" ;
-            } elsif ($entree == 1) {
-                $action = "entrée" ;
-            }
+    my $cardnumber = param "cardnumber" ;
+    my $action = "Attention : aucun code-barre n'a été saisi." ;
+    if ($cardnumber) {
+        my $entree = IsEntrance($cardnumber) ;
+        if ($entree == 0) {
+            $action = "sortie" ;
+        } elsif ($entree == 1) {
+            $action = "entrée" ;
         }
-        my $lecteurs_presents = GetTodayEntrance() ;
-        my $jours = GetPastEntrances() ;
-        template 'frequentation', {
-                label1 => "Fréquentation de la salle d'étude",
-                entree => $action,
-                cardnumber => $cardnumber,
-                lecteurs_presents => $lecteurs_presents,
-                jours => $jours
-        };
+    }
+    my $lecteurs_presents = GetTodayEntrance() ;
+    my $jours = GetPastEntrances() ;
+    template 'frequentation', {
+        label1 => "Fréquentation de la salle d'étude",
+        entree => $action,
+        cardnumber => $cardnumber,
+        lecteurs_presents => $lecteurs_presents,
+        jours => $jours
+    };
 };
 
 get 'frequentation/etude/visites' => sub {
@@ -565,29 +565,29 @@ get 'frequentation/etude/visites' => sub {
 
 # Action culturelle
 get 'form/action_culturelle' => sub {
-        my $list_actions = list_actions() ;
-        template 'action_culturelle', {
-                label1 => "Action culturelle",
-                actions => $list_actions
-        };
+    my $list_actions = list_actions() ;
+    template 'action_culturelle', {
+        label1 => "Action culturelle",
+        actions => $list_actions
+    };
 };
 
 post 'form/action_culturelle/post' => sub {
-        my $date = params->{'date'} ;
-        my $action = params->{'action'} ;
-        my $lieu = params->{'lieu'} ;
-        my $type = params->{'type'} ;
-        my $public = params->{'public'} ;
-        my $partenariat = params->{'partenariat'} ;
-        my $participants = params->{'participants'} ;
+    my $date = params->{'date'} ;
+    my $action = params->{'action'} ;
+    my $lieu = params->{'lieu'} ;
+    my $type = params->{'type'} ;
+    my $public = params->{'public'} ;
+    my $partenariat = params->{'partenariat'} ;
+    my $participants = params->{'participants'} ;
         
-        insert_action_culturelle( $date, $action, $lieu, $type, $public, $partenariat, $participants ) ;
+    insert_action_culturelle( $date, $action, $lieu, $type, $public, $partenariat, $participants ) ;
         
-        my $list_actions = list_actions() ;
-        template 'action_culturelle', {
-                label1 => "Action culturelle",
-                actions => $list_actions
-        };
+    my $list_actions = list_actions() ;
+    template 'action_culturelle', {
+        label1 => "Action culturelle",
+        actions => $list_actions
+    };
 };
 
 
