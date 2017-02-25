@@ -27,7 +27,7 @@ my $i = prets($date_veille, $es_node) ;
 
 # On log la fin de l'opération
 $log_message = "$process : $i rows indexed" ;
-log_file($log_message) ;
+AddCrontabLog($log_message) ;
 $log_message = "$process : ending\n" ;
 AddCrontabLog($log_message) ;
 

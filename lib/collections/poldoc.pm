@@ -23,7 +23,7 @@ sub GetLibAV {
 sub GetLibBranches {
     my ($branchcode) = @_ ;
     my $dbh = GetDbh() ;
-    my $req = "SELECT koha_prod.branchname FROM branches WHERE branchcode = ?" ;
+    my $req = "SELECT branchname FROM koha_prod.branches WHERE branchcode = ?" ;
     my $sth = $dbh->prepare($req);
     $sth->execute($branchcode);
     return $sth->fetchrow_array ;

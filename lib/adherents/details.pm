@@ -78,9 +78,8 @@ sub GetCity15 {
 
 sub GetRbxDistrict {
     my ($iris) = @_ ;
-    my $bdd = "statdb" ;
-    my $dbh = dbh($bdd) ;
-    my $req = "SELECT irisNom, quartier FROM iris_lib WHERE irisInsee = ?" ;
+    my $dbh = GetDbh() ;
+    my $req = "SELECT irisNom, quartier FROM statdb.iris_lib WHERE irisInsee = ?" ;
     my $sth = $dbh->prepare($req);
     $sth->execute($iris);
     return $sth->fetchrow_array ;
