@@ -5,12 +5,10 @@ use Data::Dumper;
 use FindBin qw( $Bin );
 
 use lib "$Bin/../lib";
-use Adherent::StatDB;
+use Adherent;
+
+my $adh = { koha_borrowernumber => 3745 };
 
 
-my $dbh = "toto";
-my $adh = { sexe => 'M', age => 37 };
-my @args = ( { dbh => $dbh, adherent => $adh } );
-
-my $adherent = Adherent::StatDB->new( { dbh => $dbh, adherent => $adh } );
+my $adherent = Adherent->new( { adherent => $adh } );
 print Dumper($adherent);
