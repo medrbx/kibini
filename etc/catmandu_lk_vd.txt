@@ -1,0 +1,3 @@
+0|Aucune action
+1|Autorités seulement
+2|Notice bibliographique

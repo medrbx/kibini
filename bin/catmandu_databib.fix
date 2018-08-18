@@ -1,0 +1,52 @@
+marc_map(003_,bib.identifier)
+
+marc_map(200ae,bib.title.$append, join:", ")
+
+marc_map(700ab,bib.creator.$append, join:", ")
+marc_map(701ab,bib.creator.$append, join:", ")
+marc_map(710a,bib.creator.$append, join:", ")
+marc_map(711a,bib.creator.$append, join:", ")
+
+marc_map(702ab,bib.contributor.$append, join:", ")
+marc_map(712a,bib.contributor.$append, join:", ")
+
+marc_map(010a,bib.isbn.$append)
+marc_map(011a,bib.issn.$append)
+
+#replace_all(isbn.," .","")
+#replace_all(issn.," .","")
+
+marc_map(210c,bib.publisher.$append, join:", ")
+# replace_all(publisher,",$","")
+
+marc_map('100/9-12',bib.date)
+# replace_all(date,"\D+","")
+
+marc_map(600ab,bib.subject.$append, join:", ")
+marc_map(600ab,bib.subject_main.$append, join:", ")
+marc_map(606axyz,bib.subject.$append, join:" -- ")
+marc_map(606a,bib.subject_main.$append, join:" -- ")
+marc_map(609axyz,bib.subject.$append, join:" -- ")
+marc_map(609a,bib.subject_main.$append, join:" -- ")
+
+marc_map(101a,bib.language, join:"###")
+split_field('bib.language','###')
+lookup("bib.language.*","/home/kibini/kibini_prod/bin/catmandu_lk_lg.txt", sep_char:'|',default:'NONE')
+
+marc_map(099t, bib.type)
+lookup("bib.type","/home/kibini/kibini_prod/bin/catmandu_lk.txt", sep_char:'|',default:'NONE')
+
+marc_map(033a,bib.identifier_bnf)
+if marc_match("033a","catalogue.bnf.fr")
+    set_field('bib.identifier_bnf','ok')
+else
+    set_field('vd_bnf','ko')
+end
+
+marc_map(091a,'vd_action')
+lookup("vd_action","/home/kibini/kibini_prod/bin/catmandu_lk.txt", sep_char:'|',default:'NONE')
+marc_map(091b,'vd_date')
+
+copy_field(_id,biblionumber)
+
+retain(biblionumber, bib)

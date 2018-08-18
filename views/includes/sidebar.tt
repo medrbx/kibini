@@ -1,0 +1,90 @@
+        <div class="col-sm-3">
+            <div class="panel panel-primary">
+            <div class="panel-heading">
+                    <strong>Tableaux de bord<strong>
+            </div>
+            <div class="panel-body">
+            <p class="sdtitre"><strong>La Grand-Plage</strong></p>
+
+
+            <ul class="nav nav-stacked">
+                <li class="nav-header"></li>
+                        <li><a href="/grand-plage/activites"><span class="sd">Quelle activité ces 30 derniers jours ?</span></a></li>
+                        <li><a href="/grand-plage/inscrits/profils"><span class="sd">Qui sont les inscrits ?</span></a></li>
+                        <li><a href="/grand-plage/inscrits/usages"><span class="sd">Que font les inscrits ?</span></a></li>
+                        <li><a href="/grand-plage/inscrits/quartiers"><span class="sd">Quel taux d'inscription par quartier de Roubaix ?</span></a></li>
+                        <li><a href="/grand-plage/collections/documents"><span class="sd">Quelles collections ?</span></a></li>
+                        <li><a href="/grand-plage/collections/prets"><span class="sd">Nombre de prêts ?</span></a></li>
+                        <li><a href="/grand-plage/collections/reservations"><span class="sd">Quel usage du service des réservations ?</span></a></li>
+                        <li><a href="/grand-plage/web/portail"><span class="sd">Quel usage du portail ? </span></a></li>
+						<li><a href="/grand-plage/web/bnr"><span class="sd">Quel usage de la bn-r ? </span></a></li>
+            </ul>
+            
+            <hr>
+
+            <p class="sdtitre"><strong>La Médiathèque</strong></p>
+
+            <ul class="nav nav-stacked">
+                <li class="nav-header"></li>
+                <li><a href="/mediatheque/activites">Quelle activité par mois à la Médiathèque ?</a></li>
+                <li><a href="/mediatheque/collections/documents">Quelles collections ?</a></li>
+                <li><a href="/mediatheque/collections/prets">Nombre de prêts ?</a></li>
+                <li><a href="/mediatheque/collections/emprunteurs">Qui sont les emprunteurs ? </a></li>
+                <li><a href="/mediatheque/collections/emprunteurs/details">Qui emprunte quoi ?</a></li>
+                <li><a href="/mediatheque/webkiosk/profils">Qui utilise le service Webkiosk ?</a></li>
+                <li><a href="/mediatheque/salle etude/profils">Qui fréquente la salle d'étude ?</a></li>
+                <li><a href="/mediatheque/action culturelle">Quels publics pour l'action culturelle ?</a></li>
+            </ul>
+            
+            <hr>
+
+            <p class="sdtitre"><strong>Le Zèbre</strong></p>
+
+            <ul class="nav nav-stacked">
+                <li class="nav-header"></li>
+                <li><a href="/zebre/activites">Quelle activité par mois dans le Zèbre ?</a></li>
+                <li><a href="/zebre/collections/documents">Quelles collections ?</a></li>
+                <li><a href="/zebre/collections/prets">Nombre de prêts ?</a></li>
+                <li><a href="/zebre/collections/emprunteurs">Qui sont les emprunteurs ?</a></li>
+                <li><a href="/zebre/collections/emprunteurs/details">Qui emprunte quoi ?</a></li>
+            </ul>
+
+            <hr>
+            
+            <p class="sdtitre"><strong>Les Collectivités</strong></p>
+
+            <ul class="nav nav-stacked">
+                <li class="nav-header"></li>
+                <li><a href="/collectivites/collections/documents">Quelles collections ?</a></li>
+                <li><a href="/collectivites/collections/prets">Nombre de prêts ?</a></li>
+                <li><a href="/collectivites/collections/emprunteurs">Qui sont les emprunteurs ?</a></li>
+                <li><a href="/collectivites/collections/emprunteurs/details">Qui emprunte quoi ?</a></li>
+            </ul>
+
+            <hr>
+
+            <p class="sdtitre"><strong>La poldoc de La Grand-Plage</strong></p>
+
+            <ul class="nav nav-stacked">
+                <li class="nav-header"></li>
+                <li><a href="/grand-plage/collections/ensemble">Principaux indicateurs</a></li>
+<!--                <li><a href="/mediatheque/collections/ensemble">Les collections de la Médiathèque</a></li>
+                <li><a href="/zebre/collections/ensemble">Les collections du Zèbre</a></li>
+                <li><a href="/collectivites/collections/ensemble">Les collections des collectivités </a></li>
+ -->
+            </ul>
+            
+            <hr>
+            
+            <p class="sdtitre"><strong>Les synthèses pluri-annuelles de la Grand-Plage</strong></p>
+
+            <ul class="nav nav-stacked">
+                <li class="nav-header"></li>
+                <li><a href="/grand-plage/syntheses/inscrits">Inscrits</a></li>
+                <li><a href="/grand-plage/syntheses/collections">Collections</a></li>
+                <li><a href="/grand-plage/syntheses/prets">Prêts</a></li>
+            </ul>
+            
+        </div>
+        </div>
+        </div>

@@ -1,0 +1,258 @@
+aar|afar
+abk|abkhaze
+ace|achinese
+ach|acoli
+ada|adan
+ady|adyghé
+afa|afro-asiatiques (diverses langues)
+afh|afrihili
+afr|afrikaans
+ajm|aljamia
+aka|akan
+akk|akkadien
+alb|albanais
+alg|algonquin
+amh|amharique
+ang|anglo-saxon (ca. 450-1100)
+ara|arabe
+arc|araméen
+arm|arménien
+art|artificielles (diverses langues)
+asm|assamais
+ava|avar
+ave|avestique
+awa|awadhi
+aym|aymará
+aze|azéri
+bak|bachkir
+bam|bambara
+ban|balinais
+baq|basque
+bel|biélorusse
+ben|bengali
+ber|berbères (autres langues)
+bnt|bantoues (autres langues)
+bos|bosnian
+bra|braj
+bre|breton
+btk|batak
+bua|bouriate
+bug|bugi
+bul|bulgare
+bur|birman
+cai|indiennes (langues amérique centrale)
+cam|cambodgien
+cat|catalan
+cau|caucasiennes (autres langues)
+cel|celtiques (autre langues)
+chi|chinois
+chm|mari
+chu|slavon d'église
+chv|tchouvache
+cop|copte
+cor|cornique
+cos|corse
+cpe|créoles et pidgins (anglais)
+cpf|créoles et pidgins (français)
+cpp|créoles et pidgins (portugais)
+cre|cree
+crp|créoles et pidgins (diverses)
+cze|tchèque
+dan|danois
+den|esclave (athapascan)
+dra|dravidien
+dum|néerlandais, moyen (ca. 1050-1350)
+dut|néerlandais
+efi|efik
+egy|égyptien
+eng|anglais
+enm|anglais, moyen (1100-1500)
+epo|esperanto
+esk|esquimau
+est|estonien
+ewe|éwé
+fan|fang
+fao|féroien
+fin|finnois
+fiu|finno-ougriennes (autres langues)
+fon|fon
+fre|français
+frm|français, moyen (ca. 1400-1600)
+fro|français, ancien (842-ca. 1400)
+fry|frison occidental
+ful|fula
+gaa|ga
+gag|galicien
+gem|germaniques (diverses langues)
+geo|géorgien
+ger|allemand
+gez|guèze
+gla|gaëlique
+gle|irlandais
+glg|galicien
+glv|manx
+gmh|allemand, moyen haut (ca. 1050-1500)
+goh|allemand, vieux haut (ca. 750-1050)
+got|gothique
+grc|grec ancien (jusqu'à 1453)
+gre|grec moderne (après 1453)
+grn|guarani
+guj|gujarati
+hau|haoussa
+haw|hawaïen
+heb|hébreu
+hin|hindi
+hit|hittite
+hrv|croate
+hun|hongrois
+ibo|igbo
+ice|islandais
+iku|inuktitut
+inc|indo-aryen (groupe)
+ind|indonésien
+ine|indo-européen (groupe)
+ira|iraniennes (diverses langues)
+ita|italien
+jav|javanais
+jpn|japonais
+jrb|judéo-arabe
+kab|kabyle
+kan|kanara
+kas|kasmiri
+kaw|kawi
+kaz|kazakh
+khm|khmer central
+kik|kikuyu
+kin|kinyarwanda
+kir|kirghiz
+kmb|kimbundu
+kon|kongo
+kor|coréen
+kur|kurde
+lad|ladino
+lao|lao
+lap|lapon
+lat|latin
+lav|lette
+lin|lingala
+lit|lituanien
+lug|louganda
+mac|macédonien
+mal|malayalam
+man|mande
+mao|maori
+map|malayo-polynésien
+mar|marathi
+may|malais
+mga|irlandais, moyen (900-1200)
+min|minangkabao
+mis|langues diverses
+mkh|môn khmer (diverses langues)
+mlg|malgache
+mlt|maltais
+mol|moldave
+mon|mongol
+mos|mossi
+mul|multilingue
+myn|maya
+myv|erza
+nah|nahuatl
+nai|amérindien
+ndo|ndongo
+nds|bas allemand
+nep|népalais
+nic|nigéro-congolais
+nno|norvégien nynorsk
+nob|norvégien bokmål
+non|norvégien ancien
+nor|norvégien
+nya|nyanja
+oci|occitan et provençal (après 1500)
+ori|oriya
+oss|ossète
+ota|turc ottoman (écriture arabe)
+paa|papou
+pal|pahlavi
+pan|penjabi
+peo|perse ancien (600-400 av. j.c.)
+per|persan moderne
+pli|pali
+pol|polonais
+por|portugais
+pra|prâkrit
+pro|occitan et provençal ancien (jusqu'à 1500)
+pus|pachto
+que|quechua
+raj|rajasthani
+roa|romanes (diverses langues)
+roh|rhétoroman (groupe)
+rom|romani
+rum|roumain
+run|rundi
+rus|russe
+sah|iakoute
+sai|indiennes (langues amérique du sud)
+san|sanskrit
+scc|serbe (cyrillique)
+sco|écossais
+scr|croate (alphabet latin)
+sem|sémitiques (diverses langues)
+sga|irlandais, ancien (jusqu'à 900)
+sgn|langues des signes
+sin|singhalais
+sit|sino-tibétaines (langues)
+sla|slaves (diverses langues)
+slo|slovaque
+slv|slovène
+smi|sames, langues
+sna|shona
+snh|singhalais
+snk|soninké
+som|somali
+son|songhai
+spa|espagnol
+srp|serbe
+ssa|nilo-saharien (groupe)
+sun|soundanais
+sux|sumérien
+swa|swahili
+swe|suédois
+syr|syriaque
+tah|tahitien
+tai|thaï langues (autres)
+tam|tamoul
+tat|tatar
+tel|télougou
+tgk|tadjik
+tgl|tagalog
+tha|thaï
+tib|tibétain
+tir|tigrina
+tuk|turkmène
+tur|turc
+tut|turco-tatar
+twi|twi
+uga|ougaritique
+uig|ouïgour
+ukr|ukrainien
+und|inconnue
+urd|ourdou
+uzb|ouzbek
+vie|vietnamien
+wel|gallois
+wen|wende
+wln|wallon
+wol|wolof
+xal|kalmouk
+xho|xhosa
+xxx|autres langues
+yid|yiddish
+yor|yoruba
+zul|zoulou
+zxx|pas de contenu linguistique
+deu|hollandais
+lan|occitan (post 1500)
+mla|malgache
+sam|samaritain
+frd|français, dialectes
+

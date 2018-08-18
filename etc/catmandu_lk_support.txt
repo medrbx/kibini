@@ -1,0 +1,19 @@
+CA|Carte routière
+CR|CD-ROM
+DC|Disque compact
+DG|Disque gomme-laque
+DV|Disque microsillon
+IC|Document iconographique
+JE|Jeu
+K7|Cassette audio
+LG|Livre en gros caractères
+LI|Livre
+LS|Livre sonore
+ML|Méthode de langue
+PA|Partition
+PE|Périodique
+VD|DVD
+VI|VHS, UMATIC ou film
+AP|Périodique - article
+LN|Livre numérique
+MT|Matériel

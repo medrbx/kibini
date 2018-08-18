@@ -1,0 +1,13 @@
+    <div id="sidebar">
+        [% INCLUDE 'includes/sidebar.tt' %]
+    </div>
+    <div class="col-sm-9">
+    
+        <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <strong>
+                    [% label1 %]<span>   </span><i class="glyphicon glyphicon-chevron-right"></i><span>   </span>[% label2 %]<span>   </span><i class="glyphicon glyphicon-chevron-right"></i><span>   </span>
+                    </strong>
+                </div>
+        </div>
+    </div>

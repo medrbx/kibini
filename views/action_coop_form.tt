@@ -1,0 +1,104 @@
+			<form method="post" action="/form/action_coop/post">
+
+				<div class="form-group ">
+					<label class="control-label" for="date">
+						Date
+					</label>
+					<input class="form-control" id="datepicker" name="date" type="text"/>
+				</div>
+				
+				<div class="form-group ">
+					<label class="control-label" for="lieu">
+						Lieu de l'action
+					</label>
+					<select class="form-control" name="lieu" id="lieu">
+						<option selected="selected"></option>
+						<option value="Dans les murs">Dans les murs</option>
+						<option value="Hors les murs">Hors les murs</option>
+					</select>
+				</div>
+
+				<div class="form-group ">
+					<label class="control-label" for="type_action">
+						Type d'action
+					</label>
+					<select class="form-control" name="type_action" id="type_action">
+						<option selected="selected"></option>
+						<option value="Accueil de permanences">Accueil de permanences</option>
+						<option value="Colloque, conférence">Colloque, conférence</option>
+						<option value="Journée de formation">Journée de formation</option>
+						<option value="Interview">Interview</option>
+						<option value="Prêt de salle">Prêt de salle</option>
+						<option value="Rédaction article/collaboration ouvrage">Rédaction article/collaboration ouvrage</option>
+						<option value="Rencontre">Rencontre</option>
+						<option value="Visite bibliothèque/présentation des services">Visite bibliothèque/présentation des services</option>
+						<option value="Stand présentation services/métier">Stand présentation services/métier</option>
+						<option value="Autres">Autres</option>
+					</select>
+				</div>				
+
+				<div class="form-group ">
+					<label class="control-label" for="nom_action">
+						Nom de l'action
+					</label>
+					<input class="form-control" id="nom_action" name="nom_action" type="text"/>
+				</div>                
+
+				<div class="form-group ">
+					<label class="control-label" for="referent_action">
+						Menée par
+					</label>
+					<input class="form-control" id="referent_action" name="referent_action" type="text"/>
+				</div>					
+				
+				<div class="form-group ">
+					<label class="control-label" for="type_structure">
+						Type de structure associée
+					</label>
+					<select class="form-control" name="type_structure" id="type_structure">
+						<option selected="selected"></option>
+						<option value="Associations">Associations</option>
+						<option value="Bibliothèques">Bibliothèques</option>
+						<option value="Etablissements scolaires">Etablissements scolaires</option>
+						<option value="Hôpitaux">Hôpitaux</option>
+						<option value="Prisons, PJJ">Prisons, PJJ</option>
+						<option value="Maisons de retraite, EHPAD">Maisons de retraite, EHPAD</option>
+						<option value="Centres sociaux">Centres sociaux</option>
+						<option value="Services de l'emploi">Services de l'emploi</option>
+						<option value="Etablissements médico-sociaux">Etablissements médico-sociaux</option>
+						<option value="Equipements culturels">Equipements culturels</option>
+						<option value="Autres services municipaux">Autres services municipaux</option>
+						<option value="Autres">Autres</option>
+					</select>
+				</div>			
+				
+		
+				<div class="form-group ">
+					<label class="control-label" for="nom_structure">
+						Nom de la structure associée
+					</label>
+					<input class="form-control" id="nom_structure" name="nom_structure" type="text"/>
+				</div>				
+
+				<div class="form-group ">
+					<label class="control-label" for="participants">
+						Participants/Public touché
+					</label>
+					<input class="form-control" id="participants" name="participants" type="text"/>
+				</div>						
+			
+				<div class="form-group">
+					<div>
+						<button class="btn btn-primary " name="submit" type="submit">
+							Valider
+						</button>
+					</div>
+				</div>
+		</form>
+			
+	<script>
+		$( function() {
+			$.datepicker.setDefaults($.datepicker.regional["fr"]);
+			$( "#datepicker" ).datepicker({dateFormat: "yy-mm-dd"});
+		} );
+	</script>

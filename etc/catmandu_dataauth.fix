@@ -1,0 +1,81 @@
+# identifiant RBX
+copy_field(_id,authnumber)
+
+# 009 : ark BnF
+# marc_map(009_, auth.ark_bnf)
+# if any_match(auth.ark_bnf, "catalogue.bnf.fr")
+#     add_field(vd_auth.ark_bnf, "ark BnF récupéré")
+# else
+#     add_field(vd_auth.ark_bnf, "ark BnF non récupéré")
+# end
+
+
+marc_map(200abcdfgjxyz,type.np, join:", ")
+if exists(type.np)
+    add_field(auth.type, "Nom de personne")
+    copy_field(type.np, auth.vedette)
+	if marc_match(200c, "roubaisien")
+		add_field(auth.roubaisien, "roubaisien")
+	end
+	marc_map(200ab,auth.vedette_courte, join:", ")
+end
+
+
+marc_map(210abcdefghjxyz,type.co, join:", ")
+if exists(type.co)
+    add_field(auth.type, "Nom de collectivité")
+    copy_field(type.co, auth.vedette)
+	if marc_match(210c, "roubaisien")
+		add_field(auth.roubaisien, "roubaisien")
+	end
+	marc_map(210a,auth.vedette_courte, join:", ")
+end
+
+marc_map(215ajxyz,type.sng, join:" -- ")
+if exists(type.sng)
+    add_field(auth.type, "Nom géographique")
+    copy_field(type.sng, auth.vedette)
+	marc_map(215a,auth.vedette_courte, join:", ")
+end
+
+marc_map(220afjxyz,type.fam, join:", ")
+if exists(type.fam)
+    add_field(auth.type, "Famille")
+    copy_field(type.fam, auth.vedette)
+	if marc_match(220c, "roubaisien")
+		add_field(auth.roubaisien, "roubaisien")
+	end
+	marc_map(220a,auth.vedette_courte, join:", ")
+end
+
+
+marc_map(230abhiklmnqrsuwjxyz,type.tu, join:" -- ")
+if exists(type.tu)
+    add_field(auth.type, "Titre uniforme")
+    copy_field(type.tu, auth.vedette)
+	marc_map(230a,auth.vedette_courte, join:", ")
+end
+
+marc_map(240atjxyz,type.sauttit, join:" -- ")
+if exists(type.sauttit)
+    add_field(auth.type, "Auteur / Titre")
+    copy_field(type.sauttit, auth.vedette)
+	marc_map(240at,auth.vedette_courte, join:", ")
+end
+
+marc_map(250ajxyz,type.snc, join:"j -- ")
+if exists(type.snc)
+    add_field(auth.type, "Matière nom commun")
+    copy_field(type.snc, auth.vedette)
+	marc_map(250a,auth.vedette_courte, join:", ")
+end
+
+marc_map(999a,auth.id_bnf)
+if exists(auth.id_bnf)
+    add_field(auth.origine, "bnf")
+else
+    add_field(auth.origine, "locale")
+end
+
+
+retain(authnumber, auth)

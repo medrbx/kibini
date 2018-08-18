@@ -1,0 +1,30 @@
+    <div class="col-sm-12">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <strong>
+                    [% label1 %]
+                </strong>
+            </div>
+        </div>
+        
+        <div class="container">
+        <ul class="nav nav-tabs">
+            <li class="nav active"><a href="#A" data-toggle="tab">Entrées journalières</a></li>
+            <li class="nav"><a href="#B" data-toggle="tab">Récapitulatif</a></li>
+        </ul>
+
+    <!-- Tab panes -->
+        <div class="tab-content">
+            <div class="tab-pane fade in active" id="A">
+                <div class="container">
+                    [% INCLUDE frequentation_form.tt %]
+                </div>
+            </div>
+        
+            <div class="tab-pane fade" id="B">
+                <div class="container">
+                    [% INCLUDE frequentation_synth.tt %]
+                </div>            
+            <div>
+        </div>
+    </div>

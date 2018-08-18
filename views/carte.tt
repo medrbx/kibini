@@ -1,0 +1,20 @@
+        <div id="sidebar">
+            [% INCLUDE 'includes/sidebar.tt' %]
+        </div>
+        <div class="col-sm-9">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <strong>
+                    [% label1 %]<span>   </span><i class="glyphicon glyphicon-chevron-right"></i><span>   </span>[% label2 %]<span>   </span><i class="glyphicon glyphicon-chevron-right"></i><span>   </span>[% label3 %]
+                    </strong>
+                </div>
+                <div class="panel-body">
+                
+                <div>Mise à jour chaque mercredi matin, cette carte donne à voir le taux d'inscription à La Grand Plage de chacun des quartiers de Roubaix.</br>Calcul : pour chaque quartier, on divise le nombre d'habitants de ce quartier par le nombre d'inscrits à La Grand Plage.</br>Le découpage des quartiers correspond ici au découpage défini par l'INSEE, selon les codes IRIS (Ilots regroupés pour l'information statistique), et non pas au découpage proposé par la municipalité.</div>
+                
+                [% INCLUDE 'carte-d3.tt' %]
+                
+                </div>
+            </div>
+            
+        </div>

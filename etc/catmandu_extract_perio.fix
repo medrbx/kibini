@@ -1,0 +1,7 @@
+# 099 : support
+marc_map(099t, bib.type)
+if any_match(bib.type, "PE")
+    retain (record)
+else
+	reject()
+end
