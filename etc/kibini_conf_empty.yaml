@@ -1,21 +1,37 @@
 ---
 database:
-    db: XXX
-    user: XXX
-    pwd: XXX
+    db:
+    user:
+    pwd:
 elasticsearch:
-    node: XXX
+    node:
+    mappings_file:
 nedap:
-    url: XXX
-    user: XXX
-    pwd: 
+    url:
+    user:
+    pwd:
 piwik:
-    url_api: XXX
-    token_auth: XXX
+    url_api:
+    token_auth:
 log_crontab:
-    directory: XXX
+    directory:
+ftp_logs_portail:
+    host:
+    user:
+    password:
+    dir_logs_portail:
+koha:
+    pro:
+    opac:
+    rest:
+    ilsdi:
+    admin_mail:
 suggestions:
     acquereur_id:
-        borrowernumber: nom
+        3745: toto
     acquereur_mail:
-        borrowernumber: adupont
+        3745: ftoto
+crypt:
+    salt:
+mail:
+    sender:
