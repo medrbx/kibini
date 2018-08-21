@@ -9,7 +9,6 @@ use FindBin qw( $Bin );
 use lib "$Bin/../lib";
 use Kibini::DB;
 use kibini::log;
-use kibini::time;
 use Adherent;
 use Webkiosk;
 
@@ -18,7 +17,6 @@ my $process = "statdb_webkiosk.pl";
 # On log le début de l'opération
 $log_message = "$process : beginning";
 AddCrontabLog($log_message);
-
 
 my $dbh = Kibini::DB->new;
 $dbh = $dbh->dbh;
@@ -42,3 +40,7 @@ while ( my $row = $csv->getline_hr ($fic) ) {
 
 close $fic;
 $dbh->disconnect();
+
+# On log la fin de l'opération
+$log_message = "$process : ending\n" ;
+AddCrontabLog($log_message) ;
