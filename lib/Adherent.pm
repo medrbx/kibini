@@ -123,9 +123,11 @@ sub get_data_from_koha_by_id {
 	my $dbh = $self->{dbh};
 	
 	my $select = join ", ", @{ $param->{koha_fields} };
-	my $req = "SELECT $select FROM koha_prod.borrowers WHERE $param->{koha_id} = ?";
+	my $id = $param->{koha_id};
+	my $req = "SELECT $select FROM koha_prod.borrowers WHERE $id = ?";
 	my $sth = $dbh->prepare($req);
-    $sth->execute($self->koha_borrowernumber);
+	$id = "koha_" . $id;
+    $sth->execute($self->$id);
     my $result = $sth->fetchrow_hashref ;
     $sth->finish();
 	
@@ -149,6 +151,23 @@ sub mod_data_to_statdb_webkiosk {
 	$self->{statdb_age} = $year - $yearofbirth;
 
     return $self;
+}
+
+sub get_data_to_statdb_webkiosk {
+    my ($self) = @_;
+	
+	my $adh_wk = {
+		koha_borrowernumber => $self->{koha_borrowernumber},
+		koha_userid => $self->{koha_userid},
+		statdb_age => $self->{statdb_age},
+		statdb_age => $self->{statdb_age},
+		statdb_ville => $self->{statdb_ville},
+		statdb_iris => $self->{statdb_iris},
+		statdb_branchcode => $self->{statdb_branchcode},
+		statdb_categorycode => $self->{statdb_categorycode},
+	};
+
+    return $adh_wk;
 }
 
 1;
