@@ -3,8 +3,11 @@ package Adherent;
 use Moo;
 
 use Kibini::DB;
+use kibini::time;
 
 has dbh => ( is => 'ro' );
+
+has date => ( is => 'ro' );
 
 has koha_borrowernumber => ( is => 'ro' );
 has koha_cardnumber => ( is => 'ro' );
@@ -77,6 +80,12 @@ has koha_checkprevcheckout => ( is => 'ro' );
 has koha_updated_on => ( is => 'ro' );
 has koha_lastseen => ( is => 'ro' );
 
+has statdb_age => ( is => 'ro' );
+has statdb_ville => ( is => 'ro' );
+has statdb_iris => ( is => 'ro' );
+has statdb_categorycode => ( is => 'ro' );
+has statdb_branchcode => ( is => 'ro' );
+
 
 
 
@@ -98,8 +107,51 @@ sub BUILDARGS {
             $arg->{$k} = $adh{$k};
         }
     }
+	
+    if ( $args[0]->{date} ) {
+        $arg->{date} = $args[0]->{date};
+    } else {
+        $arg->{date} = GetDateTime('today');
+    }
 
     return $arg;
 }
 
+sub get_data_from_koha_by_id {
+    my ($self, $param) = @_;
+	
+	my $dbh = $self->{dbh};
+	
+	my $select = join ", ", @{ $param->{koha_fields} };
+	my $req = "SELECT $select FROM koha_prod.borrowers WHERE $param->{koha_id} = ?";
+	my $sth = $dbh->prepare($req);
+    $sth->execute($self->koha_borrowernumber);
+    my $result = $sth->fetchrow_hashref ;
+    $sth->finish();
+	
+	foreach my $k (keys(%$result)) {
+		my $key = "koha_" . $k;
+        $self->{$key} = $result->{$k};
+    }
+
+    return $self;
+}
+
+sub mod_data_to_statdb_webkiosk {
+    my ($self) = @_;
+	
+	$self->{statdb_ville} = $self->{koha_city};
+	$self->{statdb_iris} = $self->{koha_altcontactcountry};
+	$self->{statdb_branchcode} = $self->{koha_branchcode};
+	$self->{statdb_categorycode} = $self->{koha_categorycode};
+	my $year = DateTime::Format::MySQL->parse_date($self->{date})->year();
+	my $yearofbirth = DateTime::Format::MySQL->parse_date($self->{koha_dateofbirth})->year();
+	$self->{statdb_age} = $year - $yearofbirth;
+
+    return $self;
+}
+
 1;
+
+__END__
+
