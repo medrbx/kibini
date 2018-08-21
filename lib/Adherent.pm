@@ -7,8 +7,6 @@ use kibini::time;
 
 has dbh => ( is => 'ro' );
 
-has date => ( is => 'ro' );
-
 has koha_borrowernumber => ( is => 'ro' );
 has koha_cardnumber => ( is => 'ro' );
 has koha_surname => ( is => 'ro' );
@@ -85,6 +83,7 @@ has statdb_ville => ( is => 'ro' );
 has statdb_iris => ( is => 'ro' );
 has statdb_categorycode => ( is => 'ro' );
 has statdb_branchcode => ( is => 'ro' );
+has statdb_fidelite => ( is => 'ro' );
 
 
 
@@ -100,74 +99,75 @@ sub BUILDARGS {
         $dbh = $dbh->dbh;
         $arg->{dbh} = $dbh;
     }
-	
-	if ( $args[0]->{adherent} ) {
+    
+    if ( $args[0]->{adherent} ) {
         my %adh = %{$args[0]->{adherent}};
         foreach my $k (keys(%adh)) {
             $arg->{$k} = $adh{$k};
         }
     }
-	
-    if ( $args[0]->{date} ) {
-        $arg->{date} = $args[0]->{date};
-    } else {
-        $arg->{date} = GetDateTime('today');
-    }
-
-    return $arg;
 }
 
 sub get_data_from_koha_by_id {
     my ($self, $param) = @_;
-	
-	my $dbh = $self->{dbh};
-	
-	my $select = join ", ", @{ $param->{koha_fields} };
-	my $id = $param->{koha_id};
-	my $req = "SELECT $select FROM koha_prod.borrowers WHERE $id = ?";
-	my $sth = $dbh->prepare($req);
-	$id = "koha_" . $id;
+    
+    my $dbh = $self->{dbh};
+    
+    my $select = join ", ", @{ $param->{koha_fields} };
+    my $id = $param->{koha_id};
+    my $req = "SELECT $select FROM koha_prod.borrowers WHERE $id = ?";
+    my $sth = $dbh->prepare($req);
+    $id = "koha_" . $id;
     $sth->execute($self->$id);
     my $result = $sth->fetchrow_hashref ;
     $sth->finish();
-	
-	foreach my $k (keys(%$result)) {
-		my $key = "koha_" . $k;
+    
+    foreach my $k (keys(%$result)) {
+        my $key = "koha_" . $k;
         $self->{$key} = $result->{$k};
     }
 
     return $self;
 }
 
-sub mod_data_to_statdb_webkiosk {
-    my ($self) = @_;
-	
-	$self->{statdb_ville} = $self->{koha_city};
-	$self->{statdb_iris} = $self->{koha_altcontactcountry};
-	$self->{statdb_branchcode} = $self->{koha_branchcode};
-	$self->{statdb_categorycode} = $self->{koha_categorycode};
-	my $year = DateTime::Format::MySQL->parse_date($self->{date})->year();
-	my $yearofbirth = DateTime::Format::MySQL->parse_date($self->{koha_dateofbirth})->year();
-	$self->{statdb_age} = $year - $yearofbirth;
+sub get_age_at_time_of_event {
+    my ($self, $param) = @_;
+    
+    my $date_event = $self->{$param->{date_event_field}};
+    
+    my $yearofevent;
+    if ( $param->{format_date_event} eq 'datetime' ) {
+        $yearofevent = DateTime::Format::MySQL->parse_datetime($date_event)->year();
+    } elsif ( $param->{format_date_event} eq 'date' ) {
+        $yearofevent = DateTime::Format::MySQL->parse_date($date_event)->year();
+    }
 
+    my $yearofbirth = DateTime::Format::MySQL->parse_date($self->{koha_dateofbirth})->year();
+    
+    $self->{statdb_age} = $yearofevent - $yearofbirth;
+    
+    
     return $self;
 }
 
-sub get_data_to_statdb_webkiosk {
-    my ($self) = @_;
-	
-	my $adh_wk = {
-		koha_borrowernumber => $self->{koha_borrowernumber},
-		koha_userid => $self->{koha_userid},
-		statdb_age => $self->{statdb_age},
-		statdb_age => $self->{statdb_age},
-		statdb_ville => $self->{statdb_ville},
-		statdb_iris => $self->{statdb_iris},
-		statdb_branchcode => $self->{statdb_branchcode},
-		statdb_categorycode => $self->{statdb_categorycode},
-	};
+sub get_fidelite {
+    my ($self, $param) = @_;
+    
+    my $date_event = $self->{$param->{date_event_field}};
+    
+    my $yearofevent;
+    if ( $param->{format_date_event} eq 'datetime' ) {
+        $yearofevent = DateTime::Format::MySQL->parse_datetime($date_event)->year();
+    } elsif ( $param->{format_date_event} eq 'date' ) {
+        $yearofevent = DateTime::Format::MySQL->parse_date($date_event)->year();
+    }
 
-    return $adh_wk;
+    my $yearenrolled = DateTime::Format::MySQL->parse_date($self->{koha_dateenrolled})->year();
+    
+    $self->{statdb_fidelite} = $yearofevent - $yearenrolled;
+    
+    
+    return $self;
 }
 
 1;
