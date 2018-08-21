@@ -1,7 +1,6 @@
 #!/usr/bin/perl
 
-use warnings;
-use strict;
+use Modern::Perl;
 use Text::CSV;
 use Data::Dumper;
 use FindBin qw( $Bin );
