@@ -13,8 +13,7 @@ if [ $dayofweek -eq 3 ]
 then
     # On anonymise koha_prod, puis on réalise un dump de koha_prod et de statdb
     perl $dir/admin_sauv_bdd.pl
-    # On met à jour les entrées, webkiosk, les adhérents dans ES
-    perl $dir/statdb_borrowers.pl
+    # On met à jour les entrées et webkiosk dans ES
     perl $dir/es_entrees.pl
     perl $dir/es_webkiosk.pl
     # On met à jour la carte des quartiers

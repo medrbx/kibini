@@ -118,6 +118,7 @@ INNER JOIN koha_prod.biblioitems bi ON i.biblionumber = bi.biblionumber
 GROUP BY i.ccode, i.location, bi.itemtype;
 SQL
 
+
 # On complète la table statdb.stat_borrowers
 my $stat_borrowers_1 = "INSERT INTO statdb.stat_borrowers (date, borrowernumber, cardnumber,  title,  city,  state,  zipcode,  country,  email,  phone,  mobile,    dateofbirth,  branchcode,  categorycode,  dateenrolled,  dateexpiry, gonenoaddress,  lost, contactname,  contactfirstname,  altcontactaddress1,  altcontactaddress2,  altcontactaddress3,  altcontactstate,  altcontactzipcode,  altcontactcountry ) SELECT  curdate(), borrowernumber,  cardnumber,  title,  city,  state,  zipcode,  country,  email,  phone,  mobile,    dateofbirth,  branchcode,  categorycode,  dateenrolled,  dateexpiry, gonenoaddress,  lost,  contactname,  contactfirstname,  altcontactaddress1,  altcontactaddress2,  altcontactaddress3,  altcontactstate,  altcontactzipcode,  altcontactcountry  FROM koha_prod.borrowers" ;
 
@@ -142,7 +143,7 @@ SQL
 
 my $dbh = GetDbh() ;
 
-my @req = ( $stat_docentrees, $stat_docex, $stat_borrowers_1, $stat_borrowers_2 ) ;
+my @req = ( $stat_docentrees, $stat_docex ); #, $stat_borrowers_1, $stat_borrowers_2 ) ;
 for my $req (@req) {
     my $sth = $dbh->prepare($req);
     $sth->execute();
@@ -160,6 +161,8 @@ for my $column (@columns) {
     $sth->execute();
     $sth->finish();
 }
+
+
 $dbh->disconnect();
 
 # On log la fin de l'opération
