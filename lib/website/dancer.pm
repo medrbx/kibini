@@ -599,17 +599,14 @@ post 'form/action_coop/post' => sub {
 
 
 # Listes de réservations et de perdus
-get 'liste/:type/:etage' => sub {
-
+get 'liste' => sub {
     my %params = params;
-    #print Dumper(\%params);
-    
-    #my $label1 = TestParams(\%params);
-    #my ( $label1, $template, $rows ) = GetListData( $type, $etage, $semaine );
 
-    template 'test', {
-        label1 => $params{type},
-        label2 => $params{etage}
+    my $listData = GetListData( \%params );
+
+    template $listData->{template}, {
+        label1 => $listData->{titre},
+        rows => $listData->{rows}
     };
 };
 
