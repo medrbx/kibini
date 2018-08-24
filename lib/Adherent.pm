@@ -106,6 +106,8 @@ sub BUILDARGS {
             $arg->{$k} = $adh{$k};
         }
     }
+
+    return $arg;
 }
 
 sub get_data_from_koha_by_id {
