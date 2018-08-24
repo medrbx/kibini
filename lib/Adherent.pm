@@ -1,6 +1,7 @@
 package Adherent;
 
 use Moo;
+use List::MoreUtils qw(any uniq);
 
 use Kibini::DB;
 use kibini::time;
@@ -176,8 +177,15 @@ sub get_fidelite {
 sub get_sex {
 	my ($self) = @_;
 	
-    my @codes = qw( MEDA MEDB MEDC CSVT MEDP BIBL CSLT );
-    if ( any { /$self->{koha_categorycode}/ } @codes || any { /$self->{statdb_categorycode}/ } @codes ) {
+    my @categorycodes = qw( MEDA MEDB MEDC CSVT MEDP BIBL CSLT );
+	my $categorycode;
+	if ($self->{koha_categorycode} ) {
+	    $categorycode = $self->{koha_categorycode};
+	} elsif ($self->{statdb_categorycode} ) {
+	    $categorycode = $self->{statdb_categorycode};
+	}
+	
+    if ( any { /$categorycode/ } @categorycodes ) {
 		if ( $self->{koha_title} ) {
 			if ( $self->{koha_title} eq 'Madame' ) {
 				$self->{statdb_sexe} = 'F';
