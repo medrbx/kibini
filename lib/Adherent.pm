@@ -84,8 +84,9 @@ has statdb_iris => ( is => 'ro' );
 has statdb_categorycode => ( is => 'ro' );
 has statdb_branchcode => ( is => 'ro' );
 has statdb_fidelite => ( is => 'ro' );
+has statdb_sexe => ( is => 'ro' );
 
-
+has es_sexe => ( is => 'ro' );
 
 
 sub BUILDARGS {
@@ -168,6 +169,39 @@ sub get_fidelite {
     
     
     return $self;
+}
+
+sub get_sex {
+	my ($self) = @_;
+	
+    my @codes = qw( MEDA MEDB MEDC CSVT MEDP BIBL CSLT );
+    if ( any { /$self->{koha_categorycode}/ } @codes || any { /$self->{statdb_categorycode}/ } @codes ) {
+		if ( $self->{koha_title} ) {
+			if ( $self->{koha_title} eq 'Madame' ) {
+				$self->{statdb_sexe} = 'F';
+				$self->{es_sexe} = 'Femme';
+			} elsif ( $self->{koha_title} eq 'Monsieur' ) {
+				$self->{statdb_sexe} = 'M';
+				$self->{es_sexe} = 'Homme';
+			} else {
+				$self->{statdb_sexe} = 'NC';
+				$self->{es_sexe} = 'Inconnu';
+			}
+		} elsif ( $self->{statdb_sexe} ) {
+			if ( $self->{statdb_sexe} eq 'F' ) {
+				$self->{es_sexe} = 'Femme';
+			} elsif ( $self->{statdb_sexe} eq 'H' ) {
+				$self->{es_sexe} = 'Homme';
+			} else {
+				$self->{es_sexe} = 'Inconnu';
+			}
+		}
+    } else {
+        $self->{statdb_sexe} = 'NP';
+		$self->{es_sexe} = 'NP';
+    }
+	
+	return $self;
 }
 
 1;
