@@ -151,16 +151,15 @@ for my $req (@req) {
 }
 
 # On anonymise stat_borrowers
-my @columns = qw( state email phone mobile contactname contactfirstname ) ;
-for my $column (@columns) { 
-    my $req = "UPDATE statdb.stat_borrowers SET $column = NULL WHERE $column = '' AND date = CURDATE()" ;
-    my $sth = $dbh->prepare($req);
-    $sth->execute();
-    $req =  "UPDATE statdb.stat_borrowers SET $column = 'X' WHERE $column IS NOT NULL AND date = CURDATE();" ;
-    $sth = $dbh->prepare($req);
-    $sth->execute();
-    $sth->finish();
-}
+#my @columns = qw( state email phone mobile contactname contactfirstname ) ;
+#for my $column (@columns) { 
+#    my $req = "UPDATE statdb.stat_borrowers SET $column = NULL WHERE $column = '' AND date = CURDATE()" ;
+#    my $sth = $dbh->prepare($req);
+#    $req =  "UPDATE statdb.stat_borrowers SET $column = 'X' WHERE $column IS NOT NULL AND date = CURDATE();" ;
+#    $sth = $dbh->prepare($req);
+#    $sth->execute();
+#    $sth->finish();
+#}
 
 
 $dbh->disconnect();
