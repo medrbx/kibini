@@ -1,21 +1,20 @@
 #! /usr/bin/perl
 
-use strict ;
-use warnings ;
-use FindBin qw( $Bin ) ;
+use Modern::Perl;
+use FindBin qw( $Bin );
 
-use lib "$Bin/../lib" ;
-use kibini::db ;
-use kibini::log ;
-use kibini::time ;
+use lib "$Bin/../lib";
+use kibini::db;
+use kibini::log;
+use kibini::time;
 
-my $log_message ;
-my $process = "statdb_items_borrowers.pl" ;
+my $log_message;
+my $process = "statdb_items_borrowers.pl";
 # On log le début de l'opération
-$log_message = "$process : beginning" ;
-AddCrontabLog($log_message) ;
+$log_message = "$process : beginning";
+AddCrontabLog($log_message);
 
-my $date = GetDateTime('today') ;
+my $date = GetDateTime('today');
 
 # On complète la table statdb.stat_docentrees
 my $stat_docentrees = <<SQL;
@@ -120,9 +119,9 @@ SQL
 
 
 # On complète la table statdb.stat_borrowers
-my $stat_borrowers_1 = "INSERT INTO statdb.stat_borrowers (date, borrowernumber, cardnumber,  title,  city,  state,  zipcode,  country,  email,  phone,  mobile,    dateofbirth,  branchcode,  categorycode,  dateenrolled,  dateexpiry, gonenoaddress,  lost, contactname,  contactfirstname,  altcontactaddress1,  altcontactaddress2,  altcontactaddress3,  altcontactstate,  altcontactzipcode,  altcontactcountry ) SELECT  curdate(), borrowernumber,  cardnumber,  title,  city,  state,  zipcode,  country,  email,  phone,  mobile,    dateofbirth,  branchcode,  categorycode,  dateenrolled,  dateexpiry, gonenoaddress,  lost,  contactname,  contactfirstname,  altcontactaddress1,  altcontactaddress2,  altcontactaddress3,  altcontactstate,  altcontactzipcode,  altcontactcountry  FROM koha_prod.borrowers" ;
+my $stat_borrowers_1 = "INSERT INTO statdb.stat_borrowers (date, borrowernumber, cardnumber,  title,  city,  state,  zipcode,  country,  email,  phone,  mobile,    dateofbirth,  branchcode,  categorycode,  dateenrolled,  dateexpiry, gonenoaddress,  lost, contactname,  contactfirstname,  altcontactaddress1,  altcontactaddress2,  altcontactaddress3,  altcontactstate,  altcontactzipcode,  altcontactcountry ) SELECT  curdate(), borrowernumber,  cardnumber,  title,  city,  state,  zipcode,  country,  email,  phone,  mobile,    dateofbirth,  branchcode,  categorycode,  dateenrolled,  dateexpiry, gonenoaddress,  lost,  contactname,  contactfirstname,  altcontactaddress1,  altcontactaddress2,  altcontactaddress3,  altcontactstate,  altcontactzipcode,  altcontactcountry  FROM koha_prod.borrowers";
 
-my $stat_borrowers_2 = <<SQL ;
+my $stat_borrowers_2 = <<SQL;
 UPDATE statdb.stat_borrowers
 SET
         age = CASE
@@ -141,9 +140,9 @@ SET
 WHERE date = CURDATE();
 SQL
 
-my $dbh = GetDbh() ;
+my $dbh = GetDbh();
 
-my @req = ( $stat_docentrees, $stat_docex ); #, $stat_borrowers_1, $stat_borrowers_2 ) ;
+my @req = ( $stat_docentrees, $stat_docex ); #, $stat_borrowers_1, $stat_borrowers_2 );
 for my $req (@req) {
     my $sth = $dbh->prepare($req);
     $sth->execute();
@@ -151,11 +150,11 @@ for my $req (@req) {
 }
 
 # On anonymise stat_borrowers
-#my @columns = qw( state email phone mobile contactname contactfirstname ) ;
+#my @columns = qw( state email phone mobile contactname contactfirstname );
 #for my $column (@columns) { 
-#    my $req = "UPDATE statdb.stat_borrowers SET $column = NULL WHERE $column = '' AND date = CURDATE()" ;
+#    my $req = "UPDATE statdb.stat_borrowers SET $column = NULL WHERE $column = '' AND date = CURDATE()";
 #    my $sth = $dbh->prepare($req);
-#    $req =  "UPDATE statdb.stat_borrowers SET $column = 'X' WHERE $column IS NOT NULL AND date = CURDATE();" ;
+#    $req =  "UPDATE statdb.stat_borrowers SET $column = 'X' WHERE $column IS NOT NULL AND date = CURDATE();";
 #    $sth = $dbh->prepare($req);
 #    $sth->execute();
 #    $sth->finish();
@@ -165,5 +164,5 @@ for my $req (@req) {
 $dbh->disconnect();
 
 # On log la fin de l'opération
-$log_message = "$process : ending\n" ;
-AddCrontabLog($log_message) ;
+$log_message = "$process : ending\n";
+AddCrontabLog($log_message);
