@@ -108,13 +108,8 @@ sub BUILDARGS {
             $arg->{$k} = $adh{$k};
         }
     }
-<<<<<<< HEAD
 
     return $arg;
-=======
-	
-	return $arg;
->>>>>>> dfa19cafef715f7cb74649daf134842cc5bdb145
 }
 
 sub get_data_from_koha_by_id {
