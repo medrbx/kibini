@@ -24,6 +24,7 @@ fi
 if [ $dayofweek -eq 3 ] && [ $dayofmonthnextweek -lt $dayofmonth ]
 then
     # On fait un cliché des données adhérents
+	perl $dir/statdb_adherents.pl
     perl $dir/es_adherents.pl
 fi
 
