@@ -138,17 +138,20 @@ sub get_age_at_time_of_event {
     my ($self, $param) = @_;
     
     my $date_event = $self->{$param->{date_event_field}};
+	
+	if ( $self->{koha_dateofbirth} ) {
     
-    my $yearofevent;
-    if ( $param->{format_date_event} eq 'datetime' ) {
-        $yearofevent = DateTime::Format::MySQL->parse_datetime($date_event)->year();
-    } elsif ( $param->{format_date_event} eq 'date' ) {
-        $yearofevent = DateTime::Format::MySQL->parse_date($date_event)->year();
-    }
+		my $yearofevent;
+		if ( $param->{format_date_event} eq 'datetime' ) {
+			$yearofevent = DateTime::Format::MySQL->parse_datetime($date_event)->year();
+		} elsif ( $param->{format_date_event} eq 'date' ) {
+			$yearofevent = DateTime::Format::MySQL->parse_date($date_event)->year();
+		}
 
-    my $yearofbirth = DateTime::Format::MySQL->parse_date($self->{koha_dateofbirth})->year();
+		my $yearofbirth = DateTime::Format::MySQL->parse_date($self->{koha_dateofbirth})->year();
     
-    $self->{statdb_age} = $yearofevent - $yearofbirth;
+		$self->{statdb_age} = $yearofevent - $yearofbirth;
+	}
     
     
     return $self;
@@ -158,18 +161,20 @@ sub get_fidelite {
     my ($self, $param) = @_;
     
     my $date_event = $self->{$param->{date_event_field}};
+	
+	if ( $self->{koha_dateenrolled} ) {
     
-    my $yearofevent;
-    if ( $param->{format_date_event} eq 'datetime' ) {
-        $yearofevent = DateTime::Format::MySQL->parse_datetime($date_event)->year();
-    } elsif ( $param->{format_date_event} eq 'date' ) {
-        $yearofevent = DateTime::Format::MySQL->parse_date($date_event)->year();
-    }
+		my $yearofevent;
+		if ( $param->{format_date_event} eq 'datetime' ) {
+			$yearofevent = DateTime::Format::MySQL->parse_datetime($date_event)->year();
+		} elsif ( $param->{format_date_event} eq 'date' ) {
+			$yearofevent = DateTime::Format::MySQL->parse_date($date_event)->year();
+		}
 
-    my $yearenrolled = DateTime::Format::MySQL->parse_date($self->{koha_dateenrolled})->year();
+		my $yearenrolled = DateTime::Format::MySQL->parse_date($self->{koha_dateenrolled})->year();
     
-    $self->{statdb_fidelite} = $yearofevent - $yearenrolled;
-    
+		$self->{statdb_fidelite} = $yearofevent - $yearenrolled;
+    }
     
     return $self;
 }
