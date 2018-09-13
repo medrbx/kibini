@@ -138,20 +138,20 @@ sub get_age_at_time_of_event {
     my ($self, $param) = @_;
     
     my $date_event = $self->{$param->{date_event_field}};
-	
-	if ( $self->{koha_dateofbirth} ) {
     
-		my $yearofevent;
-		if ( $param->{format_date_event} eq 'datetime' ) {
-			$yearofevent = DateTime::Format::MySQL->parse_datetime($date_event)->year();
-		} elsif ( $param->{format_date_event} eq 'date' ) {
-			$yearofevent = DateTime::Format::MySQL->parse_date($date_event)->year();
-		}
+    if ( $self->{koha_dateofbirth} ) {
+    
+        my $yearofevent;
+        if ( $param->{format_date_event} eq 'datetime' ) {
+            $yearofevent = DateTime::Format::MySQL->parse_datetime($date_event)->year();
+        } elsif ( $param->{format_date_event} eq 'date' ) {
+            $yearofevent = DateTime::Format::MySQL->parse_date($date_event)->year();
+        }
 
-		my $yearofbirth = DateTime::Format::MySQL->parse_date($self->{koha_dateofbirth})->year();
+        my $yearofbirth = DateTime::Format::MySQL->parse_date($self->{koha_dateofbirth})->year();
     
-		$self->{statdb_age} = $yearofevent - $yearofbirth;
-	}
+        $self->{statdb_age} = $yearofevent - $yearofbirth;
+    }
     
     
     return $self;
@@ -161,62 +161,62 @@ sub get_fidelite {
     my ($self, $param) = @_;
     
     my $date_event = $self->{$param->{date_event_field}};
-	
-	if ( $self->{koha_dateenrolled} ) {
     
-		my $yearofevent;
-		if ( $param->{format_date_event} eq 'datetime' ) {
-			$yearofevent = DateTime::Format::MySQL->parse_datetime($date_event)->year();
-		} elsif ( $param->{format_date_event} eq 'date' ) {
-			$yearofevent = DateTime::Format::MySQL->parse_date($date_event)->year();
-		}
+    if ( $self->{koha_dateenrolled} ) {
+    
+        my $yearofevent;
+        if ( $param->{format_date_event} eq 'datetime' ) {
+            $yearofevent = DateTime::Format::MySQL->parse_datetime($date_event)->year();
+        } elsif ( $param->{format_date_event} eq 'date' ) {
+            $yearofevent = DateTime::Format::MySQL->parse_date($date_event)->year();
+        }
 
-		my $yearenrolled = DateTime::Format::MySQL->parse_date($self->{koha_dateenrolled})->year();
+        my $yearenrolled = DateTime::Format::MySQL->parse_date($self->{koha_dateenrolled})->year();
     
-		$self->{statdb_fidelite} = $yearofevent - $yearenrolled;
+        $self->{statdb_fidelite} = $yearofevent - $yearenrolled;
     }
     
     return $self;
 }
 
 sub get_sex {
-	my ($self) = @_;
-	
+    my ($self) = @_;
+    
     my @categorycodes = qw( MEDA MEDB MEDC CSVT MEDP BIBL CSLT );
-	my $categorycode;
-	if ($self->{koha_categorycode} ) {
-	    $categorycode = $self->{koha_categorycode};
-	} elsif ($self->{statdb_categorycode} ) {
-	    $categorycode = $self->{statdb_categorycode};
-	}
-	
+    my $categorycode;
+    if ($self->{koha_categorycode} ) {
+        $categorycode = $self->{koha_categorycode};
+    } elsif ($self->{statdb_categorycode} ) {
+        $categorycode = $self->{statdb_categorycode};
+    }
+    
     if ( any { /$categorycode/ } @categorycodes ) {
-		if ( $self->{koha_title} ) {
-			if ( $self->{koha_title} eq 'Madame' ) {
-				$self->{statdb_sexe} = 'F';
-				$self->{es_sexe} = 'Femme';
-			} elsif ( $self->{koha_title} eq 'Monsieur' ) {
-				$self->{statdb_sexe} = 'M';
-				$self->{es_sexe} = 'Homme';
-			} else {
-				$self->{statdb_sexe} = 'NC';
-				$self->{es_sexe} = 'Inconnu';
-			}
-		} elsif ( $self->{statdb_sexe} ) {
-			if ( $self->{statdb_sexe} eq 'F' ) {
-				$self->{es_sexe} = 'Femme';
-			} elsif ( $self->{statdb_sexe} eq 'H' ) {
-				$self->{es_sexe} = 'Homme';
-			} else {
-				$self->{es_sexe} = 'Inconnu';
-			}
-		}
+        if ( $self->{koha_title} ) {
+            if ( $self->{koha_title} eq 'Madame' ) {
+                $self->{statdb_sexe} = 'F';
+                $self->{es_sexe} = 'Femme';
+            } elsif ( $self->{koha_title} eq 'Monsieur' ) {
+                $self->{statdb_sexe} = 'M';
+                $self->{es_sexe} = 'Homme';
+            } else {
+                $self->{statdb_sexe} = 'NC';
+                $self->{es_sexe} = 'Inconnu';
+            }
+        } elsif ( $self->{statdb_sexe} ) {
+            if ( $self->{statdb_sexe} eq 'F' ) {
+                $self->{es_sexe} = 'Femme';
+            } elsif ( $self->{statdb_sexe} eq 'H' ) {
+                $self->{es_sexe} = 'Homme';
+            } else {
+                $self->{es_sexe} = 'Inconnu';
+            }
+        }
     } else {
         $self->{statdb_sexe} = 'NP';
-		$self->{es_sexe} = 'NP';
+        $self->{es_sexe} = 'NP';
     }
-	
-	return $self;
+    
+    return $self;
 }
 
 1;
