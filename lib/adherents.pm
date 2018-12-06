@@ -4,22 +4,22 @@ use Exporter;
 @ISA = qw( Exporter );
 @EXPORT = qw( 
     getSex
-	getBorrowerAttributes
-	getUses
-	insertAdherentIntoStatdb_adherent
-	getBorrowerDataByBorrowernumber
-	getBorrowerDataByUserid
-	GetBorrowersForQA
-	GetAgeLib	
+    getBorrowerAttributes
+    getUses
+    insertAdherentIntoStatdb_adherent
+    getBorrowerDataByBorrowernumber
+    getBorrowerDataByUserid
+    GetBorrowersForQA
+    GetAgeLib    
     GetCityFront
-	GetCityLibrary
-    GetCategoryDesc	
-    GetRbxDistrict	
-    GetCardType	
-    GetTrFidelite	
-    GetTrVenue	
-    getTypeUse	
-    getEsAttribute	
+    GetCityLibrary
+    GetCategoryDesc    
+    GetRbxDistrict    
+    GetCardType    
+    GetTrFidelite    
+    GetTrVenue    
+    getTypeUse    
+    getEsAttribute    
     getPrixAdhesion
 );
 
@@ -462,7 +462,7 @@ sub GetCityLibrary {
     my ( $city ) = @_;
     my $cityWithLibrary;
     my @libok = ( 'LILLE', 'LYS-LEZ-LANNOY', 'MONS-EN-BAROEUL', 'MOUVAUX', 'ROUBAIX', 'TOURCOING', 'VILLENEUVE-D\'ASCQ', 'WASQU', 'WASQUEHAL', 'WATTRELOS');
-	my @libko = qw( CROIX HEM LEERS );
+    my @libko = qw( CROIX HEM LEERS );
     if ( grep {$_ eq $city} @libok ) {
         $cityWithLibrary = "oui";
     } elsif ( grep {$_ eq $city} @libko ) {
@@ -516,7 +516,7 @@ sub GetTrFidelite {
     my ($count) = @_;
     my $tr;
     
-	if ($count == 0 ) {
+    if ($count == 0 ) {
         $tr = "a/ 0";
     } elsif ($count == 1 ) {
         $tr = "b/ 1";
@@ -674,24 +674,24 @@ sub _getEsAttributeLib {
 }
 
 sub getPrixAdhesion {
-	my ($categorycode) = @_;
-	my ($gratuit, $prix);
-	
-	if ( $categorycode eq 'MEDA' ) {
-		$gratuit = "payante";
-		$prix = 35;
-	} elsif ( $categorycode eq 'MEDB' ) {
-		$gratuit = "payante";
-		$prix = 17;
-	} elsif ( $categorycode eq 'MEDC' ) {
-		$gratuit = "payante";
-		$prix = 5;
-	} else {
-		$gratuit = "gratuite";
-		$prix = 0;
-	}
-	
-	my @results = ($gratuit, $prix);
+    my ($categorycode) = @_;
+    my ($gratuit, $prix);
+    
+    if ( $categorycode eq 'MEDA' ) {
+        $gratuit = "payante";
+        $prix = 35;
+    } elsif ( $categorycode eq 'MEDB' ) {
+        $gratuit = "payante";
+        $prix = 17;
+    } elsif ( $categorycode eq 'MEDC' ) {
+        $gratuit = "payante";
+        $prix = 5;
+    } else {
+        $gratuit = "gratuite";
+        $prix = 0;
+    }
+    
+    my @results = ($gratuit, $prix);
 }
 
 1;
