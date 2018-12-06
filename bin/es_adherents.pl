@@ -81,6 +81,8 @@ sub adherents {
         if (defined $adherent->{geo_roubaix_iris}) {
             ($adherent->{geo_roubaix_nom_iris}, $adherent->{geo_roubaix_quartier}, $adherent->{geo_roubaix_secteur} ) = GetRbxDistrict($dbh, $adherent->{geo_roubaix_iris});
         }
+		
+		$adherent->{geo_ville_bm} = GetCityLibrary( $adherent->{geo_ville} );
         
         # inscription
         ( $adherent->{inscription_carte}, $adherent->{personnalite} ) = GetCategoryDesc( $dbh, $adherent->{inscription_code_carte} );
@@ -156,6 +158,7 @@ sub adherents {
                 geo_roubaix_nom_iris => $adherent->{geo_roubaix_nom_iris},
                 geo_roubaix_quartier => $adherent->{geo_roubaix_quartier},
 				geo_roubaix_secteur => $adherent->{geo_roubaix_secteur},
+				geo_ville_bm => $adherent->{geo_ville_bm},
                 geo_gentile => $adherent->{gentile},
                 inscription_personnalite => $adherent->{personnalite},
                 inscription_carte => $adherent->{inscription_carte},
