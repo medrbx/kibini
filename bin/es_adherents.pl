@@ -79,7 +79,7 @@ sub adherents {
         }
         $adherent->{geo_ville_front} = GetCityFront( $adherent->{geo_ville} );
         if (defined $adherent->{geo_roubaix_iris}) {
-            ($adherent->{geo_roubaix_nom_iris}, $adherent->{geo_roubaix_quartier}) = GetRbxDistrict($dbh, $adherent->{geo_roubaix_iris});
+            ($adherent->{geo_roubaix_nom_iris}, $adherent->{geo_roubaix_quartier}, $adherent->{geo_roubaix_secteur} ) = GetRbxDistrict($dbh, $adherent->{geo_roubaix_iris});
         }
         
         # inscription
@@ -155,6 +155,7 @@ sub adherents {
                 geo_roubaix_iris => $adherent->{geo_roubaix_iris},
                 geo_roubaix_nom_iris => $adherent->{geo_roubaix_nom_iris},
                 geo_roubaix_quartier => $adherent->{geo_roubaix_quartier},
+				geo_roubaix_secteur => $adherent->{geo_roubaix_secteur},
                 geo_gentile => $adherent->{gentile},
                 inscription_personnalite => $adherent->{personnalite},
                 inscription_carte => $adherent->{inscription_carte},
