@@ -11,7 +11,8 @@ use Exporter;
 	getBorrowerDataByUserid
 	GetBorrowersForQA
 	GetAgeLib	
-    GetCityFront	
+    GetCityFront
+	GetCityLibrary
     GetCategoryDesc	
     GetRbxDistrict	
     GetCardType	
@@ -455,6 +456,21 @@ sub GetCityFront {
         $ville6 = "AUTRE";
     }
     return $ville6;
+}
+
+sub GetCityLibrary {
+    my ( $city ) = @_;
+    my $cityWithLibrary;
+    my @libok = ( 'LILLE', 'LYS-LEZ-LANNOY', 'MONS-EN-BAROEUL', 'MOUVAUX', 'ROUBAIX', 'TOURCOING', 'VILLENEUVE-D\'ASCQ', 'WASQU', 'WASQUEHAL', 'WATTRELOS');
+	my @libko = qw( CROIX HEM LEERS );
+    if ( grep {$_ eq $city} @libok ) {
+        $cityWithLibrary = "oui";
+    } elsif ( grep {$_ eq $city} @libko ) {
+        $cityWithLibrary = "non";
+    } else {
+        $cityWithLibrary = "NP";
+    }
+    return $cityWithLibrary;
 }
 
 sub GetCategoryDesc {
