@@ -513,7 +513,7 @@ sub GetTrFidelite {
     } elsif ($count > 4 && $count <= 10 ) {
         $tr = "f/ 5 - 10 ans";
     } else {
-        $tr = "g/ 10 ans et plus";
+        $tr = "g/ Plus de 10 ans";
     } 
     
     return $tr;
