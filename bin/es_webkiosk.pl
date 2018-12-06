@@ -91,7 +91,7 @@ SQL
         $branchcode = GetLibBranches($branchcode);
         my ( $irisNom, $quartier ) = undef;
         if (defined $iris) {
-            ($irisNom, $quartier) = GetRbxDistrict($dbh, $iris);
+            ($irisNom, $quartier, $secteur) = GetRbxDistrict($dbh, $iris);
         }
         
         my %index = (
@@ -116,6 +116,7 @@ SQL
                 adherent_rbx_iris => $iris,
                 adherent_rbx_nom_iris => $irisNom,
                 adherent_rbx_quartier => $quartier,
+				adherent_rbx_secteur => $secteur,
                 adherent_site_inscription => $branchcode,
                 adherent_personnalite => $personnalite
             }
