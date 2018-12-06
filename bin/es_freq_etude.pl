@@ -62,7 +62,7 @@ SQL
 
         my ( $irisNom, $quartier ) = undef;
         if (defined $iris) {
-            ($irisNom, $quartier) = GetRbxDistrict($dbh, $iris);
+            ($irisNom, $quartier, $secteur) = GetRbxDistrict($dbh, $iris);
         }
     
         my ( $age_lib1, $age_lib2, $age_lib3 );
@@ -92,6 +92,7 @@ SQL
                 lecteur_rbx_iris => $iris,
                 lecteur_rbx_nom_iris => $irisNom,
                 lecteur_rbx_quartier => $quartier,
+				lecteur_rbx_secteur => $secteur,
                 lecteur_sexe => $sexe,
                 lecteur_type_carte => $type_carte,
                 lecteur_ville => $ville,
