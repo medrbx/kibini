@@ -8,6 +8,14 @@ dayofmonthnextweek=`date +%d -d "7 day"`
 dir='/home/kibini/kibini_prod/bin/'
 dir_log='/home/kibini/kibini_prod/log/crontab/'
 
+# CHAQUE DERNIER MERCREDI DU MOIS
+if [ $dayofweek -eq 3 ] && [ $dayofmonthnextweek -lt $dayofmonth ]
+then
+    # On fait un cliché des données adhérents
+	perl $dir/statdb_adherents.pl
+    perl $dir/es_adherents.pl
+fi
+
 # CHAQUE MERCREDI
 if [ $dayofweek -eq 3 ]
 then
@@ -18,14 +26,6 @@ then
     perl $dir/es_webkiosk.pl
     # On met à jour la carte des quartiers
     perl $dir/data_carte.pl
-fi
-
-# CHAQUE DERNIER MERCREDI DU MOIS
-if [ $dayofweek -eq 3 ] && [ $dayofmonthnextweek -lt $dayofmonth ]
-then
-    # On fait un cliché des données adhérents
-	perl $dir/statdb_adherents.pl
-    perl $dir/es_adherents.pl
 fi
 
 # CHAQUE JOUR
