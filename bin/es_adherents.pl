@@ -93,7 +93,11 @@ sub adherents {
             $adherent->{inscription_site_inscription} = "Zèbre";
         }
         $adherent->{inscription_fidelite_tr} = GetTrFidelite($adherent->{inscription_fidelite});
-        $adherent->{inscription_attribut_lib} = getEsAttribute($adherent->{inscription_attribut}) if ( $adherent->{inscription_attribut} );
+		if ( $adherent->{inscription_attribut} ) {
+			$adherent->{inscription_attribut_lib} = getEsAttribute($adherent->{inscription_attribut});
+		} else {
+			$adherent->{inscription_attribut_lib} = "NA"
+		}
         
         # venues
         $adherent->{nb_venues_tr} = GetTrVenue($adherent->{nb_venues});
