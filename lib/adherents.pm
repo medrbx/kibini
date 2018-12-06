@@ -8,6 +8,7 @@ use Exporter;
 	getUses
 	insertAdherentIntoStatdb_adherent
 	getBorrowerDataByBorrowernumber
+	getBorrowerDataByUserid
 	GetBorrowersForQA
 	GetAgeLib	
     GetCityFront	
@@ -28,6 +29,7 @@ use LWP::UserAgent;
 use Encode qw(encode);
 use JSON;
 use kibini::db;
+use utf8;
 
 sub getBorrowerDataByBorrowernumber {
     my ($borrowernumber) = @_;
@@ -76,7 +78,126 @@ SQL
         }
         $adherent->{geo_ville_front} = GetCityFront( $adherent->{geo_ville} );
         if (defined $adherent->{geo_roubaix_iris}) {
-            ($adherent->{geo_roubaix_nom_iris}, $adherent->{geo_roubaix_quartier}) = GetRbxDistrict($dbh, $adherent->{geo_roubaix_iris});
+            ($adherent->{geo_roubaix_nom_iris}, $adherent->{geo_roubaix_quartier}, $adherent->{geo_roubaix_secteur}) = GetRbxDistrict($dbh, $adherent->{geo_roubaix_iris});
+        }
+        
+        # inscription
+        ( $adherent->{inscription_carte}, $adherent->{personnalite} ) = GetCategoryDesc( $dbh, $adherent->{inscription_code_carte} );
+        $adherent->{type_carte} = GetCardType($adherent->{inscription_code_carte});
+        if ( $adherent->{inscription_code_site} eq 'MED' ) {
+            $adherent->{inscription_site_inscription} = "Médiathèque";
+        } elsif ( $adherent->{inscription_code_site} eq 'BUS' ) { 
+            $adherent->{inscription_site_inscription} = "Zèbre";
+        }
+        $adherent->{inscription_fidelite_tr} = GetTrFidelite($adherent->{inscription_fidelite});
+        $adherent->{inscription_attribut_lib} = getEsAttribute($adherent->{inscription_attribut}) if ( $adherent->{inscription_attribut} );
+
+        $adherent->{nb_venues_prets_mediatheque} = $adherent->{nb_venues}->{prets_mediatheque};
+        $adherent->{nb_venues_prets_bus} = $adherent->{nb_venues}->{prets_bus};
+        $adherent->{nb_venues_postes_informatiques} = $adherent->{nb_venues}->{postes_informatiques};
+        $adherent->{nb_venues_wifi} = $adherent->{nb_venues}->{wifi};
+        $adherent->{nb_venues_salle_etude} = $adherent->{nb_venues}->{salle_etude};
+        $adherent->{nb_venues} = $adherent->{nb_venues}->{toutes_pratiques};
+            
+        # venues
+        $adherent->{nb_venues_tr} = GetTrVenue($adherent->{nb_venues});
+        $adherent->{nb_venues_prets_mediatheque_tr} = GetTrVenue($adherent->{nb_venues_prets_mediatheque});
+        $adherent->{nb_venues_prets_bus_tr} = GetTrVenue($adherent->{nb_venues_prets_bus});
+        $adherent->{nb_venues_prets} = $adherent->{nb_venues_prets_mediatheque} + $adherent->{nb_venues_prets_bus};
+        $adherent->{nb_venues_prets_tr} = GetTrVenue($adherent->{nb_venues_prets});
+        $adherent->{nb_venues_postes_informatiques_tr} = GetTrVenue($adherent->{nb_venues_postes_informatiques});
+        $adherent->{nb_venues_wifi_tr} = GetTrVenue($adherent->{nb_venues_wifi});
+        $adherent->{nb_venues_salle_etude_tr} = GetTrVenue($adherent->{nb_venues_salle_etude});
+        
+        # activité
+        if ( $adherent->{nb_venues_prets_mediatheque} > 0 || $adherent->{nb_venues_prets_bus} > 0 ) {
+            $adherent->{activite_emprunteur} = "Emprunteur";
+        } else {
+            $adherent->{activite_emprunteur} = "Non emprunteur";
+        }
+        if ( $adherent->{nb_venues_prets_mediatheque} > 0 ) {
+            $adherent->{activite_emprunteur_med} = "Emprunteur Médiathèque";
+        } else {
+            $adherent->{activite_emprunteur_med} = "Non emprunteur Médiathèque";
+        }
+        if ( $adherent->{nb_venues_prets_bus} > 0 ) {
+            $adherent->{activite_emprunteur_bus} = "Emprunteur Zèbre";
+        } else {
+            $adherent->{activite_emprunteur_bus} = "Non emprunteur Zèbre";
+        }
+        if ( $adherent->{nb_venues_postes_informatiques} > 0 ) {
+            $adherent->{activite_utilisateur_postes_informatiques} = "Utilisateur postes informatiques";
+        } else {
+            $adherent->{activite_utilisateur_postes_informatiques} = "Non utilisateur postes informatiques";
+        }
+        if ( $adherent->{nb_venues_wifi} > 0 ) {
+            $adherent->{activite_utilisateur_wifi} = "Utilisateur Wifi";
+        } else {
+            $adherent->{activite_utilisateur_wifi} = "Non utilisateur Wifi";
+        }
+        if ( $adherent->{nb_venues_salle_etude} > 0 ) {
+            $adherent->{activite_utilisateur_salle_etude} = "Utilisateur Salle d'étude";
+        } else {
+            $adherent->{activite_utilisateur_salle_etude} = "Non utilisateur Salle d'étude";
+        }
+        
+        $adherent->{type_use} = getTypeUse($adherent);
+        
+        # prix inscription
+        ($adherent->{inscription_gratuite}, $adherent->{inscription_prix}) = getPrixAdhesion($adherent->{inscription_code_carte});
+    
+    
+    return $adherent;
+}
+
+sub getBorrowerDataByUserid {
+    my ($userid) = @_;
+    
+    my $dbh = GetDbh();
+    my $req = <<SQL;
+SELECT
+    CURDATE() AS date_extraction,
+    b.borrowernumber AS adherent_id,
+    b.title,
+    YEAR(CURDATE()) - YEAR(b.dateofbirth) AS age,
+    b.city AS geo_ville,
+    b.altcontactcountry AS geo_roubaix_iris,
+    b.branchcode AS inscription_code_site,
+    b.categorycode AS inscription_code_carte,
+    YEAR(CURDATE()) - YEAR(b.dateenrolled) AS inscription_fidelite
+FROM koha_prod.borrowers b
+WHERE b.userid = ?
+SQL
+    my $sth = $dbh->prepare($req);
+    $sth->execute($userid);
+    my $adherent = $sth->fetchrow_hashref;
+    
+    $adherent->{sexe} = getSex($adherent->{title}, $adherent->{inscription_code_carte});
+    $adherent->{attributes} = getBorrowerAttributes($dbh, $adherent->{adherent_id});
+    $adherent->{nb_venues} = getUses($dbh, $adherent);
+    
+    # sexe
+        if ($adherent->{sexe} eq 'F' ) {
+            $adherent->{sexe} = 'Femme';
+        } elsif ($adherent->{sexe} eq 'M' ) {
+            $adherent->{sexe} = 'Homme';
+        }
+        
+        #age
+        $adherent->{age_lib1} = GetAgeLib($dbh, $adherent->{age}, "trmeda");
+        $adherent->{age_lib2} = GetAgeLib($dbh, $adherent->{age}, "trmedb");
+        $adherent->{age_lib3} = GetAgeLib($dbh, $adherent->{age}, "trinsee");
+        
+        
+        # geo
+        if ($adherent->{geo_ville} eq 'ROUBAIX') {
+            $adherent->{gentile} = 'Roubaisien';
+        } else {
+            $adherent->{gentile} = 'Non Roubaisien';
+        }
+        $adherent->{geo_ville_front} = GetCityFront( $adherent->{geo_ville} );
+        if (defined $adherent->{geo_roubaix_iris}) {
+            ($adherent->{geo_roubaix_nom_iris}, $adherent->{geo_roubaix_quartier}, $adherent->{geo_roubaix_secteur}) = GetRbxDistrict($dbh, $adherent->{geo_roubaix_iris});
         }
         
         # inscription
@@ -353,7 +474,7 @@ sub GetCategoryDesc {
 
 sub GetRbxDistrict {
     my ($dbh, $iris) = @_ ;
-    my $req = "SELECT irisNom, quartier FROM statdb.iris_lib WHERE irisInsee = ?" ;
+    my $req = "SELECT irisNom, quartier, secteur FROM statdb.iris_lib WHERE irisInsee = ?" ;
     my $sth = $dbh->prepare($req);
     $sth->execute($iris);
     return $sth->fetchrow_array ;
