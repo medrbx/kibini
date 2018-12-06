@@ -93,7 +93,7 @@ SQL
         $branchcode = GetLibBranches($branchcode);
         my ( $irisNom, $quartier ) = undef;
         if (defined $iris) {
-            ($irisNom, $quartier) = GetRbxDistrict($dbh, $iris);
+            ($irisNom, $quartier, $secteur) = GetRbxDistrict($dbh, $iris);
         }
     
         my $duree_pret = GetDuration($issuedate, $returndate, 'days');
@@ -176,6 +176,7 @@ SQL
                 emprunteur_rbx_iris => $iris,
                 emprunteur_rbx_nom_iris =>$irisNom,
                 emprunteur_rbx_quartier => $quartier,
+				emprunteur_rbx_secteur => $secteur,
                 emprunteur_site_inscription => $branchcode,
                 emprunteur_carte => $carte,
                 emprunteur_personnalite => $personnalite,
