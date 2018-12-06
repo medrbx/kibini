@@ -93,7 +93,7 @@ SQL
         
         my ( $irisNom, $quartier ) = undef;
         if (defined $iris) {
-            ($irisNom, $quartier) = GetRbxDistrict($dbh, $iris);
+            ($irisNom, $quartier, $secteur) = GetRbxDistrict($dbh, $iris);
         }
         $branchcode = GetLibBranches($branchcode);
         $branchcode_borrower = GetLibBranches($branchcode_borrower);
@@ -132,6 +132,7 @@ SQL
                 reserveur_rbx_iris => $iris,
                 reserveur_rbx_nom_iris => $irisNom,
                 reserveur_rbx_quartier => $quartier,
+				reserveur_rbx_secteur => $secteur,
                 reserveur_site_inscription => $branchcode_borrower,
                 reserveur_carte => $carte,
                 reserveur_personnalite => $personnalite,
