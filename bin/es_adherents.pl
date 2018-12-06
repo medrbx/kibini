@@ -96,7 +96,7 @@ sub adherents {
 		if ( $adherent->{inscription_attribut} ) {
 			$adherent->{inscription_attribut_lib} = getEsAttribute($adherent->{inscription_attribut});
 		} else {
-			$adherent->{inscription_attribut_lib} = "NA"
+			$adherent->{inscription_attribut_lib}->{action} = ["aucune action"];
 		}
         
         # venues
@@ -198,7 +198,7 @@ sub adherents {
         );
         
         $e->index(\%index);
-        #print Dumper(\%index);
+        #print Dumper($adherent->{inscription_attribut_lib});
         $i++;
         print "$i\n";
     }
