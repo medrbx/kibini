@@ -91,7 +91,7 @@ SQL
         $location = GetLibAV($location, "LOC");        
         $homebranch = GetLibBranches($homebranch);
         $branchcode = GetLibBranches($branchcode);
-        my ( $irisNom, $quartier ) = undef;
+        my ( $irisNom, $quartier, $secteur ) = undef;
         if (defined $iris) {
             ($irisNom, $quartier, $secteur) = GetRbxDistrict($dbh, $iris);
         }
