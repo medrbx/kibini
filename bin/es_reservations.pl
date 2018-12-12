@@ -22,7 +22,7 @@ AddCrontabLog($log_message);
 # On récupère l'adresse d'Elasticsearch
 my $es_node = GetEsNode();
 
-my $date_veille = GetDateTime('yesterday');
+my $date_veille = "2018-12-06"; #GetDateTime('yesterday');
 my $i = reservations($date_veille, $es_node);
 
 # On log la fin de l'opération
@@ -91,7 +91,7 @@ SQL
             ( $ccode, $lib1, $lib2, $lib3, $lib4 ) = GetDataCcodeFromItemnumber($itemnumber);
         }
         
-        my ( $irisNom, $quartier ) = undef;
+        my ( $irisNom, $quartier, $secteur ) = undef;
         if (defined $iris) {
             ($irisNom, $quartier, $secteur) = GetRbxDistrict($dbh, $iris);
         }
