@@ -60,7 +60,7 @@ SQL
     while (my @row = $sth->fetchrow_array) {
         my ( $datetime_entree, $duree, $borrowernumber, $sexe, $age, $categorycode, $ville, $iris ) = @row;
 
-        my ( $irisNom, $quartier ) = undef;
+        my ( $irisNom, $quartier, $secteur ) = undef;
         if (defined $iris) {
             ($irisNom, $quartier, $secteur) = GetRbxDistrict($dbh, $iris);
         }
