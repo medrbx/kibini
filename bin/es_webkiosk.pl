@@ -89,7 +89,7 @@ SQL
         my $type_carte = GetCardType($categorycode);
         
         $branchcode = GetLibBranches($branchcode);
-        my ( $irisNom, $quartier ) = undef;
+        my ( $irisNom, $quartier, $secteur ) = undef;
         if (defined $iris) {
             ($irisNom, $quartier, $secteur) = GetRbxDistrict($dbh, $iris);
         }
