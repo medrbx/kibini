@@ -12,7 +12,7 @@ dir_log='/home/kibini/kibini_prod/log/crontab/'
 if [ $dayofweek -eq 3 ] && [ $dayofmonthnextweek -lt $dayofmonth ]
 then
     # On fait un cliché des données adhérents
-	perl $dir/statdb_adherents.pl
+    perl $dir/statdb_adherents.pl
     perl $dir/es_adherents.pl
 fi
 
@@ -37,7 +37,7 @@ bash $dir/web.sh
 
 # On met à jour la table statdb.data_bib
 #perl $dir/data_biblio.pl
-perl $dir/data_bib.pl # test statdb.data_bib
+#perl $dir/data_bib.pl # test statdb.data_bib
 
 # On incorpore dans statdb et ES les prêts de la veille
 perl $dir/statdb_issues.pl
@@ -66,13 +66,13 @@ then
 fi
 
 # CHAQUE DIMANCHE
-#if [ $dayofweek -eq 7 ]
-#then
+if [ $dayofweek -eq 7 ]
+then
     # On recrée les index items et catalogue dans ES
 #    perl $dir/es_items.pl
 #    bash $dir/catmandu_es.sh
 
-#fi
+fi
 
 # EXCEPTIONNELLEMENT LE 23/05/2017
 #if [ $date == "2017-05-23" ]
