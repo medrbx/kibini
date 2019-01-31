@@ -58,4 +58,9 @@ sub _get_dataconf {
     return $dataconf;
 }
 
+sub comptage {
+    my ($self) = @_;
+    return $self->{dataconf}->{comptage};
+}
+
 1;

@@ -66,13 +66,13 @@ then
 fi
 
 # CHAQUE DIMANCHE
-if [ $dayofweek -eq 7 ]
-then
+#if [ $dayofweek -eq 7 ]
+#then
     # On recrée les index items et catalogue dans ES
 #    perl $dir/es_items.pl
 #    bash $dir/catmandu_es.sh
 
-fi
+#fi
 
 # EXCEPTIONNELLEMENT LE 23/05/2017
 #if [ $date == "2017-05-23" ]

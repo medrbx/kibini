@@ -85,51 +85,6 @@ action_culturelle:
               ignore_above: 256
               type: keyword
           type: text
-error:
-  index: adherents
-  index_uuid: _na_
-  reason: no such index
-  resource.id: adherents
-  resource.type: index_or_alias
-  root_cause:
-  - index: adherents
-    index_uuid: _na_
-    reason: no such index
-    resource.id: adherents
-    resource.type: index_or_alias
-    type: index_not_found_exception
-  type: index_not_found_exception
-status: 404
-error:
-  index: adherents_synth
-  index_uuid: _na_
-  reason: no such index
-  resource.id: adherents_synth
-  resource.type: index_or_alias
-  root_cause:
-  - index: adherents_synth
-    index_uuid: _na_
-    reason: no such index
-    resource.id: adherents_synth
-    resource.type: index_or_alias
-    type: index_not_found_exception
-  type: index_not_found_exception
-status: 404
-error:
-  index: adherents_tout
-  index_uuid: _na_
-  reason: no such index
-  resource.id: adherents_tout
-  resource.type: index_or_alias
-  root_cause:
-  - index: adherents_tout
-    index_uuid: _na_
-    reason: no such index
-    resource.id: adherents_tout
-    resource.type: index_or_alias
-    type: index_not_found_exception
-  type: index_not_found_exception
-status: 404
 adherents2:
   mappings:
     adherents:
@@ -364,21 +319,6 @@ adherents2:
               ignore_above: 256
               type: keyword
           type: text
-error:
-  index: adherents2015
-  index_uuid: _na_
-  reason: no such index
-  resource.id: adherents2015
-  resource.type: index_or_alias
-  root_cause:
-  - index: adherents2015
-    index_uuid: _na_
-    reason: no such index
-    resource.id: adherents2015
-    resource.type: index_or_alias
-    type: index_not_found_exception
-  type: index_not_found_exception
-status: 404
 catalogue:
   mappings:
     biblio:

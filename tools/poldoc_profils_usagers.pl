@@ -41,7 +41,7 @@ foreach my $site (@sites) {
 	my $file_in = "poldoc_profils_usagers_in_" . $site->{nom_fichier} . ".csv";
 	my $importer = Catmandu->importer('CSV', file => $file_in);
 	
-	my $file_out = "poldoc_profils_usagers_out_" . $site->{nom_fichier} . "_totaux.csv";
+	my $file_out = "/home/kibini/kibini_prod/data/collections/poldoc_profils_usagers_out_2017_" . $site->{nom_fichier} . "_totaux.csv";
 	my $exporter = Catmandu->exporter('CSV', file => $file_out);
 	
 	my $whereLocation = GetWhereLocationBySite($site->{code}) ;
@@ -178,7 +178,7 @@ sub getWhereClause {
 	}
 	
 	$where = join " AND ", @conditions;
-	$where = "WHERE YEAR(iss.issuedate) = 2018 AND " . $whereLocation . " AND " . $where;
+	$where = "WHERE YEAR(iss.issuedate) = 2017 AND " . $whereLocation . " AND " . $where;
 
 	return $where;
 }

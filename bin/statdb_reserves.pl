@@ -72,8 +72,7 @@ SELECT
     CASE WHEN b.email LIKE '%@%' THEN 'oui' ELSE 'non' END
 FROM koha_prod.$table r
 JOIN koha_prod.borrowers b ON b.borrowernumber = r.borrowernumber
--- WHERE r.reservedate >= ? AND r.reserve_id NOT IN(SELECT reserve_id FROM statdb.stat_reserves);
-WHERE r.reservedate = ? AND r.reserve_id NOT IN(SELECT reserve_id FROM statdb.stat_reserves);
+WHERE r.reservedate >= ? AND r.reserve_id NOT IN(SELECT reserve_id FROM statdb.stat_reserves);
 SQL
         $sth = $dbh->prepare($req);
         $sth->execute($date);

@@ -79,6 +79,9 @@ has koha_checkprevcheckout => ( is => 'ro' );
 has koha_updated_on => ( is => 'ro' );
 has koha_lastseen => ( is => 'ro' );
 
+has koha_attribute => ( is => 'ro' );
+
+has statdb_date_extraction => ( is => 'ro' );
 has statdb_age => ( is => 'ro' );
 has statdb_ville => ( is => 'ro' );
 has statdb_iris => ( is => 'ro' );

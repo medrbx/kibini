@@ -78,9 +78,9 @@ SELECT
     i.itemcallnumber,
     bi.publicationyear,
     i.price
-FROM koha2017.items i
-JOIN koha2017.biblioitems bi ON bi.biblionumber = i.biblionumber
-JOIN koha2017.biblio b ON b.biblionumber = i.biblionumber
+FROM koha2018.items i
+JOIN koha2018.biblioitems bi ON bi.biblionumber = i.biblionumber
+JOIN koha2018.biblio b ON b.biblionumber = i.biblionumber
 JOIN statdb.lib_collections2 c ON i.ccode = c.ccode
 WHERE i.notforloan != 4
     AND i.itemnumber <= ? AND itemnumber > ?

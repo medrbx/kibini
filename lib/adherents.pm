@@ -23,7 +23,8 @@ use Exporter;
     getPrixAdhesion
 );
 
-use Modern::Perl;
+use strict;
+use warnings;
 use List::MoreUtils qw(any uniq);
 
 use LWP::UserAgent;

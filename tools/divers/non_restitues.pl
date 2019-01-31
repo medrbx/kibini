@@ -10,7 +10,7 @@ use Data::Dumper ;
 use lib "$Bin/../lib" ;
 use kibini::db ;
 
-my $file = "non_restitues.csv" ;
+my $file = "non_restitues_20181207.csv" ;
 open(my $fd,">:encoding(utf8)","$file") ;
 
 my $dbh = GetDbh() ;
@@ -124,7 +124,7 @@ SQL
 
     my $req2 = <<SQL ;
 SELECT borrowernumber
-FROM koha2016.accountlines
+FROM koha_prod.accountlines
 WHERE
 	itemnumber = ?
     AND accounttype = 'L'

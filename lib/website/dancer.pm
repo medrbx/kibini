@@ -14,6 +14,8 @@ use salleEtude::form;
 use action_culturelle;
 use action_coop::form;
 use liste;
+use data;
+use JSON;
 
 our $VERSION = '0.1';
 
@@ -69,8 +71,8 @@ get '/grand-plage/inscrits/profils' => sub {
         label2 => 'Inscrits',
         label3 => 'Profils des inscrits',
         dashboard => {
-            src => 'http://129.1.0.237:5601/app/kibana#/dashboard/AWHmiiN2pw5wXLtt120A?embed=true&_g=(refreshInterval%3A(display%3AOff%2Cpause%3A!f%2Cvalue%3A0)%2Ctime%3A(from%3Anow-15y%2Cmode%3Arelative%2Cto%3Anow))',
-            height => '1500px'
+            src => 'http://129.1.0.237:5601/app/kibana#/dashboard/AWXxyms1IC-X_pQ2wJ7I?embed=true&_g=(refreshInterval%3A(display%3AOff%2Cpause%3A!f%2Cvalue%3A0)%2Ctime%3A(from%3Anow-1M%2FM%2Cmode%3Aquick%2Cto%3Anow-1M%2FM))',
+            height => '1300px'
         }
     };
 };
@@ -113,7 +115,7 @@ get '/grand-plage/collections/prets' => sub {
                 label2 => 'Collections',
                 label3 => 'Prêts',
                 dashboard => {
-                    src => 'http://129.1.0.237:5601/app/kibana#/dashboard/Pr%C3%AAts-Grand-Plage?embed=true&_g=(refreshInterval:(display:Off,pause:!f,value:0),time:(from:now-1y,mode:quick,to:now))&_a=(filters:!(),options:(darkTheme:!f),panels:!((col:1,id:Nombre-de-pr%C3%AAts-par-collection,panelIndex:24,row:3,size_x:12,size_y:9,type:visualization),(col:7,id:\'Nombre-d!\'emprunteurs-totaux\',panelIndex:25,row:1,size_x:6,size_y:2,type:visualization),(col:1,id:Pr%C3%AAts,panelIndex:26,row:1,size_x:6,size_y:2,type:visualization)),query:(query_string:(analyze_wildcard:!t,query:\'*\')),title:\'Pr%C3%AAts%20Grand%20Plage\',uiState:())',
+                    src => 'http://129.1.0.237:5601/app/kibana#/dashboard/Pr%C3%AAts-Grand-Plage?embed=true&_g=(refreshInterval%3A(display%3AOff%2Cpause%3A!f%2Cvalue%3A0)%2Ctime%3A(from%3A\'2018-01-15T16%3A03%3A59.108Z\'%2Cmode%3Aabsolute%2Cto%3A\'2019-01-15T16%3A03%3A59.109Z\'))" height="600" width="800',
             height => '1500px'
         }
     };
@@ -397,7 +399,8 @@ get '/grand-plage/collections/ensemble' => sub {
         label2 => 'Collections',
         label3 => 'Principaux indicateurs',
         file_2016 => '/data/Statistiques_collections_2016_v20170506.xlsx',
-            file_2017 => '/data/Statistiques_collections_2017.xlsx'
+        file_2017 => '/data/Statistiques_collections_2017.xlsx', 
+		file_2018 => '/data/Statistiques_collections_2018.xlsx'
 #        indicateurs => $indicateurs
     };
 };
@@ -611,6 +614,12 @@ get 'liste/:type/:etage' => sub {
         label1 => $params{type},
         label2 => $params{etage}
     };
+};
+
+# Pour obtenir directement des données
+get 'data/arrets_bibliobus' => sub {
+	my $data = getArretsZebre();
+	return to_json($data);
 };
 
 
