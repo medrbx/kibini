@@ -2,7 +2,6 @@ package Webkiosk;
 
 use Moo;
 
-use Kibini::DB;
 extends 'Adherent';
 
 has wk_heure_deb => ( is => 'ro' );
@@ -28,6 +27,12 @@ sub BUILDARGS {
             $arg->{$k} = $wk{$k};
         }
     }
+    
+    if ( $args[0]->{crypter} ) {
+        $arg->{crypter} = $args[0]->{crypter};
+    } else {
+#        $arg->{crypter} = Kibini::Crypt->new; # Pour mise en place cryptage
+    }
 
     return $arg;
 }
@@ -44,12 +49,14 @@ sub get_wkusers_from_koha {
 sub mod_data_to_statdb_webkiosk {
     my ($self) = @_;
     
+#	$self->get_adherentid;	# Pour mise en place cryptage
     $self->{statdb_ville} = $self->{koha_city};
     $self->{statdb_iris} = $self->{koha_altcontactcountry};
     $self->{statdb_branchcode} = $self->{koha_branchcode};
     $self->{statdb_categorycode} = $self->{koha_categorycode};
     $self->get_age_at_time_of_event( {format_date_event => 'datetime', date_event_field => 'wk_heure_deb'} );
     $self->get_fidelite( {format_date_event => 'datetime', date_event_field => 'wk_heure_deb'} );
+#	$self->get_age_data;	# Pour obtenir détails sur âge
 
     return $self;
 }
@@ -64,7 +71,7 @@ VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 SQL
     my $sth = $dbh->prepare($req);
     $sth->execute( $self->{wk_heure_deb}, $self->{wk_heure_fin}, $self->{wk_espace}, $self->{wk_poste}, $self->{koha_userid}, $self->{koha_borrowernumber}, $self->{statdb_age}, $self->{statdb_sexe}, $self->{statdb_ville}, $self->{statdb_iris}, $self->{statdb_branchcode}, $self->{statdb_categorycode}, $self->{statdb_fidelite} );
-	$sth->finish();
+    $sth->finish();
 
     return $self;
 }
