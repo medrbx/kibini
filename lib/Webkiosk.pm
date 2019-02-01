@@ -31,7 +31,7 @@ sub BUILDARGS {
     if ( $args[0]->{crypter} ) {
         $arg->{crypter} = $args[0]->{crypter};
     } else {
-#        $arg->{crypter} = Kibini::Crypt->new; # Pour mise en place cryptage
+        $arg->{crypter} = Kibini::Crypt->new;
     }
 
     return $arg;
