@@ -4,7 +4,10 @@ use Moo;
 use List::MoreUtils qw(any uniq);
 
 use Kibini::DB;
+use Kibini::Crypt;
 use kibini::time;
+
+has crypter => ( is => 'ro' );
 
 has dbh => ( is => 'ro' );
 
@@ -79,19 +82,20 @@ has koha_checkprevcheckout => ( is => 'ro' );
 has koha_updated_on => ( is => 'ro' );
 has koha_lastseen => ( is => 'ro' );
 
-has koha_attribute => ( is => 'ro' );
-
-has statdb_date_extraction => ( is => 'ro' );
 has statdb_age => ( is => 'ro' );
+has statdb_acode => ( is => 'ro' );
 has statdb_ville => ( is => 'ro' );
 has statdb_iris => ( is => 'ro' );
 has statdb_categorycode => ( is => 'ro' );
 has statdb_branchcode => ( is => 'ro' );
 has statdb_fidelite => ( is => 'ro' );
 has statdb_sexe => ( is => 'ro' );
+has statdb_adherentid => ( is => 'ro' );
 
 has es_sexe => ( is => 'ro' );
-
+has es_age_lib1 => ( is => 'ro' );
+has es_age_lib2 => ( is => 'ro' );
+has es_age_lib3 => ( is => 'ro' );
 
 sub BUILDARGS {
     my ($class, @args) = @_;
@@ -110,6 +114,12 @@ sub BUILDARGS {
         foreach my $k (keys(%adh)) {
             $arg->{$k} = $adh{$k};
         }
+    }
+    
+    if ( $args[0]->{crypter} ) {
+        $arg->{crypter} = $args[0]->{crypter};
+    } else {
+        $arg->{crypter} = Kibini::Crypt->new;
     }
 
     return $arg;
@@ -143,7 +153,6 @@ sub get_age_at_time_of_event {
     my $date_event = $self->{$param->{date_event_field}};
     
     if ( $self->{koha_dateofbirth} ) {
-    
         my $yearofevent;
         if ( $param->{format_date_event} eq 'datetime' ) {
             $yearofevent = DateTime::Format::MySQL->parse_datetime($date_event)->year();
@@ -155,7 +164,26 @@ sub get_age_at_time_of_event {
     
         $self->{statdb_age} = $yearofevent - $yearofbirth;
     }
+     
+    return $self;
+}
+
+sub get_age_data {
+    my ($self, $type) = @_;
     
+    if ( $self->{statdb_acode} ) {
+        my $req = "SELECT trmeda, trmedb, trinsee FROM statdb.lib_age2 WHERE acode = ?";
+        my $sth = $self->{dbh}->prepare($req);
+        $sth->execute($self->{statdb_acode});
+        ($self->{es_age_lib1}, $self->{es_age_lib2}, $self->{es_age_lib3} ) = $sth->fetchrow_array;
+        $sth->finish;    
+    } elsif ( $self->{statdb_age} ) {
+        my $req = "SELECT acode, trmeda, trmedb, trinsee FROM statdb.lib_age2 WHERE age = ?";
+        my $sth = $self->{dbh}->prepare($req);
+        $sth->execute($self->{statdb_age});
+        ($self->{statdb_acode}, $self->{es_age_lib1}, $self->{es_age_lib2}, $self->{es_age_lib3} ) = $sth->fetchrow_array;
+        $sth->finish;    
+    }
     
     return $self;
 }
@@ -163,9 +191,8 @@ sub get_age_at_time_of_event {
 sub get_fidelite {
     my ($self, $param) = @_;
     
-    my $date_event = $self->{$param->{date_event_field}};
-    
-    if ( $self->{koha_dateenrolled} ) {
+    if ($self->{koha_dateenrolled}) {
+        my $date_event = $self->{$param->{date_event_field}};
     
         my $yearofevent;
         if ( $param->{format_date_event} eq 'datetime' ) {
@@ -222,7 +249,16 @@ sub get_sex {
     return $self;
 }
 
+sub get_adherentid {
+    my ($self) = @_;
+    
+    my $crypter = $self->{crypter};
+    
+    $self->{statdb_adherentid} = $crypter->crypt($self->{koha_borrowernumber});
+    
+    return $self;
+}
+
 1;
 
 __END__
-
