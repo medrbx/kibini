@@ -13,23 +13,26 @@ sub BUILDARGS {
     my ($class, @args) = @_;
     my $arg;
 
-    if ( $args[0]->{type} ) {
-        $arg->{type} = $args[0]->{type};
-    } else {
-        my $conf = Kibini::Config->new->crypt;
-        $arg->{salt} = $conf->{'salt'};
-    }
+    my $conf = Kibini::Config->new->crypt;
+	$arg->{type} = $conf->{type};
+	
+	if ( $arg->{type} eq 'Bcrypt' ) {
+		$arg->{salt} = $conf->{salt};
+	}
 
     return $arg;
 }
 
 sub crypt {
-    my ($self, $string) = @_;
+    my ($self, $param) = @_;
     
-    my $salt = $self->{'salt'};
-    my $settings = '$2a$08$'.$salt;
-    
-    return Crypt::Eksblowfish::Bcrypt::bcrypt($string, $settings);
+	if ($self->{type} eq 'Bcrypt' ) {
+		my $salt = $self->{'salt'};
+		my $settings = '$2a$08$'.$salt;
+		return Crypt::Eksblowfish::Bcrypt::bcrypt($param->{string}, $settings);
+	} elsif ($self->{type} eq 'SHA1' ) {
+		return sha1_hex($param->{string});
+	}
 }
 
 1;
