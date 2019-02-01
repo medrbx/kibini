@@ -7,8 +7,8 @@ use FindBin qw( $Bin );
 
 use lib "$Bin/../lib";
 use Kibini::DB;
+use Kibini::Crypt;
 use kibini::log;
-use Adherent;
 use Webkiosk;
 
 my $log_message;
@@ -20,6 +20,8 @@ AddCrontabLog($log_message);
 my $dbh = Kibini::DB->new;
 $dbh = $dbh->dbh;
 
+my $crypter = Kibini::Crypt->new;
+
 open my $fic, "<", "/home/kibini/wk_users_logs_consommations.csv";
 
 my $csv = Text::CSV->new ({
@@ -29,7 +31,7 @@ my $csv = Text::CSV->new ({
 $csv->column_names (qw( wk_heure_deb wk_heure_fin wk_espace wk_poste koha_userid ));
 
 while ( my $row = $csv->getline_hr ($fic) ) {
-    my $wk = Webkiosk->new( { dbh => $dbh, wk => $row } );
+    my $wk = Webkiosk->new( { dbh => $dbh, crypter => $crypter, wk => $row } );
     $wk->get_wkusers_from_koha;
     $wk->mod_data_to_statdb_webkiosk;
     $wk->add_data_to_statdb_webkiosk;
