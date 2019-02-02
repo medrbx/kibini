@@ -2,12 +2,16 @@ package Webkiosk;
 
 use Moo;
 
+use Kibini::ES;
+use Kibini::Time;
+
 extends 'Adherent';
 
-has wk_heure_deb => ( is => 'ro' );
-has wk_heure_fin => ( is => 'ro' );
-has wk_espace => ( is => 'ro' );
-has wk_poste => ( is => 'ro' );
+has session_heure_deb => ( is => 'ro' );
+has session_heure_fin => ( is => 'ro' );
+has session_espace => ( is => 'rw' );
+has session_poste => ( is => 'ro' );
+has session_duree  => ( is => 'ro' );
 
 sub BUILDARGS {
     my ($class, @args) = @_;
@@ -49,18 +53,33 @@ sub get_wkuser_from_koha {
 sub get_wkuser_data {
     my ($self) = @_;
     
-#	$self->get_statdb_adherentid;	# Pour mise en place cryptage	
+	$self->_get_wk_location;
+	$self->_get_session_duree;
+	
+	$self->get_statdb_adherentid;
 	$self->get_statdb_userid;
 	$self->get_statdb_borrowernumber;
-	$self->get_statdb_age( {format_date_event => 'datetime', date_event_field => 'wk_heure_deb'} );
+	$self->get_statdb_age( {format_date_event => 'datetime', date_event_field => 'session_heure_deb'} );
 	$self->get_statdb_sexe;
 	$self->get_statdb_ville;
 	$self->get_statdb_rbx_iris;
 	$self->get_statdb_branchcode;
 	$self->get_statdb_categorycode;
-	$self->get_statdb_nb_annees_adhesion( {format_date_event => 'datetime', date_event_field => 'wk_heure_deb'} );
+	$self->get_statdb_nb_annees_adhesion( {format_date_event => 'datetime', date_event_field => 'session_heure_deb'} );
 	
-	$self->get_es_age_labels;
+	$self->get_es_adherentid;
+	$self->get_es_age( {format_date_event => 'datetime', date_event_field => 'session_heure_deb'} );
+	$self->get_es_age_labels;	
+	$self->get_es_carte;
+	$self->get_es_type_carte;
+	$self->get_es_nb_annees_adhesion( {format_date_event => 'datetime', date_event_field => 'session_heure_deb'} );
+	$self->get_es_ville;
+	$self->get_es_rbx_iris;
+	$self->get_es_rbx_nom_iris;
+	$self->get_es_rbx_quartier;
+	$self->get_es_rbx_secteur;
+	$self->get_es_site_inscription;
+	$self->get_es_personnalite;
 
     return $self;
 }
@@ -88,10 +107,10 @@ VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 SQL
     my $sth = $dbh->prepare($req);
     $sth->execute(
-		$self->{wk_heure_deb},
-		$self->{wk_heure_fin},
-		$self->{wk_espace},
-		$self->{wk_poste},
+		$self->{session_heure_deb},
+		$self->{session_heure_fin},
+		$self->{session_espace},
+		$self->{session_poste},
 		$self->{statdb_userid},
 		$self->{statdb_borrowernumber},
 		$self->{statdb_age},
@@ -103,8 +122,42 @@ SQL
 		$self->{statdb_nb_annees_adhesion}
 	);
     $sth->finish();
+}
 
-    return $self;
+sub add_data_to_es_webkiosk {
+    my ($self) = @_;
+	
+	my $e = Kibini::ES->new;
+
+}
+
+sub _get_wk_location {
+    my ($self) = @_ ;
+    my %espaces = (
+        'Atelier' => 'Multimédia',
+        'Disco' => 'Phare',
+        'Etude' => 'Etude',
+        'Jeux' => 'Jeunesse',
+        'Lecture' => '1er étage',
+        'Jeunesse' => 'Jeunesse',
+        'Devoir' => 'Jeunesse',
+        'Rdc' => 'Rez-de-chaussée',
+        'Reussir' => 'Phare',
+        'Cafe' => 'Rez-de-chaussée',
+        'Rdc Ascenceur' => 'Rez-de-chaussée'
+    ) ;
+    $self->{session_espace} = $espaces{$self->{session_espace}} ;
+    return $self ;
+}
+
+sub _get_session_duree {
+    my ($self) = @_ ;
+	
+	my $time = Kibini::Time->new;
+	$time->get_duration({ datetime1 => $self->{session_heure_deb}, datetime2 => $self->{session_heure_fin}, type => 'minutes' });
+	$self->{session_duree} = $time->{duration};
+	
+    return $self ;
 }
 
 1;
