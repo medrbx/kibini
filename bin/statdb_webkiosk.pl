@@ -33,7 +33,7 @@ $csv->column_names (qw( wk_heure_deb wk_heure_fin wk_espace wk_poste koha_userid
 while ( my $row = $csv->getline_hr ($fic) ) {
     my $wk = Webkiosk->new( { dbh => $dbh, crypter => $crypter, wk => $row } );
     $wk->get_wkusers_from_koha;
-    $wk->mod_data_to_statdb_webkiosk;
+    $wk->get_data_to_statdb_webkiosk;
     $wk->add_data_to_statdb_webkiosk;
     
     print Dumper($wk);
