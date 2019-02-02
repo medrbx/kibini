@@ -2,6 +2,7 @@ package Adherent;
 
 use Moo;
 use List::MoreUtils qw(any uniq);
+use utf8;
 
 use Kibini::DB;
 use Kibini::Crypt;
@@ -209,7 +210,7 @@ sub get_statdb_rbx_iris {
 sub get_statdb_branchcode {
     my ($self) = @_;
     
-    $self->{statdb_ville} = $self->{koha_branchcode};
+    $self->{statdb_branchcode} = $self->{koha_branchcode};
     
     return $self;
 }
@@ -292,7 +293,7 @@ sub get_statdb_adherentid {
     
     my $crypter = $self->{crypter};
     
-    $self->{statdb_adherentid} = $crypter->crypt($self->{koha_borrowernumber});
+    $self->{statdb_adherentid} = $crypter->crypt({ string => $self->{koha_borrowernumber}});
     
     return $self;
 }
@@ -336,6 +337,31 @@ sub get_es_sexe {
         }
     }
     
+    return $self;
+}
+
+sub get_es_age {
+    my ($self, $param) = @_;
+	
+	if ($self->{statdb_age}) {
+		$self->{es_age} = $self->{statdb_age};
+	}
+    
+    my $date_event = $self->{$param->{date_event_field}};
+    
+    if ( $self->{koha_dateofbirth} ) {
+        my $yearofevent;
+        if ( $param->{format_date_event} eq 'datetime' ) {
+            $yearofevent = DateTime::Format::MySQL->parse_datetime($date_event)->year();
+        } elsif ( $param->{format_date_event} eq 'date' ) {
+            $yearofevent = DateTime::Format::MySQL->parse_date($date_event)->year();
+        }
+
+        my $yearofbirth = DateTime::Format::MySQL->parse_date($self->{koha_dateofbirth})->year();
+    
+        $self->{es_age} = $yearofevent - $yearofbirth;
+    }
+     
     return $self;
 }
 
@@ -385,36 +411,86 @@ sub get_es_rbx_iris {
 
 sub get_es_rbx_nom_iris {
     my ($self) = @_;
+	
+	($self->{es_rbx_nom_iris}, $self->{es_rbx_quartier}, $self->{es_rbx_secteur}) = _get_es_rbx_geo($self) unless $self->{es_rbx_nom_iris};
     
     return $self;
 }
 
 sub get_es_rbx_quartier {
     my ($self) = @_;
+	
+	($self->{es_rbx_nom_iris}, $self->{es_rbx_quartier}, $self->{es_rbx_secteur}) = _get_es_rbx_geo($self) unless $self->{es_rbx_quartier};
     
     return $self;
 }
 
 sub get_es_rbx_secteur {
     my ($self) = @_;
+	
+	($self->{es_rbx_nom_iris}, $self->{es_rbx_quartier}, $self->{es_rbx_secteur}) = _get_es_rbx_geo($self) unless $self->{es_rbx_secteur};
     
     return $self;
 }
 
 sub get_es_carte {
     my ($self) = @_;
+	
+	($self->{es_carte}, $self->{es_personnalite}) = _get_es_carte_perso($self) unless $self->{es_carte};
     
     return $self;
 }
 
 sub get_es_type_carte {
     my ($self) = @_;
+	
+	my $categorycode;
+	if ($self->{koha_categorycode}) {
+		$categorycode = $self->{koha_categorycode}
+	} elsif ($self->{statdb_categorycode}) {
+		$categorycode = $self->{statdb_categorycode}
+	}
+
+    my $type_carte ;
+    if ($categorycode eq "BIBL" ) { $type_carte = "Médiathèque" ; }
+    my @liste = qw( MEDA MEDB MEDC CSVT MEDP ) ;
+    if ( grep {$_ eq $categorycode} @liste ) { $type_carte = "Médiathèque Plus" ; }
+    if ($categorycode eq "CSLT" ) { $type_carte = "Consultation sur place" ; }
+    @liste = qw( COLI COLD ) ;
+    if ( grep {$_ eq $categorycode} @liste ) { $type_carte = "Prêt en nombre" ; }
+    @liste = qw( ECOL CLAS COLS ) ;
+    if ( grep {$_ eq $categorycode} @liste ) { $type_carte = "Service collectivités" ; }
+	
+    $self->{es_type_carte} = $type_carte;
+	
+    return $self;
+}
+
+sub get_es_personnalite {
+    my ($self) = @_;
+	
+	($self->{es_carte}, $self->{es_personnalite}) = _get_es_carte_perso($self) unless $self->{es_personnalite};
     
     return $self;
 }
 
-sub get_es_personanalite {
+sub get_es_site_inscription {
     my ($self) = @_;
+	
+	my $site;
+	if ($self->{koha_branchcode}) {
+		$site = $self->{koha_branchcode}
+	} elsif ($self->{statdb_branchcode}) {
+		$site = $self->{statdb_branchcode}
+	}
+	
+	if ($site eq 'MED') {
+		$self->{es_site_inscription} = 'Médiathèque';
+	} elsif ($site eq 'BUS') {
+		$self->{es_site_inscription} = 'Zèbre';
+	} elsif ($site eq 'MUS') {
+		$self->{es_site_inscription} = 'Musée André Diligent';
+	}
     
     return $self;
 }
@@ -434,10 +510,52 @@ sub get_es_adherentid {
         $self->{es_adherentid} = $self->{statdb_adherentid};
     } elsif ($self->{koha_borrowernumber}) {    
         my $crypter = $self->{crypter};
-        $self->{statdb_adherentid} = $crypter->crypt($self->{koha_borrowernumber});
+        $self->{statdb_adherentid} = $crypter->crypt({ string => $self->{koha_borrowernumber}});
     }
     
     return $self;
+}
+
+sub _get_es_rbx_geo {
+    my ($self) = @_ ;
+	
+	my $dbh = $self->{dbh};
+	my $iris;
+	if ($self->{koha_altcontactcountry}) {
+		$iris = $self->{koha_altcontactcountry}
+	} elsif ($self->{statdb_rbx_iris}) {
+		$iris = $self->{statdb_rbx_iris}
+	}
+	
+    my $req = "SELECT irisNom, quartier, secteur FROM statdb.iris_lib WHERE irisInsee = ?" ;
+    my $sth = $dbh->prepare($req);
+    $sth->execute($iris);
+    return $sth->fetchrow_array ;
+    $sth->finish();
+}
+
+sub _get_es_carte_perso {
+    my ($self) = @_;
+	
+	my $dbh = $self->{dbh};
+	my $categorycode;
+	if ($self->{koha_categorycode}) {
+		$categorycode = $self->{koha_categorycode}
+	} elsif ($self->{statdb_categorycode}) {
+		$categorycode = $self->{statdb_categorycode}
+	}
+	
+    my $req = "SELECT description, category_type FROM statdb.lib_categories WHERE categorycode = ? ";
+    my $sth = $dbh->prepare($req);
+    $sth->execute($categorycode);
+    my @result = $sth->fetchrow_array;
+    $sth->finish();
+    if ( $result[1] eq "C" ) {
+        $result[1] = "Personne";
+    } else {
+        $result[1] = "Collectivité";
+    }
+    return @result;
 }
 
 1;
