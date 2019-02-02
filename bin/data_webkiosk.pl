@@ -34,10 +34,8 @@ while ( my $row = $csv->getline_hr ($fic) ) {
     my $wk = Webkiosk->new( { dbh => $dbh, crypter => $crypter, wk => $row } );
 	$wk->get_wkuser_from_koha;
 	$wk->get_wkuser_data;
-#	$wk->add_data_to_statdb_webkiosk;
-	
-    
-   print Dumper($wk);
+	$wk->add_data_to_statdb_webkiosk;
+	print Dumper($wk);
 }
 
 close $fic;
