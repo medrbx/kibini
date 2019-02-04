@@ -595,8 +595,7 @@ sub getEsAttribute {
     
     foreach my $attribute (@attributes) {
         my ($lib_attribute, $code) = _getEsAttributeLib($attribute);
-        $es_attribute->{$code} = [];
-        push $es_attribute->{$code}, $lib_attribute;
+        $es_attribute->{$code} = $lib_attribute;
     }
     
     return $es_attribute;
