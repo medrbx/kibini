@@ -2,30 +2,37 @@ package Kibini::Crypt;
 
 use Moo;
 use Crypt::Eksblowfish::Bcrypt;
+use Digest::SHA1 qw(sha1_hex);
 
 use Kibini::Config;
 
-has 'salt' => (
-    is  => 'rw'
-);
+has 'type' => ( is  => 'rw' );
+has 'salt' => ( is  => 'rw' );
 
-around BUILDARGS => sub {
-    my $orig = shift;
-    my $class = shift;
+sub BUILDARGS {
+    my ($class, @args) = @_;
+    my $arg;
 
     my $conf = Kibini::Config->new->crypt;
-    my $salt = $conf->{'salt'};
+    $arg->{type} = $conf->{type};
+    
+    if ( $arg->{type} eq 'Bcrypt' ) {
+        $arg->{salt} = $conf->{salt};
+    }
 
-    return $class->$orig(salt => $salt);
-};
+    return $arg;
+}
 
 sub crypt {
-    my ($self, $string) = @_;
+    my ($self, $param) = @_;
     
-    my $salt = $self->{'salt'};
-    my $settings = '$2a$08$'.$salt;
-    
-    return Crypt::Eksblowfish::Bcrypt::bcrypt($string, $settings);
+    if ($self->{type} eq 'Bcrypt' ) {
+        my $salt = $self->{'salt'};
+        my $settings = '$2a$08$'.$salt;
+        return Crypt::Eksblowfish::Bcrypt::bcrypt($param->{string}, $settings);
+    } elsif ($self->{type} eq 'SHA1' ) {
+        return sha1_hex($param->{string});
+    }
 }
 
 1;
