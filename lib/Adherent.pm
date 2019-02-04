@@ -168,16 +168,16 @@ sub get_data_from_koha_by_id {
         my $key = "koha_" . $k;
         $self->{$key} = $result->{$k};
     }
-	
-	$self->get_koha_attributes;
+    
+    $self->get_koha_attributes;
 
     return $self;
 }
 
 sub get_statdb_adherent_generic_data {
     my ($self, $param) = @_;
-	
-	$self->get_statdb_adherentid;
+    
+    $self->get_statdb_adherentid;
     $self->get_statdb_userid;
     $self->get_statdb_borrowernumber;
     $self->get_statdb_age( {format_date_event => $param->{param_get_statdb_age}->{format_date_event}, date_event_field => $param->{param_get_statdb_age}->{date_event_field}} );
@@ -187,22 +187,22 @@ sub get_statdb_adherent_generic_data {
     $self->get_statdb_branchcode;
     $self->get_statdb_categorycode;
     $self->get_statdb_nb_annees_adhesion( {format_date_event => $param->{param_get_statdb_nb_annees_adhesion}->{format_date_event}, date_event_field => $param->{param_get_statdb_nb_annees_adhesion}->{date_event_field}} );
-	$self->get_statdb_attributes;
+    $self->get_statdb_attributes;
 
     return $self;
 }
 
 sub get_es_adherent_generic_data {
     my ($self, $param) = @_;
-	
-	$self->get_es_adherentid;
+    
+    $self->get_es_adherentid;
     $self->get_es_age( {format_date_event => $param->{param_get_es_age}->{format_date_event}, date_event_field => $param->{param_get_es_age}->{date_event_field}} );
     $self->get_es_age_labels; 
     $self->get_es_sexe;    
     $self->get_es_carte;
     $self->get_es_type_carte;
     $self->get_es_nb_annees_adhesion( {format_date_event => $param->{param_get_es_nb_annees_adhesion}->{format_date_event}, date_event_field => $param->{param_get_es_nb_annees_adhesion}->{date_event_field}} );
-	$self->get_es_nb_annees_adhesion_tra;
+    $self->get_es_nb_annees_adhesion_tra;
     $self->get_es_geo_ville;
     $self->get_es_geo_rbx_iris;
     $self->get_es_geo_rbx_nom_iris;
@@ -213,8 +213,8 @@ sub get_es_adherent_generic_data {
     $self->get_es_geo_ville_bm;
     $self->get_es_site_inscription;
     $self->get_es_personnalite;
-	$self->get_es_inscription_prix_gratuite;
-	$self->get_es_attributes;
+    $self->get_es_inscription_prix_gratuite;
+    $self->get_es_attributes;
 
     return $self;
 }
@@ -224,7 +224,7 @@ sub get_koha_attributes {
 
     my @attributes;
     my $req = "SELECT attribute FROM koha_prod.borrower_attributes WHERE borrowernumber = ?";
-	my $dbh = $self->{dbh};
+    my $dbh = $self->{dbh};
     my $sth = $dbh->prepare($req);
     $sth->execute($self->{koha_borrowernumber});
     while (my $att = $sth->fetchrow_array) {
@@ -354,7 +354,7 @@ sub get_statdb_borrowernumber {
 
 sub get_statdb_attributes {
     my ($self) = @_;
-	
+    
     $self->{statdb_attributes} = join '|', @{$self->{koha_attributes}};
     
     return $self;
@@ -618,9 +618,9 @@ sub get_es_nb_annees_adhesion {
 
 sub get_es_nb_annees_adhesion_tra {
     my ($self) = @_;
-	
+    
     my $tr;
-	my $count = $self->{es_nb_annees_adhesion};
+    my $count = $self->{es_nb_annees_adhesion};
     
     if ($count == 0 ) {
         $tr = "a/ 0";
@@ -637,8 +637,8 @@ sub get_es_nb_annees_adhesion_tra {
     } else {
         $tr = "g/ Plus de 10 ans";
     }
-	
-	$self->{es_nb_annees_adhesion_tra} = $tr;
+    
+    $self->{es_nb_annees_adhesion_tra} = $tr;
     
     return $self;
 }
@@ -646,10 +646,10 @@ sub get_es_nb_annees_adhesion_tra {
 
 sub get_es_inscription_prix_gratuite {
     my ($self) = @_;
-	
-	my ($gratuit, $prix);
-	
-	my $categorycode;
+    
+    my ($gratuit, $prix);
+    
+    my $categorycode;
     if ($self->{koha_categorycode}) {
         $categorycode = $self->{koha_categorycode}
     } elsif ($self->{statdb_categorycode}) {
@@ -670,8 +670,8 @@ sub get_es_inscription_prix_gratuite {
         $prix = 0;
     }
     
-	$self->{es_inscription_prix} = $prix;
-	$self->{es_inscription_gratuite} = $gratuit;
+    $self->{es_inscription_prix} = $prix;
+    $self->{es_inscription_gratuite} = $gratuit;
     
     return $self;
 }
@@ -699,16 +699,16 @@ sub get_es_attributes {
         my ($lib_attribute, $code) = _get_es_attributes_lib($attribute);
         $es_attribute->{$code} = $lib_attribute;
     }
-	
-	$self->{es_attributes} = $es_attribute;
+    
+    $self->{es_attributes} = $es_attribute;
     
     return $self;
 }
 
 sub export_adherent_generic_data_to_statdb {
     my ($self) = @_;
-	my $adherent_data = {
-		statdb_userid => $self->{statdb_userid},
+    my $adherent_data = {
+        statdb_userid => $self->{statdb_userid},
         statdb_borrowernumber => $self->{statdb_borrowernumber},
         statdb_age => $self->{statdb_age},
         statdb_age_code => $self->{statdb_age_code},
@@ -720,14 +720,14 @@ sub export_adherent_generic_data_to_statdb {
         statdb_nb_annees_adhesion => $self->{statdb_nb_annees_adhesion},
         statdb_adherentid => $self->{statdb_adherentid},
         statdb_attributes => $self->{statdb_attributes}
-	};
+    };
 
     return $adherent_data;
 }
 
 sub export_adherent_generic_data_to_es {
     my ($self) = @_;
-	my $adherent_data = {
+    my $adherent_data = {
         es_sexe => $self->{es_sexe},
         es_age => $self->{es_age},
         es_age_lib1 => $self->{es_age_lib1},
@@ -751,7 +751,7 @@ sub export_adherent_generic_data_to_es {
         es_nb_annees_adhesion_tra => $self->{es_nb_annees_adhesion_tra},
         es_adherentid => $self->{es_adherentid},
         es_attributes => $self->{es_attributes}
-	};
+    };
 
     return $adherent_data;
 }
