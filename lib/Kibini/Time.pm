@@ -39,8 +39,8 @@ sub get_duration {
     my ($self, $param) = @_;
 
     if ( defined $self->{start_dt} && defined $self->{end_dt} ) {
-        my $dt1 = $self->{start_dt};
-        my $dt2 = $self->{end_dt};
+        my $dt1 = $self->{end_dt};
+        my $dt2 = $self->{start_dt};
         if ( $param->{type} eq 'years' ) {
             $self->{duration} = $dt1->year - $dt2->year;
         } elsif ( $param->{type} eq 'days' ) {
