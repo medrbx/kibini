@@ -32,11 +32,11 @@ $csv->column_names (qw( session_heure_deb session_heure_fin session_groupe sessi
 
 while ( my $row = $csv->getline_hr ($fic) ) {
     my $wk = Webkiosk->new( { dbh => $dbh, crypter => $crypter, wk => $row } );
-	$wk->get_wkuser_from_koha;
-	$wk->get_wkuser_data;
-	#$wk->add_data_to_statdb_webkiosk;
+    $wk->get_wkuser_from_koha;
+    $wk->get_wkuser_data;
+    #$wk->add_data_to_statdb_webkiosk;
     #$wk->add_data_to_es_webkiosk;
-	print Dumper($wk);
+    print Dumper($wk);
 }
 
 close $fic;
