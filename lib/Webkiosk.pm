@@ -1,6 +1,7 @@
 package Webkiosk;
 
 use Moo;
+use utf8;
 
 use Kibini::ES;
 
@@ -8,7 +9,8 @@ extends 'Adherent';
 
 has session_heure_deb => ( is => 'ro' );
 has session_heure_fin => ( is => 'ro' );
-has session_espace => ( is => 'rw' );
+has session_espace => ( is => 'ro' );
+has session_groupe => ( is => 'ro' );
 has session_poste => ( is => 'ro' );
 has session_duree  => ( is => 'ro' );
 
@@ -87,7 +89,7 @@ sub get_wkuser_data {
 sub add_data_to_statdb_webkiosk {
     my ($self) = @_;
 	
-	my %statdb_wk_specific_data = %{$self->export_wk_specific_data};
+	my %statdb_wk_specific_data = %{$self->export_wk_specific_data_to_statdb};
 	my %statdb_adherent_data = %{$self->export_adherent_generic_data_to_statdb};	
     
     my $dbh = $self->{dbh};
@@ -130,11 +132,54 @@ SQL
 sub add_data_to_es_webkiosk {
     my ($self) = @_;
     
-    my $e = Kibini::ES->new;
+    my $e = Kibini::ES->new->e;
+    
 
+	my %es_wk_specific_data = %{$self->export_wk_specific_data_to_es};
+	my %es_adherent_data = %{$self->export_adherent_generic_data_to_es};
+
+    my %index = (
+        index   => 'webkiosk',
+        type    => 'sessions',
+        body    => {
+            session_heure_deb => $es_wk_specific_data{'session_heure_deb'},
+            session_heure_fin => $es_wk_specific_data{'session_heure_fin'},
+            session_duree => $es_wk_specific_data{'session_duree'},
+            session_espace => $es_wk_specific_data{'session_espace'},
+            session_groupe => $es_wk_specific_data{'session_groupe'},
+            session_poste => $es_wk_specific_data{'session_poste'},
+            adherent_id => $es_adherent_data{es_adherentid},
+            adherent_sexe => $es_adherent_data{es_sexe},
+            adherent_age => $es_adherent_data{es_age},
+            adherent_age_lib1 => $es_adherent_data{es_age_lib1},
+            adherent_age_lib2 => $es_adherent_data{es_age_lib2},
+            adherent_age_lib3 => $es_adherent_data{es_age_lib3},
+            adherent_carte => $es_adherent_data{es_carte},
+            adherent_type_carte => $es_adherent_data{es_type_carte},
+            adherent_inscription_prix => $es_adherent_data{es_inscription_prix},
+            adherent_inscription_gratuite => $es_adherent_data{es_inscription_gratuite},
+            adherent_nb_annee_inscription => $es_adherent_data{es_nb_annees_adhesion},
+            adherent_nb_annee_inscription_tra => $es_adherent_data{es_nb_annees_adhesion_tra},
+            adherent_ville => $es_adherent_data{es_geo_ville},
+            adherent_rbx_iris => $es_adherent_data{es_geo_rbx_iris},
+            adherent_rbx_nom_iris => $es_adherent_data{es_geo_rbx_nom_iris},
+            adherent_rbx_quartier => $es_adherent_data{es_geo_rbx_quartier},
+        	adherent_rbx_secteur => $es_adherent_data{es_geo_rbx_secteur},
+        	adherent_geo_gentilite => $es_adherent_data{es_geo_gentilite},
+        	adherent_geo_ville_bm => $es_adherent_data{es_geo_ville_bm},
+        	adherent_es_geo_ville_front => $es_adherent_data{es_geo_ville_front},
+            adherent_site_inscription => $es_adherent_data{es_site_inscription},
+            adherent_personnalite => $es_adherent_data{es_personnalite},
+            adherent_attributes => $es_adherent_data{es_attributes}
+        }
+    );
+
+    $e->index(%index);
+
+    return \%index;
 }
 
-sub export_wk_specific_data {
+sub export_wk_specific_data_to_statdb {
     my ($self, $param) = @_;
 	my $wk_data = {
 		session_heure_deb => $self->{session_heure_deb},
@@ -146,36 +191,20 @@ sub export_wk_specific_data {
     return $wk_data;
 }
 
-sub export_adherent_generic_data_to_es {
-    my ($self) = @_;
-	my $adherent_data = {
-        es_sexe => $self->{es_sexe},
-        es_age => $self->{es_age},
-        es_age_lib1 => $self->{es_age_lib1},
-        es_age_lib2 => $self->{es_age_lib2},
-        es_age_lib3 => $self->{es_age_lib3},
-        es_geo_ville => $self->{es_geo_ville},
-        es_geo_rbx_iris => $self->{es_geo_rbx_iris},
-        es_geo_rbx_nom_iris => $self->{es_geo_rbx_nom_iris},
-        es_geo_rbx_quartier => $self->{es_geo_rbx_quartier},    
-        es_geo_rbx_secteur => $self->{es_geo_rbx_secteur},
-        es_geo_gentilite => $self->{es_geo_gentilite},
-        es_geo_ville_bm => $self->{es_geo_ville_bm},
-        es_geo_ville_front => $self->{es_geo_ville_front},
-        es_carte => $self->{es_carte},
-        es_type_carte => $self->{es_type_carte},
-        es_personnalite  => $self->{es_personnalite},
-        es_site_inscription => $self->{es_site_inscription},
-        es_inscription_prix => $self->{es_inscription_prix},
-        es_inscription_gratuite => $self->{es_inscription_gratuite},
-        es_nb_annees_adhesion => $self->{es_nb_annees_adhesion},
-        es_nb_annees_adhesion_tra => $self->{es_nb_annees_adhesion_tra},
-        es_adherentid => $self->{es_adherentid},
-        es_attributes => $self->{es_attributes}
+sub export_wk_specific_data_to_es {
+    my ($self, $param) = @_;
+	my $wk_data = {
+		session_heure_deb => $self->{session_heure_deb},
+		session_heure_fin => $self->{session_heure_fin},
+		session_espace => $self->{session_espace},
+        session_groupe => $self->{session_groupe},
+		session_poste => $self->{session_poste},
+		session_duree => $self->{session_duree}
 	};
 
-    return $adherent_data;
+    return $wk_data;
 }
+
 
 sub _get_wk_location {
     my ($self) = @_ ;
@@ -192,7 +221,7 @@ sub _get_wk_location {
         'Cafe' => 'Rez-de-chaussée',
         'Rdc Ascenceur' => 'Rez-de-chaussée'
     ) ;
-    $self->{session_espace} = $espaces{$self->{session_espace}} ;
+    $self->{session_espace} = $espaces{$self->{session_groupe}} ;
     return $self ;
 }
 
