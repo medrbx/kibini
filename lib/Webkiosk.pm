@@ -59,12 +59,12 @@ sub get_wkuser_data {
     
     my $param_get_statdb_generic_data = {
         param_get_statdb_age => {
-            format_date_event => 'datetime',
-            date_event_field => 'session_heure_deb'
+            date_event_format => 'datetime',
+            date_event_field => $self->{session_heure_deb}
         },
         param_get_statdb_nb_annees_adhesion => {
-            format_date_event => 'datetime',
-            date_event_field => 'session_heure_deb'
+            date_event_format => 'datetime',
+            date_event_field => $self->{session_heure_deb}
         }
     };
     
@@ -73,11 +73,11 @@ sub get_wkuser_data {
     my $param_get_es_generic_data = {
         param_get_es_age => {
             format_date_event => 'datetime',
-            date_event_field => 'session_heure_deb'
+            date_event_field => $self->{session_heure_deb}
         },
         param_get_es_nb_annees_adhesion => {
             format_date_event => 'datetime',
-            date_event_field => 'session_heure_deb'
+            date_event_field => $self->{session_heure_deb}
         }
     };
     
