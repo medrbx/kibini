@@ -197,7 +197,8 @@ sub get_es_adherent_generic_data {
 	
 	$self->get_es_adherentid;
     $self->get_es_age( {format_date_event => $param->{param_get_es_age}->{format_date_event}, date_event_field => $param->{param_get_es_age}->{date_event_field}} );
-    $self->get_es_age_labels;    
+    $self->get_es_age_labels; 
+    $self->get_es_sexe;    
     $self->get_es_carte;
     $self->get_es_type_carte;
     $self->get_es_nb_annees_adhesion( {format_date_event => $param->{param_get_es_nb_annees_adhesion}->{format_date_event}, date_event_field => $param->{param_get_es_nb_annees_adhesion}->{date_event_field}} );
@@ -705,8 +706,7 @@ sub get_es_attributes {
     
     foreach my $attribute (@attributes) {
         my ($lib_attribute, $code) = _get_es_attributes_lib($attribute);
-        $es_attribute->{$code} = [];
-        push $es_attribute->{$code}, $lib_attribute;
+        $es_attribute->{$code} = $lib_attribute;
     }
 	
 	$self->{es_attributes} = $es_attribute;
