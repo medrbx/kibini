@@ -118,7 +118,7 @@ has es_site_inscription => ( is => 'ro' );
 has es_inscription_prix => ( is => 'ro' );
 has es_inscription_gratuite => ( is => 'ro' );
 has es_nb_annees_adhesion => ( is => 'ro' );
-has es_nb_annees_adhesion_tr => ( is => 'ro' );
+has es_nb_annees_adhesion_tra => ( is => 'ro' );
 has es_adherentid => ( is => 'ro' );
 has es_attributes => ( is => 'ro' );
 
@@ -201,7 +201,7 @@ sub get_es_adherent_generic_data {
     $self->get_es_carte;
     $self->get_es_type_carte;
     $self->get_es_nb_annees_adhesion( {format_date_event => $param->{param_get_es_nb_annees_adhesion}->{format_date_event}, date_event_field => $param->{param_get_es_nb_annees_adhesion}->{date_event_field}} );
-	$self->get_es_nb_annees_adhesion_tr;
+	$self->get_es_nb_annees_adhesion_tra;
     $self->get_es_geo_ville;
     $self->get_es_geo_rbx_iris;
     $self->get_es_geo_rbx_nom_iris;
@@ -624,7 +624,7 @@ sub get_es_nb_annees_adhesion {
     return $self;
 }
 
-sub get_es_nb_annees_adhesion_tr {
+sub get_es_nb_annees_adhesion_tra {
     my ($self) = @_;
 	
     my $tr;
@@ -646,7 +646,7 @@ sub get_es_nb_annees_adhesion_tr {
         $tr = "g/ Plus de 10 ans";
     }
 	
-	$self->{es_nb_annees_adhesion_tr} = $tr;
+	$self->{es_nb_annees_adhesion_tra} = $tr;
     
     return $self;
 }
@@ -757,7 +757,7 @@ sub export_adherent_generic_data_to_es {
         es_inscription_prix => $self->{es_inscription_prix},
         es_inscription_gratuite => $self->{es_inscription_gratuite},
         es_nb_annees_adhesion => $self->{es_nb_annees_adhesion},
-        es_nb_annees_adhesion_tr => $self->{es_nb_annees_adhesion_tr},
+        es_nb_annees_adhesion_tra => $self->{es_nb_annees_adhesion_tra},
         es_adherentid => $self->{es_adherentid},
         es_attributes => $self->{es_attributes}
 	};
