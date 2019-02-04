@@ -1,7 +1,6 @@
 package Adherent;
 
 use Moo;
-use List::MoreUtils qw(any uniq);
 use utf8;
 
 use Kibini::DB;
@@ -144,7 +143,7 @@ sub BUILDARGS {
     if ( $args[0]->{crypter} ) {
         $arg->{crypter} = $args[0]->{crypter};
     } else {
-        #$arg->{crypter} = Kibini::Crypt->new;
+        $arg->{crypter} = Kibini::Crypt->new;
     }
 
     return $arg;
