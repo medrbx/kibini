@@ -144,7 +144,7 @@ sub BUILDARGS {
     if ( $args[0]->{crypter} ) {
         $arg->{crypter} = $args[0]->{crypter};
     } else {
-        $arg->{crypter} = Kibini::Crypt->new;
+        #$arg->{crypter} = Kibini::Crypt->new;
     }
 
     return $arg;
@@ -239,21 +239,12 @@ sub get_koha_attributes {
 sub get_statdb_age {
     my ($self, $param) = @_;
     
-    my $date_event = $self->{$param->{date_event_field}};
-    
     if ( $self->{koha_dateofbirth} ) {
-        my $yearofevent;
-        if ( $param->{format_date_event} eq 'datetime' ) {
-            $yearofevent = DateTime::Format::MySQL->parse_datetime($date_event)->year();
-        } elsif ( $param->{format_date_event} eq 'date' ) {
-            $yearofevent = DateTime::Format::MySQL->parse_date($date_event)->year();
-        }
-
-        my $yearofbirth = DateTime::Format::MySQL->parse_date($self->{koha_dateofbirth})->year();
-    
-        $self->{statdb_age} = $yearofevent - $yearofbirth;
+        my $date_event = $self->{$param->{date_event_field}};        
+        my $kt = Kibini::Time->new({ start => { value => $self->{koha_dateofbirth}, format => 'date' }, end => { value => $date_event, format => 'datetime' }});
+        $kt->get_duration({type => 'hours'});
+        $self->{statdb_age} = $kt->duration;
     }
-     
     return $self;
 }
 

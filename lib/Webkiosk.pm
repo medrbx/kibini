@@ -227,10 +227,11 @@ sub _get_wk_location {
 
 sub _get_session_duree {
     my ($self) = @_ ;
-    
-    my $time = Kibini::Time->new;
-    $time->get_duration({ datetime1 => $self->{session_heure_deb}, datetime2 => $self->{session_heure_fin}, type => 'minutes' });
-    $self->{session_duree} = $time->{duration};
+
+    my $kt = Kibini::Time->new({ start => { value => $self->{session_heure_deb}, format => 'datetime' }, end => { value => $self->{session_heure_fin}, format => 'datetime' }});
+    $kt->get_duration({type => 'minutes'});
+
+    $self->{session_duree} = $kt->duration;
     
     return $self ;
 }
