@@ -1,6 +1,7 @@
 package Adherent;
 
 use Moo;
+use List::MoreUtils qw(any);
 use utf8;
 
 use Kibini::DB;
@@ -179,13 +180,13 @@ sub get_statdb_adherent_generic_data {
     $self->get_statdb_adherentid;
     $self->get_statdb_userid;
     $self->get_statdb_borrowernumber;
-    $self->get_statdb_age( {format_date_event => $param->{param_get_statdb_age}->{format_date_event}, date_event_field => $param->{param_get_statdb_age}->{date_event_field}} );
+    $self->get_statdb_age($param);
     $self->get_statdb_sexe;
     $self->get_statdb_ville;
     $self->get_statdb_rbx_iris;
     $self->get_statdb_branchcode;
     $self->get_statdb_categorycode;
-    $self->get_statdb_nb_annees_adhesion( {format_date_event => $param->{param_get_statdb_nb_annees_adhesion}->{format_date_event}, date_event_field => $param->{param_get_statdb_nb_annees_adhesion}->{date_event_field}} );
+    $self->get_statdb_nb_annees_adhesion($param);
     $self->get_statdb_attributes;
 
     return $self;
@@ -195,12 +196,12 @@ sub get_es_adherent_generic_data {
     my ($self, $param) = @_;
     
     $self->get_es_adherentid;
-    $self->get_es_age( {format_date_event => $param->{param_get_es_age}->{format_date_event}, date_event_field => $param->{param_get_es_age}->{date_event_field}} );
+    $self->get_es_age($param);
     $self->get_es_age_labels; 
     $self->get_es_sexe;    
     $self->get_es_carte;
     $self->get_es_type_carte;
-    $self->get_es_nb_annees_adhesion( {format_date_event => $param->{param_get_es_nb_annees_adhesion}->{format_date_event}, date_event_field => $param->{param_get_es_nb_annees_adhesion}->{date_event_field}} );
+    $self->get_es_nb_annees_adhesion($param);
     $self->get_es_nb_annees_adhesion_tra;
     $self->get_es_geo_ville;
     $self->get_es_geo_rbx_iris;
@@ -239,9 +240,10 @@ sub get_statdb_age {
     my ($self, $param) = @_;
     
     if ( $self->{koha_dateofbirth} ) {
-        my $date_event = $self->{$param->{date_event_field}};        
-        my $kt = Kibini::Time->new({ start => { value => $self->{koha_dateofbirth}, format => 'date' }, end => { value => $date_event, format => 'datetime' }});
-        $kt->get_duration({type => 'hours'});
+        my $date_event = $param->{param_get_statdb_age}->{date_event_field};
+        my $date_event_format = $param->{param_get_statdb_age}->{date_event_format};        
+        my $kt = Kibini::Time->new({ start => { value => $self->{koha_dateofbirth}, format => 'date' }, end => { value => $date_event, format => $date_event_format }});
+        $kt->get_duration({type => 'years'});
         $self->{statdb_age} = $kt->duration;
     }
     return $self;
@@ -290,20 +292,13 @@ sub get_statdb_nb_annees_adhesion {
     my ($self, $param) = @_;
     
     if ($self->{koha_dateenrolled}) {
-        my $date_event = $self->{$param->{date_event_field}};
-    
-        my $yearofevent;
-        if ( $param->{format_date_event} eq 'datetime' ) {
-            $yearofevent = DateTime::Format::MySQL->parse_datetime($date_event)->year();
-        } elsif ( $param->{format_date_event} eq 'date' ) {
-            $yearofevent = DateTime::Format::MySQL->parse_date($date_event)->year();
-        }
-
-        my $yearenrolled = DateTime::Format::MySQL->parse_date($self->{koha_dateenrolled})->year();
-    
-        $self->{statdb_nb_annees_adhesion} = $yearofevent - $yearenrolled;
+        my $date_event = $param->{param_get_statdb_nb_annees_adhesion}->{date_event_field};
+        my $date_event_format = $param->{param_get_statdb_nb_annees_adhesion}->{date_event_format};        
+        my $kt = Kibini::Time->new({ start => { value => $self->{koha_dateenrolled}, format => 'date' }, end => { value => $date_event, format => $date_event_format }});
+        $kt->get_duration({type => 'years'});
+        $self->{statdb_nb_annees_adhesion} = $kt->duration;
     }
-    
+
     return $self;
 }
 
@@ -416,21 +411,12 @@ sub get_es_age {
     
     if ($self->{statdb_age}) {
         $self->{es_age} = $self->{statdb_age};
-    }
-    
-    my $date_event = $self->{$param->{date_event_field}};
-    
-    if ( $self->{koha_dateofbirth} ) {
-        my $yearofevent;
-        if ( $param->{format_date_event} eq 'datetime' ) {
-            $yearofevent = DateTime::Format::MySQL->parse_datetime($date_event)->year();
-        } elsif ( $param->{format_date_event} eq 'date' ) {
-            $yearofevent = DateTime::Format::MySQL->parse_date($date_event)->year();
-        }
-
-        my $yearofbirth = DateTime::Format::MySQL->parse_date($self->{koha_dateofbirth})->year();
-    
-        $self->{es_age} = $yearofevent - $yearofbirth;
+    } elsif ( $self->{koha_dateofbirth} ) {
+        my $date_event = $param->{param_get_es_age}->{date_event_field};
+        my $date_event_format = $param->{param_get_es_age}->{date_event_format};        
+        my $kt = Kibini::Time->new({ start => { value => $self->{koha_dateofbirth}, format => 'date' }, end => { value => $date_event, format => $date_event_format }});
+        $kt->get_duration({type => 'years'});
+        $self->{es_age} = $kt->duration;
     }
      
     return $self;
@@ -608,10 +594,18 @@ sub get_es_site_inscription {
 }
 
 sub get_es_nb_annees_adhesion {
-    my ($self) = @_;
+    my ($self, $param) = @_;
     
-    $self->{es_nb_annees_adhesion} = $self->{statdb_nb_annees_adhesion};
-    
+    if ($self->{statdb_nb_annees_adhesion}) {
+        $self->{es_nb_annees_adhesion} = $self->{statdb_nb_annees_adhesion};
+    } elsif ($self->{koha_dateenrolled}) {
+        my $date_event = $param->{param_get_es_nb_annees_adhesion}->{date_event_field};
+        my $date_event_format = $param->{param_get_es_nb_annees_adhesion}->{date_event_format};        
+        my $kt = Kibini::Time->new({ start => { value => $self->{koha_dateenrolled}, format => 'date' }, end => { value => $date_event, format => $date_event_format }});
+        $kt->get_duration({type => 'years'});
+        $self->{es_nb_annees_adhesion} = $kt->duration;
+    }
+
     return $self;
 }
 
