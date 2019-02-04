@@ -169,7 +169,7 @@ sub export_adherent_generic_data_to_es {
         es_inscription_prix => $self->{es_inscription_prix},
         es_inscription_gratuite => $self->{es_inscription_gratuite},
         es_nb_annees_adhesion => $self->{es_nb_annees_adhesion},
-        es_nb_annees_adhesion_tr => $self->{es_nb_annees_adhesion_tr},
+        es_nb_annees_adhesion_tra => $self->{es_nb_annees_adhesion_tra},
         es_adherentid => $self->{es_adherentid},
         es_attributes => $self->{es_attributes}
 	};
