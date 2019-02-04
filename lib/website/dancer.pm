@@ -14,8 +14,8 @@ use salleEtude::form;
 use action_culturelle;
 use action_coop::form;
 use liste;
-use data;
-use JSON;
+#use data;
+#use JSON;
 
 our $VERSION = '0.1';
 
@@ -617,10 +617,10 @@ get 'liste/:type/:etage' => sub {
 };
 
 # Pour obtenir directement des données
-get 'data/arrets_bibliobus' => sub {
-	my $data = getArretsZebre();
-	return to_json($data);
-};
+#get 'data/arrets_bibliobus' => sub {
+#	my $data = getArretsZebre();
+#	return to_json($data);
+#};
 
 
 true;
