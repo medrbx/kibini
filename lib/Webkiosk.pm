@@ -56,41 +56,41 @@ sub get_wkuser_data {
     
     $self->_get_wk_location;
     $self->_get_session_duree;
-	
-	my $param_get_statdb_generic_data = {
-		param_get_statdb_age => {
-			format_date_event => 'datetime',
-			date_event_field => 'session_heure_deb'
-		},
-		param_get_statdb_nb_annees_adhesion => {
-			format_date_event => 'datetime',
-			date_event_field => 'session_heure_deb'
-		}
-	};
     
-	$self->get_statdb_adherent_generic_data($param_get_statdb_generic_data);
-	
-	my $param_get_es_generic_data = {
-		param_get_es_age => {
-			format_date_event => 'datetime',
-			date_event_field => 'session_heure_deb'
-		},
-		param_get_es_nb_annees_adhesion => {
-			format_date_event => 'datetime',
-			date_event_field => 'session_heure_deb'
-		}
-	};
+    my $param_get_statdb_generic_data = {
+        param_get_statdb_age => {
+            format_date_event => 'datetime',
+            date_event_field => 'session_heure_deb'
+        },
+        param_get_statdb_nb_annees_adhesion => {
+            format_date_event => 'datetime',
+            date_event_field => 'session_heure_deb'
+        }
+    };
     
-	$self->get_es_adherent_generic_data($param_get_es_generic_data);
+    $self->get_statdb_adherent_generic_data($param_get_statdb_generic_data);
+    
+    my $param_get_es_generic_data = {
+        param_get_es_age => {
+            format_date_event => 'datetime',
+            date_event_field => 'session_heure_deb'
+        },
+        param_get_es_nb_annees_adhesion => {
+            format_date_event => 'datetime',
+            date_event_field => 'session_heure_deb'
+        }
+    };
+    
+    $self->get_es_adherent_generic_data($param_get_es_generic_data);
 
     return $self;
 }
 
 sub add_data_to_statdb_webkiosk {
     my ($self) = @_;
-	
-	my %statdb_wk_specific_data = %{$self->export_wk_specific_data_to_statdb};
-	my %statdb_adherent_data = %{$self->export_adherent_generic_data_to_statdb};	
+    
+    my %statdb_wk_specific_data = %{$self->export_wk_specific_data_to_statdb};
+    my %statdb_adherent_data = %{$self->export_adherent_generic_data_to_statdb};    
     
     my $dbh = $self->{dbh};
     my $req = <<SQL;
@@ -135,8 +135,8 @@ sub add_data_to_es_webkiosk {
     my $e = Kibini::ES->new->e;
     
 
-	my %es_wk_specific_data = %{$self->export_wk_specific_data_to_es};
-	my %es_adherent_data = %{$self->export_adherent_generic_data_to_es};
+    my %es_wk_specific_data = %{$self->export_wk_specific_data_to_es};
+    my %es_adherent_data = %{$self->export_adherent_generic_data_to_es};
 
     my %index = (
         index   => 'webkiosk',
@@ -164,10 +164,10 @@ sub add_data_to_es_webkiosk {
             adherent_rbx_iris => $es_adherent_data{es_geo_rbx_iris},
             adherent_rbx_nom_iris => $es_adherent_data{es_geo_rbx_nom_iris},
             adherent_rbx_quartier => $es_adherent_data{es_geo_rbx_quartier},
-        	adherent_rbx_secteur => $es_adherent_data{es_geo_rbx_secteur},
-        	adherent_geo_gentilite => $es_adherent_data{es_geo_gentilite},
-        	adherent_geo_ville_bm => $es_adherent_data{es_geo_ville_bm},
-        	adherent_es_geo_ville_front => $es_adherent_data{es_geo_ville_front},
+            adherent_rbx_secteur => $es_adherent_data{es_geo_rbx_secteur},
+            adherent_geo_gentilite => $es_adherent_data{es_geo_gentilite},
+            adherent_geo_ville_bm => $es_adherent_data{es_geo_ville_bm},
+            adherent_es_geo_ville_front => $es_adherent_data{es_geo_ville_front},
             adherent_site_inscription => $es_adherent_data{es_site_inscription},
             adherent_personnalite => $es_adherent_data{es_personnalite},
             adherent_attributes => $es_adherent_data{es_attributes}
@@ -181,26 +181,26 @@ sub add_data_to_es_webkiosk {
 
 sub export_wk_specific_data_to_statdb {
     my ($self, $param) = @_;
-	my $wk_data = {
-		session_heure_deb => $self->{session_heure_deb},
-		session_heure_fin => $self->{session_heure_fin},
-		session_espace => $self->{session_espace},
-		session_poste => $self->{session_poste}
-	};
+    my $wk_data = {
+        session_heure_deb => $self->{session_heure_deb},
+        session_heure_fin => $self->{session_heure_fin},
+        session_espace => $self->{session_espace},
+        session_poste => $self->{session_poste}
+    };
 
     return $wk_data;
 }
 
 sub export_wk_specific_data_to_es {
     my ($self, $param) = @_;
-	my $wk_data = {
-		session_heure_deb => $self->{session_heure_deb},
-		session_heure_fin => $self->{session_heure_fin},
-		session_espace => $self->{session_espace},
+    my $wk_data = {
+        session_heure_deb => $self->{session_heure_deb},
+        session_heure_fin => $self->{session_heure_fin},
+        session_espace => $self->{session_espace},
         session_groupe => $self->{session_groupe},
-		session_poste => $self->{session_poste},
-		session_duree => $self->{session_duree}
-	};
+        session_poste => $self->{session_poste},
+        session_duree => $self->{session_duree}
+    };
 
     return $wk_data;
 }
