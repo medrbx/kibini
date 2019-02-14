@@ -41,30 +41,6 @@ sub BUILDARGS {
     return $arg;
 }
 
-#sub get_date {
-#    my ($self, $param) = @_ ;
-#    my $datetime ;
-#    
-#    my $dt = DateTime->now(time_zone=>'local') ;
-#    
-#    if ( defined $k ) {
-#        if ( $k eq 'now' ) {
-#            $datetime = DateTime::Format::MySQL->format_datetime($dt) ; # YYYY-MM-DD HH:MM:SS
-#        } elsif ( $k eq 'today' ) {
-#            $datetime = $dt->ymd() ; # YYYY-MM-DD
-#        } elsif ( $k eq 'today YYYYMMDD' ) {
-#            $datetime = $dt->ymd('') ; # YYYYMMDD
-#        } elsif ( $k eq 'yesterday' ) {
-#            $dt = $dt->subtract( days => 1 ) ;
-#            $datetime = $dt->ymd() ; # YYYY-MM-DD
-#        }
-#    } else {
-#        $datetime = DateTime::Format::MySQL->format_datetime($dt) ; # YYYY-MM-DD HH:MM:SS
-#    }
-
-#    return $datetime ;
-#}
-
 sub get_duration {
     my ($self, $param) = @_;
 
@@ -90,6 +66,31 @@ sub get_duration {
     }
     
     return $self->{duration};
+}
+
+sub get_date_and_time {
+    my ($self, $param) = @_;
+
+    my $date_and_time;
+    
+    my $dt = $self->{now_dt};
+    
+    if ( defined $param ) {
+        if ( $param eq 'now' ) {
+            $date_and_time = DateTime::Format::MySQL->format_datetime($dt) ; # YYYY-MM-DD HH:MM:SS
+        } elsif ( $param eq 'today' ) {
+            $date_and_time = $dt->ymd() ; # YYYY-MM-DD
+        } elsif ( $param eq 'today YYYYMMDD' ) {
+            $date_and_time = $dt->ymd('') ; # YYYYMMDD
+        } elsif ( $param eq 'yesterday' ) {
+            $dt = $dt->subtract( days => 1 ) ;
+            $date_and_time = $dt->ymd() ; # YYYY-MM-DD
+        }
+    } else {
+        $date_and_time = DateTime::Format::MySQL->format_datetime($dt) ; # YYYY-MM-DD HH:MM:SS
+    }
+
+    return $date_and_time;
 }
 
 sub _get_datetime_object {
