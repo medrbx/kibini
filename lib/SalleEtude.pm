@@ -83,6 +83,50 @@ sub get_seuser_data {
     return $self;
 }
 
+sub add_data_to_statdb_freq_etude {
+    my ($self) = @_;
+    
+    my %statdb_se_specific_data = %{$self->export_se_specific_data_to_statdb};
+    my %statdb_adherent_data = %{$self->export_adherent_generic_data_to_statdb};    
+    
+    my $dbh = $self->{dbh};
+    my $req = <<SQL;
+UPDATE statdb.stat_freq_etude
+SET
+    borrowernumber = ?,
+    sexe = ?,
+    age = ?,
+    ville = ?,
+    iris = ?,
+    categorycode = ?
+WHERE id = ?
+SQL
+
+    my $sth = $dbh->prepare($req);
+    $sth->execute(
+        $statdb_adherent_data{'statdb_borrowernumber'},
+        $statdb_adherent_data{'statdb_sexe'},
+        $statdb_adherent_data{'statdb_age'},
+        $statdb_adherent_data{'statdb_ville'},
+        $statdb_adherent_data{'statdb_rbx_iris'},
+        $statdb_adherent_data{'statdb_categorycode'},
+        $statdb_se_specific_data{'consultation_id'}
+    );
+    $sth->finish();
+}
+
+sub export_se_specific_data_to_statdb {
+    my ($self, $param) = @_;
+    my $se_data = {
+        consultation_id => $self->{consultation_id},
+        consultation_duree => $self->{consultation_duree},
+        consultation_date_heure_entree => $self->{consultation_date_heure_entree},
+        consultation_date_heure_sortie => $self->{session_poste}
+    };
+
+    return $se_data;
+}
+
 sub _get_session_duree {
     my ($self) = @_ ;
 
