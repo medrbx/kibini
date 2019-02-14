@@ -18,7 +18,8 @@ $log->add_log("$process : beginning");
 my $crypter = Kibini::Crypt->new;
 my $dbh = Kibini::DB->new;
 $dbh = $dbh->dbh;
-my $req = "SELECT id AS consultation_id, cardnumber AS koha_cardnumber, datetime_entree AS consultation_date_heure_entree, datetime_sortie AS consultation_date_heure_sortie FROM statdb.stat_freq_etude WHERE DATE(datetime_entree) >= (CURDATE() - INTERVAL 21 DAY)";
+#my $req = "SELECT id AS consultation_id, cardnumber AS koha_cardnumber, datetime_entree AS consultation_date_heure_entree, datetime_sortie AS consultation_date_heure_sortie FROM statdb.stat_freq_etude WHERE DATE(datetime_entree) >= (CURDATE() - INTERVAL 21 DAY)";
+my $req = "SELECT id AS consultation_id, cardnumber AS koha_cardnumber, datetime_entree AS consultation_date_heure_entree, datetime_sortie AS consultation_date_heure_sortie FROM statdb.stat_freq_etude WHERE id >= 17667";
 my $sth = $dbh->prepare($req);
 $sth->execute();
 
@@ -27,7 +28,9 @@ while (my $row = $sth->fetchrow_hashref) {
     my $se = SalleEtude->new( { dbh => $dbh, crypter => $crypter, se => $row } );
     $se->get_seuser_from_koha;
     $se->get_seuser_data;
-    print Dumper($se);  
+    #$se->add_data_to_statdb_freq_etude;
+    my $index = $se->add_data_to_es_freq_etude;
+    print Dumper($index);  
     $i++;
 }
 
