@@ -195,12 +195,13 @@ sub export_se_specific_data_to_es {
 
 sub _get_session_duree {
     my ($self) = @_ ;
+	if ( $self->{consultation_date_heure_entree} && $self->{consultation_date_heure_sortie} ) {
+        my $kt = Kibini::Time->new({ start => { value => $self->{consultation_date_heure_entree}, format => 'datetime' }, end => { value => $self->{consultation_date_heure_sortie}, format => 'datetime' }});
+        $kt->get_duration({type => 'minutes'});
 
-    my $kt = Kibini::Time->new({ start => { value => $self->{consultation_date_heure_entree}, format => 'datetime' }, end => { value => $self->{consultation_date_heure_sortie}, format => 'datetime' }});
-    $kt->get_duration({type => 'minutes'});
-
-    $self->{consultation_duree} = $kt->duration;
-    
+        $self->{consultation_duree} = $kt->duration;
+    }
+	
     return $self ;
 }
 
