@@ -192,6 +192,43 @@ sub export_se_specific_data_to_es {
     return $es_data;
 }
 
+sub get_salle_etude_lecteurs_presents {
+    my ($self) = @_;
+    
+    my $dbh = $self->{dbh};
+    my $req = <<SQL;
+SELECT cardnumber, TIME(datetime_entree) as entree, TIME(datetime_sortie) as sortie, duree
+FROM stat_freq_etude
+WHERE DATE(datetime_entree) = CURDATE()
+ORDER BY datetime_entree DESC
+SQL
+    my $sth = $dbh->prepare($req) ;
+    $sth->execute() ; 
+    my $result = $sth->fetchall_arrayref({}) ;
+    $sth->finish() ;
+    return $result;
+}
+
+sub get_salle_etude_frequentation_jours_precedents {
+    my ($self) = @_;
+    
+    my $dbh = $self->{dbh};
+    my $req = <<SQL;
+SELECT
+    DATE(datetime_entree) AS date,
+    COUNT(cardnumber) as nb_entrees,
+    COUNT(DISTINCT cardnumber) as nb_utilisateurs
+FROM statdb.stat_freq_etude
+GROUP BY DATE(datetime_entree)
+ORDER BY DATE(datetime_entree) DESC
+LIMIT 10
+SQL
+    my $sth = $dbh->prepare($req) ;
+    $sth->execute() ; 
+    my $result = $sth->fetchall_arrayref({}) ;
+    $sth->finish() ;
+    return $result;
+}
 
 sub _get_session_duree {
     my ($self) = @_ ;
