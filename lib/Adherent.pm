@@ -294,7 +294,7 @@ sub get_statdb_nb_annees_adhesion {
     if ($self->{koha_dateenrolled}) {
         my $date_event = $param->{param_get_statdb_nb_annees_adhesion}->{date_event_field};
         my $date_event_format = $param->{param_get_statdb_nb_annees_adhesion}->{date_event_format};        
-        my $kt = Kibini::Time->new({ start => { value => $self->{koha_dateenrolled}, format => 'date' }, end => { value => $date_event, format => $date_event_format }});
+        my $kt = Kibini::Time->new({ start => { value => $self->{koha_dateenrolled}, format => 'date' }, end => { value => $date_event, format => $date_event_format }} );
         $kt->get_duration({type => 'years'});
         $self->{statdb_nb_annees_adhesion} = $kt->duration;
     }

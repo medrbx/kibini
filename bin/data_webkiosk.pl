@@ -43,5 +43,5 @@ close $fic;
 $dbh->disconnect();
 
 # On log la fin de l'opération
-$log_message = "$process : ending\n" ;
-AddCrontabLog($log_message) ;
+$log_message = "$process : ending\n";
+AddCrontabLog($log_message);
