@@ -93,6 +93,59 @@ sub get_date_and_time {
     return $date_and_time;
 }
 
+sub get_date_and_time_by_element {
+    my ($self, $param) = @_;
+    my $element = {};
+
+    my $dt;
+    if ( $param->{date_to_plit} ) {
+        if ( $param->{date_to_plit} eq 'start') {
+            $dt = $self->{start_dt};
+        } elsif ( $param->{date_to_plit} eq 'end') {
+            $dt = $self->{end_dt};
+        } elsif ( $param->{date_to_plit} eq 'now') {
+            $dt = $self->{now_dt};
+        }
+    } else {
+        $dt = $self->{now_dt};
+    }
+
+    if ( $param->{element_to_get} ) {
+        my $element_to_get = $param->{element_to_get};
+        $element->{$element_to_get} = $dt->$element_to_get;
+    } else {
+        my @elements_to_get = qw (year month week_number day dow hour);
+        foreach my $element_to_get (@elements_to_get) {;
+            $element->{$element_to_get} = $dt->$element_to_get;
+        }
+    }
+
+    my @elements_to_mod = qw (month week_number hour);
+    foreach my $element_to_mod (@elements_to_mod) {
+        if ($element->{$element_to_mod}) {
+            if ($element->{$element_to_mod} < 10) {
+                $element->{$element_to_mod} = "0" . $element->{$element_to_mod};
+            }
+        }
+    }
+
+    if ($element->{dow}) {
+        my %dowfr = (
+            1 => "1 Lundi",
+            2 => "2 Mardi",
+            3 => "3 Mercredi",
+            4 => "4 Jeudi",
+            5 => "5 Vendredi",
+            6 => "6 Samedi",
+            7 => "7 Dimanche"
+        );
+        $element->{dow} = $dowfr{$element->{dow}}
+    }
+        
+
+    return $element;
+}
+
 sub _get_datetime_object {
     my ($value, $format) = @_;
     my $dt;
