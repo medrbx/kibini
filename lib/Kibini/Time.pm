@@ -14,6 +14,8 @@ has end_value => ( is => 'ro' );
 has end_format => ( is => 'ro' );
 has end_dt => ( is => 'ro' );
 
+has now_dt => ( is => 'ro' );
+
 has duration => ( is => 'ro' );
 
 sub BUILDARGS {
@@ -32,8 +34,36 @@ sub BUILDARGS {
         $arg->{end_dt} = _get_datetime_object($arg->{end_value}, $arg->{end_format});
     }
 
+    if ( not defined $args[0]->{start} ) {
+        $arg->{now_dt} = _get_datetime_object();
+    }
+
     return $arg;
 }
+
+#sub get_date {
+#    my ($self, $param) = @_ ;
+#    my $datetime ;
+#    
+#    my $dt = DateTime->now(time_zone=>'local') ;
+#    
+#    if ( defined $k ) {
+#        if ( $k eq 'now' ) {
+#            $datetime = DateTime::Format::MySQL->format_datetime($dt) ; # YYYY-MM-DD HH:MM:SS
+#        } elsif ( $k eq 'today' ) {
+#            $datetime = $dt->ymd() ; # YYYY-MM-DD
+#        } elsif ( $k eq 'today YYYYMMDD' ) {
+#            $datetime = $dt->ymd('') ; # YYYYMMDD
+#        } elsif ( $k eq 'yesterday' ) {
+#            $dt = $dt->subtract( days => 1 ) ;
+#            $datetime = $dt->ymd() ; # YYYY-MM-DD
+#        }
+#    } else {
+#        $datetime = DateTime::Format::MySQL->format_datetime($dt) ; # YYYY-MM-DD HH:MM:SS
+#    }
+
+#    return $datetime ;
+#}
 
 sub get_duration {
     my ($self, $param) = @_;
@@ -65,11 +95,15 @@ sub get_duration {
 sub _get_datetime_object {
     my ($value, $format) = @_;
     my $dt;
-
-    if ($format eq 'datetime') {
-        $dt = DateTime::Format::MySQL->parse_datetime($value);
-    } elsif ($format eq 'date') {
-        $dt = DateTime::Format::MySQL->parse_date($value);
+    
+    if ( defined $value && defined $format) {
+        if ($format eq 'datetime') {
+            $dt = DateTime::Format::MySQL->parse_datetime($value);
+        } elsif ($format eq 'date') {
+            $dt = DateTime::Format::MySQL->parse_date($value);
+        }
+    } else {
+        $dt = DateTime->now(time_zone=>'local');
     }
 
     return $dt;
