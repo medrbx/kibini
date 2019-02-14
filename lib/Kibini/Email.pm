@@ -1,4 +1,4 @@
-package Kibini::Email ;
+package Kibini::Email;
 
 use Moo;
 use Encode qw(encode);
@@ -40,19 +40,3 @@ EOF
 };
 
 1;
-
-__END__
-
-=pod
-
-=encoding UTF-8
-
-=head1 NOM
-
-kibini::email
-
-=head1 DESCRIPTION
-
-Ce module permet d'envoyer des emails.
-
-=cut
