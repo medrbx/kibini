@@ -12,7 +12,7 @@ use Kibini::Log;
 use Webkiosk;
 
 my $log = Kibini::Log->new;
-my $process = "statdb_webkiosk.pl";
+my $process = "data_webkiosk.pl";
 # On log le début de l'opération
 $log->add_log("$process : beginning");
 
