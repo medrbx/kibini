@@ -62,7 +62,7 @@ sub get_wkuser_data {
             date_event_format => 'datetime',
             date_event_field => $self->{session_heure_deb}
         },
-        param_get_statdb_nb_annees_adhesion => {
+        param_get_statdb_inscription_nb_annees_adhesion => {
             date_event_format => 'datetime',
             date_event_field => $self->{session_heure_deb}
         }
@@ -75,7 +75,7 @@ sub get_wkuser_data {
             format_date_event => 'datetime',
             date_event_field => $self->{session_heure_deb}
         },
-        param_get_es_nb_annees_adhesion => {
+        param_get_es_inscription_nb_annees_adhesion => {
             format_date_event => 'datetime',
             date_event_field => $self->{session_heure_deb}
         }
@@ -119,12 +119,12 @@ SQL
         $statdb_adherent_data{'statdb_userid'},
         $statdb_adherent_data{'statdb_borrowernumber'},
         $statdb_adherent_data{'statdb_age'},
-        $statdb_adherent_data{'statdb_sexe'},
-        $statdb_adherent_data{'statdb_ville'},
-        $statdb_adherent_data{'statdb_rbx_iris'},
-        $statdb_adherent_data{'statdb_branchcode'},
-        $statdb_adherent_data{'statdb_categorycode'},
-        $statdb_adherent_data{'statdb_nb_annees_adhesion'}
+        $statdb_adherent_data{'statdb_sexe_code'},
+        $statdb_adherent_data{'statdb_geo_ville'},
+        $statdb_adherent_data{'statdb_geo_rbx_iris'},
+        $statdb_adherent_data{'statdb_inscription_site_code'},
+        $statdb_adherent_data{'statdb_inscription_carte_code'},
+        $statdb_adherent_data{'statdb_inscription_nb_annees_adhesion'}
     );
     $sth->finish();
 }
@@ -154,12 +154,12 @@ sub add_data_to_es_webkiosk {
             adherent_age_lib1 => $es_adherent_data{es_age_lib1},
             adherent_age_lib2 => $es_adherent_data{es_age_lib2},
             adherent_age_lib3 => $es_adherent_data{es_age_lib3},
-            adherent_carte => $es_adherent_data{es_carte},
-            adherent_type_carte => $es_adherent_data{es_type_carte},
+            adherent_carte => $es_adherent_data{es_inscription_carte},
+            adherent_type_carte => $es_adherent_data{es_inscription_type_carte},
             adherent_inscription_prix => $es_adherent_data{es_inscription_prix},
             adherent_inscription_gratuite => $es_adherent_data{es_inscription_gratuite},
-            adherent_nb_annee_inscription => $es_adherent_data{es_nb_annees_adhesion},
-            adherent_nb_annee_inscription_tra => $es_adherent_data{es_nb_annees_adhesion_tra},
+            adherent_nb_annee_inscription => $es_adherent_data{es_inscription_nb_annees_adhesion},
+            adherent_nb_annee_inscription_tra => $es_adherent_data{es_inscription_nb_annees_adhesion_tra},
             adherent_ville => $es_adherent_data{es_geo_ville},
             adherent_rbx_iris => $es_adherent_data{es_geo_rbx_iris},
             adherent_rbx_nom_iris => $es_adherent_data{es_geo_rbx_nom_iris},
@@ -168,8 +168,8 @@ sub add_data_to_es_webkiosk {
             adherent_geo_gentilite => $es_adherent_data{es_geo_gentilite},
             adherent_geo_ville_bm => $es_adherent_data{es_geo_ville_bm},
             adherent_es_geo_ville_front => $es_adherent_data{es_geo_ville_front},
-            adherent_site_inscription => $es_adherent_data{es_site_inscription},
-            adherent_personnalite => $es_adherent_data{es_personnalite},
+            adherent_site_inscription => $es_adherent_data{es_inscription_site},
+            adherent_personnalite => $es_adherent_data{es_inscription_personnalite},
             adherent_attributes => $es_adherent_data{es_attributes}
         }
     );
