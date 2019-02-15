@@ -14,85 +14,25 @@ has dbh => ( is => 'ro' );
 
 has koha_borrowernumber => ( is => 'ro' );
 has koha_cardnumber => ( is => 'ro' );
-has koha_surname => ( is => 'ro' );
-has koha_firstname => ( is => 'ro' );
 has koha_title => ( is => 'ro' );
-has koha_othernames => ( is => 'ro' );
-has koha_initials => ( is => 'ro' );
-has koha_streetnumber => ( is => 'ro' );
-has koha_streettype => ( is => 'ro' );
-has koha_address => ( is => 'ro' );
-has koha_address2 => ( is => 'ro' );
 has koha_city => ( is => 'ro' );
-has koha_state => ( is => 'ro' );
-has koha_zipcode => ( is => 'ro' );
-has koha_country => ( is => 'ro' );
-has koha_email => ( is => 'ro' );
-has koha_phone => ( is => 'ro' );
-has koha_mobile => ( is => 'ro' );
-has koha_fax => ( is => 'ro' );
-has koha_emailpro => ( is => 'ro' );
-has koha_phonepro => ( is => 'ro' );
-has koha_B_streetnumber => ( is => 'ro' );
-has koha_B_streettype => ( is => 'ro' );
-has koha_B_address => ( is => 'ro' );
-has koha_B_address2 => ( is => 'ro' );
-has koha_B_city => ( is => 'ro' );
-has koha_B_state => ( is => 'ro' );
-has koha_B_zipcode => ( is => 'ro' );
-has koha_B_country => ( is => 'ro' );
-has koha_B_email => ( is => 'ro' );
-has koha_B_phone => ( is => 'ro' );
 has koha_dateofbirth => ( is => 'ro' );
 has koha_branchcode => ( is => 'ro' );
 has koha_categorycode => ( is => 'ro' );
 has koha_dateenrolled => ( is => 'ro' );
-has koha_dateexpiry => ( is => 'ro' );
-has koha_gonenoaddress => ( is => 'ro' );
-has koha_lost => ( is => 'ro' );
-has koha_debarred => ( is => 'ro' );
-has koha_debarredcomment => ( is => 'ro' );
-has koha_contactname => ( is => 'ro' );
-has koha_contactfirstname => ( is => 'ro' );
-has koha_contacttitle => ( is => 'ro' );
-has koha_guarantorid => ( is => 'ro' );
-has koha_borrowernotes => ( is => 'ro' );
-has koha_relationship => ( is => 'ro' );
-has koha_sex => ( is => 'ro' );
-has koha_password => ( is => 'ro' );
-has koha_flags => ( is => 'ro' );
 has koha_userid => ( is => 'ro' );
-has koha_opacnote => ( is => 'ro' );
-has koha_contactnote => ( is => 'ro' );
-has koha_sort1 => ( is => 'ro' );
-has koha_sort2 => ( is => 'ro' );
-has koha_altcontactfirstname => ( is => 'ro' );
-has koha_altcontactsurname => ( is => 'ro' );
-has koha_altcontactaddress1 => ( is => 'ro' );
-has koha_altcontactaddress2 => ( is => 'ro' );
-has koha_altcontactaddress3 => ( is => 'ro' );
-has koha_altcontactstate => ( is => 'ro' );
-has koha_altcontactzipcode => ( is => 'ro' );
 has koha_altcontactcountry => ( is => 'ro' );
-has koha_altcontactphone => ( is => 'ro' );
-has koha_smsalertnumber => ( is => 'ro' );
-has koha_sms_provider_id => ( is => 'ro' );
-has koha_privacy => ( is => 'ro' );
-has koha_privacy_guarantor_checkouts => ( is => 'ro' );
-has koha_checkprevcheckout => ( is => 'ro' );
-has koha_updated_on => ( is => 'ro' );
-has koha_lastseen => ( is => 'ro' );
 
 has koha_attributes => ( is => 'ro' ); # array
 
-has statdb_sexe => ( is => 'ro' );
+has statdb_sexe_code => ( is => 'ro' );
 has statdb_age => ( is => 'ro' );  # à suppr pour ano
 has statdb_age_code => ( is => 'ro' );
-has statdb_ville => ( is => 'ro' );
-has statdb_rbx_iris => ( is => 'ro' );
-has statdb_categorycode => ( is => 'ro' );
-has statdb_branchcode => ( is => 'ro' );
-has statdb_nb_annees_adhesion => ( is => 'ro' );
+has statdb_geo_ville => ( is => 'ro' );
+has statdb_geo_rbx_iris => ( is => 'ro' );
+has statdb_inscription_carte_code => ( is => 'ro' );
+has statdb_inscription_site_code => ( is => 'ro' );
+has statdb_inscription_nb_annees_adhesion => ( is => 'ro' );
 has statdb_userid => ( is => 'ro' );  # à suppr pour ano
 has statdb_borrowernumber => ( is => 'ro' ); # à suppr pour ano
 has statdb_adherentid => ( is => 'ro' );
@@ -111,14 +51,14 @@ has es_geo_rbx_secteur => ( is => 'ro' );
 has es_geo_gentilite => ( is => 'ro' );
 has es_geo_ville_bm => ( is => 'ro' );
 has es_geo_ville_front => ( is => 'ro' );
-has es_carte => ( is => 'ro' );
-has es_type_carte => ( is => 'ro' );
-has es_personnalite  => ( is => 'ro' );
-has es_site_inscription => ( is => 'ro' );
+has es_inscription_carte => ( is => 'ro' );
+has es_inscription_type_carte => ( is => 'ro' );
+has es_inscription_personnalite  => ( is => 'ro' );
+has es_inscription_site => ( is => 'ro' );
 has es_inscription_prix => ( is => 'ro' );
 has es_inscription_gratuite => ( is => 'ro' );
-has es_nb_annees_adhesion => ( is => 'ro' );
-has es_nb_annees_adhesion_tra => ( is => 'ro' );
+has es_inscription_nb_annees_adhesion => ( is => 'ro' );
+has es_inscription_nb_annees_adhesion_tra => ( is => 'ro' );
 has es_adherentid => ( is => 'ro' );
 has es_attributes => ( is => 'ro' );
 
@@ -181,12 +121,12 @@ sub get_statdb_adherent_generic_data {
     $self->get_statdb_userid;
     $self->get_statdb_borrowernumber;
     $self->get_statdb_age($param);
-    $self->get_statdb_sexe;
-    $self->get_statdb_ville;
-    $self->get_statdb_rbx_iris;
-    $self->get_statdb_branchcode;
-    $self->get_statdb_categorycode;
-    $self->get_statdb_nb_annees_adhesion($param);
+    $self->get_statdb_sexe_code;
+    $self->get_statdb_geo_ville;
+    $self->get_statdb_geo_rbx_iris;
+    $self->get_statdb_inscription_site_code;
+    $self->get_statdb_inscription_carte_code;
+    $self->get_statdb_inscription_nb_annees_adhesion($param);
     $self->get_statdb_attributes;
 
     return $self;
@@ -199,10 +139,10 @@ sub get_es_adherent_generic_data {
     $self->get_es_age($param);
     $self->get_es_age_labels; 
     $self->get_es_sexe;    
-    $self->get_es_carte;
-    $self->get_es_type_carte;
-    $self->get_es_nb_annees_adhesion($param);
-    $self->get_es_nb_annees_adhesion_tra;
+    $self->get_es_inscription_carte;
+    $self->get_es_inscription_type_carte;
+    $self->get_es_inscription_nb_annees_adhesion($param);
+    $self->get_es_inscription_nb_annees_adhesion_tra;
     $self->get_es_geo_ville;
     $self->get_es_geo_rbx_iris;
     $self->get_es_geo_rbx_nom_iris;
@@ -211,8 +151,8 @@ sub get_es_adherent_generic_data {
     $self->get_es_geo_gentilite;
     $self->get_es_geo_ville_front;
     $self->get_es_geo_ville_bm;
-    $self->get_es_site_inscription;
-    $self->get_es_personnalite;
+    $self->get_es_inscription_site;
+    $self->get_es_inscription_personnalite;
     $self->get_es_inscription_prix_gratuite;
     $self->get_es_attributes;
 
@@ -256,75 +196,75 @@ sub get_statdb_age_code {
     return $self;
 }
 
-sub get_statdb_ville {
+sub get_statdb_geo_ville {
     my ($self) = @_;
     
-    $self->{statdb_ville} = $self->{koha_city};
+    $self->{statdb_geo_ville} = $self->{koha_city};
     
     return $self;
 }
 
-sub get_statdb_rbx_iris {
+sub get_statdb_geo_rbx_iris {
     my ($self) = @_;
     
-    $self->{statdb_rbx_iris} = $self->{koha_altcontactcountry};
+    $self->{statdb_geo_rbx_iris} = $self->{koha_altcontactcountry};
     
     return $self;
 }
 
-sub get_statdb_branchcode {
+sub get_statdb_inscription_site_code {
     my ($self) = @_;
     
-    $self->{statdb_branchcode} = $self->{koha_branchcode};
+    $self->{statdb_inscription_site_code} = $self->{koha_branchcode};
     
     return $self;
 }
 
-sub get_statdb_categorycode {
+sub get_statdb_inscription_carte_code {
     my ($self) = @_;
     
-    $self->{statdb_categorycode} = $self->{koha_categorycode};
+    $self->{statdb_inscription_carte_code} = $self->{koha_categorycode};
     
     return $self;
 }
 
-sub get_statdb_nb_annees_adhesion {
+sub get_statdb_inscription_nb_annees_adhesion {
     my ($self, $param) = @_;
     
     if ($self->{koha_dateenrolled}) {
-        my $date_event = $param->{param_get_statdb_nb_annees_adhesion}->{date_event_field};
-        my $date_event_format = $param->{param_get_statdb_nb_annees_adhesion}->{date_event_format};        
+        my $date_event = $param->{param_get_statdb_inscription_nb_annees_adhesion}->{date_event_field};
+        my $date_event_format = $param->{param_get_statdb_inscription_nb_annees_adhesion}->{date_event_format};        
         my $kt = Kibini::Time->new({ start => { value => $self->{koha_dateenrolled}, format => 'date' }, end => { value => $date_event, format => $date_event_format }} );
         $kt->get_duration({type => 'years'});
-        $self->{statdb_nb_annees_adhesion} = $kt->duration;
+        $self->{statdb_inscription_nb_annees_adhesion} = $kt->duration;
     }
 
     return $self;
 }
 
-sub get_statdb_sexe {
+sub get_statdb_sexe_code {
     my ($self) = @_;
     
     my @categorycodes = qw( MEDA MEDB MEDC CSVT MEDP BIBL CSLT );
     my $categorycode;
     if ($self->{koha_categorycode} ) {
         $categorycode = $self->{koha_categorycode};
-    } elsif ($self->{statdb_categorycode} ) {
-        $categorycode = $self->{statdb_categorycode};
+    } elsif ($self->{statdb_inscription_carte_code} ) {
+        $categorycode = $self->{statdb_inscription_carte_code};
     }
     
     if ( any { /$categorycode/ } @categorycodes ) {
         if ( $self->{koha_title} ) {
             if ( $self->{koha_title} eq 'Madame' ) {
-                $self->{statdb_sexe} = 'F';
+                $self->{statdb_sexe_code} = 'F';
             } elsif ( $self->{koha_title} eq 'Monsieur' ) {
-                $self->{statdb_sexe} = 'M';
+                $self->{statdb_sexe_code} = 'M';
             } else {
-                $self->{statdb_sexe} = 'NC';
+                $self->{statdb_sexe_code} = 'NC';
             }
         }
     } else {
-        $self->{statdb_sexe} = 'NP';
+        $self->{statdb_sexe_code} = 'NP';
     }
     
     return $self;
@@ -367,16 +307,16 @@ sub get_statdb_adherentid {
 sub get_es_sexe {
     my ($self) = @_;
     
-    if ( $self->{statdb_sexe} ) {
-        if ($self->{statdb_sexe} eq 'F') {
+    if ( $self->{statdb_sexe_code} ) {
+        if ($self->{statdb_sexe_code} eq 'F') {
             $self->{es_sexe} = 'Femme';
-        } elsif ($self->{statdb_sexe} eq 'M') {
+        } elsif ($self->{statdb_sexe_code} eq 'M') {
             $self->{es_sexe} = 'Homme';
-        } elsif ($self->{statdb_sexe} eq 'NC') {
+        } elsif ($self->{statdb_sexe_code} eq 'NC') {
             $self->{es_sexe} = 'Inconnu';
-        } elsif ($self->{statdb_sexe} eq 'M') {
+        } elsif ($self->{statdb_sexe_code} eq 'M') {
             $self->{es_sexe} = 'Homme';
-        } elsif ($self->{statdb_sexe} eq 'NP') {
+        } elsif ($self->{statdb_sexe_code} eq 'NP') {
             $self->{es_sexe} = 'NP';
         }
     } else {    
@@ -384,8 +324,8 @@ sub get_es_sexe {
         my $categorycode;
         if ($self->{koha_categorycode} ) {
             $categorycode = $self->{koha_categorycode};
-        } elsif ($self->{statdb_categorycode} ) {
-            $categorycode = $self->{statdb_categorycode};
+        } elsif ($self->{statdb_inscription_carte_code} ) {
+            $categorycode = $self->{statdb_inscription_carte_code};
         }
     
         if ( any { /$categorycode/ } @categorycodes ) {
@@ -448,7 +388,7 @@ sub get_es_geo_ville {
     if ($self->{koha_city}) {
         $self->{es_geo_ville} = $self->{koha_city};
     } else { 
-        $self->{es_geo_ville} = $self->{statdb_ville};    
+        $self->{es_geo_ville} = $self->{statdb_geo_ville};    
     }
     
     return $self;
@@ -531,22 +471,22 @@ sub get_es_geo_ville_bm {
     return $self;
 }
 
-sub get_es_carte {
+sub get_es_inscription_carte {
     my ($self) = @_;
     
-    ($self->{es_carte}, $self->{es_personnalite}) = _get_es_carte_perso($self) unless $self->{es_carte};
+    ($self->{es_inscription_carte}, $self->{es_inscription_personnalite}) = _get_es_inscription_personnalite($self) unless $self->{es_inscription_carte};
     
     return $self;
 }
 
-sub get_es_type_carte {
+sub get_es_inscription_type_carte {
     my ($self) = @_;
     
     my $categorycode;
     if ($self->{koha_categorycode}) {
         $categorycode = $self->{koha_categorycode}
-    } elsif ($self->{statdb_categorycode}) {
-        $categorycode = $self->{statdb_categorycode}
+    } elsif ($self->{statdb_inscription_carte_code}) {
+        $categorycode = $self->{statdb_inscription_carte_code}
     }
 
     my $type_carte ;
@@ -559,61 +499,61 @@ sub get_es_type_carte {
     @liste = qw( ECOL CLAS COLS ) ;
     if ( grep {$_ eq $categorycode} @liste ) { $type_carte = "Service collectivités" ; }
     
-    $self->{es_type_carte} = $type_carte;
+    $self->{es_inscription_type_carte} = $type_carte;
     
     return $self;
 }
 
-sub get_es_personnalite {
+sub get_es_inscription_personnalite {
     my ($self) = @_;
     
-    ($self->{es_carte}, $self->{es_personnalite}) = _get_es_carte_perso($self) unless $self->{es_personnalite};
+    ($self->{es_inscription_carte}, $self->{es_inscription_personnalite}) = _get_es_inscription_personnalite($self) unless $self->{es_inscription_personnalite};
     
     return $self;
 }
 
-sub get_es_site_inscription {
+sub get_es_inscription_site {
     my ($self) = @_;
     
     my $site;
     if ($self->{koha_branchcode}) {
         $site = $self->{koha_branchcode}
-    } elsif ($self->{statdb_branchcode}) {
-        $site = $self->{statdb_branchcode}
+    } elsif ($self->{statdb_inscription_site_code}) {
+        $site = $self->{statdb_inscription_site_code}
     }
     
     if ($site eq 'MED') {
-        $self->{es_site_inscription} = 'Médiathèque';
+        $self->{es_inscription_site} = 'Médiathèque';
     } elsif ($site eq 'BUS') {
-        $self->{es_site_inscription} = 'Zèbre';
+        $self->{es_inscription_site} = 'Zèbre';
     } elsif ($site eq 'MUS') {
-        $self->{es_site_inscription} = 'Musée André Diligent';
+        $self->{es_inscription_site} = 'Musée André Diligent';
     }
     
     return $self;
 }
 
-sub get_es_nb_annees_adhesion {
+sub get_es_inscription_nb_annees_adhesion {
     my ($self, $param) = @_;
     
-    if ($self->{statdb_nb_annees_adhesion}) {
-        $self->{es_nb_annees_adhesion} = $self->{statdb_nb_annees_adhesion};
+    if ($self->{statdb_inscription_nb_annees_adhesion}) {
+        $self->{es_inscription_nb_annees_adhesion} = $self->{statdb_inscription_nb_annees_adhesion};
     } elsif ($self->{koha_dateenrolled}) {
-        my $date_event = $param->{param_get_es_nb_annees_adhesion}->{date_event_field};
-        my $date_event_format = $param->{param_get_es_nb_annees_adhesion}->{date_event_format};        
+        my $date_event = $param->{param_get_es_inscription_nb_annees_adhesion}->{date_event_field};
+        my $date_event_format = $param->{param_get_es_inscription_nb_annees_adhesion}->{date_event_format};        
         my $kt = Kibini::Time->new({ start => { value => $self->{koha_dateenrolled}, format => 'date' }, end => { value => $date_event, format => $date_event_format }});
         $kt->get_duration({type => 'years'});
-        $self->{es_nb_annees_adhesion} = $kt->duration;
+        $self->{es_inscription_nb_annees_adhesion} = $kt->duration;
     }
 
     return $self;
 }
 
-sub get_es_nb_annees_adhesion_tra {
+sub get_es_inscription_nb_annees_adhesion_tra {
     my ($self) = @_;
     
     my $tr;
-    my $count = $self->{es_nb_annees_adhesion};
+    my $count = $self->{es_inscription_nb_annees_adhesion};
     
     if ($count == 0 ) {
         $tr = "a/ 0";
@@ -631,7 +571,7 @@ sub get_es_nb_annees_adhesion_tra {
         $tr = "g/ Plus de 10 ans";
     }
     
-    $self->{es_nb_annees_adhesion_tra} = $tr;
+    $self->{es_inscription_nb_annees_adhesion_tra} = $tr;
     
     return $self;
 }
@@ -645,8 +585,8 @@ sub get_es_inscription_prix_gratuite {
     my $categorycode;
     if ($self->{koha_categorycode}) {
         $categorycode = $self->{koha_categorycode}
-    } elsif ($self->{statdb_categorycode}) {
-        $categorycode = $self->{statdb_categorycode}
+    } elsif ($self->{statdb_inscription_carte_code}) {
+        $categorycode = $self->{statdb_inscription_carte_code}
     }
     
     if ( $categorycode eq 'MEDA' ) {
@@ -705,12 +645,12 @@ sub export_adherent_generic_data_to_statdb {
         statdb_borrowernumber => $self->{statdb_borrowernumber},
         statdb_age => $self->{statdb_age},
         statdb_age_code => $self->{statdb_age_code},
-        statdb_sexe => $self->{statdb_sexe},
-        statdb_ville => $self->{statdb_ville},
-        statdb_rbx_iris => $self->{statdb_rbx_iris},
-        statdb_branchcode => $self->{statdb_branchcode},
-        statdb_categorycode => $self->{statdb_categorycode},
-        statdb_nb_annees_adhesion => $self->{statdb_nb_annees_adhesion},
+        statdb_sexe_code => $self->{statdb_sexe_code},
+        statdb_geo_ville => $self->{statdb_geo_ville},
+        statdb_geo_rbx_iris => $self->{statdb_geo_rbx_iris},
+        statdb_inscription_site_code => $self->{statdb_inscription_site_code},
+        statdb_inscription_carte_code => $self->{statdb_inscription_carte_code},
+        statdb_inscription_nb_annees_adhesion => $self->{statdb_inscription_nb_annees_adhesion},
         statdb_adherentid => $self->{statdb_adherentid},
         statdb_attributes => $self->{statdb_attributes}
     };
@@ -734,14 +674,14 @@ sub export_adherent_generic_data_to_es {
         es_geo_gentilite => $self->{es_geo_gentilite},
         es_geo_ville_bm => $self->{es_geo_ville_bm},
         es_geo_ville_front => $self->{es_geo_ville_front},
-        es_carte => $self->{es_carte},
-        es_type_carte => $self->{es_type_carte},
-        es_personnalite  => $self->{es_personnalite},
-        es_site_inscription => $self->{es_site_inscription},
+        es_inscription_carte => $self->{es_inscription_carte},
+        es_inscription_type_carte => $self->{es_inscription_type_carte},
+        es_inscription_personnalite  => $self->{es_inscription_personnalite},
+        es_inscription_site => $self->{es_inscription_site},
         es_inscription_prix => $self->{es_inscription_prix},
         es_inscription_gratuite => $self->{es_inscription_gratuite},
-        es_nb_annees_adhesion => $self->{es_nb_annees_adhesion},
-        es_nb_annees_adhesion_tra => $self->{es_nb_annees_adhesion_tra},
+        es_inscription_nb_annees_adhesion => $self->{es_inscription_nb_annees_adhesion},
+        es_inscription_nb_annees_adhesion_tra => $self->{es_inscription_nb_annees_adhesion_tra},
         es_adherentid => $self->{es_adherentid},
         es_attributes => $self->{es_attributes}
     };
@@ -756,8 +696,8 @@ sub _get_es_geo_rbx_geo {
     my $iris;
     if ($self->{koha_altcontactcountry}) {
         $iris = $self->{koha_altcontactcountry}
-    } elsif ($self->{statdb_rbx_iris}) {
-        $iris = $self->{statdb_rbx_iris}
+    } elsif ($self->{statdb_geo_rbx_iris}) {
+        $iris = $self->{statdb_geo_rbx_iris}
     }
     
     my $req = "SELECT irisNom, quartier, secteur FROM statdb.iris_lib WHERE irisInsee = ?" ;
@@ -767,15 +707,15 @@ sub _get_es_geo_rbx_geo {
     $sth->finish();
 }
 
-sub _get_es_carte_perso {
+sub _get_es_inscription_personnalite {
     my ($self) = @_;
     
     my $dbh = $self->{dbh};
     my $categorycode;
     if ($self->{koha_categorycode}) {
         $categorycode = $self->{koha_categorycode}
-    } elsif ($self->{statdb_categorycode}) {
-        $categorycode = $self->{statdb_categorycode}
+    } elsif ($self->{statdb_inscription_carte_code}) {
+        $categorycode = $self->{statdb_inscription_carte_code}
     }
     
     my $req = "SELECT description, category_type FROM statdb.lib_categories WHERE categorycode = ? ";
