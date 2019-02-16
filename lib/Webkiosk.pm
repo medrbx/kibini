@@ -6,8 +6,6 @@ use utf8;
 use Kibini::ES;
 
 with 'Evenement', 'Adherent';
-#extends 'Evenement', 'Adherent';
-#extends 'Adherent';
 
 has session_groupe => ( is => 'ro' );
 has session_poste => ( is => 'ro' );
