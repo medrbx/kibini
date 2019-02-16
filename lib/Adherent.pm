@@ -382,7 +382,8 @@ sub get_es_age_labels {
     return $self;
 }
 
-sub get_es_geo_ville {
+sub get_es_geo_ville { #"CROIX", "HEM", "LEERS", "LILLE", "LYS LEZ LANNOY", "LYS LEZ LANNOY", "MARCQ-EN-BAROEUL", "MARCQ EN BAROEUL
+MONS-EN-BAROEUL", "MONS EN BAROEUL", "MOUVAUX", "ROUBAIX", "TOURCOING", "VILLENEUVE D'ASCQ", "VILLENEUVE-D'ASCQ", "WASQUEHAL", "WATTRELOS"
     my ($self) = @_;
     
     if ($self->{koha_city}) {
