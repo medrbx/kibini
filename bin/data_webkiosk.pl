@@ -21,7 +21,7 @@ $dbh = $dbh->dbh;
 
 my $crypter = Kibini::Crypt->new;
 
-open my $fic, "<", "/home/fpichenot/Documents/projets/data/wbk_semaine_5.csv"; #"/home/kibini/wk_users_logs_consommations.csv";
+open my $fic, "<", "/home/kibini/wk_users_logs_consommations.csv";
 
 my $csv = Text::CSV->new ({
     binary    => 1, # permet caractères spéciaux (?)
@@ -38,7 +38,7 @@ while ( my $row = $csv->getline_hr ($fic) ) {
     $wk->get_wkuser_data;
     my $res = $wk->add_data_to_statdb_webkiosk;
     $wk->add_data_to_es_webkiosk;
-    print Dumper($wk);
+#    print Dumper($wk);
     $i++;
 }
 
