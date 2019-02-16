@@ -11,11 +11,11 @@ has date_heure_b_format => ( is => 'ro' );
 has date_heure_c => ( is => 'ro' );
 has date_heure_c_format => ( is => 'ro' );
 
-has statdb_date_heure_a => ( is => 'rw');#, builder => '_get_statdb_date_heure_a' );
-has statdb_date_heure_b => ( is => 'ro');#, builder => '_get_statdb_date_heure_b' );
-has statdb_date_heure_c => ( is => 'ro');#, builder => '_get_statdb_date_heure_c' );
+has statdb_date_heure_a => ( is => 'rw');
+has statdb_date_heure_b => ( is => 'ro');
+has statdb_date_heure_c => ( is => 'ro');
 
-has es_date_heure_a => ( is => 'ro');#, builder => '_get_es_date_heure_a' );
+has es_date_heure_a => ( is => 'ro');
 has es_date_heure_a_annee => ( is => 'ro' );
 has es_date_heure_a_heure => ( is => 'ro' );
 has es_date_heure_a_jour => ( is => 'ro' );
@@ -23,7 +23,7 @@ has es_date_heure_a_jour_semaine => ( is => 'ro' );
 has es_date_heure_a_mois => ( is => 'ro' );
 has es_date_heure_a_semaine => ( is => 'ro' );
 
-has es_date_heure_b => ( is => 'ro');#, builder => '_get_es_date_heure_b' );
+has es_date_heure_b => ( is => 'ro');
 has es_date_heure_b_annee => ( is => 'ro' );
 has es_date_heure_b_heure => ( is => 'ro' );
 has es_date_heure_b_jour => ( is => 'ro' );
@@ -31,7 +31,7 @@ has es_date_heure_b_jour_semaine => ( is => 'ro' );
 has es_date_heure_b_mois => ( is => 'ro' );
 has es_date_heure_b_semaine => ( is => 'ro' );
 
-has es_date_heure_c => ( is => 'ro');#, builder => '_get_es_date_heure_c' );
+has es_date_heure_c => ( is => 'ro');
 has es_date_heure_c_annee => ( is => 'ro' );
 has es_date_heure_c_heure => ( is => 'ro' );
 has es_date_heure_c_jour => ( is => 'ro' );
@@ -275,6 +275,8 @@ sub _get_statdb_date_heure_a {
     if ($self->{date_heure_a}) {
         $self->{statdb_date_heure_a} = $self->{date_heure_a};
     }
+    
+    return $self;
 }
 
 sub _get_statdb_date_heure_b {
@@ -282,6 +284,8 @@ sub _get_statdb_date_heure_b {
     if ($self->{date_heure_b}) {
         $self->{statdb_date_heure_b} = $self->{date_heure_b};
     }
+    
+    return $self;
 }
 
 sub _get_statdb_date_heure_c {
@@ -289,5 +293,7 @@ sub _get_statdb_date_heure_c {
     if ($self->{date_heure_c}) {
         $self->{statdb_date_heure_c} = $self->{date_heure_c};
     }
+    
+    return $self;
 }
 1;
