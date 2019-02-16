@@ -5,14 +5,17 @@ use utf8;
 
 use Kibini::ES;
 
-extends 'Adherent';
+with 'Evenement', 'Adherent';
 
-has session_heure_deb => ( is => 'ro' );
-has session_heure_fin => ( is => 'ro' );
-has session_espace => ( is => 'ro' );
 has session_groupe => ( is => 'ro' );
 has session_poste => ( is => 'ro' );
-has session_duree  => ( is => 'ro' );
+
+has statdb_session_groupe => ( is => 'ro' );
+has statdb_session_poste => ( is => 'ro' );
+
+has es_session_espace => ( is => 'ro' );
+has es_session_groupe => ( is => 'ro' );
+has es_session_poste => ( is => 'ro' );
 
 sub BUILDARGS {
     my ($class, @args) = @_;
@@ -54,17 +57,21 @@ sub get_wkuser_from_koha {
 sub get_wkuser_data {
     my ($self) = @_;
     
-    $self->_get_wk_location;
-    $self->_get_session_duree;
-    
+    $self->get_es_duree_ab('minutes');
+    $self->{statdb_session_groupe} = $self->{session_groupe};
+    $self->{stadb_session_poste} = $self->{session_poste};
+    $self->{es_session_groupe} = $self->{session_groupe};
+    $self->{es_session_poste} = $self->{session_poste};
+    $self->_get_wk_location;    
+
     my $param_get_statdb_generic_data = {
         param_get_statdb_age => {
             date_event_format => 'datetime',
-            date_event_field => $self->{session_heure_deb}
+            date_event_field => $self->{statdb_date_heure_a}
         },
         param_get_statdb_inscription_nb_annees_adhesion => {
             date_event_format => 'datetime',
-            date_event_field => $self->{session_heure_deb}
+            date_event_field => $self->{statdb_date_heure_a}
         }
     };
     
@@ -73,11 +80,11 @@ sub get_wkuser_data {
     my $param_get_es_generic_data = {
         param_get_es_age => {
             format_date_event => 'datetime',
-            date_event_field => $self->{session_heure_deb}
+            date_event_field => $self->{es_date_heure_a}
         },
         param_get_es_inscription_nb_annees_adhesion => {
             format_date_event => 'datetime',
-            date_event_field => $self->{session_heure_deb}
+            date_event_field => $self->{es_date_heure_a}
         }
     };
     
@@ -111,11 +118,11 @@ INSERT INTO statdb.stat_webkiosk (
 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 SQL
     my $sth = $dbh->prepare($req);
-    $sth->execute(
-        $statdb_wk_specific_data{'session_heure_deb'},
-        $statdb_wk_specific_data{'session_heure_fin'},
-        $statdb_wk_specific_data{'session_espace'},
-        $statdb_wk_specific_data{'session_poste'},
+    my $res = $sth->execute(
+        $statdb_wk_specific_data{'statdb_session_heure_deb'},
+        $statdb_wk_specific_data{'statdb_session_heure_fin'},
+        $statdb_wk_specific_data{'statdb_session_groupe'},
+        $statdb_wk_specific_data{'statdb_session_poste'},
         $statdb_adherent_data{'statdb_userid'},
         $statdb_adherent_data{'statdb_borrowernumber'},
         $statdb_adherent_data{'statdb_age'},
@@ -127,6 +134,7 @@ SQL
         $statdb_adherent_data{'statdb_inscription_nb_annees_adhesion'}
     );
     $sth->finish();
+    return $res;
 }
 
 sub add_data_to_es_webkiosk {
@@ -142,12 +150,12 @@ sub add_data_to_es_webkiosk {
         index   => 'webkiosk',
         type    => 'sessions',
         body    => {
-            session_heure_deb => $es_wk_specific_data{'session_heure_deb'},
-            session_heure_fin => $es_wk_specific_data{'session_heure_fin'},
-            session_duree => $es_wk_specific_data{'session_duree'},
-            session_espace => $es_wk_specific_data{'session_espace'},
-            session_groupe => $es_wk_specific_data{'session_groupe'},
-            session_poste => $es_wk_specific_data{'session_poste'},
+            session_heure_deb => $es_wk_specific_data{es_session},
+            session_heure_fin => $es_wk_specific_data{es_session_heure_fin},
+            session_duree => $es_wk_specific_data{es_session_duree},
+            session_espace => $es_wk_specific_data{es_session_espace},
+            session_groupe => $es_wk_specific_data{es_session_groupe},
+            session_poste => $es_wk_specific_data{es_session_poste},
             adherent_id => $es_adherent_data{es_adherentid},
             adherent_sexe => $es_adherent_data{es_sexe},
             adherent_age => $es_adherent_data{es_age},
@@ -182,10 +190,10 @@ sub add_data_to_es_webkiosk {
 sub export_wk_specific_data_to_statdb {
     my ($self, $param) = @_;
     my $wk_data = {
-        session_heure_deb => $self->{session_heure_deb},
-        session_heure_fin => $self->{session_heure_fin},
-        session_espace => $self->{session_espace},
-        session_poste => $self->{session_poste}
+        statdb_session_heure_deb => $self->{statdb_date_heure_a},
+        statdb_session_heure_fin => $self->{statdb_date_heure_b},
+        statdb_session_groupe => $self->{statdb_session_groupe},
+        statdb_session_poste => $self->{session_poste}
     };
 
     return $wk_data;
@@ -194,12 +202,12 @@ sub export_wk_specific_data_to_statdb {
 sub export_wk_specific_data_to_es {
     my ($self, $param) = @_;
     my $wk_data = {
-        session_heure_deb => $self->{session_heure_deb},
-        session_heure_fin => $self->{session_heure_fin},
-        session_espace => $self->{session_espace},
-        session_groupe => $self->{session_groupe},
-        session_poste => $self->{session_poste},
-        session_duree => $self->{session_duree}
+        es_session_heure_deb => $self->{es_date_heure_a},
+        es_session_heure_fin => $self->{es_date_heure_b},
+        es_session_duree => $self->{es_duree_ab},
+        es_session_espace => $self->{es_session_espace},
+        es_session_groupe => $self->{es_session_groupe},
+        es_session_poste => $self->{es_session_poste}
     };
 
     return $wk_data;
@@ -208,6 +216,8 @@ sub export_wk_specific_data_to_es {
 
 sub _get_wk_location {
     my ($self) = @_ ;
+    $self->{es_session_groupe} = $self->{statdb_session_groupe};
+    $self->{es_session_poste} = $self->{statdb_session_poste};
     my %espaces = (
         'Atelier' => 'Multimédia',
         'Disco' => 'Phare',
@@ -221,19 +231,8 @@ sub _get_wk_location {
         'Cafe' => 'Rez-de-chaussée',
         'Rdc Ascenceur' => 'Rez-de-chaussée'
     ) ;
-    $self->{session_espace} = $espaces{$self->{session_groupe}} ;
-    return $self ;
-}
-
-sub _get_session_duree {
-    my ($self) = @_ ;
-
-    my $kt = Kibini::Time->new({ start => { value => $self->{session_heure_deb}, format => 'datetime' }, end => { value => $self->{session_heure_fin}, format => 'datetime' }});
-    $kt->get_duration({type => 'minutes'});
-
-    $self->{session_duree} = $kt->duration;
-    
-    return $self ;
+    $self->{es_session_espace} = $espaces{$self->{es_session_groupe}} ;
+    return $self;
 }
 
 1;

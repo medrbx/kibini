@@ -1,6 +1,6 @@
 package Adherent;
 
-use Moo;
+use Moo::Role;
 use List::MoreUtils qw(any);
 use utf8;
 
