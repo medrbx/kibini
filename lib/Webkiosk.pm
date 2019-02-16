@@ -120,11 +120,11 @@ INSERT INTO statdb.stat_webkiosk (
 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 SQL
     my $sth = $dbh->prepare($req);
-    $sth->execute(
-        $statdb_wk_specific_data{'session_heure_deb'},
-        $statdb_wk_specific_data{'session_heure_fin'},
-        $statdb_wk_specific_data{'session_espace'},
-        $statdb_wk_specific_data{'session_poste'},
+    my $res = $sth->execute(
+        $statdb_wk_specific_data{'statdb_session_heure_deb'},
+        $statdb_wk_specific_data{'statdb_session_heure_fin'},
+        $statdb_wk_specific_data{'statdb_session_groupe'},
+        $statdb_wk_specific_data{'statdb_session_poste'},
         $statdb_adherent_data{'statdb_userid'},
         $statdb_adherent_data{'statdb_borrowernumber'},
         $statdb_adherent_data{'statdb_age'},
@@ -136,6 +136,7 @@ SQL
         $statdb_adherent_data{'statdb_inscription_nb_annees_adhesion'}
     );
     $sth->finish();
+    return $res;
 }
 
 sub add_data_to_es_webkiosk {
@@ -193,7 +194,7 @@ sub export_wk_specific_data_to_statdb {
     my $wk_data = {
         statdb_session_heure_deb => $self->{statdb_date_heure_a},
         statdb_session_heure_fin => $self->{statdb_date_heure_b},
-        statdb_session_espace => $self->{session_espace},
+        statdb_session_groupe => $self->{statdb_session_groupe},
         statdb_session_poste => $self->{session_poste}
     };
 
