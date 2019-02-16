@@ -36,8 +36,8 @@ while ( my $row = $csv->getline_hr ($fic) ) {
     $wk->evenement_complete_data({date_heure_a_format => 'datetime', date_heure_b_format => 'datetime'});
     $wk->get_wkuser_from_koha;
     $wk->get_wkuser_data;
-    $wk->add_data_to_statdb_webkiosk;
-#    $wk->add_data_to_es_webkiosk;
+    my $res = $wk->add_data_to_statdb_webkiosk;
+    $wk->add_data_to_es_webkiosk;
     print Dumper($wk);
     $i++;
 }
