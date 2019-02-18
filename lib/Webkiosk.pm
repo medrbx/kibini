@@ -9,13 +9,16 @@ with 'Evenement', 'Adherent';
 
 has session_groupe => ( is => 'ro' );
 has session_poste => ( is => 'ro' );
+has session_id => ( is => 'ro' );
 
 has statdb_session_groupe => ( is => 'ro' );
 has statdb_session_poste => ( is => 'ro' );
+has statdb_session_id => ( is => 'ro' );
 
 has es_session_espace => ( is => 'ro' );
 has es_session_groupe => ( is => 'ro' );
 has es_session_poste => ( is => 'ro' );
+has es_statdb_session_id => ( is => 'ro' );
 
 sub BUILDARGS {
     my ($class, @args) = @_;
