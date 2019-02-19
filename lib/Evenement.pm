@@ -77,11 +77,13 @@ sub evenement_complete_data {
 
 sub get_es_duree_ab {
     my ($self, $param) = @_ ;
+    
+    if ( $self->{date_heure_a} and $self->{date_heure_b} ) {
+        my $kt = Kibini::Time->new({ start => { value => $self->{date_heure_a}, format => $self->{date_heure_a_format} }, end => { value => $self->{date_heure_b}, format => $self->{date_heure_b_format} }});
+        $kt->get_duration({type => $param});
 
-    my $kt = Kibini::Time->new({ start => { value => $self->{date_heure_a}, format => $self->{date_heure_a_format} }, end => { value => $self->{date_heure_b}, format => $self->{date_heure_b_format} }});
-    $kt->get_duration({type => $param});
-
-    $self->{es_duree_ab} = $kt->duration;
+        $self->{es_duree_ab} = $kt->duration;
+    }
     
     return $self ;
 }
