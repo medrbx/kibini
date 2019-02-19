@@ -198,33 +198,46 @@ sub get_statdb_age_code {
 
 sub get_statdb_geo_ville {
     my ($self) = @_;
-    
-    $self->{statdb_geo_ville} = $self->{koha_city};
-    
+    unless ($self->{statdb_geo_ville}) {
+        $self->{statdb_geo_ville} = $self->{koha_city} if exists $self->{koha_city};
+    }
+
+    $self->{statdb_geo_ville} = uc $self->{statdb_geo_ville};
+    my @liste = qw (CROIX HEM LEERS LILLE LYS-LEZ-LANNOY MARCQ-EN-BAROEUL MONS-EN-BAROEUL MOUVAUX ROUBAIX TOURCOING VILLENEUVE-D'ASCQ WASQUEHAL WATTRELOS);
+    $self->{es_geo_ville} = "LYS-LEZ-LANNOY" if $self->{es_geo_ville} eq "LYS LEZ LANNOY";
+    $self->{es_geo_ville} = "MONS-EN-BAROEUL" if $self->{es_geo_ville} eq "MONS EN BAROEUL";
+    $self->{statdb_geo_ville} = "MARCQ-EN-BAROEUL" if $self->{statdb_geo_ville} eq "MARCQ EN BAROEUL";
+    $self->{statdb_geo_ville} = "VILLENEUVE-D'ASCQ" if $self->{statdb_geo_ville} eq "VILLENEUVE D'ASCQ";
+    if ( grep {$_ eq $self->{statdb_geo_ville} } @liste ) {
+        $self->{statdb_geo_ville} = $self->{statdb_geo_ville};
+    } else {
+        $self->{statdb_geo_ville} = "AUTRE";
+    }
+
     return $self;
 }
 
 sub get_statdb_geo_rbx_iris {
     my ($self) = @_;
-    
-    $self->{statdb_geo_rbx_iris} = $self->{koha_altcontactcountry};
-    
+    unless ($self->{statdb_geo_rbx_iris}) {    
+        $self->{statdb_geo_rbx_iris} = $self->{koha_altcontactcountry} if exists $self->{koha_altcontactcountry};
+    }
     return $self;
 }
 
 sub get_statdb_inscription_site_code {
     my ($self) = @_;
-    
-    $self->{statdb_inscription_site_code} = $self->{koha_branchcode};
-    
+    unless ($self->{statdb_inscription_site_code}) {
+        $self->{statdb_inscription_site_code} = $self->{koha_branchcode} if exists $self->{koha_branchcode};
+    }
     return $self;
 }
 
 sub get_statdb_inscription_carte_code {
     my ($self) = @_;
-    
-    $self->{statdb_inscription_carte_code} = $self->{koha_categorycode};
-    
+    unless ($self->{statdb_inscription_carte_code}) {
+        $self->{statdb_inscription_carte_code} = $self->{koha_categorycode} if exists $self->{koha_categorycode};
+    }
     return $self;
 }
 
@@ -288,19 +301,20 @@ sub get_statdb_borrowernumber {
 
 sub get_statdb_attributes {
     my ($self) = @_;
-    
-    $self->{statdb_attributes} = join '|', @{$self->{koha_attributes}};
-    
+    if ( $self->{koha_attributes} ) {
+        $self->{statdb_attributes} = join '|', @{$self->{koha_attributes}};
+    }
     return $self;
 }
 
 sub get_statdb_adherentid {
     my ($self) = @_;
+    if ($self->{koha_borrowernumber}) {
     
-    my $crypter = $self->{crypter};
+        my $crypter = $self->{crypter};
     
-    $self->{statdb_adherentid} = $crypter->crypt({ string => $self->{koha_borrowernumber}});
-    
+        $self->{statdb_adherentid} = $crypter->crypt({ string => $self->{koha_borrowernumber}});
+    }
     return $self;
 }
 
@@ -382,14 +396,25 @@ sub get_es_age_labels {
     return $self;
 }
 
-sub get_es_geo_ville { #"CROIX", "HEM", "LEERS", "LILLE", "LYS LEZ LANNOY", "LYS LEZ LANNOY", "MARCQ-EN-BAROEUL", "MARCQ EN BAROEUL
-MONS-EN-BAROEUL", "MONS EN BAROEUL", "MOUVAUX", "ROUBAIX", "TOURCOING", "VILLENEUVE D'ASCQ", "VILLENEUVE-D'ASCQ", "WASQUEHAL", "WATTRELOS"
+sub get_es_geo_ville {
     my ($self) = @_;
     
     if ($self->{koha_city}) {
         $self->{es_geo_ville} = $self->{koha_city};
     } else { 
         $self->{es_geo_ville} = $self->{statdb_geo_ville};    
+    }
+
+    $self->{es_geo_ville} = uc $self->{es_geo_ville};
+    my @liste = qw (CROIX HEM LEERS LILLE LYS-LEZ-LANNOY MARCQ-EN-BAROEUL MONS-EN-BAROEUL MOUVAUX ROUBAIX TOURCOING VILLENEUVE-D'ASCQ WASQUEHAL WATTRELOS);
+    $self->{es_geo_ville} = "LYS-LEZ-LANNOY" if $self->{es_geo_ville} eq "LYS LEZ LANNOY";
+    $self->{es_geo_ville} = "MONS-EN-BAROEUL" if $self->{es_geo_ville} eq "MONS EN BAROEUL";
+    $self->{es_geo_ville} = "MARCQ-EN-BAROEUL" if $self->{es_geo_ville} eq "MARCQ EN BAROEUL";
+    $self->{es_geo_ville} = "VILLENEUVE-D'ASCQ" if $self->{es_geo_ville} eq "VILLENEUVE D'ASCQ";
+    if ( grep {$_ eq $self->{es_geo_ville} } @liste ) {
+        $self->{es_geo_ville} = $self->{es_geo_ville};
+    } else {
+        $self->{es_geo_ville} = "AUTRE";
     }
     
     return $self;
