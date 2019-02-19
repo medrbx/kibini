@@ -28,7 +28,7 @@ sub crypt {
     
     if ($self->{type} eq 'Bcrypt' ) {
         my $salt = $self->{'salt'};
-        my $settings = '$2a$08$'.$salt;
+        my $settings = '$2a$08$'. $salt;
         return Crypt::Eksblowfish::Bcrypt::bcrypt($param->{string}, $settings);
     } elsif ($self->{type} eq 'SHA1' ) {
         return sha1_hex($param->{string});
