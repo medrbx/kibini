@@ -61,8 +61,10 @@ sub get_wkuser_data {
     my ($self) = @_;
     
     $self->get_es_duree_ab('minutes');
+    $self->{statdb_session_id} = $self->{session_id};    
     $self->{statdb_session_groupe} = $self->{session_groupe};
     $self->{stadb_session_poste} = $self->{session_poste};
+    $self->{es_session_id} = $self->{session_id};
     $self->{es_session_groupe} = $self->{session_groupe};
     $self->{es_session_poste} = $self->{session_poste};
     $self->_get_wk_location;    
@@ -196,7 +198,8 @@ sub export_wk_specific_data_to_statdb {
         statdb_session_heure_deb => $self->{statdb_date_heure_a},
         statdb_session_heure_fin => $self->{statdb_date_heure_b},
         statdb_session_groupe => $self->{statdb_session_groupe},
-        statdb_session_poste => $self->{session_poste}
+        statdb_session_poste => $self->{statdb_session_poste},
+        statdb_session_id => $self->{statdb_session_id}
     };
 
     return $wk_data;
@@ -210,7 +213,8 @@ sub export_wk_specific_data_to_es {
         es_session_duree => $self->{es_duree_ab},
         es_session_espace => $self->{es_session_espace},
         es_session_groupe => $self->{es_session_groupe},
-        es_session_poste => $self->{es_session_poste}
+        es_session_poste => $self->{es_session_poste},
+        es_session_id => $self->{es_session_id}
     };
 
     return $wk_data;
