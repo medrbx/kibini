@@ -25,14 +25,17 @@ sub BUILDARGS {
 
 sub crypt {
     my ($self, $param) = @_;
-    
+
+    my $crypted_string;    
     if ($self->{type} eq 'Bcrypt' ) {
         my $salt = $self->{'salt'};
         my $settings = '$2a$08$'. $salt;
-        return Crypt::Eksblowfish::Bcrypt::bcrypt($param->{string}, $settings);
+        $crypted_string = Crypt::Eksblowfish::Bcrypt::bcrypt($param->{string}, $settings);
+        $crypted_string =~ s/^\$2a\$\d{2}\$[A-Za-z0-9+\\.]{22}(.+)/$1/;
     } elsif ($self->{type} eq 'SHA1' ) {
-        return sha1_hex($param->{string});
+        $crypted_string = sha1_hex($param->{string});
     }
+    return $crypted_string;
 }
 
 1;
