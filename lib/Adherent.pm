@@ -137,7 +137,7 @@ sub get_es_adherent_generic_data {
     
     $self->get_es_adherentid;
     $self->get_es_age($param);
-    $self->get_es_age_labels; 
+    $self->get_es_age_labels;
     $self->get_es_sexe;    
     $self->get_es_inscription_carte;
     $self->get_es_inscription_type_carte;
@@ -307,6 +307,9 @@ sub get_statdb_attributes {
     my ($self) = @_;
     if ( $self->{koha_attributes} ) {
         $self->{statdb_attributes} = join '|', @{$self->{koha_attributes}};
+    } elsif ($self->{koha_borrowernumber}) {
+        $self->get_koha_attributes;
+        $self->{statdb_attributes} = join '|', @{$self->{koha_attributes}};
     }
     return $self;
 }
@@ -390,12 +393,14 @@ sub get_es_age_labels {
         my $sth = $self->{dbh}->prepare($req);
         $sth->execute($self->{statdb_age_code});
         ($self->{es_age_lib1}, $self->{es_age_lib2}, $self->{es_age_lib3} ) = $sth->fetchrow_array;
+        $self->{es_age_code} = $self->{statdb_age_code};
         $sth->finish;    
     } elsif ( $self->{statdb_age} ) {
         my $req = "SELECT acode, trmeda, trmedb, trinsee FROM statdb.lib_age2 WHERE age = ?";
         my $sth = $self->{dbh}->prepare($req);
         $sth->execute($self->{statdb_age});
         ($self->{statdb_age_code}, $self->{es_age_lib1}, $self->{es_age_lib2}, $self->{es_age_lib3} ) = $sth->fetchrow_array;
+        $self->{es_age_code} = $self->{statdb_age_code};
         $sth->finish;    
     }
     
@@ -705,7 +710,7 @@ sub export_adherent_generic_data_to_es {
     my ($self) = @_;
     my $adherent_data = {
         es_sexe => $self->{es_sexe},
-        es_age => $self->{es_age},
+        es_age_code => $self->{es_age_code},
         es_age_lib1 => $self->{es_age_lib1},
         es_age_lib2 => $self->{es_age_lib2},
         es_age_lib3 => $self->{es_age_lib3},
