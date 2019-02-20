@@ -201,19 +201,21 @@ sub get_statdb_geo_ville {
     unless ($self->{statdb_geo_ville}) {
         $self->{statdb_geo_ville} = $self->{koha_city} if exists $self->{koha_city};
     }
-
-    $self->{statdb_geo_ville} = uc $self->{statdb_geo_ville};
-    my @liste = qw (CROIX HEM LEERS LILLE LYS-LEZ-LANNOY MARCQ-EN-BAROEUL MONS-EN-BAROEUL MOUVAUX ROUBAIX TOURCOING VILLENEUVE-D'ASCQ WASQUEHAL WATTRELOS);
-    $self->{es_geo_ville} = "LYS-LEZ-LANNOY" if $self->{es_geo_ville} eq "LYS LEZ LANNOY";
-    $self->{es_geo_ville} = "MONS-EN-BAROEUL" if $self->{es_geo_ville} eq "MONS EN BAROEUL";
-    $self->{statdb_geo_ville} = "MARCQ-EN-BAROEUL" if $self->{statdb_geo_ville} eq "MARCQ EN BAROEUL";
-    $self->{statdb_geo_ville} = "VILLENEUVE-D'ASCQ" if $self->{statdb_geo_ville} eq "VILLENEUVE D'ASCQ";
-    if ( grep {$_ eq $self->{statdb_geo_ville} } @liste ) {
-        $self->{statdb_geo_ville} = $self->{statdb_geo_ville};
-    } else {
-        $self->{statdb_geo_ville} = "AUTRE";
-    }
-
+    
+    if ($self->{statdb_geo_ville}) {
+        $self->{statdb_geo_ville} = uc $self->{statdb_geo_ville};
+        my @liste = qw (CROIX HEM LEERS LILLE LYS-LEZ-LANNOY MARCQ-EN-BAROEUL MONS-EN-BAROEUL MOUVAUX ROUBAIX TOURCOING VILLENEUVE-D'ASCQ WASQUEHAL WATTRELOS);
+        $self->{statdb_geo_ville} = "LYS-LEZ-LANNOY" if $self->{statdb_geo_ville} eq "LYS LEZ LANNOY";
+        $self->{statdb_geo_ville} = "MONS-EN-BAROEUL" if $self->{statdb_geo_ville} eq "MONS EN BAROEUL";
+        $self->{statdb_geo_ville} = "MARCQ-EN-BAROEUL" if $self->{statdb_geo_ville} eq "MARCQ EN BAROEUL";
+        $self->{statdb_geo_ville} = "VILLENEUVE-D'ASCQ" if $self->{statdb_geo_ville} eq "VILLENEUVE D'ASCQ";
+        if ( grep {$_ eq $self->{statdb_geo_ville} } @liste ) {
+            $self->{statdb_geo_ville} = $self->{statdb_geo_ville};
+        } else {
+            $self->{statdb_geo_ville} = "AUTRE";
+        }
+    }    
+    
     return $self;
 }
 
@@ -266,18 +268,20 @@ sub get_statdb_sexe_code {
         $categorycode = $self->{statdb_inscription_carte_code};
     }
     
-    if ( any { /$categorycode/ } @categorycodes ) {
-        if ( $self->{koha_title} ) {
-            if ( $self->{koha_title} eq 'Madame' ) {
-                $self->{statdb_sexe_code} = 'F';
-            } elsif ( $self->{koha_title} eq 'Monsieur' ) {
-                $self->{statdb_sexe_code} = 'M';
-            } else {
-                $self->{statdb_sexe_code} = 'NC';
+    if ($categorycode) {
+        if ( any { /$categorycode/ } @categorycodes ) {
+            if ( $self->{koha_title} ) {
+                if ( $self->{koha_title} eq 'Madame' ) {
+                    $self->{statdb_sexe_code} = 'F';
+                } elsif ( $self->{koha_title} eq 'Monsieur' ) {
+                    $self->{statdb_sexe_code} = 'M';
+                } else {
+                    $self->{statdb_sexe_code} = 'NC';
+                }
             }
+        } else {
+            $self->{statdb_sexe_code} = 'NP';
         }
-    } else {
-        $self->{statdb_sexe_code} = 'NP';
     }
     
     return $self;
@@ -342,18 +346,20 @@ sub get_es_sexe {
             $categorycode = $self->{statdb_inscription_carte_code};
         }
     
-        if ( any { /$categorycode/ } @categorycodes ) {
-            if ( $self->{koha_title} ) {
-                if ( $self->{koha_title} eq 'Madame' ) {
-                    $self->{es_sexe} = 'Femme';
-                } elsif ( $self->{koha_title} eq 'Monsieur' ) {
-                    $self->{es_sexe} = 'Homme';
-                } else {
-                    $self->{es_sexe} = 'Inconnu';
+        if ($categorycode) {
+            if ( any { /$categorycode/ } @categorycodes ) {
+                if ( $self->{koha_title} ) {
+                    if ( $self->{koha_title} eq 'Madame' ) {
+                        $self->{es_sexe} = 'Femme';
+                    } elsif ( $self->{koha_title} eq 'Monsieur' ) {
+                        $self->{es_sexe} = 'Homme';
+                    } else {
+                        $self->{es_sexe} = 'Inconnu';
+                    }
                 }
+            } else {
+                $self->{es_sexe} = 'NP';
             }
-        } else {
-            $self->{es_sexe} = 'NP';
         }
     }
     
@@ -515,18 +521,20 @@ sub get_es_inscription_type_carte {
         $categorycode = $self->{statdb_inscription_carte_code}
     }
 
-    my $type_carte ;
-    if ($categorycode eq "BIBL" ) { $type_carte = "Médiathèque" ; }
-    my @liste = qw( MEDA MEDB MEDC CSVT MEDP ) ;
-    if ( grep {$_ eq $categorycode} @liste ) { $type_carte = "Médiathèque Plus" ; }
-    if ($categorycode eq "CSLT" ) { $type_carte = "Consultation sur place" ; }
-    @liste = qw( COLI COLD ) ;
-    if ( grep {$_ eq $categorycode} @liste ) { $type_carte = "Prêt en nombre" ; }
-    @liste = qw( ECOL CLAS COLS ) ;
-    if ( grep {$_ eq $categorycode} @liste ) { $type_carte = "Service collectivités" ; }
+    if ($categorycode) {
+        my $type_carte;
+        if ($categorycode eq "BIBL" ) { $type_carte = "Médiathèque" ; }
+        my @liste = qw( MEDA MEDB MEDC CSVT MEDP ) ;
+        if ( grep {$_ eq $categorycode} @liste ) { $type_carte = "Médiathèque Plus" ; }
+        if ($categorycode eq "CSLT" ) { $type_carte = "Consultation sur place" ; }
+        @liste = qw( COLI COLD ) ;
+        if ( grep {$_ eq $categorycode} @liste ) { $type_carte = "Prêt en nombre" ; }
+        @liste = qw( ECOL CLAS COLS ) ;
+        if ( grep {$_ eq $categorycode} @liste ) { $type_carte = "Service collectivités" ; }
     
-    $self->{es_inscription_type_carte} = $type_carte;
-    
+        $self->{es_inscription_type_carte} = $type_carte;
+    }    
+
     return $self;
 }
 
@@ -541,21 +549,24 @@ sub get_es_inscription_personnalite {
 sub get_es_inscription_site {
     my ($self) = @_;
     
+    
     my $site;
     if ($self->{koha_branchcode}) {
         $site = $self->{koha_branchcode}
     } elsif ($self->{statdb_inscription_site_code}) {
         $site = $self->{statdb_inscription_site_code}
     }
-    
-    if ($site eq 'MED') {
-        $self->{es_inscription_site} = 'Médiathèque';
-    } elsif ($site eq 'BUS') {
-        $self->{es_inscription_site} = 'Zèbre';
-    } elsif ($site eq 'MUS') {
-        $self->{es_inscription_site} = 'Musée André Diligent';
+
+    if ($site) {
+        if ($site eq 'MED') {
+            $self->{es_inscription_site} = 'Médiathèque';
+        } elsif ($site eq 'BUS') {
+            $self->{es_inscription_site} = 'Zèbre';
+        } elsif ($site eq 'MUS') {
+            $self->{es_inscription_site} = 'Musée André Diligent';
+        }
     }
-    
+
     return $self;
 }
 
@@ -578,26 +589,28 @@ sub get_es_inscription_nb_annees_adhesion {
 sub get_es_inscription_nb_annees_adhesion_tra {
     my ($self) = @_;
     
-    my $tr;
-    my $count = $self->{es_inscription_nb_annees_adhesion};
+    if ($self->{es_inscription_nb_annees_adhesion}) {
+        my $tr;
+        my $count = $self->{es_inscription_nb_annees_adhesion};
     
-    if ($count == 0 ) {
-        $tr = "a/ 0";
-    } elsif ($count == 1 ) {
-        $tr = "b/ 1";
-    } elsif ($count == 2 ) {
-        $tr = "c/ 2";
-    } elsif ($count == 3 ) {
-        $tr = "d/ 3";
-    } elsif ($count == 4 ) {
-        $tr = "e/ 4";
-    } elsif ($count > 4 && $count <= 10 ) {
-        $tr = "f/ 5 - 10 ans";
-    } else {
-        $tr = "g/ Plus de 10 ans";
+        if ($count == 0 ) {
+            $tr = "a/ 0";
+        } elsif ($count == 1 ) {
+            $tr = "b/ 1";
+        } elsif ($count == 2 ) {
+            $tr = "c/ 2";
+        } elsif ($count == 3 ) {
+            $tr = "d/ 3";
+        } elsif ($count == 4 ) {
+            $tr = "e/ 4";
+        } elsif ($count > 4 && $count <= 10 ) {
+            $tr = "f/ 5 - 10 ans";
+        } else {
+            $tr = "g/ Plus de 10 ans";
+        }
+    
+        $self->{es_inscription_nb_annees_adhesion_tra} = $tr;
     }
-    
-    $self->{es_inscription_nb_annees_adhesion_tra} = $tr;
     
     return $self;
 }
@@ -615,22 +628,24 @@ sub get_es_inscription_prix_gratuite {
         $categorycode = $self->{statdb_inscription_carte_code}
     }
     
-    if ( $categorycode eq 'MEDA' ) {
-        $gratuit = "payante";
-        $prix = 35;
-    } elsif ( $categorycode eq 'MEDB' ) {
-        $gratuit = "payante";
-        $prix = 17;
-    } elsif ( $categorycode eq 'MEDC' ) {
-        $gratuit = "payante";
-        $prix = 5;
-    } else {
-        $gratuit = "gratuite";
-        $prix = 0;
+    if ($categorycode) {
+        if ( $categorycode eq 'MEDA' ) {
+            $gratuit = "payante";
+            $prix = 35;
+        } elsif ( $categorycode eq 'MEDB' ) {
+            $gratuit = "payante";
+            $prix = 17;
+        } elsif ( $categorycode eq 'MEDC' ) {
+            $gratuit = "payante";
+            $prix = 5;
+        } else {
+            $gratuit = "gratuite";
+            $prix = 0;
+        }
+
+        $self->{es_inscription_prix} = $prix;
+        $self->{es_inscription_gratuite} = $gratuit;
     }
-    
-    $self->{es_inscription_prix} = $prix;
-    $self->{es_inscription_gratuite} = $gratuit;
     
     return $self;
 }
@@ -650,17 +665,19 @@ sub get_es_adherentid {
 
 sub get_es_attributes {
     my ($self) = @_;
+
+    if ($self->{statdb_attributes}) {    
+        my @attributes = split /\|/, $self->{statdb_attributes};
+        my $es_attribute = {};
     
-    my @attributes = split /\|/, $self->{statdb_attributes};
-    my $es_attribute = {};
+        foreach my $attribute (@attributes) {
+            my ($lib_attribute, $code) = _get_es_attributes_lib($attribute);
+            $es_attribute->{$code} = $lib_attribute;
+        }
     
-    foreach my $attribute (@attributes) {
-        my ($lib_attribute, $code) = _get_es_attributes_lib($attribute);
-        $es_attribute->{$code} = $lib_attribute;
+        $self->{es_attributes} = $es_attribute;
     }
-    
-    $self->{es_attributes} = $es_attribute;
-    
+
     return $self;
 }
 
@@ -743,18 +760,22 @@ sub _get_es_inscription_personnalite {
     } elsif ($self->{statdb_inscription_carte_code}) {
         $categorycode = $self->{statdb_inscription_carte_code}
     }
-    
-    my $req = "SELECT description, category_type FROM statdb.lib_categories WHERE categorycode = ? ";
-    my $sth = $dbh->prepare($req);
-    $sth->execute($categorycode);
-    my @result = $sth->fetchrow_array;
-    $sth->finish();
-    if ( $result[1] eq "C" ) {
-        $result[1] = "Personne";
-    } else {
-        $result[1] = "Collectivité";
+
+    if ($categorycode) {    
+        my $req = "SELECT description, category_type FROM statdb.lib_categories WHERE categorycode = ? ";
+        my $sth = $dbh->prepare($req);
+        $sth->execute($categorycode);
+        my @result = $sth->fetchrow_array;
+        $sth->finish();
+        if ( $result[1] eq "C" ) {
+            $result[1] = "Personne";
+        } else {
+            $result[1] = "Collectivité";
+        }
+        $self->{es_inscription_personnalite} = $result[1];
     }
-    return @result;
+    
+    return $self;
 }
 
 sub _get_es_attributes_lib {
