@@ -63,7 +63,7 @@ sub get_wkuser_data {
     $self->get_es_duree_ab('minutes');
     $self->{statdb_session_id} = $self->{session_id};    
     $self->{statdb_session_groupe} = $self->{session_groupe};
-    $self->{stadb_session_poste} = $self->{session_poste};
+    $self->{statdb_session_poste} = $self->{session_poste};
     $self->{es_session_id} = $self->{session_id};
     $self->{es_session_groupe} = $self->{session_groupe};
     $self->{es_session_poste} = $self->{session_poste};
@@ -222,23 +222,30 @@ sub export_wk_specific_data_to_es {
 
 
 sub _get_wk_location {
-    my ($self) = @_ ;
-    $self->{es_session_groupe} = $self->{statdb_session_groupe};
-    $self->{es_session_poste} = $self->{statdb_session_poste};
-    my %espaces = (
-        'Atelier' => 'Multimédia',
-        'Disco' => 'Phare',
-        'Etude' => 'Etude',
-        'Jeux' => 'Jeunesse',
-        'Lecture' => '1er étage',
-        'Jeunesse' => 'Jeunesse',
-        'Devoir' => 'Jeunesse',
-        'Rdc' => 'Rez-de-chaussée',
-        'Reussir' => 'Phare',
-        'Cafe' => 'Rez-de-chaussée',
-        'Rdc Ascenceur' => 'Rez-de-chaussée'
-    ) ;
-    $self->{es_session_espace} = $espaces{$self->{es_session_groupe}} ;
+    my ($self) = @_;
+    
+    if ($self->{statdb_session_poste}) {
+        $self->{es_session_poste} = $self->{statdb_session_poste};
+    }
+    
+    if ($self->{statdb_session_groupe}) {
+        $self->{es_session_groupe} = $self->{statdb_session_groupe};
+        my %espaces = (
+            'Atelier' => 'Multimédia',
+            'Disco' => 'Phare',
+            'Etude' => 'Etude',
+            'Jeux' => 'Jeunesse',
+            'Lecture' => '1er étage',
+            'Jeunesse' => 'Jeunesse',
+            'Devoir' => 'Jeunesse',
+            'Rdc' => 'Rez-de-chaussée',
+            'Reussir' => 'Phare',
+            'Cafe' => 'Rez-de-chaussée',
+            'Rdc Ascenceur' => 'Rez-de-chaussée'
+        );
+        $self->{es_session_espace} = $espaces{$self->{es_session_groupe}};
+    }
+    
     return $self;
 }
 
