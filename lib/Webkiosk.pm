@@ -18,7 +18,7 @@ has statdb_session_id => ( is => 'ro' );
 has es_session_espace => ( is => 'ro' );
 has es_session_groupe => ( is => 'ro' );
 has es_session_poste => ( is => 'ro' );
-has es_statdb_session_id => ( is => 'ro' );
+has es_session_id => ( is => 'ro' );
 
 sub BUILDARGS {
     my ($class, @args) = @_;
@@ -61,12 +61,49 @@ sub get_wkuser_data {
     my ($self) = @_;
     
     $self->get_es_duree_ab('minutes');
-    $self->{statdb_session_id} = $self->{session_id};    
-    $self->{statdb_session_groupe} = $self->{session_groupe};
-    $self->{statdb_session_poste} = $self->{session_poste};
-    $self->{es_session_id} = $self->{session_id};
-    $self->{es_session_groupe} = $self->{session_groupe};
-    $self->{es_session_poste} = $self->{session_poste};
+    unless ($self->{statdb_session_id}) {
+        if ($self->{session_id}) {
+            $self->{statdb_session_id} = $self->{session_id};
+        } elsif ($self->{es_session_id}) {
+            $self->{statdb_session_id} = $self->{es_session_id};
+        }
+    }
+    unless ($self->{statdb_session_groupe}) {
+        if ($self->{session_groupe}) {
+            $self->{statdb_session_groupe} = $self->{session_groupe};
+        } elsif ($self->{es_session_groupe}) {
+            $self->{statdb_session_groupe} = $self->{es_session_groupe};
+        }
+    }
+    unless ($self->{statdb_session_poste}) {
+        if ($self->{session_poste}) {
+            $self->{statdb_session_poste} = $self->{session_poste};
+        } elsif ($self->{es_session_poste}) {
+            $self->{statdb_session_poste} = $self->{es_session_poste};
+        }
+    }
+    unless ($self->{es_session_id}) {
+        if ($self->{session_id}) {
+            $self->{es_session_id} = $self->{session_id};
+        } elsif ($self->{statdb_session_id}) {
+            $self->{es_session_id} = $self->{statdb_session_id};
+        }
+    }
+
+    unless ($self->{es_session_groupe}) {
+        if ($self->{session_groupe}) {
+            $self->{es_session_groupe} = $self->{session_groupe};
+        } elsif ($self->{statdb_session_groupe}) {
+            $self->{es_session_groupe} = $self->{statdb_session_groupe};
+        }
+    }
+    unless ($self->{es_session_poste}) {
+        if ($self->{session_poste}) {
+            $self->{es_session_poste} = $self->{session_poste};
+        } elsif ($self->{statdb_session_poste}) {
+            $self->{es_session_poste} = $self->{statdb_session_poste};
+        }
+    }
     $self->_get_wk_location;    
 
     my $param_get_statdb_generic_data = {
