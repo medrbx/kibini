@@ -101,7 +101,7 @@ sub get_data_from_koha_by_id {
     my $sth = $dbh->prepare($req);
     $id = "koha_" . $id;
     $sth->execute($self->$id);
-    my $result = $sth->fetchrow_hashref ;
+    my $result = $sth->fetchrow_hashref;
     $sth->finish();
     
     foreach my $k (keys(%$result)) {
@@ -523,14 +523,14 @@ sub get_es_inscription_type_carte {
 
     if ($categorycode) {
         my $type_carte;
-        if ($categorycode eq "BIBL" ) { $type_carte = "Médiathèque" ; }
-        my @liste = qw( MEDA MEDB MEDC CSVT MEDP ) ;
-        if ( grep {$_ eq $categorycode} @liste ) { $type_carte = "Médiathèque Plus" ; }
-        if ($categorycode eq "CSLT" ) { $type_carte = "Consultation sur place" ; }
-        @liste = qw( COLI COLD ) ;
-        if ( grep {$_ eq $categorycode} @liste ) { $type_carte = "Prêt en nombre" ; }
-        @liste = qw( ECOL CLAS COLS ) ;
-        if ( grep {$_ eq $categorycode} @liste ) { $type_carte = "Service collectivités" ; }
+        if ($categorycode eq "BIBL" ) { $type_carte = "Médiathèque"; }
+        my @liste = qw( MEDA MEDB MEDC CSVT MEDP );
+        if ( grep {$_ eq $categorycode} @liste ) { $type_carte = "Médiathèque Plus"; }
+        if ($categorycode eq "CSLT" ) { $type_carte = "Consultation sur place"; }
+        @liste = qw( COLI COLD );
+        if ( grep {$_ eq $categorycode} @liste ) { $type_carte = "Prêt en nombre"; }
+        @liste = qw( ECOL CLAS COLS );
+        if ( grep {$_ eq $categorycode} @liste ) { $type_carte = "Service collectivités"; }
     
         $self->{es_inscription_type_carte} = $type_carte;
     }    
@@ -733,7 +733,7 @@ sub export_adherent_generic_data_to_es {
 }
 
 sub _get_es_geo_rbx_geo {
-    my ($self) = @_ ;
+    my ($self) = @_;
     
     my $dbh = $self->{dbh};
     my $iris;
@@ -743,10 +743,10 @@ sub _get_es_geo_rbx_geo {
         $iris = $self->{statdb_geo_rbx_iris}
     }
     
-    my $req = "SELECT irisNom, quartier, secteur FROM statdb.iris_lib WHERE irisInsee = ?" ;
+    my $req = "SELECT irisNom, quartier, secteur FROM statdb.iris_lib WHERE irisInsee = ?";
     my $sth = $dbh->prepare($req);
     $sth->execute($iris);
-    return $sth->fetchrow_array ;
+    return $sth->fetchrow_array;
     $sth->finish();
 }
 
