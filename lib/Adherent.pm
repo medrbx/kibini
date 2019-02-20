@@ -432,7 +432,7 @@ sub get_es_geo_rbx_iris {
     if ($self->{koha_city}) {
         $self->{es_geo_rbx_iris} = $self->{koha_altcontactcountry};
     } else { 
-        $self->{es_geo_rbx_iris} = $self->{statdb_iris};    
+        $self->{es_geo_rbx_iris} = $self->{statdb_geo_rbx_iris};    
     }
     
     return $self;
@@ -772,10 +772,8 @@ sub _get_es_inscription_personnalite {
         } else {
             $result[1] = "Collectivité";
         }
-        $self->{es_inscription_personnalite} = $result[1];
+        return @result;
     }
-    
-    return $self;
 }
 
 sub _get_es_attributes_lib {
