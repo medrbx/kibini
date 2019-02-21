@@ -60,7 +60,11 @@ has es_inscription_gratuite => ( is => 'ro' );
 has es_inscription_nb_annees_adhesion => ( is => 'ro' );
 has es_inscription_nb_annees_adhesion_tra => ( is => 'ro' );
 has es_adherentid => ( is => 'ro' );
-has es_attributes => ( is => 'ro' );
+has es_attributes_action => ( is => 'ro' );
+has es_attributes_collectivites => ( is => 'ro' );
+has es_attributes_pcs => ( is => 'ro' );
+has es_attributes_zebre => ( is => 'ro' );
+
 
 sub BUILDARGS {
     my ($class, @args) = @_;
@@ -679,8 +683,30 @@ sub get_es_attributes {
             my ($lib_attribute, $code) = _get_es_attributes_lib($attribute);
             $es_attribute->{$code} = $lib_attribute;
         }
+
+        if ($es_attribute->{PCS}) {
+            $self->{es_attributes_pcs} = $es_attribute->{PCS};
+        } else {
+            $self->{es_attributes_pcs} = 'n/a';
+        }
+
+        if ($es_attribute->{collectivités} ) {
+            $self->{es_attributes_collectivites} = $es_attribute->{collectivités};
+        } else {
+            $self->{es_attributes_collectivites} = 'n/a';
+        }
     
-        $self->{es_attributes} = $es_attribute;
+        if ($es_attribute->{zèbre} ) {
+            $self->{es_attributes_zebre} = $es_attribute->{zèbre};
+        } else {
+            $self->{es_attributes_zebre} = 'n/a';
+        }
+
+        if ($es_attribute->{action} ) {
+            $self->{es_attributes_action} = $es_attribute->{action};
+        } else {
+            $self->{es_attributes_action} = 'n/a';
+        }
     }
 
     return $self;
