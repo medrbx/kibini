@@ -191,7 +191,7 @@ sub add_data_to_es_webkiosk {
     my %index = (
         index   => 'sessions_webkiosk',
         type    => 'sessions',
-        _id     => $es_wk_specific_data{es_session_id},
+        id     => $es_wk_specific_data{es_session_id},
         body    => {
             session_id => $es_wk_specific_data{es_session_id},
             session_heure_deb => $es_wk_specific_data{es_session_heure_deb},
@@ -234,7 +234,10 @@ sub add_data_to_es_webkiosk {
             adherent_inscription_prix => $es_adherent_data{es_inscription_prix},
             adherent_inscription_site => $es_adherent_data{es_inscription_site},
             adherent_inscription_type_carte => $es_adherent_data{es_inscription_type_carte},
-            adherent_attributes => $es_adherent_data{es_attributes}
+            adherent_attributes_action => $es_adherent_data{es_attributes_action},
+            adherent_attributes_collectivites => $es_adherent_data{es_attributes_collectivites},
+            adherent_attributes_pcs => $es_adherent_data{es_attributes_pcs},
+            adherent_attributes_zebre => $es_adherent_data{es_attributes_zebre}
         }
     );
 
