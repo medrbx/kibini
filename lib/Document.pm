@@ -106,6 +106,15 @@ sub BUILDARGS {
     return $arg;
 }
 
+sub get_exemplaire_from_koha {
+    my ($self) = @_;
+
+    my @koha_fields = ("i.biblionumber","i.barcode","b.title");
+   $self->get_document_data_from_koha_by_id( { koha_fields => \@koha_fields, koha_id => 'itemnumber' } );
+    
+    return $self;
+}
+
 sub get_document_data_from_koha_by_id {
     my ($self, $param) = @_;
     
@@ -118,7 +127,7 @@ SELECT $select
 FROM koha_prod.items i
 JOIN koha_prod.biblioitems bi
 JOIN koha_prod.biblio b
-WHERE i.$id = ?";
+WHERE i.$id = ?;
 
 SQL
     my $sth = $dbh->prepare($req);
