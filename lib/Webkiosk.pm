@@ -286,6 +286,21 @@ sub export_wk_specific_data_to_es {
     return $wk_data;
 }
 
+sub ano_statdb_sessions_webkiosk {
+    my ($self) = @_;
+    
+    my $dbh = $self->{dbh};
+    my $req = <<SQL;
+UPDATE statdb.stat_sessions_webkiosk
+SET adherent_adherentid = NULL
+WHERE DATE(session_date_heure_debut) < CURDATE() - INTERVAL 1 YEAR AND adherent_adherentid IS NOT NULL
+SQL
+    my $sth = $dbh->prepare($req);
+    my $res = $sth->execute;
+
+    return $res;
+}
+
 
 sub _get_wk_location {
     my ($self) = @_;
