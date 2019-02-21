@@ -2002,32 +2002,30 @@ sessions_webkiosk:
               ignore_above: 256
               type: keyword
           type: text
-        adherent_attributes:
-          properties:
-            PCS:
-              fields:
-                keyword:
-                  ignore_above: 256
-                  type: keyword
-              type: text
-            action:
-              fields:
-                keyword:
-                  ignore_above: 256
-                  type: keyword
-              type: text
-            collectivités:
-              fields:
-                keyword:
-                  ignore_above: 256
-                  type: keyword
-              type: text
-            zèbre:
-              fields:
-                keyword:
-                  ignore_above: 256
-                  type: keyword
-              type: text
+        adherent_attributes_action:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        adherent_attributes_collectivites:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        adherent_attributes_pcs:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        adherent_attributes_zebre:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
         adherent_geo_gentilite:
           fields:
             keyword:
