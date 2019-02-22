@@ -16,5 +16,3 @@ $log->add_log("$process : beginning");
 $es_update->update_es_sessions_webkiosk;
 
 $log->add_log("$process : ending\n");
-
-
