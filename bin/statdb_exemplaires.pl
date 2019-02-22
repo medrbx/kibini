@@ -28,6 +28,7 @@ foreach my $table (@tables) {
         my $res = $ex->isStatdb_item_idInStatdb;
         if ($res eq 'y') {
             $y++;
+            $ex->get_statdb_item_annee_mise_pilon_from_statdb_data_exemplaires;
             $ex->update_data_in_statdb_data_exemplaires;
         } elsif ($res eq 'n') {
             $n++;
