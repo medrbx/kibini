@@ -125,8 +125,8 @@ sub get_document_data_from_koha_by_id {
     my $req = <<SQL;
 SELECT $select
 FROM koha_prod.items i
-JOIN koha_prod.biblioitems bi
-JOIN koha_prod.biblio b
+JOIN koha_prod.biblioitems bi ON bi.biblionumber = i.biblionumber
+JOIN koha_prod.biblio b ON b.biblionumber = i.biblionumber
 WHERE i.$id = ?;
 
 SQL
