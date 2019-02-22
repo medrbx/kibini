@@ -58,6 +58,16 @@ perl $dir/es_freq_etude.pl
 # On récupère les logs du portail
 perl $dir/logs_portail.pl
 
+# NOUVELLE VERSION
+# On met à jour les données exemplaires
+perl $dir/statdb_exemplaires.pl
+
+# On anonymise statdb
+perl $dir/statdb_ano.pl
+
+# On met à jour les index Elasticsearch
+perl $dir/es_update.pl
+
 # CHAQUE MARDI
 if [ $dayofweek -eq 2 ]
 then
