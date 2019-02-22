@@ -286,13 +286,6 @@ sub export_wk_specific_data_to_es {
     return $wk_data;
 }
 
-sub ano_sessions_webkiosk {
-	my ($self) = @_;
-	
-	my $req = <<SQL;
-SQL
-}
-
 
 sub _get_wk_location {
     my ($self) = @_;
