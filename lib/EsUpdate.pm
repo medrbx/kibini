@@ -2,6 +2,7 @@ package EsUpdate;
 
 use Moo;
 use utf8;
+use Data::Dumper;
 
 use Kibini::Log;
 use Webkiosk;
@@ -59,8 +60,10 @@ sub update_es_sessions_webkiosk {
     my $req = <<SQL;
 SELECT 
     session_id AS statdb_session_id,
-    session_date_heure_debut AS statdb_date_heure_a,
-    session_date_heure_fin AS statdb_date_heure_b, 
+    session_date_heure_debut AS date_heure_a,
+    'datetime' AS date_heure_a_format,
+    session_date_heure_fin AS date_heure_b, 
+    'datetime' AS date_heure_b_format,
     session_groupe AS statdb_session_groupe,
     session_poste AS statdb_session_poste,
     adherent_adherentid AS statdb_adherentid,
@@ -81,9 +84,11 @@ SQL
     while (my $row = $sth->fetchrow_hashref) {
         my $wk = Webkiosk->new( { dbh => $dbh, crypter => $crypter, wk => $row } );
         $wk->get_wkuser_data;
+        $wk->evenement_complete_data;
         my $index = $wk->add_data_to_es_webkiosk;
+        #print Dumper($index);
         $i++;
-		$log->add_log("update_es_sessions_webkiosk : $i rows updated") if $i % 10000 == 0;
+        $log->add_log("update_es_sessions_webkiosk : $i rows updated") if $i % 10000 == 0;
     }
     $log->add_log("update_es_sessions_webkiosk : $i rows updated");
     $log->add_log("update_es_sessions_webkiosk : ending");
