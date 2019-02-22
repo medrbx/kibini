@@ -18,22 +18,22 @@ my @tables = qw( items deleteditems );
 my $y = 0;
 my $n = 0;
 foreach my $table (@tables) {
-	my $req = "SELECT itemnumber AS koha_itemnumber FROM koha_prod.$table WHERE DATE(timestamp) = CURDATE()-INTERVAL 1 DAY";
-	my $sth = $dbh->prepare($req);
-	$sth->execute;
-	while (my $row = $sth->fetchrow_hashref) {
-		my $ex = Exemplaire->new({ dbh=> $dbh, document => $row});
-		$ex->get_exemplaire_from_koha_by_itemnumber;
-		$ex->get_statdb_document_generic_data;
-		my $res = $ex->isStatdb_item_idInStatdb;
-		if ($res eq 'y') {
-			$y++;
-			$ex->update_data_in_statdb_data_exemplaires;
-		} elsif ($res eq 'n') {
-			$n++;
-			$ex->add_data_to_statdb_data_exemplaires;
-		}
-	}
+    my $req = "SELECT itemnumber AS koha_itemnumber FROM koha_prod.$table WHERE DATE(timestamp) = CURDATE()-INTERVAL 1 DAY";
+    my $sth = $dbh->prepare($req);
+    $sth->execute;
+    while (my $row = $sth->fetchrow_hashref) {
+        my $ex = Exemplaire->new({ dbh=> $dbh, document => $row});
+        $ex->get_exemplaire_from_koha_by_itemnumber;
+        $ex->get_statdb_document_generic_data;
+        my $res = $ex->isStatdb_item_idInStatdb;
+        if ($res eq 'y') {
+            $y++;
+            $ex->update_data_in_statdb_data_exemplaires;
+        } elsif ($res eq 'n') {
+            $n++;
+            $ex->add_data_to_statdb_data_exemplaires;
+        }
+    }
 }
 
 $log->add_log("$process : $n rows added");
