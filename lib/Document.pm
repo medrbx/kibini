@@ -121,73 +121,73 @@ sub get_document_data_from_koha_by_id {
     my ($self, $param) = @_;
     
     my $dbh = $self->{dbh};
-	my ($req, $sth, $res, $data);
+    my ($req, $sth, $res, $data);
     
     my $select = join ", ", @{ $param->{koha_fields} };
     my $id = $param->{koha_id};
-	$id = "koha_" . $id;
-	
-	# On regarde si on trouve l'exemplaire dans items :
-	$req = "SELECT COUNT(*) FROM koha_prod.items WHERE $param->{koha_id} = ?";
-	$sth = $dbh->prepare($req);
-	$sth->execute($self->$id);
-	$res = $sth->fetchrow_array;
-	if ($res == 0) {
-		# si non, on regarde si on trouve l'exemplaire dans deleteditems
-		$req = "SELECT COUNT(*) FROM koha_prod.deleteditems WHERE $param->{koha_id} = ?";
-		$sth = $dbh->prepare($req);
-		$sth->execute($self->$id);
-		$res = $sth->fetchrow_array;
-		if ($res == 1) {
-			# si oui, on regarde si on trouve la notice dans biblio
-			$self->{statdb_item_deleted} = 1;
-			$req = "SELECT COUNT(*) FROM koha_prod.deleteditems i JOIN koha_prod.biblio b ON b.biblionumber = i.biblionumber WHERE i.$param->{koha_id} = ?";
-			$sth = $dbh->prepare($req);
-			$sth->execute($self->$id);
-			$res = $sth->fetchrow_array;
-			if ($res == 1) {
-				$req = <<SQL;
+    $id = "koha_" . $id;
+    
+    # On regarde si on trouve l'exemplaire dans items :
+    $req = "SELECT COUNT(*) FROM koha_prod.items WHERE $param->{koha_id} = ?";
+    $sth = $dbh->prepare($req);
+    $sth->execute($self->$id);
+    $res = $sth->fetchrow_array;
+    if ($res == 0) {
+        # si non, on regarde si on trouve l'exemplaire dans deleteditems
+        $req = "SELECT COUNT(*) FROM koha_prod.deleteditems WHERE $param->{koha_id} = ?";
+        $sth = $dbh->prepare($req);
+        $sth->execute($self->$id);
+        $res = $sth->fetchrow_array;
+        if ($res == 1) {
+            # si oui, on regarde si on trouve la notice dans biblio
+            $self->{statdb_item_deleted} = 1;
+            $req = "SELECT COUNT(*) FROM koha_prod.deleteditems i JOIN koha_prod.biblio b ON b.biblionumber = i.biblionumber WHERE i.$param->{koha_id} = ?";
+            $sth = $dbh->prepare($req);
+            $sth->execute($self->$id);
+            $res = $sth->fetchrow_array;
+            if ($res == 1) {
+                $req = <<SQL;
 SELECT $select
 FROM koha_prod.deleteditems i
 LEFT JOIN koha_prod.biblioitems bi ON bi.biblionumber = i.biblionumber
 LEFT JOIN koha_prod.biblio b ON b.biblionumber = i.biblionumber
 WHERE i.$param->{koha_id} = ?
 SQL
-				$sth = $dbh->prepare($req);
-				$sth->execute($self->$id);
-				$data = $sth->fetchrow_hashref;
-			} else {
-				# si on ne trouve pas la notice dans biblio, on regarde dans deletedbiblio
-				$req = <<SQL;
+                $sth = $dbh->prepare($req);
+                $sth->execute($self->$id);
+                $data = $sth->fetchrow_hashref;
+            } else {
+                # si on ne trouve pas la notice dans biblio, on regarde dans deletedbiblio
+                $req = <<SQL;
 SELECT $select
 FROM koha_prod.deleteditems i
 LEFT JOIN koha_prod.deletedbiblioitems bi ON bi.biblionumber = i.biblionumber
 LEFT JOIN koha_prod.deletedbiblio b ON b.biblionumber = i.biblionumber
 WHERE i.$param->{koha_id} = ?
 SQL
-				$sth = $dbh->prepare($req);
-				$sth->execute($self->$id);
-				$data = $sth->fetchrow_hashref;
-			}
-		}
-	} else {
-		$self->{statdb_item_deleted} = 0;
-		$req = <<SQL;
+                $sth = $dbh->prepare($req);
+                $sth->execute($self->$id);
+                $data = $sth->fetchrow_hashref;
+            }
+        }
+    } else {
+        $self->{statdb_item_deleted} = 0;
+        $req = <<SQL;
 SELECT $select
 FROM koha_prod.items i
 LEFT JOIN koha_prod.biblioitems bi ON bi.biblionumber = i.biblionumber
 LEFT JOIN koha_prod.biblio b ON b.biblionumber = i.biblionumber
 WHERE i.$param->{koha_id} = ?
 SQL
-		$sth = $dbh->prepare($req);
-		$sth->execute($self->$id);
-		$data = $sth->fetchrow_hashref;
-	}
+        $sth = $dbh->prepare($req);
+        $sth->execute($self->$id);
+        $data = $sth->fetchrow_hashref;
+    }
     
-	foreach my $k (keys(%$data)) {
-		my $key = "koha_" . $k;
-		$self->{$key} = $data->{$k};
-	}    
+    foreach my $k (keys(%$data)) {
+        my $key = "koha_" . $k;
+        $self->{$key} = $data->{$k};
+    }    
     
     return $self;
 }
@@ -222,290 +222,290 @@ sub get_statdb_document_generic_data {
 }
 
 sub get_statdb_biblio_annee_publication {
-	my ($self) = @_;
-	
-	unless ($self->{statdb_biblio_annee_publication}) {
-		if ($self->{koha_publicationyear}) {
-			$self->{statdb_biblio_annee_publication} = $self->{koha_publicationyear};
-		} elsif ($self->{es_biblio_annee_publication}) {
-			$self->{statdb_biblio_annee_publication} = $self->{es_biblio_annee_publication};
-		}
-	}
-	
-	return $self;
+    my ($self) = @_;
+    
+    unless ($self->{statdb_biblio_annee_publication}) {
+        if ($self->{koha_publicationyear}) {
+            $self->{statdb_biblio_annee_publication} = $self->{koha_publicationyear};
+        } elsif ($self->{es_biblio_annee_publication}) {
+            $self->{statdb_biblio_annee_publication} = $self->{es_biblio_annee_publication};
+        }
+    }
+    
+    return $self;
 }
 
 sub get_statdb_biblio_id {
-	my ($self) = @_;
-	
-	unless ($self->{statdb_biblio_id}) {
-		if ($self->{koha_biblionumber}) {
-			$self->{statdb_biblio_id} = $self->{koha_biblionumber};
-		} elsif ($self->{es_biblio_id}) {
-			$self->{statdb_biblio_id} = $self->{es_biblio_id};
-		}
-	}
-	
-	return $self;
+    my ($self) = @_;
+    
+    unless ($self->{statdb_biblio_id}) {
+        if ($self->{koha_biblionumber}) {
+            $self->{statdb_biblio_id} = $self->{koha_biblionumber};
+        } elsif ($self->{es_biblio_id}) {
+            $self->{statdb_biblio_id} = $self->{es_biblio_id};
+        }
+    }
+    
+    return $self;
 }
 
 sub get_statdb_biblio_prix {
-	my ($self) = @_;
-	
-	unless ($self->{statdb_biblio_prix}) {
-		if ($self->{koha_price}) {
-			$self->{statdb_biblio_prix} = $self->{koha_price};
-		} elsif ($self->{es_biblio_prix}) {
-			$self->{statdb_biblio_prix} = $self->{es_biblio_prix};
-		}
-	}
-	
-	return $self;
+    my ($self) = @_;
+    
+    unless ($self->{statdb_biblio_prix}) {
+        if ($self->{koha_price}) {
+            $self->{statdb_biblio_prix} = $self->{koha_price};
+        } elsif ($self->{es_biblio_prix}) {
+            $self->{statdb_biblio_prix} = $self->{es_biblio_prix};
+        }
+    }
+    
+    return $self;
 }
 
 sub get_statdb_biblio_support_code {
-	my ($self) = @_;
-	
-	unless ($self->{statdb_biblio_support_code}) {
-		if ($self->{koha_itemtype}) {
-			$self->{statdb_biblio_support_code} = $self->{koha_itemtype};
-		}
-	}
-	
-	return $self;
+    my ($self) = @_;
+    
+    unless ($self->{statdb_biblio_support_code}) {
+        if ($self->{koha_itemtype}) {
+            $self->{statdb_biblio_support_code} = $self->{koha_itemtype};
+        }
+    }
+    
+    return $self;
 }
 
 sub get_statdb_biblio_titre {
-	my ($self) = @_;
-	
-	unless ($self->{statdb_biblio_titre}) {
-		if ($self->{koha_title}) {
-			$self->{statdb_biblio_titre} = $self->{koha_title};
-		} elsif ($self->{es_biblio_titre}) {
-			$self->{statdb_biblio_titre} = $self->{es_biblio_titre};
-		}
-	}
-	
-	return $self;
+    my ($self) = @_;
+    
+    unless ($self->{statdb_biblio_titre}) {
+        if ($self->{koha_title}) {
+            $self->{statdb_biblio_titre} = $self->{koha_title};
+        } elsif ($self->{es_biblio_titre}) {
+            $self->{statdb_biblio_titre} = $self->{es_biblio_titre};
+        }
+    }
+    
+    return $self;
 }
 
 #to do
 sub get_statdb_item_annee_mise_pilon {
-	my ($self) = @_;
-	
-	return $self;
+    my ($self) = @_;
+    
+    return $self;
 }
 
 sub get_statdb_item_code_barre {
-	my ($self) = @_;
-	
-	unless ($self->{statdb_item_code_barre}) {
-		if ($self->{koha_barcode}) {
-			$self->{statdb_item_code_barre} = $self->{koha_barcode};
-		} elsif ($self->{es_item_code_barre}) {
-			$self->{statdb_item_code_barre} = $self->{es_item_code_barre};
-		}
-	}
-	
-	return $self;
+    my ($self) = @_;
+    
+    unless ($self->{statdb_item_code_barre}) {
+        if ($self->{koha_barcode}) {
+            $self->{statdb_item_code_barre} = $self->{koha_barcode};
+        } elsif ($self->{es_item_code_barre}) {
+            $self->{statdb_item_code_barre} = $self->{es_item_code_barre};
+        }
+    }
+    
+    return $self;
 }
 
 sub get_statdb_item_collection_ccode {
-	my ($self) = @_;
-	
-	unless ($self->{statdb_item_collection_ccode}) {
-		if ($self->{koha_ccode}) {
-			$self->{statdb_item_collection_ccode} = $self->{koha_ccode};
-		} elsif ($self->{es_item_collection_ccode}) {
-			$self->{statdb_item_collection_ccode} = $self->{es_item_collection_ccode};
-		}
-	}
-	
-	return $self;
+    my ($self) = @_;
+    
+    unless ($self->{statdb_item_collection_ccode}) {
+        if ($self->{koha_ccode}) {
+            $self->{statdb_item_collection_ccode} = $self->{koha_ccode};
+        } elsif ($self->{es_item_collection_ccode}) {
+            $self->{statdb_item_collection_ccode} = $self->{es_item_collection_ccode};
+        }
+    }
+    
+    return $self;
 }
 
 sub get_statdb_item_cote {
-	my ($self) = @_;
-	
-	unless ($self->{statdb_item_cote}) {
-		if ($self->{koha_itemcallnumber}) {
-			$self->{statdb_item_cote} = $self->{koha_itemcallnumber};
-		} elsif ($self->{es_item_cote}) {
-			$self->{statdb_item_cote} = $self->{es_item_cote};
-		}
-	}
-	
-	return $self;
+    my ($self) = @_;
+    
+    unless ($self->{statdb_item_cote}) {
+        if ($self->{koha_itemcallnumber}) {
+            $self->{statdb_item_cote} = $self->{koha_itemcallnumber};
+        } elsif ($self->{es_item_cote}) {
+            $self->{statdb_item_cote} = $self->{es_item_cote};
+        }
+    }
+    
+    return $self;
 }
 
 sub get_statdb_item_date_creation {
-	my ($self) = @_;
-	
-	unless ($self->{statdb_item_date_creation}) {
-		if ($self->{koha_dateaccessioned}) {
-			$self->{statdb_item_date_creation} = $self->{koha_dateaccessioned};
-		} elsif ($self->{es_item_date_creation}) {
-			$self->{statdb_item_date_creation} = $self->{es_item_date_creation};
-		}
-	}
-	
-	return $self;
+    my ($self) = @_;
+    
+    unless ($self->{statdb_item_date_creation}) {
+        if ($self->{koha_dateaccessioned}) {
+            $self->{statdb_item_date_creation} = $self->{koha_dateaccessioned};
+        } elsif ($self->{es_item_date_creation}) {
+            $self->{statdb_item_date_creation} = $self->{es_item_date_creation};
+        }
+    }
+    
+    return $self;
 }
 
 sub get_statdb_item_id {
-	my ($self) = @_;
-	
-	unless ($self->{statdb_item_id}) {
-		if ($self->{koha_itemnumber}) {
-			$self->{statdb_item_id} = $self->{koha_itemnumber};
-		} elsif ($self->{es_item_id}) {
-			$self->{statdb_item_id} = $self->{es_item_id};
-		}
-	}
-	
-	return $self;
+    my ($self) = @_;
+    
+    unless ($self->{statdb_item_id}) {
+        if ($self->{koha_itemnumber}) {
+            $self->{statdb_item_id} = $self->{koha_itemnumber};
+        } elsif ($self->{es_item_id}) {
+            $self->{statdb_item_id} = $self->{es_item_id};
+        }
+    }
+    
+    return $self;
 }
 
 sub get_statdb_item_localisation_code {
-	my ($self) = @_;
-	
-	unless ($self->{statdb_item_localisation_code}) {
-		if ($self->{koha_location}) {
-			$self->{statdb_item_localisation_code} = $self->{koha_location};
-		}
-	}
-	
-	return $self;
+    my ($self) = @_;
+    
+    unless ($self->{statdb_item_localisation_code}) {
+        if ($self->{koha_location}) {
+            $self->{statdb_item_localisation_code} = $self->{koha_location};
+        }
+    }
+    
+    return $self;
 }
 
 sub get_statdb_item_site_detenteur_code {
-	my ($self) = @_;
-	
-	unless ($self->{statdb_item_site_detenteur_code}) {
-		if ($self->{koha_homebranch}) {
-			$self->{statdb_item_site_detenteur_code} = $self->{koha_homebranch};
-		}
-	}
-	
-	return $self;
+    my ($self) = @_;
+    
+    unless ($self->{statdb_item_site_detenteur_code}) {
+        if ($self->{koha_homebranch}) {
+            $self->{statdb_item_site_detenteur_code} = $self->{koha_homebranch};
+        }
+    }
+    
+    return $self;
 }
 
 sub get_statdb_item_site_rattachement_code {
-	my ($self) = @_;
-	
-	unless ($self->{statdb_item_site_rattachement_code}) {
-		if ($self->{koha_holdingbranch}) {
-			$self->{statdb_item_site_rattachement_code} = $self->{koha_holdingbranch};
-		}
-	}
-	
-	return $self;
+    my ($self) = @_;
+    
+    unless ($self->{statdb_item_site_rattachement_code}) {
+        if ($self->{koha_holdingbranch}) {
+            $self->{statdb_item_site_rattachement_code} = $self->{koha_holdingbranch};
+        }
+    }
+    
+    return $self;
 }
 
 sub get_statdb_statut_code {
-	my ($self) = @_;
-	
-	unless ($self->{statdb_statut_code}) {
-		if ($self->{koha_notforloan}) {
-			$self->{statdb_statut_code} = $self->{koha_notforloan};
-		}
-	}
-	
-	return $self;
+    my ($self) = @_;
+    
+    unless ($self->{statdb_statut_code}) {
+        if ($self->{koha_notforloan}) {
+            $self->{statdb_statut_code} = $self->{koha_notforloan};
+        }
+    }
+    
+    return $self;
 }
 
 sub get_statdb_statut_abime_code {
-	my ($self) = @_;
-	
-	unless ($self->{statdb_statut_abime_code}) {
-		if ($self->{koha_damaged}) {
-			$self->{statdb_statut_abime_code} = $self->{koha_damaged};
-		}
-	}
-	
-	return $self;
+    my ($self) = @_;
+    
+    unless ($self->{statdb_statut_abime_code}) {
+        if ($self->{koha_damaged}) {
+            $self->{statdb_statut_abime_code} = $self->{koha_damaged};
+        }
+    }
+    
+    return $self;
 }
 
 sub get_statdb_statut_desherbe_code {
-	my ($self) = @_;
-	
-	unless ($self->{statdb_statut_desherbe_code}) {
-		if ($self->{koha_withdrawn}) {
-			$self->{statdb_statut_desherbe_code} = $self->{koha_withdrawn};
-		}
-	}
-	
-	return $self;
+    my ($self) = @_;
+    
+    unless ($self->{statdb_statut_desherbe_code}) {
+        if ($self->{koha_withdrawn}) {
+            $self->{statdb_statut_desherbe_code} = $self->{koha_withdrawn};
+        }
+    }
+    
+    return $self;
 }
 
 sub get_statdb_statut_desherbe_date {
-	my ($self) = @_;
-	
-	unless ($self->{statdb_statut_desherbe_date}) {
-		if ($self->{koha_withdrawn_on}) {
-			$self->{statdb_statut_desherbe_date} = $self->{koha_withdrawn_on};
-		} elsif ($self->{es_statut_desherbe_date}) {
-			$self->{statdb_statut_desherbe_date} = $self->{es_statut_desherbe_date};
-		}
-	}
-	
-	return $self;
+    my ($self) = @_;
+    
+    unless ($self->{statdb_statut_desherbe_date}) {
+        if ($self->{koha_withdrawn_on}) {
+            $self->{statdb_statut_desherbe_date} = $self->{koha_withdrawn_on};
+        } elsif ($self->{es_statut_desherbe_date}) {
+            $self->{statdb_statut_desherbe_date} = $self->{es_statut_desherbe_date};
+        }
+    }
+    
+    return $self;
 }
 
 sub get_statdb_statut_perdu_code {
-	my ($self) = @_;
-	
-	unless ($self->{statdb_statut_perdu_code}) {
-		if ($self->{koha_itemlost}) {
-			$self->{statdb_statut_perdu_code} = $self->{koha_itemlost};
-		}
-	}
-	
-	return $self;
+    my ($self) = @_;
+    
+    unless ($self->{statdb_statut_perdu_code}) {
+        if ($self->{koha_itemlost}) {
+            $self->{statdb_statut_perdu_code} = $self->{koha_itemlost};
+        }
+    }
+    
+    return $self;
 }
 
 sub get_statdb_statut_perdu_date {
-	my ($self) = @_;
-	
-	unless ($self->{statdb_statut_perdu_date}) {
-		if ($self->{koha_itemlost_on}) {
-			$self->{statdb_statut_perdu_date} = $self->{koha_itemlost_on};
-		} elsif ($self->{es_statut_perdu_date}) {
-			$self->{statdb_statut_perdu_date} = $self->{es_statut_perdu_date};
-		}
-	}
-	
-	return $self;
+    my ($self) = @_;
+    
+    unless ($self->{statdb_statut_perdu_date}) {
+        if ($self->{koha_itemlost_on}) {
+            $self->{statdb_statut_perdu_date} = $self->{koha_itemlost_on};
+        } elsif ($self->{es_statut_perdu_date}) {
+            $self->{statdb_statut_perdu_date} = $self->{es_statut_perdu_date};
+        }
+    }
+    
+    return $self;
 }
 
 sub get_statdb_usage_emprunt_code {
-	my ($self) = @_;
-	
-	unless ($self->{statdb_usage_emprunt_code}) {
-		if ($self->{koha_onloan}) {
-			if ($self->{koha_onloan} =~ m/^\d{4}-\d{2}-\d{2}/ ) {
-				$self->{statdb_usage_emprunt_code} = 1;
-			}
-		} else {
-			$self->{statdb_usage_emprunt_code} = 0;
-		}
-	}
-	
-	return $self;
+    my ($self) = @_;
+    
+    unless ($self->{statdb_usage_emprunt_code}) {
+        if ($self->{koha_onloan}) {
+            if ($self->{koha_onloan} =~ m/^\d{4}-\d{2}-\d{2}/ ) {
+                $self->{statdb_usage_emprunt_code} = 1;
+            }
+        } else {
+            $self->{statdb_usage_emprunt_code} = 0;
+        }
+    }
+    
+    return $self;
 }
 
 sub get_statdb_usage_date_dernier_pret {
-	my ($self) = @_;
-	
-	unless ($self->{statdb_usage_date_dernier_pret}) {
-		if ($self->{koha_datelastborrowed}) {
-			$self->{statdb_usage_date_dernier_pret} = $self->{koha_datelastborrowed};
-		} elsif ($self->{es_usage_date_dernier_pret}) {
-			$self->{statdb_usage_date_dernier_pret} = $self->{es_usage_date_dernier_pret};
-		}
-	}
-	
-	return $self;
+    my ($self) = @_;
+    
+    unless ($self->{statdb_usage_date_dernier_pret}) {
+        if ($self->{koha_datelastborrowed}) {
+            $self->{statdb_usage_date_dernier_pret} = $self->{koha_datelastborrowed};
+        } elsif ($self->{es_usage_date_dernier_pret}) {
+            $self->{statdb_usage_date_dernier_pret} = $self->{es_usage_date_dernier_pret};
+        }
+    }
+    
+    return $self;
 }
 
 1;
