@@ -18,4 +18,4 @@ my $wk = Webkiosk->new;
 $i = $wk->ano_statdb_sessions_webkiosk;
 $log->add_log("statdb_sessions_webkiosk : $i rows anonymised");
 
-$log->add_log("$process : ending");
+$log->add_log("$process : ending\n");
