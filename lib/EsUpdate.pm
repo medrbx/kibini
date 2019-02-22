@@ -83,6 +83,7 @@ SQL
         $wk->get_wkuser_data;
         my $index = $wk->add_data_to_es_webkiosk;
         $i++;
+		$log->add_log("update_es_sessions_webkiosk : $i rows updated") if $i % 10000 == 0;
     }
     $log->add_log("update_es_sessions_webkiosk : $i rows updated");
     $log->add_log("update_es_sessions_webkiosk : ending");
