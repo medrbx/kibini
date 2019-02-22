@@ -5,9 +5,9 @@ use Data::Dumper;
 use FindBin qw( $Bin );
 
 use lib "$Bin/../lib";
-use Es_Update;
+use EsUpdate;
 
-my $es_update = Es_Update->new;
+my $es_update = EsUpdate->new;
 
 my $log = $es_update->logger;
 my $process = "es_update.pl";
