@@ -419,17 +419,19 @@ sub get_es_geo_ville {
     } else { 
         $self->{es_geo_ville} = $self->{statdb_geo_ville};    
     }
-
-    $self->{es_geo_ville} = uc $self->{es_geo_ville};
-    my @liste = qw (CROIX HEM LEERS LILLE LYS-LEZ-LANNOY MARCQ-EN-BAROEUL MONS-EN-BAROEUL MOUVAUX ROUBAIX TOURCOING VILLENEUVE-D'ASCQ WASQUEHAL WATTRELOS);
-    $self->{es_geo_ville} = "LYS-LEZ-LANNOY" if $self->{es_geo_ville} eq "LYS LEZ LANNOY";
-    $self->{es_geo_ville} = "MONS-EN-BAROEUL" if $self->{es_geo_ville} eq "MONS EN BAROEUL";
-    $self->{es_geo_ville} = "MARCQ-EN-BAROEUL" if $self->{es_geo_ville} eq "MARCQ EN BAROEUL";
-    $self->{es_geo_ville} = "VILLENEUVE-D'ASCQ" if $self->{es_geo_ville} eq "VILLENEUVE D'ASCQ";
-    if ( grep {$_ eq $self->{es_geo_ville} } @liste ) {
-        $self->{es_geo_ville} = $self->{es_geo_ville};
-    } else {
-        $self->{es_geo_ville} = "AUTRE";
+    
+    if ($self->{es_geo_ville}) {
+        $self->{es_geo_ville} = uc $self->{es_geo_ville};
+        my @liste = qw (CROIX HEM LEERS LILLE LYS-LEZ-LANNOY MARCQ-EN-BAROEUL MONS-EN-BAROEUL MOUVAUX ROUBAIX TOURCOING VILLENEUVE-D'ASCQ WASQUEHAL WATTRELOS);
+        $self->{es_geo_ville} = "LYS-LEZ-LANNOY" if $self->{es_geo_ville} eq "LYS LEZ LANNOY";
+        $self->{es_geo_ville} = "MONS-EN-BAROEUL" if $self->{es_geo_ville} eq "MONS EN BAROEUL";
+        $self->{es_geo_ville} = "MARCQ-EN-BAROEUL" if $self->{es_geo_ville} eq "MARCQ EN BAROEUL";
+        $self->{es_geo_ville} = "VILLENEUVE-D'ASCQ" if $self->{es_geo_ville} eq "VILLENEUVE D'ASCQ";
+        if ( grep {$_ eq $self->{es_geo_ville} } @liste ) {
+            $self->{es_geo_ville} = $self->{es_geo_ville};
+        } else {
+            $self->{es_geo_ville} = "AUTRE";
+        }
     }
     
     return $self;
