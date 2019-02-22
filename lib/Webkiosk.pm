@@ -241,7 +241,7 @@ sub add_data_to_es_webkiosk {
         }
     );
 
-    $e->index(%index);
+    my $res = $e->index(%index);
 
     return \%index;
 }
