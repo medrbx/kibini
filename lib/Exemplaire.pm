@@ -72,7 +72,8 @@ SET
     ex_statut_perdu_date = ?,
     ex_usage_emprunt_code = ?,
     ex_usage_date_dernier_pret = ?,
-    ex_item_deleted = ?
+    ex_item_deleted = ?,
+	updated_on = NOW()
 WHERE ex_item_id = ?
 SQL
     my $sth = $dbh->prepare($req);
