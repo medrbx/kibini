@@ -192,6 +192,322 @@ SQL
     return $self;
 }
 
+sub get_statdb_document_generic_data {
+    my ($self) = @_;
+    
+    $self->get_statdb_biblio_annee_publication;
+    $self->get_statdb_biblio_id;
+    $self->get_statdb_biblio_prix;
+    $self->get_statdb_biblio_support_code;
+    $self->get_statdb_biblio_titre;
+    $self->get_statdb_item_annee_mise_pilon;
+    $self->get_statdb_item_code_barre;
+    $self->get_statdb_item_collection_ccode;
+    $self->get_statdb_item_cote;
+    $self->get_statdb_item_date_creation;
+    $self->get_statdb_item_id;
+    $self->get_statdb_item_localisation_code;
+    $self->get_statdb_item_site_detenteur_code;
+    $self->get_statdb_item_site_rattachement_code;
+    $self->get_statdb_statut_code;
+    $self->get_statdb_statut_abime_code;
+    $self->get_statdb_statut_desherbe_code;
+    $self->get_statdb_statut_desherbe_date;
+    $self->get_statdb_statut_perdu_code;
+    $self->get_statdb_statut_perdu_date;
+    $self->get_statdb_usage_emprunt_code;
+    $self->get_statdb_usage_date_dernier_pret;
+
+    return $self;
+}
+
+sub get_statdb_biblio_annee_publication {
+	my ($self) = @_;
+	
+	unless ($self->{statdb_biblio_annee_publication}) {
+		if ($self->{koha_publicationyear}) {
+			$self->{statdb_biblio_annee_publication} = $self->{koha_publicationyear};
+		} elsif ($self->{es_biblio_annee_publication}) {
+			$self->{statdb_biblio_annee_publication} = $self->{es_biblio_annee_publication};
+		}
+	}
+	
+	return $self;
+}
+
+sub get_statdb_biblio_id {
+	my ($self) = @_;
+	
+	unless ($self->{statdb_biblio_id}) {
+		if ($self->{koha_biblionumber}) {
+			$self->{statdb_biblio_id} = $self->{koha_biblionumber};
+		} elsif ($self->{es_biblio_id}) {
+			$self->{statdb_biblio_id} = $self->{es_biblio_id};
+		}
+	}
+	
+	return $self;
+}
+
+sub get_statdb_biblio_prix {
+	my ($self) = @_;
+	
+	unless ($self->{statdb_biblio_prix}) {
+		if ($self->{koha_price}) {
+			$self->{statdb_biblio_prix} = $self->{koha_price};
+		} elsif ($self->{es_biblio_prix}) {
+			$self->{statdb_biblio_prix} = $self->{es_biblio_prix};
+		}
+	}
+	
+	return $self;
+}
+
+sub get_statdb_biblio_support_code {
+	my ($self) = @_;
+	
+	unless ($self->{statdb_biblio_support_code}) {
+		if ($self->{koha_itemtype}) {
+			$self->{statdb_biblio_support_code} = $self->{koha_itemtype};
+		}
+	}
+	
+	return $self;
+}
+
+sub get_statdb_biblio_titre {
+	my ($self) = @_;
+	
+	unless ($self->{statdb_biblio_titre}) {
+		if ($self->{koha_title}) {
+			$self->{statdb_biblio_titre} = $self->{koha_title};
+		} elsif ($self->{es_biblio_titre}) {
+			$self->{statdb_biblio_titre} = $self->{es_biblio_titre};
+		}
+	}
+	
+	return $self;
+}
+
+#to do
+sub get_statdb_item_annee_mise_pilon {
+	my ($self) = @_;
+	
+	return $self;
+}
+
+sub get_statdb_item_code_barre {
+	my ($self) = @_;
+	
+	unless ($self->{statdb_item_code_barre}) {
+		if ($self->{koha_barcode}) {
+			$self->{statdb_item_code_barre} = $self->{koha_barcode};
+		} elsif ($self->{es_item_code_barre}) {
+			$self->{statdb_item_code_barre} = $self->{es_item_code_barre};
+		}
+	}
+	
+	return $self;
+}
+
+sub get_statdb_item_collection_ccode {
+	my ($self) = @_;
+	
+	unless ($self->{statdb_item_collection_ccode}) {
+		if ($self->{koha_ccode}) {
+			$self->{statdb_item_collection_ccode} = $self->{koha_ccode};
+		} elsif ($self->{es_item_collection_ccode}) {
+			$self->{statdb_item_collection_ccode} = $self->{es_item_collection_ccode};
+		}
+	}
+	
+	return $self;
+}
+
+sub get_statdb_item_cote {
+	my ($self) = @_;
+	
+	unless ($self->{statdb_item_cote}) {
+		if ($self->{koha_itemcallnumber}) {
+			$self->{statdb_item_cote} = $self->{koha_itemcallnumber};
+		} elsif ($self->{es_item_cote}) {
+			$self->{statdb_item_cote} = $self->{es_item_cote};
+		}
+	}
+	
+	return $self;
+}
+
+sub get_statdb_item_date_creation {
+	my ($self) = @_;
+	
+	unless ($self->{statdb_item_date_creation}) {
+		if ($self->{koha_dateaccessioned}) {
+			$self->{statdb_item_date_creation} = $self->{koha_dateaccessioned};
+		} elsif ($self->{es_item_date_creation}) {
+			$self->{statdb_item_date_creation} = $self->{es_item_date_creation};
+		}
+	}
+	
+	return $self;
+}
+
+sub get_statdb_item_id {
+	my ($self) = @_;
+	
+	unless ($self->{statdb_item_id}) {
+		if ($self->{koha_itemnumber}) {
+			$self->{statdb_item_id} = $self->{koha_itemnumber};
+		} elsif ($self->{es_item_id}) {
+			$self->{statdb_item_id} = $self->{es_item_id};
+		}
+	}
+	
+	return $self;
+}
+
+sub get_statdb_item_localisation_code {
+	my ($self) = @_;
+	
+	unless ($self->{statdb_item_localisation_code}) {
+		if ($self->{koha_location}) {
+			$self->{statdb_item_localisation_code} = $self->{koha_location};
+		}
+	}
+	
+	return $self;
+}
+
+sub get_statdb_item_site_detenteur_code {
+	my ($self) = @_;
+	
+	unless ($self->{statdb_item_site_detenteur_code}) {
+		if ($self->{koha_homebranch}) {
+			$self->{statdb_item_site_detenteur_code} = $self->{koha_homebranch};
+		}
+	}
+	
+	return $self;
+}
+
+sub get_statdb_item_site_rattachement_code {
+	my ($self) = @_;
+	
+	unless ($self->{statdb_item_site_rattachement_code}) {
+		if ($self->{koha_holdingbranch}) {
+			$self->{statdb_item_site_rattachement_code} = $self->{koha_holdingbranch};
+		}
+	}
+	
+	return $self;
+}
+
+sub get_statdb_statut_code {
+	my ($self) = @_;
+	
+	unless ($self->{statdb_statut_code}) {
+		if ($self->{koha_notforloan}) {
+			$self->{statdb_statut_code} = $self->{koha_notforloan};
+		}
+	}
+	
+	return $self;
+}
+
+sub get_statdb_statut_abime_code {
+	my ($self) = @_;
+	
+	unless ($self->{statdb_statut_abime_code}) {
+		if ($self->{koha_damaged}) {
+			$self->{statdb_statut_abime_code} = $self->{koha_damaged};
+		}
+	}
+	
+	return $self;
+}
+
+sub get_statdb_statut_desherbe_code {
+	my ($self) = @_;
+	
+	unless ($self->{statdb_statut_desherbe_code}) {
+		if ($self->{koha_withdrawn}) {
+			$self->{statdb_statut_desherbe_code} = $self->{koha_withdrawn};
+		}
+	}
+	
+	return $self;
+}
+
+sub get_statdb_statut_desherbe_date {
+	my ($self) = @_;
+	
+	unless ($self->{statdb_statut_desherbe_date}) {
+		if ($self->{koha_withdrawn_on}) {
+			$self->{statdb_statut_desherbe_date} = $self->{koha_withdrawn_on};
+		} elsif ($self->{es_statut_desherbe_date}) {
+			$self->{statdb_statut_desherbe_date} = $self->{es_statut_desherbe_date};
+		}
+	}
+	
+	return $self;
+}
+
+sub get_statdb_statut_perdu_code {
+	my ($self) = @_;
+	
+	unless ($self->{statdb_statut_perdu_code}) {
+		if ($self->{koha_itemlost}) {
+			$self->{statdb_statut_perdu_code} = $self->{koha_itemlost};
+		}
+	}
+	
+	return $self;
+}
+
+sub get_statdb_statut_perdu_date {
+	my ($self) = @_;
+	
+	unless ($self->{statdb_statut_perdu_date}) {
+		if ($self->{koha_itemlost_on}) {
+			$self->{statdb_statut_perdu_date} = $self->{koha_itemlost_on};
+		} elsif ($self->{es_statut_perdu_date}) {
+			$self->{statdb_statut_perdu_date} = $self->{es_statut_perdu_date};
+		}
+	}
+	
+	return $self;
+}
+
+sub get_statdb_usage_emprunt_code {
+	my ($self) = @_;
+	
+	unless ($self->{statdb_usage_emprunt_code}) {
+		if ($self->{koha_onloan}) {
+			if ($self->{koha_onloan} =~ m/^\d{4}-\d{2}-\d{2}/ ) {
+				$self->{statdb_usage_emprunt_code} = 1;
+			}
+		} else {
+			$self->{statdb_usage_emprunt_code} = 0;
+		}
+	}
+	
+	return $self;
+}
+
+sub get_statdb_usage_date_dernier_pret {
+	my ($self) = @_;
+	
+	unless ($self->{statdb_usage_date_dernier_pret}) {
+		if ($self->{koha_datelastborrowed}) {
+			$self->{statdb_usage_date_dernier_pret} = $self->{koha_datelastborrowed};
+		} elsif ($self->{es_usage_date_dernier_pret}) {
+			$self->{statdb_usage_date_dernier_pret} = $self->{es_usage_date_dernier_pret};
+		}
+	}
+	
+	return $self;
+}
+
 1;
 
 __END__
