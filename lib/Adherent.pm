@@ -476,10 +476,12 @@ sub get_es_geo_rbx_secteur {
 sub get_es_geo_gentilite {
     my ($self) = @_;
     
-    if ($self->{es_geo_ville} eq 'ROUBAIX') {
-        $self->{es_geo_gentilite} = 'Roubaisien';
-    } else {
-        $self->{es_geo_gentilite} = 'Non Roubaisien';
+    if ($self->{es_geo_ville}) {
+        if ($self->{es_geo_ville} eq 'ROUBAIX') {
+            $self->{es_geo_gentilite} = 'Roubaisien';
+        } else {
+            $self->{es_geo_gentilite} = 'Non Roubaisien';
+        }
     }
      
     return $self;
@@ -488,11 +490,13 @@ sub get_es_geo_gentilite {
 sub get_es_geo_ville_front {
     my ($self) = @_;
 
-    my @liste = qw( CROIX HEM LEERS LYS-LEZ-LANNOY ROUBAIX TOURCOING WATTRELOS );
-    if ( grep {$_ eq $self->{es_geo_ville} } @liste ) {
-        $self->{es_geo_ville_front} = $self->{es_geo_ville};
-    } else {
-        $self->{es_geo_ville_front} = "AUTRE";
+    if ($self->{es_geo_ville}) {
+        my @liste = qw( CROIX HEM LEERS LYS-LEZ-LANNOY ROUBAIX TOURCOING WATTRELOS );
+        if ( grep {$_ eq $self->{es_geo_ville} } @liste ) {
+            $self->{es_geo_ville_front} = $self->{es_geo_ville};
+        } else {
+            $self->{es_geo_ville_front} = "AUTRE";
+        }
     }
 
     return $self;
@@ -500,15 +504,17 @@ sub get_es_geo_ville_front {
 
 sub get_es_geo_ville_bm {
     my ($self) = @_;
-
-    my @libok = ( 'LILLE', 'LYS-LEZ-LANNOY', 'MONS-EN-BAROEUL', 'MOUVAUX', 'ROUBAIX', 'TOURCOING', 'VILLENEUVE-D\'ASCQ', 'WASQUEHAL', 'WATTRELOS');
-    my @libko = qw( CROIX HEM LEERS );
-    if ( grep {$_ eq $self->{es_geo_ville}} @libok ) {
-        $self->{es_geo_ville_bm} = "oui";
-    } elsif ( grep {$_ eq $self->{es_geo_ville}} @libko ) {
-        $self->{es_geo_ville_bm} = "non";
-    } else {
-        $self->{es_geo_ville_bm} = "NP";
+    
+    if ($self->{es_geo_ville}) {
+        my @libok = ( 'LILLE', 'LYS-LEZ-LANNOY', 'MONS-EN-BAROEUL', 'MOUVAUX', 'ROUBAIX', 'TOURCOING', 'VILLENEUVE-D\'ASCQ', 'WASQUEHAL', 'WATTRELOS');
+        my @libko = qw( CROIX HEM LEERS );
+        if ( grep {$_ eq $self->{es_geo_ville}} @libok ) {
+            $self->{es_geo_ville_bm} = "oui";
+        } elsif ( grep {$_ eq $self->{es_geo_ville}} @libko ) {
+            $self->{es_geo_ville_bm} = "non";
+        } else {
+            $self->{es_geo_ville_bm} = "NP";
+        }
     }
 
     return $self;
