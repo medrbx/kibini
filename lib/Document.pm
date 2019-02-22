@@ -51,6 +51,7 @@ has statdb_statut_perdu_code => ( is => 'ro' );
 has statdb_statut_perdu_date => ( is => 'ro' );
 has statdb_usage_emprunt_code => ( is => 'ro' );
 has statdb_usage_date_dernier_pret => ( is => 'ro' );
+has statdb_item_deleted => ( is => 'ro' );
 
 has es_biblio_annee_publication => ( is => 'ro' );
 has es_biblio_id => ( is => 'ro' );
@@ -83,6 +84,7 @@ has es_statut_perdu => ( is => 'ro' );
 has es_statut_perdu_date => ( is => 'ro' );
 has es_usage_emprunt => ( is => 'ro' );
 has es_usage_date_dernier_pret => ( is => 'ro' );
+has es_item_deleted => ( is => 'ro' );
 
 sub BUILDARGS {
     my ($class, @args) = @_;
@@ -106,10 +108,10 @@ sub BUILDARGS {
     return $arg;
 }
 
-sub get_exemplaire_from_koha {
+sub get_exemplaire_from_koha_by_itemnumber {
     my ($self) = @_;
 
-    my @koha_fields = ("i.biblionumber","i.barcode","b.title");
+    my @koha_fields = ("bi.publicationyear", "i.biblionumber", "i.price", "bi.itemtype", "b.title", "i.barcode", "i.ccode", "i.itemcallnumber", "i.dateaccessioned", "i.itemnumber", "i.location", "i.homebranch", "i.holdingbranch", "i.notforloan", "i.damaged", "i.withdrawn", "i.withdrawn_on", "i.itemlost", "i.itemlost_on", "i.onloan", "i.datelastborrowed");
    $self->get_document_data_from_koha_by_id( { koha_fields => \@koha_fields, koha_id => 'itemnumber' } );
     
     return $self;
@@ -119,27 +121,73 @@ sub get_document_data_from_koha_by_id {
     my ($self, $param) = @_;
     
     my $dbh = $self->{dbh};
+	my ($req, $sth, $res, $data);
     
     my $select = join ", ", @{ $param->{koha_fields} };
     my $id = $param->{koha_id};
-    my $req = <<SQL;
+	$id = "koha_" . $id;
+	
+	# On regarde si on trouve l'exemplaire dans items :
+	$req = "SELECT COUNT(*) FROM koha_prod.items WHERE $param->{koha_id} = ?";
+	$sth = $dbh->prepare($req);
+	$sth->execute($self->$id);
+	$res = $sth->fetchrow_array;
+	if ($res == 0) {
+		# si non, on regarde si on trouve l'exemplaire dans deleteditems
+		$req = "SELECT COUNT(*) FROM koha_prod.deleteditems WHERE $param->{koha_id} = ?";
+		$sth = $dbh->prepare($req);
+		$sth->execute($self->$id);
+		$res = $sth->fetchrow_array;
+		if ($res == 1) {
+			# si oui, on regarde si on trouve la notice dans biblio
+			$self->{statdb_item_deleted} = 1;
+			$req = "SELECT COUNT(*) FROM koha_prod.deleteditems i JOIN koha_prod.biblio b ON b.biblionumber = i.biblionumber WHERE i.$param->{koha_id} = ?";
+			$sth = $dbh->prepare($req);
+			$sth->execute($self->$id);
+			$res = $sth->fetchrow_array;
+			if ($res == 1) {
+				$req = <<SQL;
+SELECT $select
+FROM koha_prod.deleteditems i
+LEFT JOIN koha_prod.biblioitems bi ON bi.biblionumber = i.biblionumber
+LEFT JOIN koha_prod.biblio b ON b.biblionumber = i.biblionumber
+WHERE i.$param->{koha_id} = ?
+SQL
+				$sth = $dbh->prepare($req);
+				$sth->execute($self->$id);
+				$data = $sth->fetchrow_hashref;
+			} else {
+				# si on ne trouve pas la notice dans biblio, on regarde dans deletedbiblio
+				$req = <<SQL;
+SELECT $select
+FROM koha_prod.deleteditems i
+LEFT JOIN koha_prod.deletedbiblioitems bi ON bi.biblionumber = i.biblionumber
+LEFT JOIN koha_prod.deletedbiblio b ON b.biblionumber = i.biblionumber
+WHERE i.$param->{koha_id} = ?
+SQL
+				$sth = $dbh->prepare($req);
+				$sth->execute($self->$id);
+				$data = $sth->fetchrow_hashref;
+			}
+		}
+	} else {
+		$self->{statdb_item_deleted} = 0;
+		$req = <<SQL;
 SELECT $select
 FROM koha_prod.items i
-JOIN koha_prod.biblioitems bi ON bi.biblionumber = i.biblionumber
-JOIN koha_prod.biblio b ON b.biblionumber = i.biblionumber
-WHERE i.$id = ?;
-
+LEFT JOIN koha_prod.biblioitems bi ON bi.biblionumber = i.biblionumber
+LEFT JOIN koha_prod.biblio b ON b.biblionumber = i.biblionumber
+WHERE i.$param->{koha_id} = ?
 SQL
-    my $sth = $dbh->prepare($req);
-    $id = "koha_" . $id;
-    $sth->execute($self->$id);
-    my $result = $sth->fetchrow_hashref;
-    $sth->finish();
+		$sth = $dbh->prepare($req);
+		$sth->execute($self->$id);
+		$data = $sth->fetchrow_hashref;
+	}
     
-    foreach my $k (keys(%$result)) {
-        my $key = "koha_" . $k;
-        $self->{$key} = $result->{$k};
-    }
+	foreach my $k (keys(%$data)) {
+		my $key = "koha_" . $k;
+		$self->{$key} = $data->{$k};
+	}    
     
     return $self;
 }
