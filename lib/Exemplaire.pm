@@ -124,6 +124,21 @@ sub isStatdb_item_idInStatdb {
     return $res;
 }
 
+sub get_statdb_item_annee_mise_pilon_from_statdb_data_exemplaires {
+    my ($self) = @_;
+
+    my $dbh = $self->{dbh};
+    my $req = "SELECT ex_item_annee_mise_pilon FROM statdb.data_exemplaires WHERE ex_item_id = ?";
+    my $sth = $dbh->prepare($req);
+    $sth->execute($self->{statdb_item_id});
+    my $res = $sth->fetchrow_array;
+    if ($res) {
+        $self->statdb_item_annee_mise_pilon;
+    }
+
+    return $self;
+}
+
 1;
 
 __END__
