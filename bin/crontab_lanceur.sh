@@ -19,7 +19,7 @@ fi
 # CHAQUE MERCREDI
 if [ $dayofweek -eq 3 ]
 then
-    # On anonymise koha_prod, puis on réalise un dump de koha_prod et de statdb
+    # On réalise un dump de statdb
     perl $dir/admin_sauv_bdd.pl
     # On met à jour les entrées et webkiosk dans ES
     perl $dir/es_entrees.pl
