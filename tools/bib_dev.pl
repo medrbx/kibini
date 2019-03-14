@@ -13,7 +13,7 @@ my $dbh = Kibini::DB->new;
 $dbh = $dbh->dbh;
 my $req = <<SQL;
 SELECT
-    b.biblionumber AS koha_biblio_biblionumber,
+    b.biblionumber AS koha_biblionumber,
     b.frameworkcode AS koha_biblio_frameworkcode,
     b.author AS koha_biblio_author,
     b.title AS koha_biblio_title,
@@ -66,14 +66,15 @@ SELECT
 FROM koha_prod.biblio b
 JOIN koha_prod.biblioitems bi ON bi.biblionumber = b.biblionumber
 JOIN koha_prod.biblio_metadata m ON m.biblionumber = b.biblionumber
-LIMIT 10
+LIMIT 1
 SQL
 
 my $sth = $dbh->prepare($req);
 $sth->execute();
 while ( my $data = $sth->fetchrow_hashref) {
-    my $biblio = Biblio->new( { dbh => $dbh, biblio => $data } );    
-    print Dumper($biblio);    
+    my $biblio = Biblio->new( { dbh => $dbh, biblio => $data } );
+    my $bib_data = $biblio->get_statdb_biblio_specific_data;
+    print "$bib_data->{statdb_biblio_metadata}";
 }
 
 
