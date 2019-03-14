@@ -4,60 +4,27 @@ use Moo;
 use utf8;
 
 use Kibini::DB;
+use Catmandu;
 
 has dbh => ( is => 'ro' );
 
 has koha_biblionumber => ( is => 'ro' );
 has koha_biblio_frameworkcode => ( is => 'ro' );
-has koha_biblio_author => ( is => 'ro' );
-has koha_biblio_title => ( is => 'ro' );
-has koha_biblio_unititle => ( is => 'ro' );
-has koha_biblio_notes => ( is => 'ro' );
-has koha_biblio_serial => ( is => 'ro' );
-has koha_biblio_seriestitle => ( is => 'ro' );
-has koha_biblio_copyrightdate => ( is => 'ro' );
 has koha_biblio_timestamp => ( is => 'ro' );
 has koha_biblio_datecreated => ( is => 'ro' );
-has koha_biblio_abstract => ( is => 'ro' );
-has koha_biblioitems_biblioitemnumber => ( is => 'ro' );
-has koha_biblioitems_biblionumber => ( is => 'ro' );
-has koha_biblioitems_volume => ( is => 'ro' );
-has koha_biblioitems_number => ( is => 'ro' );
 has koha_biblioitems_itemtype => ( is => 'ro' );
-has koha_biblioitems_isbn => ( is => 'ro' );
-has koha_biblioitems_issn => ( is => 'ro' );
-has koha_biblioitems_ean => ( is => 'ro' );
-has koha_biblioitems_publicationyear => ( is => 'ro' );
-has koha_biblioitems_publishercode => ( is => 'ro' );
-has koha_biblioitems_volumedate => ( is => 'ro' );
-has koha_biblioitems_volumedesc => ( is => 'ro' );
-has koha_biblioitems_collectiontitle => ( is => 'ro' );
-has koha_biblioitems_collectionissn => ( is => 'ro' );
-has koha_biblioitems_collectionvolume => ( is => 'ro' );
-has koha_biblioitems_editionstatement => ( is => 'ro' );
-has koha_biblioitems_editionresponsibility => ( is => 'ro' );
 has koha_biblioitems_timestamp => ( is => 'ro' );
-has koha_biblioitems_illus => ( is => 'ro' );
-has koha_biblioitems_pages => ( is => 'ro' );
-has koha_biblioitems_notes => ( is => 'ro' );
-has koha_biblioitems_size => ( is => 'ro' );
-has koha_biblioitems_place => ( is => 'ro' );
-has koha_biblioitems_lccn => ( is => 'ro' );
-has koha_biblioitems_url => ( is => 'ro' );
-has koha_biblioitems_cn_source => ( is => 'ro' );
-has koha_biblioitems_cn_class => ( is => 'ro' );
-has koha_biblioitems_cn_item => ( is => 'ro' );
-has koha_biblioitems_cn_suffix => ( is => 'ro' );
-has koha_biblioitems_cn_sort => ( is => 'ro' );
-has koha_biblioitems_agerestriction => ( is => 'ro' );
 has koha_biblioitems_totalissues => ( is => 'ro' );
-has koha_biblio_metadata_id => ( is => 'ro' );
-has koha_biblio_metadata_biblionumber => ( is => 'ro' );
-has koha_biblio_metadata_format => ( is => 'ro' );
-has koha_biblio_metadata_marcflavour => ( is => 'ro' );
 has koha_biblio_metadata_metadata => ( is => 'ro' );
 has koha_biblio_metadata_timestamp => ( is => 'ro' );
 
+has statdb_biblionumber => ( is => 'ro' );
+has statdb_biblio_metadata => ( is => 'ro' );
+has statdb_date_creation => ( is => 'ro' );
+has statdb_date_derniere_modification => ( is => 'ro' );
+has statdb_titre => ( is => 'ro' );
+has statdb_support => ( is => 'ro' );
+has statdb_biblio_deleted => ( is => 'ro' );
 
 sub BUILDARGS {
     my ($class, @args) = @_;
@@ -79,6 +46,91 @@ sub BUILDARGS {
     }
 
     return $arg;
+}
+
+sub get_statdb_biblio_specific_data {
+    my ($self) = @_;
+
+    $self->get_statdb_biblionumber;
+    $self->get_statdb_biblio_metadata;
+    $self->get_statdb_date_creation;
+    $self->get_statdb_date_derniere_modification;
+    $self->get_statdb_support;
+    $self->get_statdb_biblio_deleted;
+
+    my $biblio_data = {
+        statdb_biblionumber => $self->statdb_biblionumber,
+        statdb_biblio_metadata => $self->statdb_biblio_metadata,
+        statdb_date_creation => $self->statdb_date_creation,
+        statdb_date_derniere_modification => $self->statdb_date_derniere_modification,
+        statdb_support => $self->statdb_support,
+        statdb_biblio_deleted => $self->statdb_biblio_deleted
+    };
+    
+    return $biblio_data;
+}
+
+sub get_statdb_biblionumber {
+    my ($self) = @_;
+    if ($self->{koha_biblionumber}) {
+        $self->{statdb_biblionumber} = $self->{koha_biblionumber};
+    }
+
+    return $self;
+}
+
+sub get_statdb_date_creation {
+    my ($self) = @_;
+    if ($self->{koha_biblio_datecreated}) {
+        $self->{statdb_date_creation} = $self->{koha_biblio_datecreated};
+    }
+    return $self;
+}
+
+sub get_statdb_date_derniere_modification {
+    my ($self) = @_;
+    if ($self->{koha_biblio_metadata_timestamp}) {
+        $self->{statdb_date_derniere_modification} = $self->{koha_biblio_metadata_timestamp};
+    }
+    return $self;
+}
+
+sub get_statdb_titre {
+    my ($self) = @_;
+
+    return $self;
+}
+
+sub get_statdb_support {
+    my ($self) = @_;
+    if ($self->{koha_biblioitems_itemtype}) {
+        $self->{statdb_support} = $self->{koha_biblioitems_itemtype};
+    }
+    return $self;
+}
+
+sub get_statdb_biblio_deleted {
+    my ($self) = @_;
+    $self->{statdb_biblio_deleted} = 0;
+    return $self;
+}
+
+sub get_statdb_biblio_metadata {
+    my ($self) = @_ ;
+    
+    my $marcxml = $self->{koha_biblio_metadata_metadata};
+    chomp($marcxml);
+
+    my $importer = Catmandu->importer( 'MARC', type => 'XML', file => \$marcxml );
+    my $outdata ;
+    my $exporter = Catmandu->exporter( 'JSON', file => \$outdata, fix => '/home/fpichenot/Documents/projets/kibini/etc/catmandu_databib.fix', array => 0);
+    $importer->each(sub {
+        my $item = shift;
+        $exporter->add($item);
+    });
+    
+    $self->{statdb_biblio_metadata} = $outdata;
+    return $self;
 }
 
 1;
