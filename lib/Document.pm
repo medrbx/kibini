@@ -315,6 +315,9 @@ sub get_statdb_item_collection_ccode {
     
     unless ($self->{statdb_item_collection_ccode}) {
         if ($self->{koha_ccode}) {
+            if (koha_itemtype) {
+                $self->_get_perio_ccode;
+            }            
             $self->{statdb_item_collection_ccode} = $self->{koha_ccode};
         } elsif ($self->{es_item_collection_ccode}) {
             $self->{statdb_item_collection_ccode} = $self->{es_item_collection_ccode};
@@ -505,6 +508,24 @@ sub get_statdb_usage_date_dernier_pret {
         }
     }
     
+    return $self;
+}
+
+sub _get_perio_ccode {
+    my ($self) = @_;
+    
+    if ($self->{koha_itemtype} eq 'PE') {
+        my $req = "SELECT COUNT(*) FROM koha_prod.deleteditems WHERE $param->{koha_id} = ?";
+        my $sth = $dbh->prepare($req);
+        $sth->execute($self->$id);
+        my $res = $sth->fetchrow_array;
+        $sth->finish;
+        if ($res) {
+            $self->{statdb_item_collection_ccode} = $res;
+        }
+    }
+    
+#UPDATE koha_prod.items s JOIN statdb.lib_periodiques p ON s.biblionumber = p.biblionumber SET s.ccode = p.ccode
     return $self;
 }
 
