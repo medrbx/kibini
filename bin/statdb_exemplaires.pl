@@ -1,7 +1,6 @@
 #! /usr/bin/perl
 
 use Modern::Perl;
-use Data::Dumper;
 use FindBin qw( $Bin );
 
 use lib "$Bin/../lib";
@@ -18,7 +17,7 @@ my @tables = qw( items deleteditems );
 my $y = 0;
 my $n = 0;
 foreach my $table (@tables) {
-    my $req = "SELECT itemnumber AS koha_itemnumber FROM koha_prod.$table WHERE DATE(timestamp) = CURDATE()-INTERVAL 1 DAY";
+    my $req = "SELECT itemnumber AS koha_itemnumber FROM koha_prod.$table WHERE DATE(timestamp) >= CURDATE()- INTERVAL 1 DAY";
     my $sth = $dbh->prepare($req);
     $sth->execute;
     while (my $row = $sth->fetchrow_hashref) {
