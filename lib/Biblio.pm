@@ -123,7 +123,7 @@ sub get_statdb_biblio_metadata {
 
     my $importer = Catmandu->importer( 'MARC', type => 'XML', file => \$marcxml );
     my $outdata ;
-    my $exporter = Catmandu->exporter( 'JSON', file => \$outdata, fix => '/home/fpichenot/Documents/projets/kibini/etc/catmandu_databib.fix', array => 0);
+    my $exporter = Catmandu->exporter( 'JSON', file => \$outdata, fix => '/home/kibini/kibini_prod/etc/catmandu_databib.fix', array => 0);
     $importer->each(sub {
         my $item = shift;
         $exporter->add($item);
