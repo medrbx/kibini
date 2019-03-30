@@ -72,7 +72,7 @@ SELECT
 FROM statdb.stat_issues iss
 JOIN statdb.lib_collections2 c ON iss.ccode = c.ccode
 -- WHERE iss.ccode IN ('AAPATLC')
--- WHERE iss.timestamp > NOW() - INTERVAL 2 HOUR
+-- WHERE iss.timestamp > NOW() - INTERVAL 1 HOUR
 WHERE(DATE(iss.returndate) >= ? OR DATE(iss.issuedate) >= ?)
 SQL
 
