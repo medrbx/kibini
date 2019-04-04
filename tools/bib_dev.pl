@@ -66,7 +66,7 @@ SELECT
 FROM koha_prod.biblio b
 JOIN koha_prod.biblioitems bi ON bi.biblionumber = b.biblionumber
 JOIN koha_prod.biblio_metadata m ON m.biblionumber = b.biblionumber
-LIMIT 1
+LIMIT 10
 SQL
 
 my $sth = $dbh->prepare($req);
