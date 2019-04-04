@@ -29,7 +29,7 @@ if exists(vd.action)
 else
 	add_field(qa.vd.action, "vendangeur action non spécifiée")
 end
-lookup(vd.action, "/home/kibini/kibini_prod/etc/catmandu_lk_vd.txt", sep_char:"|")
+#lookup(vd.action, "/home/kibini/kibini_prod/etc/catmandu_lk_vd.txt", sep_char:"|")
 
 marc_map(091b, vd.date) # remettre la date au format YYYY-MM-DD
 if exists(vd.date)
@@ -42,7 +42,7 @@ end
 marc_map(099t, bib.type)
 if any_match(bib.type, "PE")
 	copy_field(_id, bib.perio_ccode)
-	lookup(bib.perio_ccode, "/home/kibini/kibini_prod/etc/catmandu_lk_perio_ccode.txt", sep_char:"|", default:no_abo)
+#	lookup(bib.perio_ccode, "/home/kibini/kibini_prod/etc/catmandu_lk_perio_ccode.txt", sep_char:"|", default:no_abo)
 end
 
 
@@ -51,7 +51,7 @@ if exists(bib.type)
 else
 	add_field(qa.bib.type, "support non spécifié")
 end
-lookup(bib.type, "/home/kibini/kibini_prod/etc/catmandu_lk_support.txt", sep_char:"|")
+#lookup(bib.type, "/home/kibini/kibini_prod/etc/catmandu_lk_support.txt", sep_char:"|")
 
 # 100
 marc_map('100/9-12',bib.date)
@@ -69,7 +69,7 @@ else
 	add_field(qa.bib.language, "langue non spécifiée")
 end
 split_field(bib.language,'###')
-lookup(bib.language.*, "/home/kibini/kibini_prod/etc/catmandu_lk_langues.txt", sep_char:'|')
+#lookup(bib.language.*, "/home/kibini/kibini_prod/etc/catmandu_lk_langues.txt", sep_char:'|')
 
 # 200 : titre
 marc_map(200ae,bib.title.$append, join:", ")
@@ -84,7 +84,7 @@ if exists(bib.audience)
 else
 	add_field(qa.bib.audience, "public non spécifié")
 end
-lookup(bib.audience, "/home/kibini/kibini_prod/etc/catmandu_lk_publics.txt", sep_char:'|')
+#lookup(bib.audience, "/home/kibini/kibini_prod/etc/catmandu_lk_publics.txt", sep_char:'|')
 
 # 34? : ean
 
@@ -121,7 +121,7 @@ else
 	add_field(qa.bib.agence_cat, "agence de catalogage non spécifiée")
 end
 copy_field(bib.agence_cat,bib.agence_cat_nor)
-lookup(bib.agence_cat_nor.*, "/home/kibini/kibini_prod/etc/catmandu_lk_agence_cata.txt", sep_char:'|')
+#lookup(bib.agence_cat_nor.*, "/home/kibini/kibini_prod/etc/catmandu_lk_agence_cata.txt", sep_char:'|')
 
 # Présence d'un id type isbn, issn, ean
 if exists(bib.identifier)
