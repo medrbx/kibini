@@ -20,9 +20,9 @@ AddCrontabLog($log_message) ;
 # On récupère l'adresse d'Elasticsearch
 my $es_node = GetEsNode() ;
 
-my $result = RegenerateIndex($es_node, "syntheses") ;
+#my $result = RegenerateIndex($es_node, "syntheses") ;
 
-my $i = synth_prets($es_node) ;
+#my $i = synth_prets($es_node) ;
 
 # On log la fin de l'opération
 $log_message = "$process : $i rows indexed" ;
@@ -39,7 +39,7 @@ sub synth_prets {
 
     my $e = Search::Elasticsearch->new( %params ) ;
     
-    open my $fic, "<:encoding(utf8)", "/home/kibini/kibini_prod/data/es_csv/synthese_prets2.csv";
+    open my $fic, "<:encoding(utf8)", "/home/kibini/kibini_prod/data/es_csv/synth_ann_prets_20190404.csv";
 
     my $csv = Text::CSV->new ({
         binary    => 1, # permet caractères spéciaux (?)
@@ -48,7 +48,7 @@ sub synth_prets {
 
     my $i = 0 ;
     while (my $row = $csv->getline ($fic)) {
-        my ($public, $support, $annee, $nb_prets) = @$row ;
+        my ($annee, $public, $support, $nb_prets) = @$row ;
         my %index = (
             index   => $index,
             type    => $type,

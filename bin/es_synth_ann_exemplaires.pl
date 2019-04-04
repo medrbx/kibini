@@ -20,7 +20,7 @@ my $index = "synth_ann_exemplaires";
 # On récupère l'adresse d'Elasticsearch
 my $es_node = GetEsNode();
 
-my $result = RegenerateIndex($es_node, $index);
+#my $result = RegenerateIndex($es_node, $index);
 
 my $i = synth_documents($es_node, $index);
 
