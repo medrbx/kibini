@@ -29,20 +29,21 @@ my $sth = $dbh->prepare($req);
 my $i = 0 ;
 while (my $ligne = <>) {
     my $datetime ;
+	chomp $ligne;
     my ($date, $heure, $entrees) = split /\,/, $ligne ;
-    if ($date =~ /^\(/ & $heure =~ /^[0-9]/) {
-        $date =~ s/(\)|\()//g ;
-        my ($jour, $mois, $annee) = split /-/, $date ;
-        $heure =~ /(\d*)(h.)/ ;
-        $heure = $1 ;
-        if ($heure !~ /\d{2}/) {
-            $heure = "0$heure" ;
-        }
-        $datetime = "$annee-$mois-$jour $heure:00:00" ;
-        $sth->execute( $datetime, $entrees )
-                or die "Echec Requête $req : $DBI::errstr";
+    $date =~ s/(\)|\()//g ;
+    my ($annee, $mois, $jour) = split /-/, $date ;
+    $heure =~ /(\d*)(h.)/ ;
+    $heure = $1 ;
+    if ($heure !~ /\d{2}/) {
+        $heure = "0$heure" ;
+    }
+    $datetime = "$annee-$mois-$jour $heure:00:00" ;
+	if ( $datetime =~ m/\d{4}-\d{2}-\d{2} \d{2}:00:00/) {
+	    $sth->execute( $datetime, $entrees )
+        	or die "Echec Requête $req : $DBI::errstr";
         $i++ ;
-    }        
+	}        
 }
 
 $sth->finish();
