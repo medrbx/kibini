@@ -21,8 +21,7 @@ if [ $dayofweek -eq 3 ]
 then
     # On réalise un dump de statdb
     perl $dir/admin_sauv_bdd.pl
-    # On met à jour les entrées et webkiosk dans ES
-    perl $dir/es_entrees.pl
+    # On met à jour webkiosk dans ES
     perl $dir/es_webkiosk.pl
     # On met à jour la carte des quartiers
     perl $dir/data_carte.pl
@@ -54,6 +53,10 @@ perl $dir/es_rfid.pl
 # On traite les données liées à la fréquentation de la salle d'étude
 perl $dir/statdb_freq_etude.pl
 perl $dir/es_freq_etude.pl
+
+# On incorpore les entrées
+perl $dir/statdb_comptage.pl
+perl $dir/es_entrees.pl
 
 # On récupère les logs du portail
 perl $dir/logs_portail.pl
