@@ -175,7 +175,19 @@ adherents2:
               ignore_above: 256
               type: keyword
           type: text
+        geo_roubaix_secteur:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
         geo_ville:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        geo_ville_bm:
           fields:
             keyword:
               ignore_above: 256
@@ -201,7 +213,19 @@ adherents2:
                   ignore_above: 256
                   type: keyword
               type: text
+            collectivitÃ©s:
+              fields:
+                keyword:
+                  ignore_above: 256
+                  type: keyword
+              type: text
             collectivités:
+              fields:
+                keyword:
+                  ignore_above: 256
+                  type: keyword
+              type: text
+            zÃ¨bre:
               fields:
                 keyword:
                   ignore_above: 256
@@ -762,6 +786,14 @@ freq_etude:
         lecteur_rbx_quartier:
           index: not_analyzed
           type: string
+        lecteur_rbx_secteur:
+          fielddata: !!perl/scalar:JSON::PP::Boolean 0
+          fields:
+            keyword:
+              ignore_above: 256
+              index: not_analyzed
+              type: string
+          type: string
         lecteur_sexe:
           index: not_analyzed
           type: string
@@ -1126,269 +1158,6 @@ items:
               ignore_above: 256
               type: keyword
           type: text
-periodiques:
-  mappings:
-    biblio:
-      properties:
-        bib:
-          properties:
-            agence_cat:
-              index: not_analyzed
-              type: string
-            agence_cat_nor:
-              index: not_analyzed
-              type: string
-            ark_bnf:
-              index: not_analyzed
-              type: string
-            audience:
-              index: not_analyzed
-              type: string
-            contributor:
-              index: not_analyzed
-              type: string
-            count_items:
-              index: not_analyzed
-              type: string
-            creator:
-              index: not_analyzed
-              type: string
-            date:
-              index: not_analyzed
-              type: string
-            identifier:
-              properties:
-                isbn:
-                  index: not_analyzed
-                  type: string
-                issn:
-                  index: not_analyzed
-                  type: string
-            items:
-              properties:
-                barcode:
-                  index: not_analyzed
-                  type: string
-                collection:
-                  properties:
-                    ccode:
-                      index: not_analyzed
-                      type: string
-                    lib1:
-                      index: not_analyzed
-                      type: string
-                    lib2:
-                      index: not_analyzed
-                      type: string
-                    lib3:
-                      index: not_analyzed
-                      type: string
-                    lib4:
-                      index: not_analyzed
-                      type: string
-                damaged:
-                  index: not_analyzed
-                  type: string
-                dateaccessioned:
-                  format: strict_date_optional_time||epoch_millis
-                  type: date
-                datelastborrowed:
-                  format: strict_date_optional_time||epoch_millis
-                  type: date
-                datelastseen:
-                  format: strict_date_optional_time||epoch_millis
-                  type: date
-                holdingbranch:
-                  index: not_analyzed
-                  type: string
-                homebranch:
-                  index: not_analyzed
-                  type: string
-                issues:
-                  properties:
-                    age:
-                      type: string
-                    arret_bus:
-                      index: not_analyzed
-                      type: string
-                    borrower:
-                      properties:
-                        age:
-                          properties:
-                            age:
-                              index: not_analyzed
-                              type: string
-                            trinsee:
-                              index: not_analyzed
-                              type: string
-                            trmeda:
-                              index: not_analyzed
-                              type: string
-                            trmedb:
-                              index: not_analyzed
-                              type: string
-                            trmedc:
-                              index: not_analyzed
-                              type: string
-                        borrowernumber:
-                          index: not_analyzed
-                          type: string
-                        branch:
-                          index: not_analyzed
-                          type: string
-                        carte:
-                          index: not_analyzed
-                          type: string
-                        categorycode:
-                          index: not_analyzed
-                          type: string
-                        geo:
-                          properties:
-                            district:
-                              properties:
-                                irisInsee:
-                                  index: not_analyzed
-                                  type: string
-                                irisNom:
-                                  index: not_analyzed
-                                  type: string
-                                quartier:
-                                  index: not_analyzed
-                                  type: string
-                            ville:
-                              index: not_analyzed
-                              type: string
-                    borrowernumber:
-                      index: not_analyzed
-                      type: string
-                    branch:
-                      index: not_analyzed
-                      type: string
-                    branchcode:
-                      index: not_analyzed
-                      type: string
-                    categorycode:
-                      index: not_analyzed
-                      type: string
-                    date_due:
-                      index: not_analyzed
-                      type: string
-                    fidelite:
-                      index: not_analyzed
-                      type: string
-                    iris:
-                      index: not_analyzed
-                      type: string
-                    issue_id:
-                      index: not_analyzed
-                      type: string
-                    issuedate:
-                      index: not_analyzed
-                      type: string
-                    itemnumber:
-                      index: not_analyzed
-                      type: string
-                    renewals:
-                      index: not_analyzed
-                      type: string
-                    returndate:
-                      index: not_analyzed
-                      type: string
-                    sexe:
-                      index: not_analyzed
-                      type: string
-                    timestamp:
-                      index: not_analyzed
-                      type: string
-                    ville:
-                      index: not_analyzed
-                      type: string
-                itdeleted:
-                  type: boolean
-                itemcallnumber:
-                  index: not_analyzed
-                  type: string
-                itemlost:
-                  index: not_analyzed
-                  type: string
-                itemnumber:
-                  index: not_analyzed
-                  type: string
-                location:
-                  index: not_analyzed
-                  type: string
-                notforloan:
-                  index: not_analyzed
-                  type: string
-                onloan:
-                  format: strict_date_optional_time||epoch_millis
-                  type: date
-                price:
-                  index: not_analyzed
-                  type: string
-                renewals:
-                  index: not_analyzed
-                  type: string
-                timestamp:
-                  index: not_analyzed
-                  type: string
-                withdrawn:
-                  index: not_analyzed
-                  type: string
-              type: nested
-            language:
-              index: not_analyzed
-              type: string
-            perio_ccode:
-              index: not_analyzed
-              type: string
-            publisher:
-              index: not_analyzed
-              type: string
-            subject:
-              index: not_analyzed
-              type: string
-            subject_main:
-              index: not_analyzed
-              type: string
-            title:
-              index: not_analyzed
-              type: string
-            type:
-              index: not_analyzed
-              type: string
-        biblionumber:
-          type: string
-        qa:
-          properties:
-            bib:
-              properties:
-                agence_cat:
-                  index: not_analyzed
-                  type: string
-                ark_rbx:
-                  index: not_analyzed
-                  type: string
-                audience:
-                  index: not_analyzed
-                  type: string
-                date:
-                  index: not_analyzed
-                  type: string
-                language:
-                  index: not_analyzed
-                  type: string
-                type:
-                  index: not_analyzed
-                  type: string
-            vd:
-              properties:
-                action:
-                  index: not_analyzed
-                  type: string
-                vendange:
-                  index: not_analyzed
-                  type: string
 prets:
   mappings:
     issues:
@@ -1474,6 +1243,14 @@ prets:
           type: string
         emprunteur_rbx_quartier:
           index: not_analyzed
+          type: string
+        emprunteur_rbx_secteur:
+          fielddata: !!perl/scalar:JSON::PP::Boolean 0
+          fields:
+            keyword:
+              ignore_above: 256
+              index: not_analyzed
+              type: string
           type: string
         emprunteur_sexe:
           index: not_analyzed
@@ -1659,6 +1436,14 @@ reservations:
           type: string
         reserveur_rbx_quartier:
           index: not_analyzed
+          type: string
+        reserveur_rbx_secteur:
+          fielddata: !!perl/scalar:JSON::PP::Boolean 0
+          fields:
+            keyword:
+              ignore_above: 256
+              index: not_analyzed
+              type: string
           type: string
         reserveur_sexe:
           type: string
@@ -1884,14 +1669,82 @@ webkiosk:
         adherent_age_lib3:
           index: not_analyzed
           type: string
+        adherent_attributes:
+          properties:
+            PCS:
+              fielddata: !!perl/scalar:JSON::PP::Boolean 0
+              fields:
+                keyword:
+                  ignore_above: 256
+                  index: not_analyzed
+                  type: string
+              type: string
+            action:
+              fielddata: !!perl/scalar:JSON::PP::Boolean 0
+              fields:
+                keyword:
+                  ignore_above: 256
+                  index: not_analyzed
+                  type: string
+              type: string
+            zèbre:
+              fielddata: !!perl/scalar:JSON::PP::Boolean 0
+              fields:
+                keyword:
+                  ignore_above: 256
+                  index: not_analyzed
+                  type: string
+              type: string
         adherent_carte:
           index: not_analyzed
+          type: string
+        adherent_es_geo_ville_front:
+          fielddata: !!perl/scalar:JSON::PP::Boolean 0
+          fields:
+            keyword:
+              ignore_above: 256
+              index: not_analyzed
+              type: string
+          type: string
+        adherent_geo_gentilite:
+          fielddata: !!perl/scalar:JSON::PP::Boolean 0
+          fields:
+            keyword:
+              ignore_above: 256
+              index: not_analyzed
+              type: string
+          type: string
+        adherent_geo_ville_bm:
+          fielddata: !!perl/scalar:JSON::PP::Boolean 0
+          fields:
+            keyword:
+              ignore_above: 256
+              index: not_analyzed
+              type: string
           type: string
         adherent_id:
           index: not_analyzed
           type: string
+        adherent_inscription_gratuite:
+          fielddata: !!perl/scalar:JSON::PP::Boolean 0
+          fields:
+            keyword:
+              ignore_above: 256
+              index: not_analyzed
+              type: string
+          type: string
+        adherent_inscription_prix:
+          type: long
         adherent_nb_annee_inscription:
           type: integer
+        adherent_nb_annee_inscription_tra:
+          fielddata: !!perl/scalar:JSON::PP::Boolean 0
+          fields:
+            keyword:
+              ignore_above: 256
+              index: not_analyzed
+              type: string
+          type: string
         adherent_personnalite:
           index: not_analyzed
           type: string
@@ -1903,6 +1756,14 @@ webkiosk:
           type: string
         adherent_rbx_quartier:
           index: not_analyzed
+          type: string
+        adherent_rbx_secteur:
+          fielddata: !!perl/scalar:JSON::PP::Boolean 0
+          fields:
+            keyword:
+              ignore_above: 256
+              index: not_analyzed
+              type: string
           type: string
         adherent_sexe:
           index: not_analyzed
@@ -1916,6 +1777,40 @@ webkiosk:
         adherent_ville:
           index: not_analyzed
           type: string
+        query:
+          properties:
+            bool:
+              properties:
+                filter:
+                  properties:
+                    range:
+                      properties:
+                        date:
+                          properties:
+                            format:
+                              fielddata: !!perl/scalar:JSON::PP::Boolean 0
+                              fields:
+                                keyword:
+                                  ignore_above: 256
+                                  index: not_analyzed
+                                  type: string
+                              type: string
+                            gte:
+                              fielddata: !!perl/scalar:JSON::PP::Boolean 0
+                              fields:
+                                keyword:
+                                  ignore_above: 256
+                                  index: not_analyzed
+                                  type: string
+                              type: string
+                            lt:
+                              fielddata: !!perl/scalar:JSON::PP::Boolean 0
+                              fields:
+                                keyword:
+                                  ignore_above: 256
+                                  index: not_analyzed
+                                  type: string
+                              type: string
         session_duree:
           type: integer
         session_espace:
@@ -1968,233 +1863,101 @@ webkiosk:
         session_poste:
           index: not_analyzed
           type: string
-sessions_webkiosk:
+magasin:
   mappings:
-    sessions:
+    documents:
       properties:
-        adherent_adherentid:
+        barcode:
           fields:
             keyword:
               ignore_above: 256
               type: keyword
           type: text
-        adherent_age_code:
+        biblionumber:
           fields:
             keyword:
               ignore_above: 256
               type: keyword
           type: text
-        adherent_age_lib1:
+        ccode:
           fields:
             keyword:
               ignore_above: 256
               type: keyword
           type: text
-        adherent_age_lib2:
+        collection:
           fields:
             keyword:
               ignore_above: 256
               type: keyword
           type: text
-        adherent_age_lib3:
+        contributor:
           fields:
             keyword:
               ignore_above: 256
               type: keyword
           type: text
-        adherent_attributes_action:
+        creator:
           fields:
             keyword:
               ignore_above: 256
               type: keyword
           type: text
-        adherent_attributes_collectivites:
-          fields:
-            keyword:
-              ignore_above: 256
-              type: keyword
-          type: text
-        adherent_attributes_pcs:
-          fields:
-            keyword:
-              ignore_above: 256
-              type: keyword
-          type: text
-        adherent_attributes_zebre:
-          fields:
-            keyword:
-              ignore_above: 256
-              type: keyword
-          type: text
-        adherent_geo_gentilite:
-          fields:
-            keyword:
-              ignore_above: 256
-              type: keyword
-          type: text
-        adherent_geo_rbx_iris:
-          fields:
-            keyword:
-              ignore_above: 256
-              type: keyword
-          type: text
-        adherent_geo_rbx_nom_iris:
-          fields:
-            keyword:
-              ignore_above: 256
-              type: keyword
-          type: text
-        adherent_geo_rbx_quartier:
-          fields:
-            keyword:
-              ignore_above: 256
-              type: keyword
-          type: text
-        adherent_geo_rbx_secteur:
-          fields:
-            keyword:
-              ignore_above: 256
-              type: keyword
-          type: text
-        adherent_geo_ville:
-          fields:
-            keyword:
-              ignore_above: 256
-              type: keyword
-          type: text
-        adherent_geo_ville_bm:
-          fields:
-            keyword:
-              ignore_above: 256
-              type: keyword
-          type: text
-        adherent_geo_ville_front:
-          fields:
-            keyword:
-              ignore_above: 256
-              type: keyword
-          type: text
-        adherent_inscription_carte:
-          fields:
-            keyword:
-              ignore_above: 256
-              type: keyword
-          type: text
-        adherent_inscription_gratuite:
-          fields:
-            keyword:
-              ignore_above: 256
-              type: keyword
-          type: text
-        adherent_inscription_nb_annees_adhesion:
-          type: integer
-        adherent_inscription_nb_annees_adhesion_tra:
-          fields:
-            keyword:
-              ignore_above: 256
-              type: keyword
-          type: text
-        adherent_inscription_personnalite:
-          fields:
-            keyword:
-              ignore_above: 256
-              type: keyword
-          type: text
-        adherent_inscription_prix:
-          type: integer
-        adherent_inscription_site:
-          fields:
-            keyword:
-              ignore_above: 256
-              type: keyword
-          type: text
-        adherent_inscription_type_carte:
-          fields:
-            keyword:
-              ignore_above: 256
-              type: keyword
-          type: text
-        adherent_sexe:
-          fields:
-            keyword:
-              ignore_above: 256
-              type: keyword
-          type: text
-        session_duree:
-          type: integer
-        session_espace:
-          fields:
-            keyword:
-              ignore_above: 256
-              type: keyword
-          type: text
-        session_groupe:
-          fields:
-            keyword:
-              ignore_above: 256
-              type: keyword
-          type: text
-        session_heure_deb:
-          format: yyyy-MM-dd HH:mm:ss
+        dateaccessioned:
           type: date
-        session_heure_deb_annee:
-          type: integer
-        session_heure_deb_heure:
-          type: integer
-        session_heure_deb_jour:
-          type: integer
-        session_heure_deb_jour_semaine:
-          fields:
-            keyword:
-              ignore_above: 256
-              type: keyword
-          type: text
-        session_heure_deb_mois:
-          fields:
-            keyword:
-              ignore_above: 256
-              type: keyword
-          type: text
-        session_heure_deb_semaine:
-          fields:
-            keyword:
-              ignore_above: 256
-              type: keyword
-          type: text
-        session_heure_fin:
-          format: yyyy-MM-dd HH:mm:ss
+        datelastborrowed:
           type: date
-        session_heure_fin_annee:
+        issues:
           type: integer
-        session_heure_fin_heure:
+        itemcallnumber:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        itemnumber:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        itemtype:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        location:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        nb_issues2015:
           type: integer
-        session_heure_fin_jour:
+        nb_issues2016:
           type: integer
-        session_heure_fin_jour_semaine:
+        nb_issues2017:
+          type: integer
+        nb_issues2018:
+          type: integer
+        nb_issues2019:
+          type: integer
+        publicationyear:
+          type: integer
+        publisher:
           fields:
             keyword:
               ignore_above: 256
               type: keyword
           type: text
-        session_heure_fin_mois:
+        subject:
           fields:
             keyword:
               ignore_above: 256
               type: keyword
           type: text
-        session_heure_fin_semaine:
-          fields:
-            keyword:
-              ignore_above: 256
-              type: keyword
-          type: text
-        session_id:
-          fields:
-            keyword:
-              ignore_above: 256
-              type: keyword
-          type: text
-        session_poste:
+        title:
           fields:
             keyword:
               ignore_above: 256
