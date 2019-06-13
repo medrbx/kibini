@@ -63,8 +63,10 @@ VALUES (?, ?, ?, ?, ?, ?, ?)
 SQL
 my $sth = $dbh->prepare($req);
 
+my $i = 0;
 my $externe = Catmandu->importer('CSV', file => $file_ext, header => 0 );
 $externe->each(sub {
+	$i++;
     my $data = shift;
     if ( $data->{0} =~ m/^\d{4}/) {
         my $to_keep = {};
@@ -76,12 +78,34 @@ $externe->each(sub {
         ($to_keep->{taux_conversion}) = ( $data->{19} =~ m/^(\d+)(.*)/ );
         $to_keep->{origine} = "externe";
         $sth->execute($to_keep->{date}, $to_keep->{periode}, $to_keep->{visites}, $to_keep->{pages_vues}, $to_keep->{utilisateurs}, $to_keep->{taux_conversion}, $to_keep->{origine});
-        print Dumper($to_keep);
+		($to_keep->{year}, $to_keep->{month}, $to_keep->{week_number}, $to_keep->{day}, $to_keep->{dow}) = GetSplitDate($to_keep->{date});
+        ($to_keep->{year}, $to_keep->{month}, $to_keep->{week_number}, $to_keep->{day}, $to_keep->{dow}) = GetSplitDate($to_keep->{date});
+		my %index = (
+            index   => $index,
+            type    => $type,
+            body    => {
+                consultation_date => $to_keep->{date},
+                consultation_date_annee => $to_keep->{year},
+                consultation_date_mois => $to_keep->{month},
+                consultation_date_semaine => $to_keep->{week_number},
+                consultation_date_jour => $to_keep->{day},
+                consultation_date_jour_semaine => $to_keep->{dow},
+                periode => $to_keep->{periode},
+                visites => $to_keep->{visites},
+                pages_vues => $to_keep->{pages_vues},
+                utilisateurs => $to_keep->{utilisateurs},
+                taux_conversion => $to_keep->{taux_conversion},
+                origine => $to_keep->{origine}
+            }
+        );
+		$e->index(%index); 
+        print Dumper(\%index);
     }
 });
 
 my $interne = Catmandu->importer('CSV', file => $file_int, header => 0 );
 $interne->each(sub {
+	$i++;
     my $data = shift;
     if ( $data->{0} =~ m/^\d{4}/) {
         my $to_keep = {};
@@ -93,14 +117,34 @@ $interne->each(sub {
         ($to_keep->{taux_conversion}) = ( $data->{19} =~ m/^(\d+)(.*)/ );
         $to_keep->{origine} = "interne";
         $sth->execute($to_keep->{date}, $to_keep->{periode}, $to_keep->{visites}, $to_keep->{pages_vues}, $to_keep->{utilisateurs}, $to_keep->{taux_conversion}, $to_keep->{origine});
-        print Dumper($to_keep);
+		($to_keep->{year}, $to_keep->{month}, $to_keep->{week_number}, $to_keep->{day}, $to_keep->{dow}) = GetSplitDate($to_keep->{date});
+		my %index = (
+            index   => $index,
+            type    => $type,
+            body    => {
+                consultation_date => $to_keep->{date},
+                consultation_date_annee => $to_keep->{year},
+                consultation_date_mois => $to_keep->{month},
+                consultation_date_semaine => $to_keep->{week_number},
+                consultation_date_jour => $to_keep->{day},
+                consultation_date_jour_semaine => $to_keep->{dow},
+                periode => $to_keep->{periode},
+                visites => $to_keep->{visites},
+                pages_vues => $to_keep->{pages_vues},
+                utilisateurs => $to_keep->{utilisateurs},
+                taux_conversion => $to_keep->{taux_conversion},
+                origine => $to_keep->{origine}
+            }
+        );
+		$e->index(%index);
+        print Dumper(\%index);
     }
 });
 
 
 
 # On log la fin de l'opération
-#$log->add_log("$process : $i rows added");
+$log->add_log("$process : $i rows added");
 $log->add_log("$process : ending\n");
 
 __END__
