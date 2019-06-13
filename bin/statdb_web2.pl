@@ -21,30 +21,30 @@ $log->add_log("$process : beginning");
 my $file_ext = "/home/kibini/stat_web_externe.csv";
 unless (-e $file_ext) {
     print "Attention : le fichier \"/home/kibini/stat_web_externe.csv\" n'existe pas.\n";
-	exit;
+    exit;
 }
 
 my $file_int = "/home/kibini/stat_web_interne.csv";
 unless (-e $file_int) {
     print "Attention : le fichier \"/home/kibini/stat_web_interne.csv\" n'existe pas.\n";
-	exit;
+    exit;
 }
 
 my $periode;
 if (exists $ARGV[0]) {
     unless ( $ARGV[0] eq "scolaire"  || $ARGV[0] eq "été" || $ARGV[0] eq "vacances") {
         print "Attention : il est nécessaire de spécifier le type de période en argument.\n";
-	    print "Trois possibiblités : 'scolaire ou 'été' ou 'vacances'\n";
-	    print "Par exemple : \"./statdb_web2.pl scolaire\"\n";
-	    exit;
+        print "Trois possibiblités : 'scolaire ou 'été' ou 'vacances'\n";
+        print "Par exemple : \"./statdb_web2.pl scolaire\"\n";
+        exit;
     } else {
-	    $periode = $ARGV[0];
+        $periode = $ARGV[0];
     }
 } else {
     print "Attention : il est nécessaire de spécifier le type de période en argument.\n";
-	print "Trois possibiblités : 'scolaire ou 'été' ou 'vacances'\n";
+    print "Trois possibiblités : 'scolaire ou 'été' ou 'vacances'\n";
     print "Par exemple : \"./statdb_web2.pl scolaire\"\n";
-	exit;
+    exit;
 }
 
 # Connexion à la base de données et ES
@@ -66,35 +66,35 @@ my $sth = $dbh->prepare($req);
 my $externe = Catmandu->importer('CSV', file => $file_ext, header => 0 );
 $externe->each(sub {
     my $data = shift;
-	if ( $data->{0} =~ m/^\d{4}/) {
-	    my $to_keep = {};
-	    $to_keep->{date} = $data->{0};
-	    $to_keep->{periode} = $periode;
+    if ( $data->{0} =~ m/^\d{4}/) {
+        my $to_keep = {};
+        $to_keep->{date} = $data->{0};
+        $to_keep->{periode} = $periode;
         $to_keep->{visites} = $data->{2};
         $to_keep->{pages_vues} = $data->{24};
         $to_keep->{utilisateurs} = $data->{3};
         ($to_keep->{taux_conversion}) = ( $data->{19} =~ m/^(\d+)(.*)/ );
-	    $to_keep->{origine} = "externe";
-		$sth->execute($to_keep->{date}, $to_keep->{periode}, $to_keep->{visites}, $to_keep->{pages_vues}, $to_keep->{utilisateurs}, $to_keep->{taux_conversion}, $to_keep->{origine});
+        $to_keep->{origine} = "externe";
+        $sth->execute($to_keep->{date}, $to_keep->{periode}, $to_keep->{visites}, $to_keep->{pages_vues}, $to_keep->{utilisateurs}, $to_keep->{taux_conversion}, $to_keep->{origine});
         print Dumper($to_keep);
-	}
+    }
 });
 
 my $interne = Catmandu->importer('CSV', file => $file_int, header => 0 );
 $interne->each(sub {
     my $data = shift;
-	if ( $data->{0} =~ m/^\d{4}/) {
-	    my $to_keep = {};
-	    $to_keep->{date} = $data->{0};
-	    $to_keep->{periode} = $periode;
+    if ( $data->{0} =~ m/^\d{4}/) {
+        my $to_keep = {};
+        $to_keep->{date} = $data->{0};
+        $to_keep->{periode} = $periode;
         $to_keep->{visites} = $data->{2};
         $to_keep->{pages_vues} = $data->{24};
         $to_keep->{utilisateurs} = $data->{3};
         ($to_keep->{taux_conversion}) = ( $data->{19} =~ m/^(\d+)(.*)/ );
-	    $to_keep->{origine} = "interne";
-		$sth->execute($to_keep->{date}, $to_keep->{periode}, $to_keep->{visites}, $to_keep->{pages_vues}, $to_keep->{utilisateurs}, $to_keep->{taux_conversion}, $to_keep->{origine});
+        $to_keep->{origine} = "interne";
+        $sth->execute($to_keep->{date}, $to_keep->{periode}, $to_keep->{visites}, $to_keep->{pages_vues}, $to_keep->{utilisateurs}, $to_keep->{taux_conversion}, $to_keep->{origine});
         print Dumper($to_keep);
-	}
+    }
 });
 
 
