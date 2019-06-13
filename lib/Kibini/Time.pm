@@ -85,6 +85,9 @@ sub get_date_and_time {
         } elsif ( $param eq 'yesterday' ) {
             $dt = $dt->subtract( days => 1 ) ;
             $date_and_time = $dt->ymd() ; # YYYY-MM-DD
+        } elsif ( $param eq 'yesterday YYYYMMDD' ) {
+            $dt = $dt->subtract( days => 1 ) ;
+            $date_and_time = $dt->ymd('') ; # YYYYMMDD
         }
     } else {
         $date_and_time = DateTime::Format::MySQL->format_datetime($dt) ; # YYYY-MM-DD HH:MM:SS
