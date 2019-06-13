@@ -66,7 +66,7 @@ my $sth = $dbh->prepare($req);
 my $i = 0;
 my $externe = Catmandu->importer('CSV', file => $file_ext, header => 0 );
 $externe->each(sub {
-	$i++;
+    $i++;
     my $data = shift;
     if ( $data->{0} =~ m/^\d{4}/) {
         my $to_keep = {};
@@ -78,9 +78,9 @@ $externe->each(sub {
         ($to_keep->{taux_conversion}) = ( $data->{19} =~ m/^(\d+)(.*)/ );
         $to_keep->{origine} = "externe";
         $sth->execute($to_keep->{date}, $to_keep->{periode}, $to_keep->{visites}, $to_keep->{pages_vues}, $to_keep->{utilisateurs}, $to_keep->{taux_conversion}, $to_keep->{origine});
-		($to_keep->{year}, $to_keep->{month}, $to_keep->{week_number}, $to_keep->{day}, $to_keep->{dow}) = GetSplitDate($to_keep->{date});
         ($to_keep->{year}, $to_keep->{month}, $to_keep->{week_number}, $to_keep->{day}, $to_keep->{dow}) = GetSplitDate($to_keep->{date});
-		my %index = (
+        ($to_keep->{year}, $to_keep->{month}, $to_keep->{week_number}, $to_keep->{day}, $to_keep->{dow}) = GetSplitDate($to_keep->{date});
+        my %index = (
             index   => $index,
             type    => $type,
             body    => {
@@ -98,14 +98,14 @@ $externe->each(sub {
                 origine => $to_keep->{origine}
             }
         );
-		$e->index(%index); 
+        $e->index(%index); 
         print Dumper(\%index);
     }
 });
 
 my $interne = Catmandu->importer('CSV', file => $file_int, header => 0 );
 $interne->each(sub {
-	$i++;
+    $i++;
     my $data = shift;
     if ( $data->{0} =~ m/^\d{4}/) {
         my $to_keep = {};
@@ -117,8 +117,8 @@ $interne->each(sub {
         ($to_keep->{taux_conversion}) = ( $data->{19} =~ m/^(\d+)(.*)/ );
         $to_keep->{origine} = "interne";
         $sth->execute($to_keep->{date}, $to_keep->{periode}, $to_keep->{visites}, $to_keep->{pages_vues}, $to_keep->{utilisateurs}, $to_keep->{taux_conversion}, $to_keep->{origine});
-		($to_keep->{year}, $to_keep->{month}, $to_keep->{week_number}, $to_keep->{day}, $to_keep->{dow}) = GetSplitDate($to_keep->{date});
-		my %index = (
+        ($to_keep->{year}, $to_keep->{month}, $to_keep->{week_number}, $to_keep->{day}, $to_keep->{dow}) = GetSplitDate($to_keep->{date});
+        my %index = (
             index   => $index,
             type    => $type,
             body    => {
@@ -136,7 +136,7 @@ $interne->each(sub {
                 origine => $to_keep->{origine}
             }
         );
-		$e->index(%index);
+        $e->index(%index);
         print Dumper(\%index);
     }
 });
