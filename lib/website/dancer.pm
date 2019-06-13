@@ -140,7 +140,7 @@ get '/grand-plage/web/portail' => sub {
                 label3 => "L'usage du portail",
                 dashboard => {
                     src => 'http://129.1.0.237:5601/app/kibana#/dashboard/cef5b330-9786-11e7-88ff-a79737dea4ec?embed=true&_g=(refreshInterval%3A(display%3AOff%2Cpause%3A!f%2Cvalue%3A0)%2Ctime%3A(from%3Anow-1y%2Cmode%3Aquick%2Cto%3Anow))',
-            height => '1500px'
+            height => '1650px'
         }
     };
 };
@@ -151,7 +151,7 @@ get '/grand-plage/web/bnr' => sub {
                 label2 => 'Sites web',
                 label3 => "Sessions de consultation de la bn-r et du portail",
                 dashboard => {
-                    src => 'http://129.1.0.237:5601/app/kibana#/dashboard/Web-:-sessions?embed=true&_g=(refreshInterval:(display:Off,pause:!f,value:0),time:(from:\'2008-01-01T00:00:00.000Z\',mode:absolute,to:\'2016-12-30T23:00:00.000Z\'))&_a=(filters:!(),options:(darkTheme:!f),panels:!((col:1,id:\'Web-:-sessions-par-ann%C3%A9e\',panelIndex:1,row:1,size_x:12,size_y:5,type:visualization),(col:1,id:\'Web-:-sessions-par-mois\',panelIndex:2,row:6,size_x:12,size_y:5,type:visualization)),query:(query_string:(analyze_wildcard:!t,query:\'*\')),title:\'Web%20:%20sessions\',uiState:(P-1:(vis:(legendOpen:!f)),P-2:(vis:(legendOpen:!f))))',
+                    src => 'http://129.1.0.237:5601/app/kibana#/dashboard/Web-:-sessions?embed=true&_g=(refreshInterval:(display:Off,pause:!f,value:0),time:(from:\'2008-01-01T00:00:00.000Z\',mode:absolute,to:\'2019-04-18T07:38:29.312Z\'))&_a=(description:\'\',filters:!(),options:(darkTheme:!f),panels:!((col:1,id:\'Web-:-sessions-par-ann%C3%A9e\',panelIndex:1,row:2,size_x:12,size_y:5,type:visualization),(col:1,id:\'Web-:-sessions-par-mois\',panelIndex:2,row:7,size_x:12,size_y:5,type:visualization),(col:1,id:AWovY57YIC-X_pQ2xMAW,panelIndex:3,row:1,size_x:12,size_y:1,type:visualization)),query:(query_string:(analyze_wildcard:!t,query:\'*\')),timeRestore:!t,title:\'Web+:+sessions\',uiState:(P-1:(vis:(legendOpen:!f)),P-2:(vis:(legendOpen:!f))),viewMode:view)',
             height => '1300px'
         }
     };
@@ -201,7 +201,7 @@ get '/mediatheque/collections/prets' => sub {
         label2 => 'Collections',
         label3 => 'Prêts',
         dashboard => {
-            src => 'http://129.1.0.237:5601/app/kibana#/dashboard/Pr%C3%AAts-M%C3%A9diath%C3%A8que?embed=true&_g=(refreshInterval:(display:Off,pause:!f,value:0),time:(from:now-1y,mode:quick,to:now))&_a=(filters:!(),options:(darkTheme:!f),panels:!((col:1,id:Nombre-de-pr%C3%AAts-par-collection,panelIndex:24,row:3,size_x:12,size_y:9,type:visualization),(col:7,id:\'Nombre-d!\'emprunteurs-totaux\',panelIndex:25,row:1,size_x:6,size_y:2,type:visualization),(col:1,id:Pr%C3%AAts,panelIndex:26,row:1,size_x:6,size_y:2,type:visualization)),query:(query_string:(analyze_wildcard:!t,query:\'pret_site:%20%22M%C3%A9diath%C3%A8que%22%20AND%20personne\')),title:\'Pr%C3%AAts%20M%C3%A9diath%C3%A8que\',uiState:())',
+            src => 'http://129.1.0.237:5601/app/kibana#/dashboard/Pr%C3%AAts-M%C3%A9diath%C3%A8que?embed=true&_g=(refreshInterval:(display:Off,pause:!f,value:0),time:(from:now-1y,mode:quick,to:now))&_a=(description:\'\',filters:!((\'$state\':(store:appState),meta:(alias:!n,disabled:!f,index:prets,key:pret_site,negate:!f,type:phrase,value:M%C3%A9diath%C3%A8que),query:(match:(pret_site:(query:M%C3%A9diath%C3%A8que,type:phrase))))),options:(darkTheme:!f),panels:!((col:1,id:Nombre-de-pr%C3%AAts-par-collection,panelIndex:24,row:4,size_x:12,size_y:9,type:visualization),(col:7,id:\'Nombre-d!\'emprunteurs-totaux\',panelIndex:25,row:1,size_x:6,size_y:2,type:visualization),(col:1,id:Pr%C3%AAts,panelIndex:26,row:1,size_x:6,size_y:2,type:visualization),(col:1,id:Pr%C3%A9cision,panelIndex:27,row:3,size_x:12,size_y:1,type:visualization)),query:(match_all:()),timeRestore:!t,title:\'Pr%C3%AAts+M%C3%A9diath%C3%A8que\',uiState:(),viewMode:view)',
             height => '1400px'
         }
     };
@@ -236,7 +236,7 @@ get '/mediatheque/webkiosk/profils' => sub {
         label1 => 'La Médiathèque',
         label2 => 'Qui utilise le service webkiosk?',
         dashboard => {
-            src => 'http://129.1.0.237:5601/app/kibana#/dashboard/AWkU49FAIC-X_pQ2w5S5?embed=true&_g=(refreshInterval:(display:Off,pause:!f,value:0),time:(from:now-1y,mode:quick,to:now))&_a=(description:\'Profil+et+usages+des+ordinateurs+webkiosk+en+libre+acc%C3%A8s\',filters:!(),options:(darkTheme:!f),panels:!((col:9,id:AWkU4XRCIC-X_pQ2w5S4,panelIndex:1,row:5,size_x:4,size_y:3,type:visualization),(col:9,id:AWkU3Y3jIC-X_pQ2w5S1,panelIndex:2,row:3,size_x:4,size_y:2,type:visualization),(col:1,id:AWkU3BneIC-X_pQ2w5Sz,panelIndex:3,row:3,size_x:8,size_y:2,type:visualization),(col:5,id:AWkU4LqYIC-X_pQ2w5S3,panelIndex:4,row:5,size_x:4,size_y:3,type:visualization),(col:1,id:AWkU3yr6IC-X_pQ2w5S2,panelIndex:5,row:8,size_x:12,size_y:4,type:visualization),(col:1,id:AWkU2twZIC-X_pQ2w5Sy,panelIndex:6,row:1,size_x:8,size_y:2,type:visualization),(col:9,id:AWkU3KPZIC-X_pQ2w5S0,panelIndex:7,row:1,size_x:4,size_y:2,type:visualization),(col:1,id:AWkU8ezvIC-X_pQ2w5S7,panelIndex:8,row:5,size_x:4,size_y:3,type:visualization)),query:(match_all:()),timeRestore:!t,title:\'Usages+de+webkiosk\',uiState:(P-1:(vis:(legendOpen:!f)),P-2:(vis:(defaultColors:(\'0+-+100\':\'rgb(0,104,55)\'))),P-3:(vis:(legendOpen:!f)),P-4:(vis:(legendOpen:!f)),P-5:(vis:(legendOpen:!f)),P-6:(vis:(legendOpen:!f)),P-7:(vis:(defaultColors:(\'0+-+100\':\'rgb(0,104,55)\'))),P-8:(vis:(defaultColors:(\'0+-+100\':\'rgb(0,104,55)\')))),viewMode:view)', 
+            src => 'http://129.1.0.237:5601/goto/e2054a9d9694884fe341c1580b50c75e?embed=true', 
 			height => '1500px'
         }
     };
@@ -258,7 +258,7 @@ get '/mediatheque/salle etude/profils' => sub {
         label1 => 'La Médiathèque',
         label2 => 'Qui fréquente la salle d\'etude?',
         dashboard => {
-            src => 'http://129.1.0.237:5601/app/kibana#/dashboard/Fr%C3%A9quentation-de-la-salle-d\'%C3%A9tude?embed=true&_g=(refreshInterval:(display:Off,pause:!f,value:0),time:(from:now-1y,mode:quick,to:now))&_a=(filters:!(),options:(darkTheme:!f),panels:!((col:9,id:\'Utilisateurs-salle-d!\'%C3%A9tude-par-%C3%A2ge\',panelIndex:3,row:5,size_x:4,size_y:4,type:visualization),(col:1,id:\'Utilisateurs-salle-d!\'%C3%A9tude-par-type-de-carte\',panelIndex:5,row:5,size_x:4,size_y:4,type:visualization),(col:4,id:\'Nombre-d!\'utilisateurs-de-la-salle-d!\'%C3%A9tude-par-mois\',panelIndex:7,row:1,size_x:6,size_y:2,type:visualization),(col:1,id:\'Utilisateurs-salle-d!\'%C3%A9tude\',panelIndex:8,row:1,size_x:3,size_y:2,type:visualization),(col:1,id:\'Visites-salle-d!\'%C3%A9tude\',panelIndex:9,row:3,size_x:3,size_y:2,type:visualization),(col:5,id:\'Utilisateurs-salle-d!\'%C3%A9tude-par-sexe\',panelIndex:11,row:5,size_x:4,size_y:4,type:visualization),(col:10,id:\'Dur%C3%A9e-moyenne-visite-salle-d!\'%C3%A9tude\',panelIndex:12,row:3,size_x:3,size_y:2,type:visualization),(col:4,id:\'Nombre-de-visites-en-salle-d!\'%C3%A9tude-par-mois\',panelIndex:13,row:3,size_x:6,size_y:2,type:visualization),(col:10,id:\'Salle-d!\'%C3%A9tude\',panelIndex:14,row:1,size_x:3,size_y:2,type:visualization)),query:(query_string:(analyze_wildcard:!t,query:\'*\')),title:\'Fr%C3%A9quentation%20de%20la%20salle%20d!\'%C3%A9tude\',uiState:(P-13:(vis:(legendOpen:!f)),P-3:(vis:(legendOpen:!f)),P-7:(vis:(legendOpen:!f))))',
+            src => 'http://129.1.0.237:5601/goto/6c112f731f85d1f09553834dc8e1d36c?embed=true',
             height => '1200px'
         }
     };
