@@ -35,22 +35,25 @@ SQL
     my $i = 0 ;
     while (my @row = $sth->fetchrow_array) {
         my ( $id, $date, $action, $lieu, $type_action, $public, $partenariat, $nb_participants ) = @row ;
+		
+		if (defined $date) {
     
-        my %index = (
-            index   => $index,
-            type    => $type,
-            id         => $id,
-            body    => {
-                action_id => $id,
-                date => $date,
-                action => $action,
-                lieu => $lieu,
-                type_action => $type_action,
-                public => $public,
-                partenariat => $partenariat,
-                nb_participants => $nb_participants
-            }
-        ) ;
+			my %index = (
+				index   => $index,
+				type    => $type,
+				id         => $id,
+				body    => {
+					action_id => $id,
+					date => $date,
+					action => $action,
+					lieu => $lieu,
+					type_action => $type_action,
+					public => $public,
+					partenariat => $partenariat,
+					nb_participants => $nb_participants
+				}
+			);
+        }
 
         $e->index(%index) ;
         $i++ ;
