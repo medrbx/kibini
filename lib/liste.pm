@@ -18,7 +18,7 @@ sub TestParams {
 
 sub GetListRows {
     my ($rapport ) = @_ ;
-    my $ws = "http://webservice.mediathequederoubaix.fr/cgi-bin/koha/svc/report?id=$rapport" ;
+    my $ws = "http://cataloguekoha.ntrbx.local/cgi-bin/koha/svc/report?id=$rapport" ;
     my $ua = LWP::UserAgent->new() ;
     my $request = HTTP::Request->new( GET => $ws ) ;
     my $rep = $ua->request($request)->{'_content'} ;

@@ -57,8 +57,10 @@
                 <li class="nav-header"></li>
                 <li><a href="/collectivites/collections/documents">Quelles collections ?</a></li>
                 <li><a href="/collectivites/collections/prets">Nombre de prêts ?</a></li>
+<!--
                 <li><a href="/collectivites/collections/emprunteurs">Qui sont les emprunteurs ?</a></li>
                 <li><a href="/collectivites/collections/emprunteurs/details">Qui emprunte quoi ?</a></li>
+																											 -->
             </ul>
 
             <hr>

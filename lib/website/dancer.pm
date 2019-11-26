@@ -365,29 +365,31 @@ get '/collectivites/collections/prets' => sub {
     };
 };
 
-get '/collectivites/collections/emprunteurs' => sub {
-    template 'kibana', {
-        label1 => 'Collectivités',
-        label2 => 'Collections',
-        label3 => 'Emprunteurs',
-        dashboard => {
-            src => 'http://129.1.0.237:5601/app/kibana#/dashboard/Profil-emprunteurs-Collectivit%C3%A9s?embed=true&_g=(refreshInterval%3A(display%3AOff%2Cpause%3A!f%2Cvalue%3A0)%2Ctime%3A(from%3Anow-1y%2Cmode%3Aquick%2Cto%3Anow))',
-            height => '1200px'
-        }
-    };
-};
+# 2 tableaux de bords en attente
 
-get '/collectivites/collections/emprunteurs/details' => sub {
-    template 'kibana', {
-        label1 => 'Collectivités',
-        label2 => 'Collections',
-        label3 => 'Qui emprunte quoi?',
-        dashboard => {
-            src => '...',
-            height => '1200px'
-        }
-    };
-};
+#get '/collectivites/collections/emprunteurs' => sub {
+#    template 'kibana', {
+#        label1 => 'Collectivités',
+#        label2 => 'Collections',
+#        label3 => 'Emprunteurs',
+#        dashboard => {
+#            src => 'http://129.1.0.237:5601/app/kibana#/dashboard/Profil-emprunteurs-Collectivit%C3%A9s?embed=true&_g=(refreshInterval%3A(display%3AOff%2Cpause%3A!f%2Cvalue%3A0)%2Ctime%3A(from%3Anow-1y%2Cmode%3Aquick%2Cto%3Anow))',
+#            height => '1200px'
+#        }
+#    };
+#};
+
+#get '/collectivites/collections/emprunteurs/details' => sub {
+#    template 'kibana', {
+#        label1 => 'Collectivités',
+#        label2 => 'Collections',
+#        label3 => 'Qui emprunte quoi?',
+#        dashboard => {
+#            src => '...',
+#            height => '1200px'
+#        }
+#    };
+#};
 
 # PARTIE 5 - La poldoc de La Grand-Plage
 
