@@ -54,6 +54,8 @@ sub GetListData {
         "d3pzz" => "Réservations sur documents disponibles, personnel, 3e étage",
         "d4azz" => "Réservations sur documents disponibles, public, Zèbre",
         "d4pzz" => "Réservations sur documents disponibles, personnel, Zèbre",
+		"d5azz" => "Réservations sur documents disponibles, public, Quarantaine",
+        "d5pzz" => "Réservations sur documents disponibles, personnel, Quarantaine",
         "t0azz" => "Réservations sur documents en traitement, public, RDC",
         "t0pzz" => "Réservations sur documents en traitement, personnel, RDC",
         "t1azz" => "Réservations sur documents en traitement, public, 1er étage",
@@ -81,7 +83,9 @@ sub GetListData {
         "p_et0_s5" => "Documents perdus depuis cinq semaines, RDC",
         "p_et1_s5" => "Documents perdus depuis cinq semaines, 1er étage",
         "p_et2_s5" => "Documents perdus depuis cinq semaines, 2e étage",
-        "p_et3_s5" => "Documents perdus depuis cinq semaines, 3e étage"
+        "p_et3_s5" => "Documents perdus depuis cinq semaines, 3e étage",
+		"aazzz" => "Contentieux, personnes à appeler",
+		"bbzzz" => "Contentieux, titres de recettes à créer"
     );
 
     my %rap = (
@@ -95,6 +99,8 @@ sub GetListData {
         "d3pzz" => "190",
         "d4azz" => "170",
         "d4pzz" => "191",
+		"d5azz" => "205",
+		"d5pzz" => "206",
         "t0azz" => "144",
         "t0pzz" => "192",
         "t1azz" => "145",
@@ -122,10 +128,14 @@ sub GetListData {
         "p_et0_s1" => "152",
         "p_et1_s1" => "153",
         "p_et2_s1" => "154",
-        "p_et3_s1" => "155"
+        "p_et3_s1" => "155",
+		"aazzz" => "207",
+		"bbzzz" => "208"
     );
 
     my %template = (
+		"a" => 'liste_contentieux',
+		"b" => 'liste_contentieuxb',
         "d" => 'liste_reservations',
         "t" => 'liste_reservations',
         "e" => 'liste_reservations',        
@@ -141,7 +151,7 @@ sub GetListData {
     
     # On récupère les lignes
     my $rapport = $rap{$key};
-    my $ws = "http://webservice.mediathequederoubaix.fr/cgi-bin/koha/svc/report?id=$rapport";
+    my $ws = "http://cataloguekoha.ntrbx.local/cgi-bin/koha/svc/report?id=$rapport";
     my $ua = LWP::UserAgent->new();
     my $request = HTTP::Request->new( GET => $ws );
     my $rep = $ua->request($request)->{'_content'};

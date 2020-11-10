@@ -33,7 +33,7 @@ while (my $ligne = <>) {
     my ($date, $heure, $entrees) = split /\,/, $ligne ;
     $date =~ s/(\)|\()//g ;
     my ($annee, $mois, $jour) = split /-/, $date ;
-    $heure =~ /(\d*)(h.)/ ;
+    $heure =~ /(\d*)(\D+)/ ;
     $heure = $1 ;
     if ($heure !~ /\d{2}/) {
         $heure = "0$heure" ;
@@ -43,6 +43,7 @@ while (my $ligne = <>) {
 	    $sth->execute( $datetime, $entrees )
         	or die "Echec Requête $req : $DBI::errstr";
         $i++ ;
+		print "$datetime : $entrees\n";
 	}        
 }
 

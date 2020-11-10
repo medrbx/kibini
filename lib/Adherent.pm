@@ -60,6 +60,7 @@ has es_inscription_gratuite => ( is => 'ro' );
 has es_inscription_nb_annees_adhesion => ( is => 'ro' );
 has es_inscription_nb_annees_adhesion_tra => ( is => 'ro' );
 has es_adherentid => ( is => 'ro' );
+has es_adherentid_test => ( is => 'ro' );
 has es_attributes_action => ( is => 'ro' );
 has es_attributes_collectivites => ( is => 'ro' );
 has es_attributes_pcs => ( is => 'ro' );

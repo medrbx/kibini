@@ -40,12 +40,8 @@ sub entrees {
     my $e = Search::Elasticsearch->new( %params );
 
     my $dbh = GetDbh();
-    my $req = <<SQL;
-SELECT date_heure, nb_entrees
-FROM statdb.stat_compteur_entrees
-WHERE date_heure > ?
-SQL
-
+    #my $req = "SELECT date_heure, nb_entrees FROM statdb.stat_compteur_entrees WHERE date_heure > ?";
+	my $req = "SELECT datetime as date_heure, entrees as nb_entrees FROM statdb.stat_entrees WHERE datetime > ?";
     my $sth = $dbh->prepare($req);
     $sth->execute($maxdatetime);
     $i = 0;

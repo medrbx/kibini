@@ -4,7 +4,7 @@ use Modern::Perl;
 use LWP::UserAgent;
 use Data::Dumper;
 
-my $input = "ADM_delete_borrowers_input.txt";
+my $input = "b2del/xaz";
 #my $input = "ADM_delete_borrowers_input_test.txt";
 
 open( my $fd, "<", $input );

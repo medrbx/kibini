@@ -22,7 +22,7 @@ my $es_node = GetEsNode() ;
 
 #my $result = RegenerateIndex($es_node, "syntheses") ;
 
-#my $i = synth_prets($es_node) ;
+my $i = synth_prets($es_node) ;
 
 # On log la fin de l'opération
 $log_message = "$process : $i rows indexed" ;
@@ -39,7 +39,7 @@ sub synth_prets {
 
     my $e = Search::Elasticsearch->new( %params ) ;
     
-    open my $fic, "<:encoding(utf8)", "/home/kibini/kibini_prod/data/es_csv/synth_ann_prets_20190404.csv";
+    open my $fic, "<:encoding(utf8)", "/home/kibini/kibini_prod/data/es_csv/synth_ann_prets_20200122.csv";
 
     my $csv = Text::CSV->new ({
         binary    => 1, # permet caractères spéciaux (?)
@@ -59,9 +59,9 @@ sub synth_prets {
                 nb_prets => $nb_prets
             }
         ) ;
-        print "$public, $support, $annee, $nb_prets\n" ;
+        #print "$public, $support, $annee, $nb_prets\n" ;
         $e->index(%index) ;
-		#print Dumper(\%index);
+		print Dumper(\%index);
 
         $i++ ;
     }

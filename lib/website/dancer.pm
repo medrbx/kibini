@@ -402,7 +402,8 @@ get '/grand-plage/collections/ensemble' => sub {
         label3 => 'Principaux indicateurs',
         file_2016 => '/data/Statistiques_collections_2016_v20170506.xlsx',
         file_2017 => '/data/Statistiques_collections_2017.xlsx', 
-		file_2018 => '/data/Statistiques_collections_2018.xlsx'
+        file_2018 => '/data/Statistiques_collections_2018.xlsx',
+        file_2019 => '/data/Statistiques_collections_2019_VM.xlsx'
 #        indicateurs => $indicateurs
     };
 };

@@ -1,0 +1,2202 @@
+---
+action_coop:
+  mappings:
+    actions:
+      properties:
+        action_id:
+          type: integer
+        date:
+          type: date
+        lieu:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        nom:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        nom_structure:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        participants:
+          type: integer
+        referent_action:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        type_action:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        type_structure:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+action_culturelle:
+  mappings:
+    actions:
+      properties:
+        action:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        action_id:
+          type: integer
+        date:
+          type: date
+        lieu:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        nb_participants:
+          type: integer
+        partenariat:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        public:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        type_action:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+adherents2:
+  mappings:
+    adherents:
+      properties:
+        activite:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        activite_emprunteur:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        activite_emprunteur_bus:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        activite_emprunteur_med:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        activite_salle_etude:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        activite_utilisateur_postes_informatiques:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        activite_utilisateur_wifi:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        ages_lib1:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        ages_lib2:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        ages_lib3:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        date_extraction:
+          type: date
+        geo_gentile:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        geo_roubaix_iris:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        geo_roubaix_nom_iris:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        geo_roubaix_quartier:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        geo_ville:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        geo_ville_front:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        inscription_attribut:
+          properties:
+            PCS:
+              fields:
+                keyword:
+                  ignore_above: 256
+                  type: keyword
+              type: text
+            action:
+              fields:
+                keyword:
+                  ignore_above: 256
+                  type: keyword
+              type: text
+            collectivités:
+              fields:
+                keyword:
+                  ignore_above: 256
+                  type: keyword
+              type: text
+            zèbre:
+              fields:
+                keyword:
+                  ignore_above: 256
+                  type: keyword
+              type: text
+        inscription_carte:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        inscription_fidelite:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        inscription_fidelite_tr:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        inscription_gratuite:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        inscription_personnalite:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        inscription_prix:
+          type: integer
+        inscription_site_inscription:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        inscription_type_carte:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        nb_venues:
+          type: long
+        nb_venues_postes_informatiques:
+          type: long
+        nb_venues_postes_informatiques_tr:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        nb_venues_prets:
+          type: long
+        nb_venues_prets_bus:
+          type: long
+        nb_venues_prets_bus_tr:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        nb_venues_prets_mediatheque:
+          type: long
+        nb_venues_prets_mediatheque_tr:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        nb_venues_prets_tr:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        nb_venues_salle_etude:
+          type: long
+        nb_venues_salle_etude_tr:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        nb_venues_tr:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        nb_venues_wifi:
+          type: long
+        nb_venues_wifi_tr:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        sexe:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+catalogue:
+  mappings:
+    biblio:
+      properties:
+        bib:
+          properties:
+            agence_cat:
+              fields:
+                keyword:
+                  ignore_above: 256
+                  type: keyword
+              type: text
+            agence_cat_nor:
+              fields:
+                keyword:
+                  ignore_above: 256
+                  type: keyword
+              type: text
+            ark_bnf:
+              fields:
+                keyword:
+                  ignore_above: 256
+                  type: keyword
+              type: text
+            audience:
+              fields:
+                keyword:
+                  ignore_above: 256
+                  type: keyword
+              type: text
+            contributor:
+              fields:
+                keyword:
+                  ignore_above: 256
+                  type: keyword
+              type: text
+            creator:
+              fields:
+                keyword:
+                  ignore_above: 256
+                  type: keyword
+              type: text
+            date:
+              fields:
+                keyword:
+                  ignore_above: 256
+                  type: keyword
+              type: text
+            identifier:
+              properties:
+                ean:
+                  fields:
+                    keyword:
+                      ignore_above: 256
+                      type: keyword
+                  type: text
+                isbn:
+                  fields:
+                    keyword:
+                      ignore_above: 256
+                      type: keyword
+                  type: text
+                issn:
+                  fields:
+                    keyword:
+                      ignore_above: 256
+                      type: keyword
+                  type: text
+            language:
+              fields:
+                keyword:
+                  ignore_above: 256
+                  type: keyword
+              type: text
+            perio_ccode:
+              fields:
+                keyword:
+                  ignore_above: 256
+                  type: keyword
+              type: text
+            publisher:
+              fields:
+                keyword:
+                  ignore_above: 256
+                  type: keyword
+              type: text
+            subject:
+              fields:
+                keyword:
+                  ignore_above: 256
+                  type: keyword
+              type: text
+            subject_main:
+              fields:
+                keyword:
+                  ignore_above: 256
+                  type: keyword
+              type: text
+            title:
+              fields:
+                keyword:
+                  ignore_above: 256
+                  type: keyword
+              type: text
+            type:
+              fields:
+                keyword:
+                  ignore_above: 256
+                  type: keyword
+              type: text
+        biblionumber:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        items:
+          properties:
+            count:
+              fields:
+                keyword:
+                  ignore_above: 256
+                  type: keyword
+              type: text
+        manage:
+          properties:
+            datecreated:
+              type: date
+        qa:
+          properties:
+            bib:
+              properties:
+                agence_cat:
+                  fields:
+                    keyword:
+                      ignore_above: 256
+                      type: keyword
+                  type: text
+                ark_rbx:
+                  fields:
+                    keyword:
+                      ignore_above: 256
+                      type: keyword
+                  type: text
+                audience:
+                  fields:
+                    keyword:
+                      ignore_above: 256
+                      type: keyword
+                  type: text
+                date:
+                  fields:
+                    keyword:
+                      ignore_above: 256
+                      type: keyword
+                  type: text
+                language:
+                  fields:
+                    keyword:
+                      ignore_above: 256
+                      type: keyword
+                  type: text
+                type:
+                  fields:
+                    keyword:
+                      ignore_above: 256
+                      type: keyword
+                  type: text
+            vd:
+              properties:
+                action:
+                  fields:
+                    keyword:
+                      ignore_above: 256
+                      type: keyword
+                  type: text
+                vendange:
+                  fields:
+                    keyword:
+                      ignore_above: 256
+                      type: keyword
+                  type: text
+eliminations:
+  mappings:
+    exemplaires:
+      properties:
+        annee_mise_pilon:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        barcode:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        biblionumber:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        ccode:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        damaged:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        dateaccessioned:
+          type: date
+        datelastborrowed:
+          type: date
+        datelastseen:
+          type: date
+        holdingbranch:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        homebranch:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        issues:
+          type: integer
+        itemcallnumber:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        itemlost:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        itemnumber:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        itemtype:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        itype:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        lib1:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        lib2:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        lib3:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        lib4:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        location:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        motif:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        notforloan:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        onloan:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        pret12:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        price:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: float
+        renewals:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        replacementprice:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: float
+        sll_acces:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        sll_collection:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        sll_prets:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        sll_prets_coll:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        sll_public:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        title:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        withdrawn:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+entrees:
+  mappings:
+    camera:
+      properties:
+        entrees_date:
+          format: yyyy-MM-dd HH:mm:ss
+          type: date
+        entrees_date_annee:
+          index: not_analyzed
+          type: string
+        entrees_date_heure:
+          index: not_analyzed
+          type: string
+        entrees_date_jour:
+          index: not_analyzed
+          type: string
+        entrees_date_jour_semaine:
+          index: not_analyzed
+          type: string
+        entrees_date_mois:
+          index: not_analyzed
+          type: string
+        entrees_date_semaine:
+          index: not_analyzed
+          type: string
+        nb_entrees:
+          type: integer
+freq_etude:
+  mappings:
+    consultations:
+      properties:
+        consultation_duree:
+          type: integer
+        date:
+          format: yyyy-MM-dd HH:mm:ss
+          type: date
+        lecteur_age:
+          index: not_analyzed
+          type: string
+        lecteur_age_lib1:
+          index: not_analyzed
+          type: string
+        lecteur_age_lib2:
+          index: not_analyzed
+          type: string
+        lecteur_age_lib3:
+          index: not_analyzed
+          type: string
+        lecteur_carte:
+          index: not_analyzed
+          type: string
+        lecteur_id:
+          index: not_analyzed
+          type: string
+        lecteur_rbx_iris:
+          index: not_analyzed
+          type: string
+        lecteur_rbx_nom_iris:
+          index: not_analyzed
+          type: string
+        lecteur_rbx_quartier:
+          index: not_analyzed
+          type: string
+        lecteur_sexe:
+          index: not_analyzed
+          type: string
+        lecteur_type_carte:
+          index: not_analyzed
+          type: string
+        lecteur_ville:
+          index: not_analyzed
+          type: string
+frequentation:
+  mappings:
+    tests:
+      properties:
+        espace:
+          index: not_analyzed
+          type: string
+        heure:
+          type: integer
+        jour:
+          index: not_analyzed
+          type: string
+        nb_personnes:
+          type: integer
+        periode:
+          index: not_analyzed
+          type: string
+        position:
+          index: not_analyzed
+          type: string
+        type_periode:
+          index: not_analyzed
+          type: string
+items:
+  mappings:
+    exemplaires:
+      properties:
+        abime:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        annee_mise_pilon:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        annee_publication:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        barcode:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        biblionumber:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        ccode:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        code_barre:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        collection_ccode:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        collection_lib1:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        collection_lib2:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        collection_lib3:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        collection_lib4:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        cote:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        damaged:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        date_creation:
+          type: date
+        date_dernier_pret:
+          type: date
+        dateaccessioned:
+          type: date
+        datelastborrowed:
+          type: date
+        datelastseen:
+          type: date
+        emprunt:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        holdingbranch:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        homebranch:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        issues:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        itemcallnumber:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        itemlost:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        itemlost_on:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        itemnumber:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        itemtype:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        itype:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        lib1:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        lib2:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        lib3:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        lib4:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        localisation:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        location:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        motif:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        notforloan:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        onloan:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        perdu:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        pret12:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        price:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        prix:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        renewals:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        replacementprice:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        retire_collection:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        site_detenteur:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        site_rattach:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        sll_acces:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        sll_collection:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        sll_prets:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        sll_prets_coll:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        sll_public:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        statut:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        support:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        title:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        titre:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        withdrawn:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        withdrawn_on:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+periodiques:
+  mappings:
+    biblio:
+      properties:
+        bib:
+          properties:
+            agence_cat:
+              index: not_analyzed
+              type: string
+            agence_cat_nor:
+              index: not_analyzed
+              type: string
+            ark_bnf:
+              index: not_analyzed
+              type: string
+            audience:
+              index: not_analyzed
+              type: string
+            contributor:
+              index: not_analyzed
+              type: string
+            count_items:
+              index: not_analyzed
+              type: string
+            creator:
+              index: not_analyzed
+              type: string
+            date:
+              index: not_analyzed
+              type: string
+            identifier:
+              properties:
+                isbn:
+                  index: not_analyzed
+                  type: string
+                issn:
+                  index: not_analyzed
+                  type: string
+            items:
+              properties:
+                barcode:
+                  index: not_analyzed
+                  type: string
+                collection:
+                  properties:
+                    ccode:
+                      index: not_analyzed
+                      type: string
+                    lib1:
+                      index: not_analyzed
+                      type: string
+                    lib2:
+                      index: not_analyzed
+                      type: string
+                    lib3:
+                      index: not_analyzed
+                      type: string
+                    lib4:
+                      index: not_analyzed
+                      type: string
+                damaged:
+                  index: not_analyzed
+                  type: string
+                dateaccessioned:
+                  format: strict_date_optional_time||epoch_millis
+                  type: date
+                datelastborrowed:
+                  format: strict_date_optional_time||epoch_millis
+                  type: date
+                datelastseen:
+                  format: strict_date_optional_time||epoch_millis
+                  type: date
+                holdingbranch:
+                  index: not_analyzed
+                  type: string
+                homebranch:
+                  index: not_analyzed
+                  type: string
+                issues:
+                  properties:
+                    age:
+                      type: string
+                    arret_bus:
+                      index: not_analyzed
+                      type: string
+                    borrower:
+                      properties:
+                        age:
+                          properties:
+                            age:
+                              index: not_analyzed
+                              type: string
+                            trinsee:
+                              index: not_analyzed
+                              type: string
+                            trmeda:
+                              index: not_analyzed
+                              type: string
+                            trmedb:
+                              index: not_analyzed
+                              type: string
+                            trmedc:
+                              index: not_analyzed
+                              type: string
+                        borrowernumber:
+                          index: not_analyzed
+                          type: string
+                        branch:
+                          index: not_analyzed
+                          type: string
+                        carte:
+                          index: not_analyzed
+                          type: string
+                        categorycode:
+                          index: not_analyzed
+                          type: string
+                        geo:
+                          properties:
+                            district:
+                              properties:
+                                irisInsee:
+                                  index: not_analyzed
+                                  type: string
+                                irisNom:
+                                  index: not_analyzed
+                                  type: string
+                                quartier:
+                                  index: not_analyzed
+                                  type: string
+                            ville:
+                              index: not_analyzed
+                              type: string
+                    borrowernumber:
+                      index: not_analyzed
+                      type: string
+                    branch:
+                      index: not_analyzed
+                      type: string
+                    branchcode:
+                      index: not_analyzed
+                      type: string
+                    categorycode:
+                      index: not_analyzed
+                      type: string
+                    date_due:
+                      index: not_analyzed
+                      type: string
+                    fidelite:
+                      index: not_analyzed
+                      type: string
+                    iris:
+                      index: not_analyzed
+                      type: string
+                    issue_id:
+                      index: not_analyzed
+                      type: string
+                    issuedate:
+                      index: not_analyzed
+                      type: string
+                    itemnumber:
+                      index: not_analyzed
+                      type: string
+                    renewals:
+                      index: not_analyzed
+                      type: string
+                    returndate:
+                      index: not_analyzed
+                      type: string
+                    sexe:
+                      index: not_analyzed
+                      type: string
+                    timestamp:
+                      index: not_analyzed
+                      type: string
+                    ville:
+                      index: not_analyzed
+                      type: string
+                itdeleted:
+                  type: boolean
+                itemcallnumber:
+                  index: not_analyzed
+                  type: string
+                itemlost:
+                  index: not_analyzed
+                  type: string
+                itemnumber:
+                  index: not_analyzed
+                  type: string
+                location:
+                  index: not_analyzed
+                  type: string
+                notforloan:
+                  index: not_analyzed
+                  type: string
+                onloan:
+                  format: strict_date_optional_time||epoch_millis
+                  type: date
+                price:
+                  index: not_analyzed
+                  type: string
+                renewals:
+                  index: not_analyzed
+                  type: string
+                timestamp:
+                  index: not_analyzed
+                  type: string
+                withdrawn:
+                  index: not_analyzed
+                  type: string
+              type: nested
+            language:
+              index: not_analyzed
+              type: string
+            perio_ccode:
+              index: not_analyzed
+              type: string
+            publisher:
+              index: not_analyzed
+              type: string
+            subject:
+              index: not_analyzed
+              type: string
+            subject_main:
+              index: not_analyzed
+              type: string
+            title:
+              index: not_analyzed
+              type: string
+            type:
+              index: not_analyzed
+              type: string
+        biblionumber:
+          type: string
+        qa:
+          properties:
+            bib:
+              properties:
+                agence_cat:
+                  index: not_analyzed
+                  type: string
+                ark_rbx:
+                  index: not_analyzed
+                  type: string
+                audience:
+                  index: not_analyzed
+                  type: string
+                date:
+                  index: not_analyzed
+                  type: string
+                language:
+                  index: not_analyzed
+                  type: string
+                type:
+                  index: not_analyzed
+                  type: string
+            vd:
+              properties:
+                action:
+                  index: not_analyzed
+                  type: string
+                vendange:
+                  index: not_analyzed
+                  type: string
+prets:
+  mappings:
+    issues:
+      properties:
+        aggs:
+          properties:
+            sexe:
+              properties:
+                terms:
+                  properties:
+                    field:
+                      fielddata: !!perl/scalar:JSON::PP::Boolean 0
+                      fields:
+                        keyword:
+                          ignore_above: 256
+                          index: not_analyzed
+                          type: string
+                      type: string
+        doc_biblionumber:
+          type: integer
+        doc_collection_ccode:
+          index: not_analyzed
+          type: string
+        doc_collection_lib1:
+          index: not_analyzed
+          type: string
+        doc_collection_lib2:
+          index: not_analyzed
+          type: string
+        doc_collection_lib3:
+          index: not_analyzed
+          type: string
+        doc_collection_lib4:
+          index: not_analyzed
+          type: string
+        doc_cote:
+          index: not_analyzed
+          type: string
+        doc_date_acquisition:
+          format: yyyy-MM-dd
+          type: date
+        doc_date_publication:
+          type: integer
+        doc_itemnumber:
+          type: integer
+        doc_localisation:
+          index: not_analyzed
+          type: string
+        doc_site_rattachement:
+          index: not_analyzed
+          type: string
+        doc_support:
+          index: not_analyzed
+          type: string
+        emprunteur_age:
+          index: not_analyzed
+          type: string
+        emprunteur_age_lib1:
+          index: not_analyzed
+          type: string
+        emprunteur_age_lib2:
+          index: not_analyzed
+          type: string
+        emprunteur_age_lib3:
+          index: not_analyzed
+          type: string
+        emprunteur_carte:
+          index: not_analyzed
+          type: string
+        emprunteur_id:
+          index: not_analyzed
+          type: string
+        emprunteur_nb_annee_inscription:
+          type: integer
+        emprunteur_personnalite:
+          index: not_analyzed
+          type: string
+        emprunteur_rbx_iris:
+          index: not_analyzed
+          type: string
+        emprunteur_rbx_nom_iris:
+          index: not_analyzed
+          type: string
+        emprunteur_rbx_quartier:
+          index: not_analyzed
+          type: string
+        emprunteur_sexe:
+          index: not_analyzed
+          type: string
+        emprunteur_site_inscription:
+          index: not_analyzed
+          type: string
+        emprunteur_type_carte:
+          index: not_analyzed
+          type: string
+        emprunteur_ville:
+          index: not_analyzed
+          type: string
+        pret_arret_bus:
+          index: not_analyzed
+          type: string
+        pret_date_pret:
+          format: yyyy-MM-dd HH:mm:ss
+          type: date
+        pret_date_pret_annee:
+          type: integer
+        pret_date_pret_heure:
+          type: integer
+        pret_date_pret_jour:
+          type: integer
+        pret_date_pret_jour_semaine:
+          index: not_analyzed
+          type: string
+        pret_date_pret_mois:
+          type: integer
+        pret_date_pret_semaine:
+          type: integer
+        pret_date_retour:
+          format: yyyy-MM-dd HH:mm:ss
+          type: date
+        pret_date_retour_annee:
+          type: integer
+        pret_date_retour_heure:
+          type: integer
+        pret_date_retour_jour:
+          type: integer
+        pret_date_retour_jour_semaine:
+          index: not_analyzed
+          type: string
+        pret_date_retour_mois:
+          type: integer
+        pret_date_retour_semaine:
+          type: integer
+        pret_duree:
+          type: integer
+        pret_nb_renouvellements:
+          type: integer
+        pret_retard:
+          type: integer
+        pret_site:
+          index: not_analyzed
+          type: string
+        query:
+          properties:
+            bool:
+              properties:
+                must:
+                  properties:
+                    match:
+                      properties:
+                        doc_collection_lib3:
+                          fielddata: !!perl/scalar:JSON::PP::Boolean 0
+                          fields:
+                            keyword:
+                              ignore_above: 256
+                              index: not_analyzed
+                              type: string
+                          type: string
+                        emprunteur_ville:
+                          fielddata: !!perl/scalar:JSON::PP::Boolean 0
+                          fields:
+                            keyword:
+                              ignore_above: 256
+                              index: not_analyzed
+                              type: string
+                          type: string
+        sll_acces:
+          index: not_analyzed
+          type: string
+        sll_collection:
+          index: not_analyzed
+          type: string
+        sll_prets:
+          index: not_analyzed
+          type: string
+        sll_prets_coll:
+          index: not_analyzed
+          type: string
+        sll_public:
+          index: not_analyzed
+          type: string
+reservations:
+  mappings:
+    reserves:
+      properties:
+        annulation:
+          type: string
+        biblionumber:
+          type: integer
+        collection_ccode:
+          index: not_analyzed
+          type: string
+        collection_lib1:
+          index: not_analyzed
+          type: string
+        collection_lib2:
+          index: not_analyzed
+          type: string
+        collection_lib3:
+          index: not_analyzed
+          type: string
+        collection_lib4:
+          index: not_analyzed
+          type: string
+        date_annulation:
+          format: yyyy-MM-dd
+          type: date
+        date_mise_cote:
+          format: yyyy-MM-dd
+          type: date
+        date_notification:
+          format: yyyy-MM-dd
+          type: date
+        document_mis_cote:
+          type: string
+        espace:
+          index: not_analyzed
+          type: string
+        etat:
+          index: not_analyzed
+          type: string
+        found:
+          index: not_analyzed
+          type: string
+        localisation:
+          index: not_analyzed
+          type: string
+        motif_annulation:
+          index: not_analyzed
+          type: string
+        reserve_id:
+          type: integer
+        reservedate:
+          format: yyyy-MM-dd
+          type: date
+        reserveur_age:
+          index: not_analyzed
+          type: string
+        reserveur_age_lib1:
+          index: not_analyzed
+          type: string
+        reserveur_age_lib2:
+          index: not_analyzed
+          type: string
+        reserveur_age_lib3:
+          index: not_analyzed
+          type: string
+        reserveur_carte:
+          index: not_analyzed
+          type: string
+        reserveur_courriel:
+          type: string
+        reserveur_id:
+          index: not_analyzed
+          type: string
+        reserveur_mobile:
+          type: string
+        reserveur_nb_annee_inscription:
+          type: integer
+        reserveur_personnalite:
+          index: not_analyzed
+          type: string
+        reserveur_rbx_iris:
+          index: not_analyzed
+          type: string
+        reserveur_rbx_nom_iris:
+          index: not_analyzed
+          type: string
+        reserveur_rbx_quartier:
+          index: not_analyzed
+          type: string
+        reserveur_sexe:
+          type: string
+        reserveur_site_inscription:
+          index: not_analyzed
+          type: string
+        reserveur_type_carte:
+          index: not_analyzed
+          type: string
+        reserveur_ville:
+          index: not_analyzed
+          type: string
+        site_rattach:
+          index: not_analyzed
+          type: string
+        site_retrait:
+          index: not_analyzed
+          type: string
+        support:
+          index: not_analyzed
+          type: string
+rfid:
+  mappings:
+    prets:
+      properties:
+        borne:
+          index: not_analyzed
+          type: string
+        date:
+          properties:
+            annee:
+              type: integer
+            datetime:
+              format: yyyy-MM-dd HH:mm:ss
+              type: date
+            heure:
+              type: integer
+            jour:
+              type: integer
+            jour_semaine:
+              index: not_analyzed
+              type: string
+            mois:
+              type: integer
+            numero_semaine:
+              type: integer
+        etage:
+          index: not_analyzed
+          type: string
+        nb_prets:
+          type: integer
+    retours:
+      properties:
+        borne:
+          index: not_analyzed
+          type: string
+        date:
+          properties:
+            annee:
+              type: integer
+            datetime:
+              format: yyyy-MM-dd HH:mm:ss
+              type: date
+            heure:
+              type: integer
+            jour:
+              type: integer
+            jour_semaine:
+              index: not_analyzed
+              type: string
+            mois:
+              type: integer
+            numero_semaine:
+              type: integer
+        etage:
+          index: not_analyzed
+          type: string
+        nb_retours:
+          type: integer
+synth_ann_exemplaires:
+  mappings:
+    exemplaires:
+      properties:
+        annee:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        nb_documents:
+          type: integer
+        support:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+synth_ann_inscrits:
+  mappings:
+    inscrits:
+      properties:
+        annee:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        carte:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        nb_inscrits:
+          type: integer
+synth_ann_prets:
+  mappings:
+    prets:
+      properties:
+        annee:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        nb_prets:
+          type: integer
+        public:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        support:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+web:
+  mappings:
+    bn-r:
+      properties:
+        date:
+          format: strict_date_optional_time||epoch_millis
+          type: date
+        nb_pages_vues:
+          type: integer
+        nb_sessions:
+          type: integer
+        site:
+          index: not_analyzed
+          type: string
+    site:
+      properties:
+        date:
+          format: strict_date_optional_time||epoch_millis
+          type: date
+        nb_pages_vues:
+          type: integer
+        nb_sessions:
+          type: integer
+        site:
+          index: not_analyzed
+          type: string
+web2:
+  mappings:
+    site:
+      properties:
+        consultation_date:
+          type: date
+        consultation_date_annee:
+          type: long
+        consultation_date_jour:
+          type: long
+        consultation_date_jour_semaine:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        consultation_date_mois:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        consultation_date_semaine:
+          type: long
+        origine:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        pages_vues:
+          type: long
+        periode:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        taux_conversion:
+          type: long
+        utilisateurs:
+          type: long
+        visites:
+          type: long
+webkiosk:
+  mappings:
+    sessions:
+      properties:
+        adherent_age:
+          index: not_analyzed
+          type: string
+        adherent_age_lib1:
+          index: not_analyzed
+          type: string
+        adherent_age_lib2:
+          index: not_analyzed
+          type: string
+        adherent_age_lib3:
+          index: not_analyzed
+          type: string
+        adherent_carte:
+          index: not_analyzed
+          type: string
+        adherent_id:
+          index: not_analyzed
+          type: string
+        adherent_nb_annee_inscription:
+          type: integer
+        adherent_personnalite:
+          index: not_analyzed
+          type: string
+        adherent_rbx_iris:
+          index: not_analyzed
+          type: string
+        adherent_rbx_nom_iris:
+          index: not_analyzed
+          type: string
+        adherent_rbx_quartier:
+          index: not_analyzed
+          type: string
+        adherent_sexe:
+          index: not_analyzed
+          type: string
+        adherent_site_inscription:
+          index: not_analyzed
+          type: string
+        adherent_type_carte:
+          index: not_analyzed
+          type: string
+        adherent_ville:
+          index: not_analyzed
+          type: string
+        session_duree:
+          type: integer
+        session_espace:
+          index: not_analyzed
+          type: string
+        session_etage:
+          index: not_analyzed
+          type: string
+        session_groupe:
+          type: string
+        session_heure_deb:
+          format: yyyy-MM-dd HH:mm:ss
+          type: date
+        session_heure_deb_annee:
+          index: not_analyzed
+          type: string
+        session_heure_deb_heure:
+          index: not_analyzed
+          type: string
+        session_heure_deb_jour:
+          index: not_analyzed
+          type: string
+        session_heure_deb_jour_semaine:
+          index: not_analyzed
+          type: string
+        session_heure_deb_mois:
+          index: not_analyzed
+          type: string
+        session_heure_deb_semaine:
+          index: not_analyzed
+          type: string
+        session_heure_fin:
+          format: yyyy-MM-dd HH:mm:ss
+          type: date
+        session_heure_fin_annee:
+          index: not_analyzed
+          type: string
+        session_heure_fin_heure:
+          index: not_analyzed
+          type: string
+        session_heure_fin_jour:
+          index: not_analyzed
+          type: string
+        session_heure_fin_mois:
+          index: not_analyzed
+          type: string
+        session_heure_fin_semaine:
+          index: not_analyzed
+          type: string
+        session_poste:
+          index: not_analyzed
+          type: string
+sessions_webkiosk:
+  mappings:
+    sessions:
+      properties:
+        adherent_adherentid:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        adherent_age_code:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        adherent_age_lib1:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        adherent_age_lib2:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        adherent_age_lib3:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        adherent_attributes_action:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        adherent_attributes_collectivites:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        adherent_attributes_pcs:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        adherent_attributes_zebre:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        adherent_geo_gentilite:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        adherent_geo_rbx_iris:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        adherent_geo_rbx_nom_iris:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        adherent_geo_rbx_quartier:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        adherent_geo_rbx_secteur:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        adherent_geo_ville:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        adherent_geo_ville_bm:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        adherent_geo_ville_front:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        adherent_inscription_carte:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        adherent_inscription_gratuite:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        adherent_inscription_nb_annees_adhesion:
+          type: integer
+        adherent_inscription_nb_annees_adhesion_tra:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        adherent_inscription_personnalite:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        adherent_inscription_prix:
+          type: integer
+        adherent_inscription_site:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        adherent_inscription_type_carte:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        adherent_sexe:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        session_duree:
+          type: integer
+        session_espace:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        session_groupe:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        session_heure_deb:
+          format: yyyy-MM-dd HH:mm:ss
+          type: date
+        session_heure_deb_annee:
+          type: integer
+        session_heure_deb_heure:
+          type: integer
+        session_heure_deb_jour:
+          type: integer
+        session_heure_deb_jour_semaine:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        session_heure_deb_mois:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        session_heure_deb_semaine:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        session_heure_fin:
+          format: yyyy-MM-dd HH:mm:ss
+          type: date
+        session_heure_fin_annee:
+          type: integer
+        session_heure_fin_heure:
+          type: integer
+        session_heure_fin_jour:
+          type: integer
+        session_heure_fin_jour_semaine:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        session_heure_fin_mois:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        session_heure_fin_semaine:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        session_id:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text
+        session_poste:
+          fields:
+            keyword:
+              ignore_above: 256
+              type: keyword
+          type: text

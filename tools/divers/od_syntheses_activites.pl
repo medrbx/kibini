@@ -35,7 +35,7 @@ SELECT
     COUNT(*) AS "Nb"
 FROM statdb.stat_webkiosk s
 LEFT JOIN statdb.iris_lib i ON i.irisInsee = s.iris
-WHERE YEAR(s.heure_deb) IN (2016, 2017)
+WHERE YEAR(s.heure_deb) IN (2018, 2019)
 GROUP BY SUBSTRING(s.heure_deb, 1, 13), gent, s.iris
 SQL
 

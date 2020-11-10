@@ -8,6 +8,9 @@ dayofmonthnextweek=`date +%d -d "7 day"`
 dir='/home/kibini/kibini_prod/bin/'
 dir_log='/home/kibini/kibini_prod/log/crontab/'
 
+# CHAQUE JOUR CONFINNEMENT 2 : on génère liste des personnes à appeler pour réservation
+perl /home/kibini/kibini_prod/tools/ADM_resa_appels.pl
+
 # CHAQUE DERNIER MERCREDI DU MOIS
 if [ $dayofweek -eq 3 ] && [ $dayofmonthnextweek -lt $dayofmonth ]
 then

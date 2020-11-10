@@ -1,0 +1,10 @@
+	'marc_map(200aegi, title, join:", ")',
+	'marc_map(210c, publisher)',
+	'marc_map(700abf, creator.$append, join:", ")',
+	'marc_map(701abf, creator.$append, join:", ")',
+	'marc_map(702abf, contributor.$append, join:", ")',
+	'marc_map(710af, creator.$append, join:", ")',
+	'marc_map(711af, creator.$append, join:", ")',
+	'marc_map(712af, contributor.$append, join:", ")',
+	'marc_map(60.a, subject.$append, join:", ")',
+	'retain(title, publisher, creator, contributor, subject)

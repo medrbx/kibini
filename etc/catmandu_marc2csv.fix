@@ -1,0 +1,78 @@
+marc_map(200a,Titre, join:"|") # en cas de valeurs multiples, celles-c- sont séparées par un pipe
+unless exists(Titre) # si le champ, n'existe pas, on lui donne une valeur N/A par défaut (indispensable dans le cas d'un export à plat)
+  set_field(Titre,"N/A")
+end
+
+marc_map(200h,NumeroVolume, join:"|")
+unless exists(NumeroVolume)
+  set_field(NumeroVolume,"N/A")
+end
+
+marc_map(200i,TitreVolume, join:"|")
+unless exists(TitreVolume)
+  set_field(TitreVolume,"N/A")
+end
+
+marc_map(010a,ISBN, join:"|")
+unless exists(ISBN)
+  marc_map(073a,ISBN, join:"|")
+  unless exists(ISBN)  
+    set_field(ISBN,"N/A")
+  end
+end
+
+marc_map(200e,SousTitre, join:"|")
+unless exists(SousTitre)
+  set_field(SousTitre,"N/A")
+end
+
+marc_map('100/9-12',DateEdition)
+unless exists(DateEdition)
+  marc_map(210d,DateEdition)
+  replace_all(DateEdition, '^.*(\d{4}).*$', '$1') # regex qui devrait ne retenir que les 4 chiffres de l'année, mais qui fonctionne mal...
+  unless exists(DateEdition)
+    set_field(DateEdition,"N/A")
+  end
+end
+
+marc_map(410t,Collection, join:"|")
+unless exists(Collection)
+  marc_map(225a,Collection, join:"|")
+  unless exists(Collection)
+    set_field(Collection,"N/A")
+  end
+end
+
+marc_map(700a,NomAuteur, join:"|")
+unless exists(NomAuteur)
+  set_field(NomAuteur,"N/A")
+end
+
+marc_map(700b,PrenomAuteur, join:"|")
+unless exists(PrenomAuteur)
+  set_field(PrenomAuteur,"N/A")
+end
+
+marc_map(700f,DatesAuteur, join:"|")
+unless exists(DatesAuteur)
+  set_field(DatesAuteur,"N/A")
+end
+
+marc_map(710a,CollectiviteAuteur, join:"|")
+unless exists(CollectiviteAuteur)
+  set_field(CollectiviteAuteur,"N/A")
+end
+
+marc_map(461t,TitreSerie, join:"|")
+unless exists(TitreSerie)
+  set_field(TitreSerie,"N/A")
+end
+
+marc_map(676a,Dewey, join:"|")
+unless exists(Dewey)
+  set_field(Dewey,"N/A")
+end
+
+move_field(_id, biblionumber)
+
+retain(biblionumber, Titre, ISBN, NumeroVolume, NumeroVolume, TitreVolume, SousTitre, DateEdition, Collection, NomAuteur, PrenomAuteur, DatesAuteur, CollectiviteAuteur, TitreSerie, Dewey)

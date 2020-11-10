@@ -3,10 +3,11 @@ package Kibini::Crypt;
 use Moo;
 use Crypt::Eksblowfish::Bcrypt;
 use Digest::SHA1 qw(sha1_hex);
+use Hashids;
 
 use Kibini::Config;
 
-has 'type' => ( is  => 'rw' );
+has 'type' => ( is  => 'rw' ); 
 has 'salt' => ( is  => 'rw' );
 
 sub BUILDARGS {
@@ -16,7 +17,7 @@ sub BUILDARGS {
     my $conf = Kibini::Config->new->crypt;
     $arg->{type} = $conf->{type};
     
-    if ( $arg->{type} eq 'Bcrypt' ) {
+    if ( $arg->{type} eq 'Bcrypt' || $arg->{type} eq 'Hashids' ) {
         $arg->{salt} = $conf->{salt};
     }
 
@@ -34,7 +35,13 @@ sub crypt {
         $crypted_string =~ s/^\$2a\$\d{2}\$[A-Za-z0-9+\\.]{22}(.+)/$1/;
     } elsif ($self->{type} eq 'SHA1' ) {
         $crypted_string = sha1_hex($param->{string});
+    } elsif ($self->{type} eq 'Hashids' ) {
+		    my $salt = $self->{'salt'};
+		    my $hashids = Hashids->new($salt);
+        $crypted_string = $hashids->encode($param->{string});
     }
+	
+	
     return $crypted_string;
 }
 
