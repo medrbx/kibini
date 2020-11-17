@@ -1,7 +1,8 @@
 #!/usr/bin/perl
 
-use Modern::Perl;
-use Catmandu;
+use strict;
+use warnings;
+use Text::CSV;
 use Data::Dumper;
 use FindBin qw( $Bin );
 
@@ -20,9 +21,7 @@ AddCrontabLog($log_message);
 my $file = "/home/kibini/stat_web.csv";
 if ( defined $ARGV[0] ) {
     $file = $ARGV[0];
-}
-
-my $importer = Catmandu->importer('CSV', file => $file);
+} 
 
 # Connexion à la base de données et ES
 my $dbh = GetDbh();
@@ -37,23 +36,17 @@ my $req = <<"SQL";
 INSERT INTO statdb.stat_web2 (date, periode, visites, pages_vues, utilisateurs, taux_conversion, origine)
 VALUES (?, ?, ?, ?, ?, ?, ?)
 SQL
- 
+
 # Traitement de la requête
 my $sth = $dbh->prepare($req);
+
+# Lire un fichier CSV et récupérer les lignes comme référence de hash
+my $csv = Text::CSV->new ({ binary => 1 });
+open(my $fd, "<:encoding(UTF-8)", $file);
+$csv->column_names (qw( date periode visites pages_vues utilisateurs taux_conversion origine ));
 my $i = 0;
-$importer->each(sub {
-	my $csv_row = shift;
-	$i++;
-	my $row = {};
-	$row->{date} = $csv_row->{Date};
-	$row->{visites} = $csv_row->{Visites};
-	$row->{pages_vues} = $csv_row->{Vues};
-	$row->{utilisateurs} = $csv_row->{Utilisateurs};
-	($row->{taux_conversion}) = $csv_row->{'Taux de conversion'} =~ /(\d+)\.*/;
-	$row->{origine} = $csv_row->{origine};
-	$row->{periode} = $csv_row->{periode};
-	if ( $row->{date} =~ m/^\d{4}-\d{2}-\d{2}$/ ) {
-		print Dumper($row);
+while (my $row = $csv->getline_hr ($fd)) {
+    if ( $row->{date} =~ m/^\d{4}-\d{2}-\d{2}$/ ) {
         $sth->execute( $row->{date}, $row->{periode}, $row->{visites}, $row->{pages_vues}, $row->{utilisateurs}, $row->{taux_conversion}, $row->{origine} );
         ($row->{year}, $row->{month}, $row->{week_number}, $row->{day}, $row->{dow}) = GetSplitDate($row->{date});
         my %index = (
@@ -77,43 +70,11 @@ $importer->each(sub {
 
         $e->index(%index);    
     }
-	
-	
-});
-
-
-__END__
-#while (my $row = $csv->getline_hr ($fd)) {
-    if ( $row->{date} =~ m/^\d{4}-\d{2}-\d{2}$/ ) {
-		print Dumper($row);
-        #$sth->execute( $row->{date}, $row->{periode}, $row->{visites}, $row->{pages_vues}, $row->{utilisateurs}, $row->{taux_conversion}, $row->{origine} );
-        ($row->{year}, $row->{month}, $row->{week_number}, $row->{day}, $row->{dow}) = GetSplitDate($row->{date});
-        my %index = (
-            index   => $index,
-            type    => $type,
-            body    => {
-                consultation_date => $row->{date},
-                consultation_date_annee => $row->{year},
-                consultation_date_mois => $row->{month},
-                consultation_date_semaine => $row->{week_number},
-                consultation_date_jour => $row->{day},
-                consultation_date_jour_semaine => $row->{dow},
-                periode => $row->{periode},
-                visites => $row->{visites},
-                pages_vues => $row->{pages_vues},
-                utilisateurs => $row->{utilisateurs},
-                taux_conversion => $row->{taux_conversion},
-                origine => $row->{origine}
-            }
-        );
-
-        #$e->index(%index);    
-    }
 }
 close $fd;
 
 $sth->finish();
- 
+
 # Déconnexion de la base de données
 $dbh->disconnect();
 
@@ -122,4 +83,3 @@ $log_message = "$process : $i rows added";
 AddCrontabLog($log_message);
 $log_message = "$process : ending\n";
 AddCrontabLog($log_message);
-
