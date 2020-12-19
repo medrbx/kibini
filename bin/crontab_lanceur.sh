@@ -7,6 +7,10 @@ dayofmonthnextweek=`date +%d -d "7 day"`
 
 dir='/home/kibini/kibini_prod/bin/'
 dir_log='/home/kibini/kibini_prod/log/crontab/'
+dir_kib2='/home/kibini/kibini2'
+
+# POUR KIBINI2 : on active l'environnement conda
+conda activate kibini
 
 # CHAQUE JOUR CONFINNEMENT 2 : on génère liste des personnes à appeler pour réservation
 perl /home/kibini/kibini_prod/tools/ADM_resa_appels.pl
@@ -73,6 +77,10 @@ perl $dir/statdb_ano.pl
 
 # On met à jour les index Elasticsearch
 perl $dir/es_update.pl
+
+# KIBINI2
+python $dir_kib2/kibini/data_prets.py
+python $dir_kib2/kibini/es_maj.py
 
 # CHAQUE MARDI
 if [ $dayofweek -eq 2 ]

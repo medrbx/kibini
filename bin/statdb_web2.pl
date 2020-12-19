@@ -3,6 +3,7 @@
 use strict;
 use warnings;
 use Text::CSV;
+use Catmandu;
 use Data::Dumper;
 use FindBin qw( $Bin );
 
@@ -41,13 +42,23 @@ SQL
 my $sth = $dbh->prepare($req);
 
 # Lire un fichier CSV et récupérer les lignes comme référence de hash
-my $csv = Text::CSV->new ({ binary => 1 });
-open(my $fd, "<:encoding(UTF-8)", $file);
-$csv->column_names (qw( date periode visites pages_vues utilisateurs taux_conversion origine ));
+
+my $importer = Catmandu->importer('CSV', file => $file);
 my $i = 0;
-while (my $row = $csv->getline_hr ($fd)) {
+$importer->each(sub{
+    my $data = shift;
+	my $row = {};
+	$row->{date} = $data->{Date};
+	$row->{periode} = $data->{periode};
+	$row->{visites} = $data->{Visites};
+	$row->{pages_vues} = $data->{Vues};
+	$row->{utilisateurs} = $data->{Utilisateurs};
+	$row->{taux_conversion} = $data->{'Taux de conversion'};
+	$row->{taux_conversion} =~ s/%//ig;
+	$row->{origine} = $data->{origine};
     if ( $row->{date} =~ m/^\d{4}-\d{2}-\d{2}$/ ) {
-        $sth->execute( $row->{date}, $row->{periode}, $row->{visites}, $row->{pages_vues}, $row->{utilisateurs}, $row->{taux_conversion}, $row->{origine} );
+		print Dumper($row);
+        #$sth->execute( $row->{date}, $row->{periode}, $row->{visites}, $row->{pages_vues}, $row->{utilisateurs}, $row->{taux_conversion}, $row->{origine} );
         ($row->{year}, $row->{month}, $row->{week_number}, $row->{day}, $row->{dow}) = GetSplitDate($row->{date});
         my %index = (
             index   => $index,
@@ -70,8 +81,7 @@ while (my $row = $csv->getline_hr ($fd)) {
 
         $e->index(%index);    
     }
-}
-close $fd;
+});
 
 $sth->finish();
 
