@@ -58,7 +58,7 @@ $importer->each(sub{
 	$row->{origine} = $data->{origine};
     if ( $row->{date} =~ m/^\d{4}-\d{2}-\d{2}$/ ) {
 		print Dumper($row);
-        #$sth->execute( $row->{date}, $row->{periode}, $row->{visites}, $row->{pages_vues}, $row->{utilisateurs}, $row->{taux_conversion}, $row->{origine} );
+        $sth->execute( $row->{date}, $row->{periode}, $row->{visites}, $row->{pages_vues}, $row->{utilisateurs}, $row->{taux_conversion}, $row->{origine} );
         ($row->{year}, $row->{month}, $row->{week_number}, $row->{day}, $row->{dow}) = GetSplitDate($row->{date});
         my %index = (
             index   => $index,
