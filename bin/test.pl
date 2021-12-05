@@ -1,7 +1,15 @@
 #! /usr/bin/perl
 
 use Modern::Perl;
+use utf8;
+use Search::Elasticsearch;
+use FindBin qw( $Bin );
+use Data::Dumper;
 
-my $str = "51.22%";
-my ($to_keep) = ( $str =~ m/^(\d+)(.*)/ );
-print "$to_keep\n";
+use lib "$Bin/../lib";
+use kibini::db;
+use kibini::elasticsearch;
+use kibini::log;
+use kibini::time;
+use adherents;
+use collections::poldoc;

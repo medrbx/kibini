@@ -8,7 +8,7 @@ use FindBin qw( $Bin ) ;
 use lib "$Bin/../lib" ;
 use kibini::db ;
 
-my $output = "od_syntheses_activites.csv";
+my $output = "od_syntheses_activites_2020.csv";
 open(my $fd,">:encoding(utf8)","$output");
 my $csv = Text::CSV->new ({ binary => 1, eol => "\r\n" });
 
@@ -35,7 +35,7 @@ SELECT
     COUNT(*) AS "Nb"
 FROM statdb.stat_webkiosk s
 LEFT JOIN statdb.iris_lib i ON i.irisInsee = s.iris
-WHERE YEAR(s.heure_deb) IN (2018, 2019)
+WHERE YEAR(s.heure_deb) IN (2020)
 GROUP BY SUBSTRING(s.heure_deb, 1, 13), gent, s.iris
 SQL
 
@@ -92,7 +92,7 @@ SELECT
     COUNT(*) AS "Nb"
 FROM statdb.stat_issues s
 LEFT JOIN statdb.iris_lib i ON i.irisInsee = s.iris
-WHERE YEAR($type->{field}) IN (2018, 2019) AND $site->{location}
+WHERE YEAR($type->{field}) IN (2020) AND $site->{location}
 GROUP BY SUBSTRING($type->{field}, 1, 13), gent, s.iris
 SQL
 

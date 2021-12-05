@@ -13,7 +13,7 @@ dir_kib2='/home/kibini/kibini2'
 conda activate kibini
 
 # CHAQUE JOUR CONFINNEMENT 2 : on g�n�re liste des personnes � appeler pour r�servation
-perl /home/kibini/kibini_prod/tools/ADM_resa_appels.pl
+#perl /home/kibini/kibini_prod/tools/ADM_resa_appels.pl
 
 # CHAQUE DERNIER MERCREDI DU MOIS
 if [ $dayofweek -eq 3 ] && [ $dayofmonthnextweek -lt $dayofmonth ]
@@ -24,15 +24,15 @@ then
 fi
 
 # CHAQUE MERCREDI
-if [ $dayofweek -eq 3 ]
-then
+#if [ $dayofweek -eq 3 ]
+#then
     # On r�alise un dump de statdb
-    perl $dir/admin_sauv_bdd.pl
+ #   perl $dir/admin_sauv_bdd.pl
     # On met � jour webkiosk dans ES
-    perl $dir/es_webkiosk.pl
+ #   perl $dir/es_webkiosk.pl
     # On met � jour la carte des quartiers
-    perl $dir/data_carte.pl
-fi
+ #   perl $dir/data_carte.pl
+#fi
 
 # CHAQUE JOUR
 # On charge sur preprod la version de koha_prod du jour

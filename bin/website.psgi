@@ -1,10 +1,9 @@
 #!/usr/bin/perl
 
-use strict ;
-use warnings ;
-use FindBin qw( $Bin ) ;
+use Modern::Perl;
+use FindBin qw( $Bin );
 
-use lib "$Bin/../lib" ;
-use website::dancer ;
+use lib "$Bin/../lib";
+use website::dancer;
 
-website::dancer->dance ;
+website::dancer->dance;
