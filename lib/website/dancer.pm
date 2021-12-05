@@ -52,7 +52,7 @@ get '/' => sub {
 
 # PARTIE 1 - La Grand-Plage
 
-get 'grand-plage/activites' => sub {
+get '/grand-plage/activites' => sub {
     template 'kibana', {
         label1 => 'La Grand-Plage',
         label2 => 'Quelle activité ces 30 derniers jours ?',
@@ -493,7 +493,7 @@ get '/qa/inscrits' => sub {
 };
 
 # Suggestions
-get 'suggestions' => sub {
+get '/suggestions' => sub {
     my $suggestions = suggestions();
     my $acquereurs = acquereurs();
     template 'suggestions', {
@@ -503,7 +503,7 @@ get 'suggestions' => sub {
     };
 };
 
-post 'suggestions/mod' => sub {
+post '/suggestions/mod' => sub {
     my $suggestionid = param "suggestionid";
     my $managedby = param "borrnummanagedby";
     my $title = param "title";
@@ -516,7 +516,7 @@ post 'suggestions/mod' => sub {
 };
 
 # Fréquentation étude
-get 'frequentation/etude' => sub {
+get '/frequentation/etude' => sub {
     my $lecteurs_presents = GetTodayEntrance();
     my $jours = GetPastEntrances();
     template 'frequentation', {
@@ -526,7 +526,7 @@ get 'frequentation/etude' => sub {
     };
 };
 
-post 'frequentation/etude/post' => sub {
+post '/frequentation/etude/post' => sub {
     my $cardnumber = param "cardnumber";
     my $action = "Attention : aucun code-barre n'a été saisi.";
     if ($cardnumber) {
@@ -549,7 +549,7 @@ post 'frequentation/etude/post' => sub {
 };
 
 # Action culturelle
-get 'form/action_culturelle' => sub {
+get '/form/action_culturelle' => sub {
     my $list_actions = list_actions();
     template 'action_culturelle', {
         label1 => "Action culturelle",
@@ -557,7 +557,7 @@ get 'form/action_culturelle' => sub {
     };
 };
 
-post 'form/action_culturelle/post' => sub {
+post '/form/action_culturelle/post' => sub {
     my $date = params->{'date'};
     my $action = params->{'action'};
     my $lieu = params->{'lieu'};
@@ -576,7 +576,7 @@ post 'form/action_culturelle/post' => sub {
 };
 
 # Actions de coopération
-get 'form/action_coop' => sub {
+get '/form/action_coop' => sub {
         my $list_actions = GetListActionsCooperation();
         template 'action_coop', {
                 label1 => "Action de coopération",
@@ -584,7 +584,7 @@ get 'form/action_coop' => sub {
         };
 };
 
-post 'form/action_coop/post' => sub {
+post '/form/action_coop/post' => sub {
         my $date = params->{'date'};
         my $lieu = params->{'lieu'};
         my $type = params->{'type_action'};
@@ -606,7 +606,7 @@ post 'form/action_coop/post' => sub {
 
 
 # Listes de réservations et de perdus
-get 'liste' => sub {
+get '/liste' => sub {
     my %params = params;
 
     my $listData = GetListData( \%params );
