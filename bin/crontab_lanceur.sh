@@ -53,9 +53,9 @@ perl $dir/es_prets.pl
 perl $dir/statdb_reserves.pl
 perl $dir/es_reservations.pl
 
-# On incorpore dans statdb et ES les statisques nedap de la journ�e pr�c�dente
-perl $dir/statdb_nedap.pl
-perl $dir/es_rfid.pl
+# On incorpore dans statdb et ES les statisques nedap de la journ�e pr�c�dente => désormais impossible
+#perl $dir/statdb_nedap.pl
+#perl $dir/es_rfid.pl
 
 # On traite les donn�es li�es � la fr�quentation de la salle d'�tude
 perl $dir/statdb_freq_etude.pl
