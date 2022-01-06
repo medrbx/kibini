@@ -21,6 +21,8 @@
 					<th>Code-barres</th>
 					<th>Date résa</th>
 					<th>Carte</th>
+					<th>Exempl.</th>
+					<th>Note</th>
                 </tr>
             </thead>
             
@@ -36,6 +38,8 @@
 					<td>[% row.5 %]</td>
 					<td>[% row.6 %]</td>
 					<td><a href="http://koha.ntrbx.local/cgi-bin/koha/members/moremember.pl?borrowernumber=[% row.9 %]">[% row.7 %]</td>
+					<td>[% row.11 %]</td>
+					<td>[% row.12 %]</td>
                 </tr>
                 [% END %]
             </tbody>

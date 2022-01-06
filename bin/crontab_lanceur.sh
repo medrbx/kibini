@@ -7,84 +7,92 @@ dayofmonthnextweek=`date +%d -d "7 day"`
 
 dir='/home/kibini/kibini_prod/bin/'
 dir_log='/home/kibini/kibini_prod/log/crontab/'
+dir_kib2='/home/kibini/kibini2'
 
-# CHAQUE JOUR CONFINNEMENT 2 : on génère liste des personnes à appeler pour réservation
-perl /home/kibini/kibini_prod/tools/ADM_resa_appels.pl
+# POUR KIBINI2 : on active l'environnement conda
+conda activate kibini
+
+# CHAQUE JOUR CONFINNEMENT 2 : on gï¿½nï¿½re liste des personnes ï¿½ appeler pour rï¿½servation
+#perl /home/kibini/kibini_prod/tools/ADM_resa_appels.pl
 
 # CHAQUE DERNIER MERCREDI DU MOIS
 if [ $dayofweek -eq 3 ] && [ $dayofmonthnextweek -lt $dayofmonth ]
 then
-    # On fait un cliché des données adhérents
+    # On fait un clichï¿½ des donnï¿½es adhï¿½rents
     perl $dir/statdb_adherents.pl
     perl $dir/es_adherents.pl
 fi
 
 # CHAQUE MERCREDI
-if [ $dayofweek -eq 3 ]
-then
-    # On réalise un dump de statdb
-    perl $dir/admin_sauv_bdd.pl
-    # On met à jour webkiosk dans ES
-    perl $dir/es_webkiosk.pl
-    # On met à jour la carte des quartiers
-    perl $dir/data_carte.pl
-fi
+#if [ $dayofweek -eq 3 ]
+#then
+    # On rï¿½alise un dump de statdb
+ #   perl $dir/admin_sauv_bdd.pl
+    # On met ï¿½ jour webkiosk dans ES
+ #   perl $dir/es_webkiosk.pl
+    # On met ï¿½ jour la carte des quartiers
+ #   perl $dir/data_carte.pl
+#fi
 
 # CHAQUE JOUR
 # On charge sur preprod la version de koha_prod du jour
 perl $dir/statdb_load_koha_prod.pl
 
-# On met à jour les stats web
+# On met ï¿½ jour les stats web
 bash $dir/web.sh
 
-# On met à jour la table statdb.data_bib
+# On met ï¿½ jour la table statdb.data_bib
 #perl $dir/data_biblio.pl
 #perl $dir/data_bib.pl # test statdb.data_bib
 
-# On incorpore dans statdb et ES les prêts de la veille
+# On incorpore dans statdb et ES les prï¿½ts de la veille
 perl $dir/statdb_issues.pl
 perl $dir/es_prets.pl
 
-# On incorpore dans statdb et ES les réservations de la veille
+# On incorpore dans statdb et ES les rï¿½servations de la veille
 perl $dir/statdb_reserves.pl
 perl $dir/es_reservations.pl
 
-# On incorpore dans statdb et ES les statisques nedap de la journée précédente
-perl $dir/statdb_nedap.pl
-perl $dir/es_rfid.pl
+# On incorpore dans statdb et ES les statisques nedap de la journï¿½e prï¿½cï¿½dente => dÃ©sormais impossible
+#perl $dir/statdb_nedap.pl
+#perl $dir/es_rfid.pl
 
-# On traite les données liées à la fréquentation de la salle d'étude
+# On traite les donnï¿½es liï¿½es ï¿½ la frï¿½quentation de la salle d'ï¿½tude
 perl $dir/statdb_freq_etude.pl
 perl $dir/es_freq_etude.pl
 
-# On incorpore les entrées
+# On incorpore les entrï¿½es
 perl $dir/statdb_comptage.pl
 perl $dir/es_entrees.pl
 
-# On récupère les logs du portail
+# On rï¿½cupï¿½re les logs du portail
 perl $dir/logs_portail.pl
 
 # NOUVELLE VERSION
-# On met à jour les données exemplaires
+# On met ï¿½ jour les donnï¿½es exemplaires
 perl $dir/statdb_exemplaires.pl
 
 # On anonymise statdb
-perl $dir/statdb_ano.pl
+#perl $dir/statdb_ano.pl
 
-# On met à jour les index Elasticsearch
+# On met ï¿½ jour les index Elasticsearch
 perl $dir/es_update.pl
+
+# KIBINI2
+python $dir_kib2/kibini/data_prets.py
+python $dir_kib2/kibini/es_maj.py
 
 # CHAQUE MARDI
 if [ $dayofweek -eq 2 ]
 then
-    # On incorpore dans statdb des données sur les exemplaires et les adhérents
+    # On incorpore dans statdb des donnï¿½es sur les exemplaires et les adhï¿½rents
     perl $dir/statdb_items_borrowers.pl
 fi
 
 # CHAQUE DIMANCHE
 #if [ $dayofweek -eq 7 ]
 #then
-    # On recrée les index items et catalogue dans ES
+    # On recrï¿½e les index items et catalogue dans ES
 #    perl $dir/es_items.pl
 #    bash $dir/catmandu_es.sh
 

@@ -1,4 +1,4 @@
-#! /usr/bin/perl
+﻿#! /usr/bin/perl
 
 # script à placer dans le répertoire tools de kibini
 
@@ -17,20 +17,20 @@ use kibini::elasticsearch ;
 my $dbh = GetDbh() ;
 my $es_node = GetEsNode() ;
 my $e = Search::Elasticsearch->new( nodes => $es_node ) ;
-my $firsdate = '2018-09-01' ;
+my $firsdate = '2020-10-28' ;
 
 # on prépare le fichier d'entrée
-my $in = "stat_perio_in.csv" ;
+my $in = "stat_perio_in_2021.csv" ;
 my $csv_in = Text::CSV->new ({ binary => 1 });
 open( my $fd_in, "<:encoding(UTF-8)", $in ) ;
-my @column_in = qw( thematique ccode collection titre biblionumber dest1 dest2 empruntable infos periodicite prix nb_issues nb_emprunteurs_dist nb_items_dist_emp nb_items tx_rot tx_actif ) ;
+my @column_in = qw( thematique ccode collection collection_niv1 collection_niv2 collection_niv3 collection_niv4 titre biblionumber dest1 dest2 empruntable infos periodicite prix nb_issues nb_emprunteurs_dist nb_items_dist_emp nb_items tx_rot tx_actif ) ;
 $csv_in->column_names(@column_in);
 
 # on prépare le fichier de sortie
-my $out = "stat_perio_out.csv" ;
+my $out = "stat_perio_out_2021.csv" ;
 my $csv_out = Text::CSV->new ({ binary => 1, eol => "\r\n" });
 open( my $fd_out, ">:encoding(UTF-8)", $out ) ;
-my @column_out = ( 'Thématique', 'Code collection', 'Collection', 'Titre', 'Numéro notice bib', '1er destination', '2e destination', 'empruntable ?', 'infos', 'Périodicité', 'prix de l\'abt', 'Nb prêts', 'Emprunteurs', 'Prêts ex dist', 'Ex', 'Tx rot', 'Tx actif' ) ;
+my @column_out = ( 'Thématique', 'Code collection', 'Collection', 'Collection niveau 1', 'Collection niveau 2', 'Collection niveau 3', 'Collection niveau 4', 'Titre', 'Numéro notice bib', '1er destination', '2e destination', 'empruntable ?', 'infos', 'Périodicité', 'prix de l\'abt', 'Nb prêts', 'Emprunteurs', 'Prêts ex dist', 'Ex', 'Tx rot', 'Tx actif' ) ;
 $csv_out->print ($fd_out, \@column_out) ;
 
 # on calcule le nb de prêts, ... pour chaque ligne et on remplit le fichier de sortie
@@ -42,7 +42,7 @@ while (my $row = $csv_in->getline_hr ($fd_in)) {
     $row->{nb_emprunteurs_dist} = GetNbDistBorrowers($dbh, $row->{biblionumber}) ;
     $row->{nb_items_dist_emp} = GetNbDistItemsLoaned($dbh, $row->{biblionumber}) ;
     $row->{nb_items} = GetNbItems($dbh, $row->{biblionumber}) ;
-    my @row_out = ($row->{thematique}, $row->{ccode}, $row->{collection}, $row->{titre}, $row->{biblionumber}, $row->{dest1}, $row->{dest2}, $row->{empruntable}, $row->{infos}, $row->{periodicite}, $row->{prix}, $row->{nb_issues}, $row->{nb_emprunteurs_dist}, $row->{nb_items_dist_emp}, $row->{nb_items}, $row->{tx_rot}, $row->{tx_actif} ) ;
+    my @row_out = ($row->{thematique}, $row->{ccode}, $row->{collection}, $row->{collection_niv1}, $row->{collection_niv2}, $row->{collection_niv3}, $row->{collection_niv4}, $row->{titre}, $row->{biblionumber}, $row->{dest1}, $row->{dest2}, $row->{empruntable}, $row->{infos}, $row->{periodicite}, $row->{prix}, $row->{nb_issues}, $row->{nb_emprunteurs_dist}, $row->{nb_items_dist_emp}, $row->{nb_items}, $row->{tx_rot}, $row->{tx_actif} ) ;
     $csv_out->print ($fd_out, \@row_out) ;
     print Dumper($row) ;
     #print "$i\n" ;
@@ -58,7 +58,7 @@ $dbh->disconnect() ;
 sub GetNbIssues {
     my ($dbh, $biblionumber) = @_ ;
     
-    my $req = "SELECT COUNT(issue_id) FROM statdb.stat_issues  WHERE biblionumber = ? AND DATE(issuedate) BETWEEN '2018-09-01' AND '2019-08-31'" ;
+    my $req = "SELECT COUNT(issue_id) FROM statdb.stat_issues  WHERE biblionumber = ? AND DATE(issuedate) BETWEEN '2020-10-28' AND '2021-10-27'" ;
     my $sth = $dbh->prepare($req) ;
     $sth->execute($biblionumber) ;
     return $sth->fetchrow_array() ;
@@ -68,7 +68,7 @@ sub GetNbIssues {
 sub GetNbDistBorrowers {
     my ($dbh, $biblionumber) = @_ ;
     
-    my $req = "SELECT COUNT(DISTINCT borrowernumber) FROM statdb.stat_issues  WHERE biblionumber = ? AND DATE(issuedate) BETWEEN '2018-09-01' AND '2019-08-31'" ;
+    my $req = "SELECT COUNT(DISTINCT borrowernumber) FROM statdb.stat_issues  WHERE biblionumber = ? AND DATE(issuedate) BETWEEN '2020-10-28' AND '2021-10-27'" ;
     my $sth = $dbh->prepare($req) ;
     $sth->execute($biblionumber) ;
     return $sth->fetchrow_array() ;
@@ -78,7 +78,7 @@ sub GetNbDistBorrowers {
 sub GetNbDistItemsLoaned {
     my ($dbh, $biblionumber) = @_ ;
     
-    my $req = "SELECT COUNT(DISTINCT itemnumber) FROM statdb.stat_issues  WHERE biblionumber = ? AND DATE(issuedate) BETWEEN '2018-09-01' AND '2019-08-31'" ;
+    my $req = "SELECT COUNT(DISTINCT itemnumber) FROM statdb.stat_issues  WHERE biblionumber = ? AND DATE(issuedate) BETWEEN '2020-10-28' AND '2021-10-27'" ;
     my $sth = $dbh->prepare($req) ;
     $sth->execute($biblionumber) ;
     return $sth->fetchrow_array() ;
@@ -91,7 +91,7 @@ sub GetNbItems {
     my $nb_items = 0 ;
     my @tables = qw (items deleteditems ) ;
     foreach my $table (@tables) {
-        my $req = "SELECT COUNT(itemnumber) FROM koha_prod.$table  WHERE biblionumber = ? AND DATE(dateaccessioned) BETWEEN '2018-09-01' AND '2019-08-31'" ;
+        my $req = "SELECT COUNT(itemnumber) FROM koha_prod.$table  WHERE biblionumber = ? AND DATE(dateaccessioned) BETWEEN '2020-10-28' AND '2021-10-27'" ;
         my $sth = $dbh->prepare($req) ;
         $sth->execute($biblionumber) ;
         my $result = $sth->fetchrow_array() ;

@@ -413,7 +413,7 @@ sub insertAdherentIntoStatdb_adherent {
 
 sub GetBorrowersForQA {
     # On récupère par webservice tous les adhérents répondant aux conditions fixées dans la requête
-    my $ws = "http://webservice.mediathequederoubaix.fr/cgi-bin/koha/svc/report?id=166";
+    my $ws = "http://cataloguekoha.ntrbx.local/cgi-bin/koha/svc/report?id=166";
     my $ua = LWP::UserAgent->new();
     my $request = HTTP::Request->new( GET => $ws );
     my $rep = $ua->request($request)->{'_content'};

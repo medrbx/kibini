@@ -38,7 +38,7 @@ my $es_node = GetEsNode();
 #}
 
 # V2 : On ajoute uniquement les éliminations de l'année
-my $year = 2019;
+my $year = 2020;
 my $nb = itemsByYear($es_node, $year);
 
 # On log la fin de l'opération

@@ -8,6 +8,7 @@ use FindBin qw( $Bin ) ;
 
 use lib "$Bin/../lib" ;
 use kibini::db ;
+use Data::Dumper;
 
 my @sites = (
     {
@@ -66,7 +67,7 @@ sub GetWhereLocationBySite {
 
 sub exemplaires {
     my ($dbh, $csv, $where, $nom_fichier) = @_ ;
-    
+ 
     open(my $fd,">:encoding(utf8)","../data/collections/2020_exemplaires_$nom_fichier.csv") ;
     my @column_names = qw( collection_code collection_lib1 collection_lib2 collection_lib3 collection_lib4 support nb_exemplaires nb_exemplaires_empruntables nb_exemplaires_consultables_sur_place_uniquement nb_exemplaires_en_acces_libre nb_exemplaires_en_acces_indirect nb_exemplaires_en_commande nb_exemplaires_en_traitement nb_exemplaires_en_abîmés nb_exemplaires_en_réparation nb_exemplaires_en_retrait nb_exemplaires_en_reliure nb_exemplaires_perdus nb_exemplaires_non_restitués nb_exemplaires_créés_dans_annee nb_exemplaires_empruntables_pas_empruntés_1_an nb_exemplaires_empruntables_pas_empruntés_3_ans nb_exemplaires_en_pret ) ;
     $csv->print ($fd, \@column_names) ;
@@ -92,9 +93,9 @@ SELECT
     COUNT(IF(i.notforloan = 5 AND i.damaged = 0 AND i.itemlost = 0, i.itemnumber, NULL)) AS 'nb_exemplaires_en_reliure',
     COUNT(IF(i.itemlost = 2, i.itemnumber, NULL)) AS 'nb_exemplaires_perdus',
     COUNT(IF(i.itemlost = 1, i.itemnumber, NULL)) AS 'nb_exemplaires_non_restitués',
-    COUNT(IF(i.dateaccessioned > ('2018-01-01' - INTERVAL 1 YEAR), i.itemnumber, NULL)) AS 'nb_exemplaires_créés_dans_annee',
-	COUNT(IF(i.notforloan NOT IN (-2, -1, 2) AND i.datelastborrowed <= ('2018-01-01' - INTERVAL 1 YEAR), i.itemnumber, NULL)) AS 'nb_exemplaires_empruntables_pas_empruntés_1_an',
-    COUNT(IF(i.notforloan NOT IN (-2, -1, 2) AND i.datelastborrowed <= ('2018-01-01' - INTERVAL 3 YEAR), i.itemnumber, NULL)) AS 'nb_exemplaires_empruntables_pas_empruntés_3_ans',
+    COUNT(IF(i.dateaccessioned > ('2021-01-01' - INTERVAL 1 YEAR), i.itemnumber, NULL)) AS 'nb_exemplaires_créés_dans_annee',
+	COUNT(IF(i.notforloan NOT IN (-2, -1, 2) AND i.datelastborrowed <= ('2021-01-01' - INTERVAL 1 YEAR), i.itemnumber, NULL)) AS 'nb_exemplaires_empruntables_pas_empruntés_1_an',
+    COUNT(IF(i.notforloan NOT IN (-2, -1, 2) AND i.datelastborrowed <= ('2021-01-01' - INTERVAL 3 YEAR), i.itemnumber, NULL)) AS 'nb_exemplaires_empruntables_pas_empruntés_3_ans',
     COUNT(IF(i.onloan IS NOT NULL OR i.itemlost = 1, i.itemnumber, NULL)) AS 'nb_exemplaires_en_pret'
 FROM koha2020.items i
 JOIN koha2020.biblioitems bi ON bi.biblionumber = i.biblionumber
