@@ -6,6 +6,7 @@ from os.path import join
 
 path = "data/collections"
 sites = ['grand-plage', 'mediatheque', 'zebre', 'collectivites']
+year = "2021"
 
 code_support = {
     "CA": "Carte routière",
@@ -32,15 +33,15 @@ code_support = {
 sheets = []
 for site in sites:
     print(site)
-    ex = pd.read_csv(join(path, f"2020_exemplaires_{site}.csv"))
-    el = pd.read_csv(join(path, f"2020_eliminations_{site}.csv"))
-    p = pd.read_csv(join(path, f"2020_prets_{site}.csv"))
+    ex = pd.read_csv(join(path, f"{year}_exemplaires_{site}.csv"))
+    el = pd.read_csv(join(path, f"{year}_eliminations_{site}.csv"))
+    p = pd.read_csv(join(path, f"{year}_prets_{site}.csv"))
     
     s = pd.merge(ex, el, on=['collection_code', 'support'], how='left')
     s = pd.merge(s, p, on=['collection_code', 'support'], how='left')
     sheets.append((s, site))
     
-writer = pd.ExcelWriter(join(path,'2020_synthese.xlsx'), engine='xlsxwriter')
+writer = pd.ExcelWriter(join(path,'2021_synthese.xlsx'), engine='xlsxwriter')
 for sheet in sheets:
     df = sheet[0]
     df['support'] = df['support'].apply(lambda x: code_support[x] if x in code_support else np.nan)
