@@ -3,26 +3,30 @@
 use Modern::Perl;
 use Data::Dumper;
 use FindBin qw( $Bin );
+use YAML qw(LoadFile) ;
 
 use lib "$Bin";
+use kibini::db ;
+use kibini::elasticsearch ;
+use kibini::log ;
+use collections::poldoc ;
+use kibini::config ;
 
-use liste;
-use Data::Dumper;
-use LWP::UserAgent ;
-use JSON qw( decode_json );
+my $log_message ;
+my $process = "es_items.pl" ;
+# On log le début de l'opération
+$log_message = "$process : beginning" ;
+AddCrontabLog($log_message) ;
 
-my %params = (type => "d", loc => "0", public => "a");
-#print Dumper(\%params);
+# On récupère l'adresse d'Elasticsearch
+my $es_node = GetEsNode() ;
 
-my $date = "2020-10-30";
-my $report_id = "179";
-my $url = "http://cataloguekoha.ntrbx.local/cgi-bin/koha/svc/report";
-$url = $url . "?id=" . $report_id . "&sql_params=" . $date;
-my $ua = LWP::UserAgent->new();
-my $request = HTTP::Request->new( GET => $url );
-my $rep = $ua->request($request)->{'_content'};
+# On supprime l'index items puis on le recrée :
+#my $result = RegenerateIndex($es_node, "items") ;
 
-print Dumper($rep);
-#my $rows = decode_json($rep);
 
-	
+#my $mappings = GetEsMappingConf("items");
+
+my $conf_elasticsearch = GetConfig('elasticsearch');
+my $mappings_file = $conf_elasticsearch->{mappings_file} ;
+my $mappings_data = LoadFile($mappings_file) ;
