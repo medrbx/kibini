@@ -39,7 +39,7 @@ sub synth_inscrits {
 
     my $e = Search::Elasticsearch->new( %params );
     
-    open my $fic, "<:encoding(utf8)", "/home/kibini/kibini_prod/data/es_csv/synth_ann_inscrits_20200122.csv";
+    open my $fic, "<:encoding(utf8)", "/home/kibini/kibini_prod/data/es_csv/synth_ann_inscrits_20220216.csv";
 
     my $csv = Text::CSV->new ({
         binary    => 1, # permet caractères spéciaux (?)
@@ -48,7 +48,7 @@ sub synth_inscrits {
 
     my $i = 0;
     while (my $row = $csv->getline ($fic)) {
-        my ($annee, , $nb_inscrits, $carte) = @$row;
+        my ($annee, $carte, $nb_inscrits) = @$row;
         my %index = (
             index   => $index,
             type    => $type,
