@@ -39,7 +39,7 @@ sub synth_documents {
 
     my $e = Search::Elasticsearch->new( %params );
     
-    open my $fic, "<:encoding(utf8)", "/home/kibini/kibini_prod/data/es_csv/synth_ann_exemplaires_20180227.csv";
+    open my $fic, "<:encoding(utf8)", "/home/kibini/kibini_prod/data/es_csv/synth_ann_exemplaires_20220216.csv";
 
     my $csv = Text::CSV->new ({
         binary    => 1, # permet caractères spéciaux (?)
