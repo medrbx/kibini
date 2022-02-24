@@ -17,12 +17,12 @@ sub GetDbh {
     my $pwd = $conf_database->{pwd} ;
  
     my $dbh = DBI->connect(          
-        "dbi:mysql:dbname=$db", 
+        "dbi:MariaDB:dbname=$db", 
         $user,
         $pwd,                          
         {
             RaiseError => 1,
-            mysql_enable_utf8 => 1
+            #mysql_enable_utf8 => 1
         },         
     ) or die $DBI::errstr;
 

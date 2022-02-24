@@ -20,7 +20,7 @@ AddCrontabLog($log_message);
 my $dbh = GetDbh();
 
 my $req = <<SQL;
-SELECT
+    SELECT
     CURDATE() AS date_extraction,
     b.borrowernumber AS adherent_id,
     b.title,
