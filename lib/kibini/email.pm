@@ -4,10 +4,31 @@ use Exporter ;
 @ISA = qw(Exporter) ;
 @EXPORT = qw( SendEmail ) ;
 
-use strict ;
-use warnings ;
-use Encode qw(encode) ;
+use Modern::Perl;
+use Email::MIME;
+use Email::Sender::Simple qw(sendmail);
 
+sub SendEmail {
+    my ($from, $to, $subject, $msg) = @_;    
+    my $message = Email::MIME->create(
+		header_str => [
+			From    => $from,
+			To      => $to,
+			Subject => $subject,
+		],
+		attributes => {
+			encoding => 'quoted-printable',
+			charset  => 'utf-8',
+		},
+		body_str => $msg,
+);
+
+# send the message
+
+sendmail($message);
+};
+
+__END__
 sub SendEmail {
     my ($from, $to, $subject, $msg) = @_;    
     $from = Encode::encode('MIME-Q', $from);

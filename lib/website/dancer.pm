@@ -404,7 +404,8 @@ get '/grand-plage/collections/ensemble' => sub {
         file_2017 => '/data/Statistiques_collections_2017.xlsx', 
         file_2018 => '/data/Statistiques_collections_2018.xlsx',
         file_2019 => '/data/Statistiques_collections_2019_VM.xlsx',
-		file_2020 => '/data/Statistiques_collections_2020_VM.xlsx'
+	file_2020 => '/data/Statistiques_collections_2020_VM.xlsx',
+	file_2021 => '/data/Statistiques_collections_2021.xlsx'
 #        indicateurs => $indicateurs
     };
 };

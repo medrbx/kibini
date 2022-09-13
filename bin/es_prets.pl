@@ -123,6 +123,10 @@ SQL
             ( $retour_year, $retour_month, $retour_week_number, $retour_day, $retour_jour_semaine, $retour_hour ) = GetSplitDateTime($returndate);
         }
         
+		my $publicationyear_int;
+		if ($publicationyear =~ /^[+-]?\d+$/ ) {
+		    $publicationyear_int = $publicationyear;
+		}
     
         my %index = (
             index   => $index,
@@ -154,7 +158,7 @@ SQL
                 doc_site_rattachement => $homebranch,
                 doc_localisation => $location,
                 doc_cote => $itemcallnumber,
-                doc_date_publication => $publicationyear,
+                doc_date_publication => $publicationyear_int,
                 doc_date_acquisition => $dateaccessioned,
                 doc_collection_ccode => $ccode,
                 doc_collection_lib1 => $lib1,

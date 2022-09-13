@@ -1,15 +1,17 @@
 #! /usr/bin/perl
 
 use Modern::Perl;
-use utf8;
-use Search::Elasticsearch;
-use FindBin qw( $Bin );
 use Data::Dumper;
+use FindBin qw( $Bin );
 
 use lib "$Bin/../lib";
-use kibini::db;
-use kibini::elasticsearch;
-use kibini::log;
-use kibini::time;
-use adherents;
-use collections::poldoc;
+#use Kibini::DB;
+
+use kibini::email;
+
+my $from = 'fpichenot@ville-roubaix.fr';
+my $to = 'fpichenot@ville-roubaix.fr';
+my $subject = 'test';
+my $msg = 'le teste';
+
+SendEmail($from, $to, $subject, $msg);
