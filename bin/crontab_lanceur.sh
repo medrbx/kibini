@@ -56,6 +56,19 @@ then
 	
     # On liste les prétendus rendus à traiter
     python $dir_kib2/kibini/adm_itemsPretendusRendus2adm.py
+	
+	# On liste les documents à passer en non restitués plus
+	python $dir_kib2/kibini/adm_itemsNonRestituesPlus.py
+
+fi
+
+
+# CHAQUE VNEDREDI
+if [ $dayofweek -eq 5 ]
+then
+	# On liste les documents à passer en non restitués plus
+	python $dir_kib2/kibini/adm_itemsNonRestituesPlus.py
+
 fi
 
 # CHAQUE PREMIER DU MOIS
@@ -67,6 +80,9 @@ fi
 
 
 # CHAQUE JOUR
+# On liste les documents en non restitués plus rendu la veille
+python $dir_kib2/kibini/adm_itemsNonRestituesPlus_retours.py
+
 # On met � jour les stats web
 bash $dir/web.sh
 
@@ -82,7 +98,7 @@ perl $dir/es_prets.pl
 perl $dir/statdb_reserves.pl
 perl $dir/es_reservations.pl
 
-# On incorpore dans statdb et ES les statisques nedap de la journ�e pr�c�dente => désormais impossible
+# On incorpore dans statdb et ES les statisques nedap de la journ�e précédente => désormais impossible
 #perl $dir/statdb_nedap.pl
 #perl $dir/es_rfid.pl
 

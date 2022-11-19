@@ -32,7 +32,8 @@ my $req = <<SQL;
     YEAR(CURDATE()) - YEAR(b.dateenrolled) AS inscription_fidelite
 FROM koha_prod.borrowers b
 WHERE b.dateexpiry > CURDATE()
-	AND categorycode IN ("ECOL", "CLAS", "CSVT", "CSLT", "BIBL", "MEDB", "MEDA", "MEDC", "MEDP", "COLD", "COLI", "COLS")
+    AND b.categorycode IN ("ECOL", "CLAS", "CSVT", "CSLT", "BIBL", "MEDB", "MEDA", "MEDC", "MEDP", "COLD", "COLI", "COLS")
+	
 SQL
 
 my $sth = $dbh->prepare($req);
