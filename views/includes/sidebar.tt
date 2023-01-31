@@ -17,7 +17,8 @@
                         <li><a href="/grand-plage/collections/prets"><span class="sd">Nombre de prêts ?</span></a></li>
                         <li><a href="/grand-plage/collections/reservations"><span class="sd">Quel usage du service des réservations ?</span></a></li>
                         <li><a href="/grand-plage/web/portail"><span class="sd">Quel usage du portail ? </span></a></li>
-						<li><a href="/grand-plage/web/bnr"><span class="sd">Quel usage de la bn-r ? </span></a></li>
+                        <li><a href="/grand-plage/web/bnr"><span class="sd">Quel usage de la bn-r ? </span></a></li>
+                        <li><a href="/grand-plage/dimanche"><span class="sd">Fréquentation le dimanche</span></a></li>
             </ul>
             
             <hr>

@@ -158,15 +158,17 @@ get '/grand-plage/web/bnr' => sub {
 
 };
 
-get '/grand plage/action cooperation' => sub {
-    template 'kibana', {
-        label1 => 'La Médiathèque',
-        label2 => 'Quelles actions de coopération ?',
-        dashboard => {
-                    src => '...',
-            height => '1300px'
+get '/grand-plage/dimanche' => sub {
+        template 'kibana', {
+                label1 => 'La Grand-Plage',
+                label2 => 'Activité',
+                label3 => "Dimanches",
+                dashboard => {
+                    src => "http://129.1.0.237:1789/data/notebook_dimanche.html",
+                    height => '2600px'
         }
     };
+
 };
 
 
@@ -321,7 +323,7 @@ get '/zebre/collections/emprunteurs' => sub {
         label2 => 'Collections',
         label3 => 'Emprunteurs',
         dashboard => {
-            src => 'http://129.1.0.237:5601/app/kibana#/dashboard/Qui-sont-les-emprunteurs-du-Z%C3%A8bre-questionmark-?embed=true&_g=(refreshInterval:(display:Off,pause:!f,value:0),time:(from:now-1y,mode:quick,to:now))&_a=(filters:!(),options:(darkTheme:!f),panels:!((col:1,id:\'Nombre-d!\'emprunteurs-par-mois\',panelIndex:1,row:1,size_x:8,size_y:2,type:visualization),(col:1,id:Nombre-de-pr%C3%AAts-par-mois,panelIndex:3,row:3,size_x:8,size_y:2,type:visualization),(col:9,id:Pr%C3%AAts,panelIndex:4,row:3,size_x:4,size_y:2,type:visualization),(col:1,id:Emprunteurs-distincts-par-quartier-de-Roubaix,panelIndex:6,row:5,size_x:6,size_y:3,type:visualization),(col:7,id:Emprunteurs-distincts-par-ville,panelIndex:7,row:5,size_x:6,size_y:3,type:visualization),(col:9,id:Emprunteurs-distincts-par-%C3%A2ge-m%C3%A9diath%C3%A8que,panelIndex:8,row:8,size_x:4,size_y:3,type:visualization),(col:1,id:Emprunteurs-distincts-par-type-de-carte,panelIndex:9,row:8,size_x:4,size_y:3,type:visualization),(col:5,id:Emprunteurs-distincts-par-sexe,panelIndex:10,row:8,size_x:4,size_y:3,type:visualization),(col:9,id:\'Nombre-d!\'emprunteurs-\',panelIndex:11,row:1,size_x:4,size_y:2,type:visualization)),query:(query_string:(analyze_wildcard:!t,query:\'pret_site%20:%20%22Z%C3%A8bre%22\')),title:\'Qui%20sont%20les%20emprunteurs%20du%20Z%C3%A8bre%20%3F\',uiState:(P-1:(vis:(legendOpen:!f)),P-10:(vis:(legendOpen:!f)),P-3:(vis:(legendOpen:!f)),P-6:(vis:(legendOpen:!f)),P-7:(vis:(legendOpen:!f)),P-8:(vis:(legendOpen:!f)),P-9:(vis:(legendOpen:!f))))',
+            src => 'http://129.1.0.237:5601/app/kibana#/dashboard/Qui-sont-les-emprunteurs-du-Z%C3%A8bre-questionmark-?embed=true&_g=(refreshInterval:(display:Off,pause:!f,value:0),time:(from:now-1y,mode:quick,to:now))&_a=(filters:!(),options:(darkTheme:!f),panels:!((col:1,id:\'Nombre-d!\'emprunteurs-par-mois\',panelIndex:1,row:1,size_x:8,size_y:2,type:visualization),(col:1,id:Nombre-de-pr%C3%AAts-par-mois,panelIndex:3,row:3,size_x:8,size_y:2,type:visualization),(col:9,id:Pr%C3%AAts,panelIndex:4,row:3,size_x:4,size_y:2,type:visualization),(col:1,id:Emprunteurs-distincts-par--de-Roubaix,panelIndex:6,row:5,size_x:6,size_y:3,type:visualization),(col:7,id:Emprunteurs-distincts-par-ville,panelIndex:7,row:5,size_x:6,size_y:3,type:visualization),(col:9,id:Emprunteurs-distincts-par-%C3%A2ge-m%C3%A9diath%C3%A8que,panelIndex:8,row:8,size_x:4,size_y:3,type:visualization),(col:1,id:Emprunteurs-distincts-par-type-de-carte,panelIndex:9,row:8,size_x:4,size_y:3,type:visualization),(col:5,id:Emprunteurs-distincts-par-sexe,panelIndex:10,row:8,size_x:4,size_y:3,type:visualization),(col:9,id:\'Nombre-d!\'emprunteurs-\',panelIndex:11,row:1,size_x:4,size_y:2,type:visualization)),query:(query_string:(analyze_wildcard:!t,query:\'pret_site%20:%20%22Z%C3%A8bre%22\')),title:\'Qui%20sont%20les%20emprunteurs%20du%20Z%C3%A8bre%20%3F\',uiState:(P-1:(vis:(legendOpen:!f)),P-10:(vis:(legendOpen:!f)),P-3:(vis:(legendOpen:!f)),P-6:(vis:(legendOpen:!f)),P-7:(vis:(legendOpen:!f)),P-8:(vis:(legendOpen:!f)),P-9:(vis:(legendOpen:!f))))',
             height => '1200px'
         }
     };
@@ -404,8 +406,9 @@ get '/grand-plage/collections/ensemble' => sub {
         file_2017 => '/data/Statistiques_collections_2017.xlsx', 
         file_2018 => '/data/Statistiques_collections_2018.xlsx',
         file_2019 => '/data/Statistiques_collections_2019_VM.xlsx',
-	file_2020 => '/data/Statistiques_collections_2020_VM.xlsx',
-	file_2021 => '/data/Statistiques_collections_2021.xlsx'
+	    file_2020 => '/data/Statistiques_collections_2020_VM.xlsx',
+	    file_2021 => '/data/Statistiques_collections_2021.xlsx',
+		file_2022 => '/data/Statistiques_collections_2022_20230128.xlsx'
 #        indicateurs => $indicateurs
     };
 };
