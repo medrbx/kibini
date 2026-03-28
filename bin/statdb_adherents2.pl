@@ -21,17 +21,17 @@ my $dbh = GetDbh();
 
 my $req = <<SQL;
     SELECT
-    CURDATE() AS date_extraction,
+    '2025-12-31' AS date_extraction,
     b.borrowernumber AS adherent_id,
     b.sex as sexe,
-    YEAR(CURDATE()) - YEAR(b.dateofbirth) AS age,
+    2025 - YEAR(b.dateofbirth) AS age,
     b.city AS geo_ville,
     b.altcontactcountry AS geo_roubaix_iris,
     b.branchcode AS inscription_code_site,
     b.categorycode AS inscription_code_carte,
-    YEAR(CURDATE()) - YEAR(b.dateenrolled) AS inscription_fidelite
-FROM koha_prod.borrowers b
-WHERE b.dateexpiry > CURDATE()
+    2025 - YEAR(b.dateenrolled) AS inscription_fidelite
+FROM koha2025.borrowers b
+WHERE b.dateexpiry >= '2025-12-31'
     AND b.categorycode IN ("ECOL", "CLAS", "CSVT", "CSLT", "BIBL", "MEDB", "MEDA", "MEDC", "MEDP", "COLD", "COLI", "COLS")
 	
 SQL

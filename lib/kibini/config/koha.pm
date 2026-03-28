@@ -2,7 +2,7 @@ package kibini::config::koha ;
 
 use Exporter ;
 @ISA = qw(Exporter) ;
-@EXPORT = qw( GetKohaProUrl GetKohaOpacUrl GetKohaRestUrl GetKohaIlsdiUrl ) ;
+@EXPORT = qw( GetKohaProUrl GetKohaOpacUrl GetKohaRestUrl GetKohaIlsdiUrl GetKohaAuthUser GetKohaAuthPwd ) ;
 
 use kibini::config ;
 
@@ -22,6 +22,18 @@ sub GetKohaRestUrl {
     my $rest = $conf->{'rest'} ;
     my $resturl = $opac . "/" . $rest ;
     return $resturl ;
+}
+
+sub GetKohaAuthUser {
+    my $conf = GetConfig('koha') ;
+    my $user = $conf->{'user'} ;
+    return $user ;
+}
+
+sub GetKohaAuthPwd {
+    my $conf = GetConfig('koha') ;
+    my $pwd = $conf->{'pwd'} ;
+    return $pwd ;
 }
 
 sub GetKohaIlsdiUrl {

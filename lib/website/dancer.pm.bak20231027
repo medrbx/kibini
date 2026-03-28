@@ -44,12 +44,11 @@ get '/' => sub {
         label2 => 'Les tableaux de bord de La Grand-Plage',
         label3 => 'Quels sont les services proposés ?',
         dashboard => {
-            src => "http://129.1.0.237:1789/data/notebook_kibini2_0_presentation.html",
-            height => '1400px'
+            src => 'http://129.1.0.237:5601/app/kibana#/dashboard/Les-services-propos%C3%A9s-%C3%A0-la-Grand-Plage?embed=true&_g=(refreshInterval:(display:Off,pause:!f,value:0),time:(from:now-15m,mode:relative,to:now))&_a=(filters:!(),options:(darkTheme:!f),panels:!((col:1,id:\'Services-de-la-M%C3%A9diath%C3%A8que-(2017)\',panelIndex:3,row:5,size_x:12,size_y:5,type:visualization),(col:1,id:\'L!\'outil-Kibini,-qu!\'est-ce-que-c!\'est-questionmark-\',panelIndex:4,row:1,size_x:12,size_y:4,type:visualization)),query:(query_string:(analyze_wildcard:!t,query:\'*\')),title:\'Les%20services%20propos%C3%A9s%20%C3%A0%20la%20Grand-Plage\',uiState:())',
+            height => '1200px'
         }
     };
 };
-
 
 # PARTIE 1 - La Grand-Plage
 
@@ -59,6 +58,7 @@ get '/grand-plage/activites' => sub {
         label2 => 'Quelle activité ces 30 derniers jours ?',
         label3 => 'Quelques chiffres',
         dashboard => {
+            #src => 'http://129.1.0.237:5601/app/kibana#/dashboard/Page-d%27accueil-:-les-30-derniers-jours-%C3%A0-La-Grand-Plage?embed=true&_g=(refreshInterval%3A(display%3AOff%2Cpause%3A!f%2Cvalue%3A0)%2Ctime%3A(from%3Anow-5y%2Cmode%3Aquick%2Cto%3Anow))',
             src => "http://129.1.0.237:1789/data/notebook_kibini2_lgp_activite30j.html",
             height => '1400px'
         }
@@ -66,12 +66,15 @@ get '/grand-plage/activites' => sub {
      };     
 };
 
+
 get '/grand-plage/inscrits/profils' => sub {
     template 'kibana', {
         label1 => 'La Grand-Plage',
         label2 => 'Inscrits',
         label3 => 'Profils des inscrits',
         dashboard => {
+            #src => 'http://129.1.0.237:5601/app/kibana#/dashboard/AWXxyms1IC-X_pQ2wJ7I?embed=true&_g=(refreshInterval%3A(display%3AOff%2Cpause%3A!f%2Cvalue%3A0)%2Ctime%3A(from%3Anow-1M%2FM%2Cmode%3Aquick%2Cto%3Anow-1M%2FM))',
+            #height => '1300px'
             src => "http://129.1.0.237:1789/data/notebook_kibini2_lgp_qui_sont_les_inscrits.html",
             height => '1400px'
         }
@@ -84,42 +87,70 @@ get '/grand-plage/inscrits/usages' => sub {
         label2 => 'Inscrits',
         label3 => 'Usages des inscrits',
         dashboard => {
+            #src => 'http://129.1.0.237:5601/app/kibana#/dashboard/AWH6yu6epw5wXLtt4DsB?embed=true&_g=(refreshInterval%3A(display%3AOff%2Cpause%3A!f%2Cvalue%3A0)%2Ctime%3A(from%3Anow-1M%2FM%2Cmode%3Aquick%2Cto%3Anow-1M%2FM))',
+            #height => '1400px'
             src => "http://129.1.0.237:1789/data/notebook_kibini2_lgp_que_font_les_inscrits.html",
             height => '1400px'            
         }
     };
 };
 
-get '/grand-plage/collections/prets' => sub {
-    template 'kibana', {
+get '/grand-plage/inscrits/quartiers' => sub {
+    template 'carte', {
         label1 => 'La Grand-Plage',
-        label2 => 'Collections',
-        label3 => 'Prêts',
-        dashboard => {
+        label2 => 'Inscrits',
+        label3 => 'Taux d\'inscription par quartier',
+    };
+};
+
+get '/grand-plage/collections/documents' => sub {
+        template 'kibana', {
+                label1 => 'La Grand-Plage',
+                label2 => 'Collections',
+                label3 => 'Documents',
+                dashboard => {
+                    src => 'http://129.1.0.237:5601/app/kibana#/dashboard/Quelles-collections-questionmark-?embed=true&_g=(refreshInterval:(display:Off,pause:!f,value:0),time:(from:now-15y,mode:quick,to:now))&_a=(filters:!(),options:(darkTheme:!f),panels:!((col:9,id:Documents,panelIndex:1,row:1,size_x:4,size_y:2,type:visualization),(col:1,id:Nombre-de-documents-par-collection,panelIndex:2,row:3,size_x:12,size_y:8,type:visualization),(col:1,id:Documents-empruntables,panelIndex:3,row:1,size_x:4,size_y:2,type:visualization),(col:5,id:Nombre-de-documents-par-acc%C3%A8s,panelIndex:4,row:1,size_x:4,size_y:2,type:visualization)),query:(query_string:(analyze_wildcard:!t,query:\'*\')),title:\'Quelles%20collections%20%3F\',uiState:())',
+            height => '1400px'
+        }
+    };
+};
+
+get '/grand-plage/collections/prets' => sub {
+        template 'kibana', {
+                label1 => 'La Grand-Plage',
+                label2 => 'Collections',
+                label3 => 'Prêts',
+                dashboard => {
+#                    src => 'http://129.1.0.237:5601/app/kibana#/dashboard/Pr%C3%AAts-Grand-Plage?embed=true&_g=(refreshInterval%3A(display%3AOff%2Cpause%3A!f%2Cvalue%3A0)%2Ctime%3A(from%3A\'2018-01-15T16%3A03%3A59.108Z\'%2Cmode%3Aabsolute%2Cto%3A\'2019-01-15T16%3A03%3A59.109Z\'))" height="600" width="800',
+#            height => '1500px'
             src => "http://129.1.0.237:1789/data/notebook_kibini2_lgp_evolution_prets.html",
             height => '1400px'         
-        }
+ }
     };
 };
 
 get '/grand-plage/collections/retours' => sub {
-    template 'kibana', {
-        label1 => 'La Grand-Plage',
-        label2 => 'Collections',
-        label3 => 'Retours',
-        dashboard => {
-            src => "http://129.1.0.237:1789/data/notebook_kibini2_lgp_evolution_retours.html",
-            height => '1400px'         
-        }
+        template 'kibana', {
+                label1 => 'La Grand-Plage',
+                label2 => 'Collections',
+                label3 => 'Retours',
+                dashboard => {
+                    src => "http://129.1.0.237:1789/data/notebook_kibini2_lgp_evolution_retours.html",
+                    height => '1400px'         
+ }
     };
 };
 
+
+
 get '/grand-plage/collections/reservations' => sub {
-    template 'kibana', {
-        label1 => 'La Grand-Plage',
-        label2 => 'Collections',
-        label3 => 'Réservations',
-        dashboard => {
+        template 'kibana', {
+                label1 => 'La Grand-Plage',
+                label2 => 'Collections',
+                label3 => 'Réservations',
+                dashboard => {
+                    # src => 'http://129.1.0.237:5601/app/kibana#/dashboard/Usages-du-service-r%C3%A9servations?embed=true&_g=(refreshInterval:(display:Off,pause:!f,value:0),time:(from:now-1y,mode:quick,to:now))&_a=(filters:!(),options:(darkTheme:!f),panels:!((col:1,id:\'Nombre-d!\'utilisateurs-du-service-r%C3%A9servations-par-mois\',panelIndex:7,row:1,size_x:8,size_y:2,type:visualization),(col:1,id:Nombre-de-r%C3%A9servations-par-mois,panelIndex:11,row:3,size_x:8,size_y:2,type:visualization),(col:9,id:\'Nombre-d!\'utilisateurs-du-service-r%C3%A9servations\',panelIndex:12,row:1,size_x:4,size_y:2,type:visualization),(col:7,id:Utilisateurs-service-r%C3%A9servations-par-type-de-carte,panelIndex:13,row:5,size_x:6,size_y:3,type:visualization),(col:1,id:Utilisateurs-service-r%C3%A9servations-par-%C3%A2ge,panelIndex:17,row:5,size_x:6,size_y:3,type:visualization),(col:1,id:R%C3%A9servations-par-collection,panelIndex:18,row:8,size_x:4,size_y:5,type:visualization),(col:5,id:R%C3%A9servations-par-support,panelIndex:19,row:8,size_x:4,size_y:5,type:visualization),(col:9,id:R%C3%A9servations-par-statut,panelIndex:20,row:8,size_x:4,size_y:5,type:visualization),(col:9,id:Nombre-total-de-r%C3%A9servations,panelIndex:21,row:3,size_x:4,size_y:2,type:visualization)),query:(query_string:(analyze_wildcard:!t,query:\'*\')),title:\'Usages%20du%20service%20r%C3%A9servations\',uiState:(P-11:(vis:(legendOpen:!f)),P-13:(vis:(legendOpen:!f)),P-17:(vis:(legendOpen:!f)),P-18:(vis:(legendOpen:!f)),P-20:(vis:(legendOpen:!f)),P-7:(vis:(legendOpen:!f))))',
+            # height => '1500px'
             src => "http://129.1.0.237:1789/data/notebook_kibini2_lgp_evolution_resas.html",
             height => '1400px'
         }
@@ -127,126 +158,95 @@ get '/grand-plage/collections/reservations' => sub {
 };
 
 get '/grand-plage/collections/reservations_usages' => sub {
-    template 'kibana', {
-        label1 => 'La Grand-Plage',
-        label2 => 'Collections',
-        label3 => 'Usage des réservations',
-        dashboard => {
-            src => "http://129.1.0.237:1789/data/notebook_kibini2_lgp_quels_usages_resas.html",
-            height => '1400px'
+        template 'kibana', {
+                label1 => 'La Grand-Plage',
+                label2 => 'Collections',
+                label3 => 'Usage des réservations',
+                dashboard => {
+                    # src => 'http://129.1.0.237:5601/app/kibana#/dashboard/Usages-du-service-r%C3%A9servations?embed=true&_g=(refreshInterval:(display:Off,pause:!f,value:0),time:(from:now-1y,mode:quick,to:now))&_a=(filters:!(),options:(darkTheme:!f),panels:!((col:1,id:\'Nombre-d!\'utilisateurs-du-service-r%C3%A9servations-par-mois\',panelIndex:7,row:1,size_x:8,size_y:2,type:visualization),(col:1,id:Nombre-de-r%C3%A9servations-par-mois,panelIndex:11,row:3,size_x:8,size_y:2,type:visualization),(col:9,id:\'Nombre-d!\'utilisateurs-du-service-r%C3%A9servations\',panelIndex:12,row:1,size_x:4,size_y:2,type:visualization),(col:7,id:Utilisateurs-service-r%C3%A9servations-par-type-de-carte,panelIndex:13,row:5,size_x:6,size_y:3,type:visualization),(col:1,id:Utilisateurs-service-r%C3%A9servations-par-%C3%A2ge,panelIndex:17,row:5,size_x:6,size_y:3,type:visualization),(col:1,id:R%C3%A9servations-par-collection,panelIndex:18,row:8,size_x:4,size_y:5,type:visualization),(col:5,id:R%C3%A9servations-par-support,panelIndex:19,row:8,size_x:4,size_y:5,type:visualization),(col:9,id:R%C3%A9servations-par-statut,panelIndex:20,row:8,size_x:4,size_y:5,type:visualization),(col:9,id:Nombre-total-de-r%C3%A9servations,panelIndex:21,row:3,size_x:4,size_y:2,type:visualization)),query:(query_string:(analyze_wildcard:!t,query:\'*\')),title:\'Usages%20du%20service%20r%C3%A9servations\',uiState:(P-11:(vis:(legendOpen:!f)),P-13:(vis:(legendOpen:!f)),P-17:(vis:(legendOpen:!f)),P-18:(vis:(legendOpen:!f)),P-20:(vis:(legendOpen:!f)),P-7:(vis:(legendOpen:!f))))',
+                    # height => '1500px'
+                    src => "http://129.1.0.237:1789/data/notebook_kibini2_lgp_evolution_resas.html",
+                    height => '1400px'
         }
     };
 };
 
 get '/grand-plage/web/portail' => sub {
-    template 'kibana', {
-        label1 => 'La Grand-Plage',
-        label2 => 'Portail',
-        label3 => "L'usage du portail",
-        dashboard => {
-            src => "http://129.1.0.237:1789/data/notebook_kibini2_lgp_quels_usages_portail.html",
-            height => '1400px'
+        template 'kibana', {
+                label1 => 'La Grand-Plage',
+                label2 => 'Portail',
+                label3 => "L'usage du portail",
+                dashboard => {
+                    # src => 'http://129.1.0.237:5601/app/kibana#/dashboard/cef5b330-9786-11e7-88ff-a79737dea4ec?embed=true&_g=(refreshInterval%3A(display%3AOff%2Cpause%3A!f%2Cvalue%3A0)%2Ctime%3A(from%3Anow-1y%2Cmode%3Aquick%2Cto%3Anow))',
+                    # height => '1650px'
+					src => "http://129.1.0.237:1789/data/notebook_kibini2_lgp_quels_usages_portail.html",
+                    height => '1400px'
         }
     };
 };
 
+# get '/grand-plage/web/bnr' => sub {
+        # template 'kibana', {
+                # label1 => 'La Grand-Plage',
+                # label2 => 'Sites web',
+                # label3 => "Sessions de consultation de la bn-r et du portail",
+                # dashboard => {
+                    # src => 'http://129.1.0.237:5601/app/kibana#/dashboard/Web-:-sessions?embed=true&_g=(refreshInterval:(display:Off,pause:!f,value:0),time:(from:\'2008-01-01T00:00:00.000Z\',mode:absolute,to:\'2019-04-18T07:38:29.312Z\'))&_a=(description:\'\',filters:!(),options:(darkTheme:!f),panels:!((col:1,id:\'Web-:-sessions-par-ann%C3%A9e\',panelIndex:1,row:2,size_x:12,size_y:5,type:visualization),(col:1,id:\'Web-:-sessions-par-mois\',panelIndex:2,row:7,size_x:12,size_y:5,type:visualization),(col:1,id:AWovY57YIC-X_pQ2xMAW,panelIndex:3,row:1,size_x:12,size_y:1,type:visualization)),query:(query_string:(analyze_wildcard:!t,query:\'*\')),timeRestore:!t,title:\'Web+:+sessions\',uiState:(P-1:(vis:(legendOpen:!f)),P-2:(vis:(legendOpen:!f))),viewMode:view)',
+                    # height => '1300px'
+        # }
+    # };
+
+# };    
+
 get '/grand-plage/dimanche22' => sub {
-    template 'kibana', {
-        label1 => 'La Grand-Plage',
-        label2 => 'Activité',
-        label3 => "Dimanches 2022-2023",
-        dashboard => {
-            src => "http://129.1.0.237:1789/data/notebook_dimanche22.html",
-            height => '2600px'
+        template 'kibana', {
+                label1 => 'La Grand-Plage',
+                label2 => 'Activité',
+                label3 => "Dimanches 2022-2023",
+                dashboard => {
+                    src => "http://129.1.0.237:1789/data/notebook_dimanche22.html",
+                    height => '2600px'
         }
     };
 
 };
 
 get '/grand-plage/dimanche23' => sub {
-    template 'kibana', {
-        label1 => 'La Grand-Plage',
-        label2 => 'Activité',
-        label3 => "Dimanches 2023-2024",
-        dashboard => {
-            src => "http://129.1.0.237:1789/data/notebook_dimanche23.html",
-            height => '2600px'
+        template 'kibana', {
+                label1 => 'La Grand-Plage',
+                label2 => 'Activité',
+                label3 => "Dimanches 2023-2024",
+                dashboard => {
+                    src => "http://129.1.0.237:1789/data/notebook_dimanche23.html",
+                    height => '2600px'
         }
     };
 
-};
-
-get 'grand-plage/dimanche24' => sub {
-    template 'kibana', {
-     label1 => 'La Grand-Plage',
-     label2 => 'Activité',
-     label3 => 'Dimanches 2024-2025',
-     dashboard => {
-         src => 'http://129.1.0.237:1789/data/notebook_dimanche24.html',
-	 height => '2600px'
-     }
-    };
-};
-
-get 'grand-plage/dimanche25' => sub {
-    template 'kibana', {
-     label1 => 'La Grand-Plage',
-     label2 => 'Activité',
-     label3 => 'Dimanches 2025-2026',
-     dashboard => {
-         src => 'http://129.1.0.237:1789/data/notebook_dimanche25.html',
-	 height => '2600px'
-     }
-    }; 
-};
-
-get '/grand-plage/synthese_pluriannuelle' => sub {
-    template 'kibana', {
-        label1 => 'La Grand-Plage',
-        label2 => 'Activité',
-        label3 => "Synthèse pluriannuelle",
-        dashboard => {
-            src => "http://129.1.0.237:1789/data/notebook_kibini2_lgp_syntheses_pluriannuelles.html",
-            height => '1500px'
-        }
-    
-    };
 };
 
 
 # PARTIE 2 - La Médiathèque
- 
+
 get '/mediatheque/activites' => sub {
     template 'kibana', {
         label1 => 'La Médiathèque',
-        label2 => 'Activité',
+        label2 => 'Quelle activité à la Médiathèque ?',
         dashboard => {
-            src => "http://129.1.0.237:1789/data/notebook_kibini2_med_activite_hebdo.html",
-            height => '1400px'
+            src => 'http://129.1.0.237:5601/app/kibana#/dashboard/L%27activit%C3%A9-de-la-M%C3%A9diath%C3%A8que-?embed=true&_g=(refreshInterval%3A(display%3AOff%2Cpause%3A!f%2Cvalue%3A0)%2Ctime%3A(from%3Anow-1y%2Cmode%3Aquick%2Cto%3Anow))',
+            height => '2000px'
         }
     };
 };
 
-get '/mediatheque/entrees' => sub {
-    template 'kibana', {
-        label1 => 'La Médiathèque',
-        label2 => 'Entrées',
-        dashboard => {
-            src => "http://129.1.0.237:1789/data/notebook_kibini2_med_evolution_entrees.html",
-            height => '1400px'
-        }
-    };
-};
-
-get '/mediatheque/collections/prets_repartition' => sub {
+get '/mediatheque/collections/documents' => sub {
     template 'kibana', {
         label1 => 'La Médiathèque',
         label2 => 'Collections',
-        label3 => 'Répartition des prêts',
+        label3 => 'Documents',
         dashboard => {
-            src => "http://129.1.0.237:1789/data/notebook_kibini2_med_quelle_repartition_des_prets.html",
-            height => '1400px'
-        }
+            src => 'http://129.1.0.237:5601/app/kibana#/dashboard/Quelles-collections-%C3%A0-la-m%C3%A9diath%C3%A8que-questionmark-?embed=true&_g=(refreshInterval:(display:Off,pause:!f,value:0),time:(from:now-15y,mode:relative,to:now))&_a=(filters:!(),options:(darkTheme:!f),panels:!((col:1,id:Nombre-de-documents-par-collection,panelIndex:2,row:4,size_x:12,size_y:8,type:visualization),(col:9,id:Documents-M%C3%A9diath%C3%A8que,panelIndex:3,row:1,size_x:4,size_y:3,type:visualization),(col:1,id:Documents-empruntables-M%C3%A9diath%C3%A8que,panelIndex:4,row:1,size_x:4,size_y:3,type:visualization),(col:5,id:Documents-par-acc%C3%A8s,panelIndex:5,row:1,size_x:4,size_y:3,type:visualization)),query:(query_string:(analyze_wildcard:!t,query:\'NOT%20%22Magasin%20collectivit%C3%A9s%22,%20NOT%20%22Z%C3%A8bre%22\')),title:\'Quelles%20collections%20%C3%A0%20la%20m%C3%A9diath%C3%A8que%20%3F\',uiState:())',
+            height => '1300px'
+        }    
     };
 };
 
@@ -256,57 +256,9 @@ get '/mediatheque/collections/prets' => sub {
         label2 => 'Collections',
         label3 => 'Prêts',
         dashboard => {
-            src => "http://129.1.0.237:1789/data/notebook_kibini2_med_evolution_prets.html",
+            src => 'http://129.1.0.237:5601/app/kibana#/dashboard/Pr%C3%AAts-M%C3%A9diath%C3%A8que?embed=true&_g=(refreshInterval:(display:Off,pause:!f,value:0),time:(from:now-1y,mode:quick,to:now))&_a=(description:\'\',filters:!((\'$state\':(store:appState),meta:(alias:!n,disabled:!f,index:prets,key:pret_site,negate:!f,type:phrase,value:M%C3%A9diath%C3%A8que),query:(match:(pret_site:(query:M%C3%A9diath%C3%A8que,type:phrase))))),options:(darkTheme:!f),panels:!((col:1,id:Nombre-de-pr%C3%AAts-par-collection,panelIndex:24,row:4,size_x:12,size_y:9,type:visualization),(col:7,id:\'Nombre-d!\'emprunteurs-totaux\',panelIndex:25,row:1,size_x:6,size_y:2,type:visualization),(col:1,id:Pr%C3%AAts,panelIndex:26,row:1,size_x:6,size_y:2,type:visualization),(col:1,id:Pr%C3%A9cision,panelIndex:27,row:3,size_x:12,size_y:1,type:visualization)),query:(match_all:()),timeRestore:!t,title:\'Pr%C3%AAts+M%C3%A9diath%C3%A8que\',uiState:(),viewMode:view)',
             height => '1400px'
         }
-    };
-};
-
-get '/mediatheque/collections/retours' => sub {
-    template 'kibana', {
-        label1 => 'La Médiathèque',
-        label2 => 'Collections',
-        label3 => 'Retours',
-        dashboard => {
-            src => "http://129.1.0.237:1789/data/notebook_kibini2_med_evolution_retours.html",
-            height => '1400px'
-        }
-    };
-};
-
-get '/mediatheque/collections/reservations' => sub {
-    template 'kibana', {
-        label1 => 'La Médiathèque',
-        label2 => 'Collections',
-        label3 => 'Réservations',
-        dashboard => {
-            src => "http://129.1.0.237:1789/data/notebook_kibini2_med_evolution_resas.html",
-            height => '1400px'
-        }
-    };
-};
-
-get '/mediatheque/webkiosk/connexions' => sub {
-    template 'kibana', {
-        label1 => 'La Médiathèque',
-        label2 => 'Webkiosk',
-        label3 => 'Connexions',
-        dashboard => {
-            src => "http://129.1.0.237:1789/data/notebook_kibini2_med_evolution_webkiosk.html",
-            height => '1400px'
-        }
-    };
-};
-
-get '/mediatheque/webkiosk/impressions' => sub {
-    template 'kibana', {
-        label1 => 'La Médiathèque',
-        label2 => 'Quelle évolution des impressions ?',
-        dashboard => {
-            src => "http://129.1.0.237:1789/data/notebook_kibini2_med_evolution_impressions.html",
-            height => '1500px'
-        }
-    
     };
 };
 
@@ -316,7 +268,7 @@ get '/mediatheque/collections/emprunteurs' => sub {
         label2 => 'Collections',
         label3 => 'Emprunteurs', 
         dashboard => {
-            src => 'http://129.1.0.237:1789/data/notebook_kibini2_med_qui_sont_les_emprunteurs.html',
+            src => 'http://129.1.0.237:5601/app/kibana#/dashboard/Profil-emprunteurs-m%C3%A9diath%C3%A8que?embed=true&_g=(refreshInterval:(display:Off,pause:!f,value:0),time:(from:now-1y,mode:quick,to:now))&_a=(filters:!(),options:(darkTheme:!f),panels:!((col:4,id:Emprunteurs-distincts-M%C3%A9diath%C3%A8que,panelIndex:1,row:1,size_x:9,size_y:3,type:visualization),(col:1,id:Emprunteurs-distincts-par-carte-m%C3%A9diath%C3%A8que,panelIndex:2,row:4,size_x:4,size_y:4,type:visualization),(col:5,id:Emprunteurs-distincts-par-%C3%A2ge-m%C3%A9diath%C3%A8que,panelIndex:3,row:4,size_x:4,size_y:4,type:visualization),(col:1,id:\'Nombre-d!\'emprunteurs\',panelIndex:4,row:1,size_x:3,size_y:3,type:visualization),(col:9,id:Emprunteurs-distincts-par-ville,panelIndex:5,row:4,size_x:4,size_y:4,type:visualization)),query:(query_string:(analyze_wildcard:!t,query:\'pret_site:%20%22M%C3%A9diath%C3%A8que%22%20AND%20personne\')),title:\'Profil%20emprunteurs%20m%C3%A9diath%C3%A8que\',uiState:(P-2:(vis:(legendOpen:!f)),P-3:(vis:(legendOpen:!f)),P-5:(vis:(legendOpen:!f)))',
             height => '1300px'
         }
     };
@@ -356,12 +308,12 @@ get '/mediatheque/suggestions/profils' => sub {
     };
 };
 
-get '/mediatheque/etude/frequentation' => sub {
+get '/mediatheque/salle etude/profils' => sub {
     template 'kibana', {
         label1 => 'La Médiathèque',
-        label2 => 'Fréquentation de la salle d\'étude?',
+        label2 => 'Qui fréquente la salle d\'etude?',
         dashboard => {
-            src => 'http://129.1.0.237:1789/data/notebook_kibini2_med_evolution_frequentation_etude.html',
+            src => 'http://129.1.0.237:5601/goto/6c112f731f85d1f09553834dc8e1d36c?embed=true',
             height => '1200px'
         }
     };
@@ -372,71 +324,48 @@ get '/mediatheque/action culturelle' => sub {
         label1 => 'La Médiathèque',
         label2 => 'Quels publics pour l\'action culturelle ?',
         dashboard => {
-            src => "http://129.1.0.237:1789/data/notebook_kibini2_med_quels_publics_action_culturelle.html",
+            src => 'http://129.1.0.237:5601/app/kibana#/dashboard/Action-culturelle?embed=true&_g=(refreshInterval:(display:Off,pause:!f,value:0),time:(from:now-1y,mode:quick,to:now))&_a=(filters:!(),options:(darkTheme:!f),panels:!((col:9,id:\'Nombre-de-participants-%C3%A0-l!\'action-culturelle\',panelIndex:1,row:3,size_x:4,size_y:2,type:visualization),(col:1,id:\'Nombre-d!\'actions-par-mois\',panelIndex:2,row:1,size_x:8,size_y:2,type:visualization),(col:1,id:\'Action-culturelle-par-type-d!\'action\',panelIndex:3,row:8,size_x:4,size_y:4,type:visualization),(col:5,id:Action-culturelle-par-public-cible,panelIndex:4,row:8,size_x:4,size_y:4,type:visualization),(col:1,id:Nombre-de-participants-par-mois,panelIndex:5,row:3,size_x:8,size_y:2,type:visualization),(col:9,id:\'Nombre-d!\'actions-propos%C3%A9es\',panelIndex:6,row:1,size_x:2,size_y:2,type:visualization),(col:11,id:\'Action-culturelle-:-nombre-de-partenariats\',panelIndex:7,row:1,size_x:2,size_y:2,type:visualization),(col:9,id:Action-culturelle-par-lieu,panelIndex:8,row:8,size_x:4,size_y:4,type:visualization),(col:1,id:Tableau-r%C3%A9capitulatif-action-culturelle,panelIndex:9,row:5,size_x:12,size_y:3,type:visualization)),query:(query_string:(analyze_wildcard:!t,query:\'*\')),title:\'Action%20culturelle\',uiState:(P-2:(vis:(legendOpen:!f)),P-3:(vis:(legendOpen:!f)),P-4:(vis:(legendOpen:!f)),P-5:(vis:(legendOpen:!f)),P-8:(vis:(legendOpen:!f))))',
             height => '1500px'
         }
     
     };
 };
 
+
 # PARTIE 3 - Le Zèbre
 
 
-# get '/zebre/activites' => sub {
-    # template 'kibana', {
-        # label1 => 'Le Zèbre',
-        # label2 => 'Quelle activité ?',
-        # dashboard => {
-            # src => 'http://129.1.0.237:5601/app/kibana#/dashboard/L\'activit%C3%A9-du-Z%C3%A8bre?embed=true&_g=(refreshInterval:(display:Off,pause:!f,value:0),time:(from:now-1y,mode:relative,to:now))&_a=(filters:!(),options:(darkTheme:!f),panels:!((col:9,id:Nombre-de-pr%C3%AAts-Z%C3%A8bre,panelIndex:3,row:1,size_x:4,size_y:3,type:visualization),(col:1,id:Nombre-de-pr%C3%AAts-par-mois-Z%C3%A8bre,panelIndex:4,row:1,size_x:8,size_y:3,type:visualization),(col:9,id:Tableau-nombre-de-r%C3%A9servations-retir%C3%A9es-par-mois-Z%C3%A8bre,panelIndex:5,row:7,size_x:4,size_y:3,type:visualization),(col:1,id:Nombre-de-r%C3%A9servations-retir%C3%A9es-par-mois-Z%C3%A8bre,panelIndex:6,row:7,size_x:8,size_y:3,type:visualization),(col:1,id:Nombre-de-pr%C3%AAts-par-mois-et-par-arr%C3%AAt-Z%C3%A8bre,panelIndex:7,row:4,size_x:8,size_y:3,type:visualization),(col:9,id:Nombre-de-pr%C3%AAts-par-arr%C3%AAt-Z%C3%A8bre,panelIndex:8,row:4,size_x:4,size_y:3,type:visualization)),query:(query_string:(analyze_wildcard:!t,query:\'*\')),title:\'L!\'activit%C3%A9%20du%20Z%C3%A8bre\',uiState:())',
-            # height => '1200px'
-        # }
-    # };
-# };
+get '/zebre/activites' => sub {
+    template 'kibana', {
+        label1 => 'Le Zèbre',
+        label2 => 'Quelle activité ?',
+        dashboard => {
+            src => 'http://129.1.0.237:5601/app/kibana#/dashboard/L\'activit%C3%A9-du-Z%C3%A8bre?embed=true&_g=(refreshInterval:(display:Off,pause:!f,value:0),time:(from:now-1y,mode:relative,to:now))&_a=(filters:!(),options:(darkTheme:!f),panels:!((col:9,id:Nombre-de-pr%C3%AAts-Z%C3%A8bre,panelIndex:3,row:1,size_x:4,size_y:3,type:visualization),(col:1,id:Nombre-de-pr%C3%AAts-par-mois-Z%C3%A8bre,panelIndex:4,row:1,size_x:8,size_y:3,type:visualization),(col:9,id:Tableau-nombre-de-r%C3%A9servations-retir%C3%A9es-par-mois-Z%C3%A8bre,panelIndex:5,row:7,size_x:4,size_y:3,type:visualization),(col:1,id:Nombre-de-r%C3%A9servations-retir%C3%A9es-par-mois-Z%C3%A8bre,panelIndex:6,row:7,size_x:8,size_y:3,type:visualization),(col:1,id:Nombre-de-pr%C3%AAts-par-mois-et-par-arr%C3%AAt-Z%C3%A8bre,panelIndex:7,row:4,size_x:8,size_y:3,type:visualization),(col:9,id:Nombre-de-pr%C3%AAts-par-arr%C3%AAt-Z%C3%A8bre,panelIndex:8,row:4,size_x:4,size_y:3,type:visualization)),query:(query_string:(analyze_wildcard:!t,query:\'*\')),title:\'L!\'activit%C3%A9%20du%20Z%C3%A8bre\',uiState:())',
+            height => '1200px'
+        }
+    };
+};
 
-# get '/zebre/collections/documents' => sub {
-    # template 'kibana', {
-        # label1 => 'Le Zèbre',
-        # label2 => 'Collections',
-        # label3 => 'Documents',
-        # dashboard => {
-            # src => 'http://129.1.0.237:5601/app/kibana#/dashboard/Quelles-collections-dans-le-Z%C3%A8bre-questionmark-?embed=true&_g=(refreshInterval:(display:Off,pause:!f,value:0),time:(from:now-15y,mode:relative,to:now))&_a=(filters:!(),options:(darkTheme:!f),panels:!((col:1,id:Nombre-de-documents-par-collection,panelIndex:2,row:4,size_x:12,size_y:8,type:visualization),(col:7,id:Documents-Z%C3%A8bre,panelIndex:4,row:1,size_x:6,size_y:3,type:visualization),(col:1,id:Documents-empruntables-Z%C3%A8bre,panelIndex:5,row:1,size_x:6,size_y:3,type:visualization)),query:(query_string:(analyze_wildcard:!t,query:\'site_rattach:%20%22Z%C3%A8bre%22\')),title:\'Quelles%20collections%20dans%20le%20Z%C3%A8bre%20%3F\',uiState:())',
-            # height => '1200px'
-        # }
-    # };
-# };
+get '/zebre/collections/documents' => sub {
+    template 'kibana', {
+        label1 => 'Le Zèbre',
+        label2 => 'Collections',
+        label3 => 'Documents',
+        dashboard => {
+            src => 'http://129.1.0.237:5601/app/kibana#/dashboard/Quelles-collections-dans-le-Z%C3%A8bre-questionmark-?embed=true&_g=(refreshInterval:(display:Off,pause:!f,value:0),time:(from:now-15y,mode:relative,to:now))&_a=(filters:!(),options:(darkTheme:!f),panels:!((col:1,id:Nombre-de-documents-par-collection,panelIndex:2,row:4,size_x:12,size_y:8,type:visualization),(col:7,id:Documents-Z%C3%A8bre,panelIndex:4,row:1,size_x:6,size_y:3,type:visualization),(col:1,id:Documents-empruntables-Z%C3%A8bre,panelIndex:5,row:1,size_x:6,size_y:3,type:visualization)),query:(query_string:(analyze_wildcard:!t,query:\'site_rattach:%20%22Z%C3%A8bre%22\')),title:\'Quelles%20collections%20dans%20le%20Z%C3%A8bre%20%3F\',uiState:())',
+            height => '1200px'
+        }
+    };
+};
 
 get '/zebre/collections/prets' => sub {
     template 'kibana', {
-        label1 => 'La Médiathèque',
+        label1 => 'Le Zèbre',
         label2 => 'Collections',
         label3 => 'Prêts',
         dashboard => {
-            src => "http://129.1.0.237:1789/data/notebook_kibini2_zebre_evolution_prets.html",
-            height => '1400px'
-        }
-    };
-};
-
-get '/zebre/collections/retours' => sub {
-    template 'kibana', {
-        label1 => 'La Médiathèque',
-        label2 => 'Collections',
-        label3 => 'Retours',
-        dashboard => {
-            src => "http://129.1.0.237:1789/data/notebook_kibini2_zebre_evolution_retours.html",
-            height => '1400px'
-        }
-    };
-};
-
-get '/zebre/collections/reservations' => sub {
-    template 'kibana', {
-        label1 => 'La Médiathèquee',
-        label2 => 'Collections',
-        label3 => 'Réservations',
-        dashboard => {
-            src => "http://129.1.0.237:1789/data/notebook_kibini2_zebre_evolution_resas.html",
-            height => '1400px'
+            src => 'http://129.1.0.237:5601/app/kibana#/dashboard/Pr%C3%AAts-Z%C3%A8bre?embed=true&_g=(refreshInterval%3A(display%3AOff%2Cpause%3A!f%2Cvalue%3A0)%2Ctime%3A(from%3Anow-1y%2Cmode%3Aquick%2Cto%3Anow))',
+            height => '1200px'
         }
     };
 };
@@ -532,10 +461,7 @@ get '/grand-plage/collections/ensemble' => sub {
         file_2019 => '/data/Statistiques_collections_2019_VM.xlsx',
         file_2020 => '/data/Statistiques_collections_2020_VM.xlsx',
         file_2021 => '/data/Statistiques_collections_2021.xlsx',
-        file_2022 => '/data/Statistiques_collections_2022_20230128.xlsx',
-        file_2023 => '/data/Statistiques_collections_2023_v20240113.xlsx',
-	    file_2024 => '/data/Statistiques_collections_2024.xlsx',
-		file_2025 => '/data/Statistiques_collections_2025.xlsx'
+        file_2022 => '/data/Statistiques_collections_2022_20230128.xlsx'
 #        indicateurs => $indicateurs
     };
 };
@@ -625,9 +551,9 @@ get '/qa/inscrits' => sub {
 
 # Suggestions
 get '/suggestions' => sub {
-    my $suggestions = suggestions2();
+    my $suggestions = suggestions();
     my $acquereurs = acquereurs();
-    template 'suggestions2', {
+    template 'suggestions', {
         label1 => 'Suggestions',
         suggestions => $suggestions,
         acquereurs => $acquereurs
@@ -638,7 +564,7 @@ post '/suggestions/mod' => sub {
     my $suggestionid = param "suggestionid";
     my $managedby = param "borrnummanagedby";
     my $title = param "title";
-    modSuggestion2($suggestionid, $managedby);
+    modSuggestion($suggestionid, $managedby);
             
     my ($from, $to, $subject, $msg) = constructionCourriel($managedby, $title);
     SendEmail($from, $to, $subject, $msg);

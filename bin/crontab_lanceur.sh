@@ -20,7 +20,7 @@ if [ $dayofweek -eq 3 ] && [ $dayofmonthnextweek -lt $dayofmonth ]
 then
     # On fait un clich� des donn�es adh�rents
     perl $dir/statdb_adherents.pl
-    perl $dir/es_adherents.pl
+    #perl $dir/es_adherents.pl
 fi
 
 # CHAQUE MERCREDI
@@ -39,8 +39,8 @@ fi
 cp $dir_data/dumps_koha/dumps/koha_prod_$date_dump.sql.gz $dir_data/.
 perl $dir/statdb_load_koha_prod.pl
 
-# CHAQUE MARDI
-if [ $dayofweek -eq 2 ]
+# CHAQUE MERCREDI
+if [ $dayofweek -eq 3 ]
 then
     # On liste les exemplaires sortis des collections non abîmés, non perdus, non restitués à supprimer
     python $dir_kib2/kibini/adm_items2del2adm.py
@@ -57,13 +57,17 @@ then
     # On liste les prétendus rendus à traiter
     python $dir_kib2/kibini/adm_itemsPretendusRendus2adm.py
 	
-	# On liste les documents à passer en non restitués plus
+	# On liste les documents à passer en retard supérieur à 90 jours
 	python $dir_kib2/kibini/adm_itemsNonRestituesPlus.py
 
 fi
 
+# CHAQUE JOUR :
+# on finit le chargement de koha_prod (correction périos)
+perl $dir/statdb_load_koha_prod_end.pl
 
-# CHAQUE VNEDREDI
+
+# CHAQUE VENDREDI
 if [ $dayofweek -eq 5 ]
 then
 	# On liste les documents à passer en non restitués plus
@@ -81,10 +85,10 @@ fi
 
 # CHAQUE JOUR
 # On liste les documents en non restitués plus rendu la veille
-python $dir_kib2/kibini/adm_itemsNonRestituesPlus_retours.py
+#python $dir_kib2/kibini/adm_itemsNonRestituesPlus_retours.py
 
 # On met � jour les stats web
-bash $dir/web.sh
+#bash $dir/web.sh
 
 # On met � jour la table statdb.data_bib
 #perl $dir/data_biblio.pl
@@ -92,11 +96,11 @@ bash $dir/web.sh
 
 # On incorpore dans statdb et ES les pr�ts de la veille
 perl $dir/statdb_issues.pl
-perl $dir/es_prets.pl
+#perl $dir/es_prets.pl
 
 # On incorpore dans statdb et ES les r�servations de la veille
 perl $dir/statdb_reserves.pl
-perl $dir/es_reservations.pl
+#perl $dir/es_reservations.pl
 
 # On incorpore dans statdb et ES les statisques nedap de la journ�e précédente => désormais impossible
 #perl $dir/statdb_nedap.pl
@@ -104,11 +108,11 @@ perl $dir/es_reservations.pl
 
 # On traite les donn�es li�es � la fr�quentation de la salle d'�tude
 perl $dir/statdb_freq_etude.pl
-perl $dir/es_freq_etude.pl
+#perl $dir/es_freq_etude.pl
 
 # On incorpore les entr�es
 #perl $dir/statdb_comptage.pl
-perl $dir/es_entrees.pl
+#perl $dir/es_entrees.pl
 
 # On r�cup�re les logs du portail
 #perl $dir/logs_portail.pl
@@ -121,11 +125,11 @@ perl $dir/statdb_exemplaires.pl
 perl $dir/statdb_ano.pl
 
 # On met � jour les index Elasticsearch
-perl $dir/es_update.pl
+#perl $dir/es_update.pl
 
 # KIBINI2
 python $dir_kib2/kibini/data_prets.py
-python $dir_kib2/kibini/es_maj.py
+#python $dir_kib2/kibini/es_maj.py
 
 
 # CHAQUE DIMANCHE

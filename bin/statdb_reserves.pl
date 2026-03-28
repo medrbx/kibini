@@ -62,7 +62,7 @@ SELECT
     r.waitingdate,
     r.expirationdate,
     CASE WHEN b.categorycode NOT IN ('BIBL', 'CSLT','CSVT','MEDA','MEDB','MEDC','MEDP') THEN 'NP' ELSE YEAR(r.reservedate) - YEAR(b.dateofbirth) END,
-    CASE WHEN b.title = 'Madame' THEN 'F' WHEN b.title = 'Monsieur' THEN 'M' WHEN b.categorycode NOT IN ('BIBL', 'CSLT','CSVT','MEDA','MEDB','MEDC','MEDP') THEN 'NP' END,
+    b.sex,
     b.city,
     b.altcontactcountry,
     b.branchcode,

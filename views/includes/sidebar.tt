@@ -9,16 +9,19 @@
 
             <ul class="nav nav-stacked">
                 <li class="nav-header"></li>
-                        <li><a href="/grand-plage/activites"><span class="sd">Quelle activité ces 30 derniers jours ?</span></a></li>
-                        <li><a href="/grand-plage/inscrits/profils"><span class="sd">Qui sont les inscrits ?</span></a></li>
-                        <li><a href="/grand-plage/inscrits/usages"><span class="sd">Que font les inscrits ?</span></a></li>
-                        <li><a href="/grand-plage/inscrits/quartiers"><span class="sd">Quel taux d'inscription par quartier de Roubaix ?</span></a></li>
-                        <li><a href="/grand-plage/collections/documents"><span class="sd">Quelles collections ?</span></a></li>
-                        <li><a href="/grand-plage/collections/prets"><span class="sd">Nombre de prêts ?</span></a></li>
-                        <li><a href="/grand-plage/collections/reservations"><span class="sd">Quel usage du service des réservations ?</span></a></li>
-                        <li><a href="/grand-plage/web/portail"><span class="sd">Quel usage du portail ? </span></a></li>
-                        <li><a href="/grand-plage/web/bnr"><span class="sd">Quel usage de la bn-r ? </span></a></li>
-                        <li><a href="/grand-plage/dimanche"><span class="sd">Fréquentation le dimanche</span></a></li>
+                <li><a href="/grand-plage/activites"><span class="sd">Quelle activité ces 30 derniers jours ?</span></a></li>
+                <li><a href="/grand-plage/inscrits/profils"><span class="sd">Qui sont les inscrits ?</span></a></li>
+                <li><a href="/grand-plage/inscrits/usages"><span class="sd">Que font les inscrits ?</span></a></li>
+                <li><a href="/grand-plage/collections/prets"><span class="sd">Quelle évolution des prêts ?</span></a></li>
+                <li><a href="/grand-plage/collections/retours"><span class="sd">Quelle évolution des retours ?</span></a></li>
+                <li><a href="/grand-plage/collections/reservations"><span class="sd">Quelle évolution des réservations ?</span></a></li>                        
+                <li><a href="/grand-plage/collections/reservations_usages"><span class="sd">Quel usage des réservations ?</span></a></li>        
+                <li><a href="/grand-plage/web/portail"><span class="sd">Quel usage du portail ?</span></a></li>
+                <li><a href="/grand-plage/dimanche22"><span class="sd">Fréquentation le dimanche (année 2022-2023)</span></a></li>
+                <li><a href="/grand-plage/dimanche23"><span class="sd">Fréquentation le dimanche (année 2023-2024)</span></a></li>
+                <li><a href="/grand-plage/dimanche24"><span class="sd">Fréquentation le dimanche (année 2024-2025)</span></a></li>
+                <li><a href="/grand-plage/dimanche25"><span class="sd">Fréquentation le dimanche (année 2025-2026)</span></a></li>
+                <li><a href="/grand-plage/synthese_pluriannuelle"><span class="sd">Activité : synthèse pluriannuelle</span></a></li>
             </ul>
             
             <hr>
@@ -27,13 +30,17 @@
 
             <ul class="nav nav-stacked">
                 <li class="nav-header"></li>
-                <li><a href="/mediatheque/activites">Quelle activité par mois à la Médiathèque ?</a></li>
-                <li><a href="/mediatheque/collections/documents">Quelles collections ?</a></li>
-                <li><a href="/mediatheque/collections/prets">Nombre de prêts ?</a></li>
+                <li><a href="/mediatheque/activites">Activité la semaine dernière</a></li>
+                <li><a href="/mediatheque/entrees">Quelle évolution des entrées ?</a></li>
+                <li><a href="/mediatheque/collections/prets">Quelle évolution des prêts ?</a></li>
+                <li><a href="/mediatheque/collections/prets_repartition">Quelle répartition des prêts ?</a></li>
+                <li><a href="/mediatheque/collections/retours">Quelle évolution des retours ?</a></li>
+                <li><a href="/mediatheque/collections/reservations">Quelle évolution des réservations ?</a></li>                     
+                <li><a href="/mediatheque/webkiosk/connexions">Quelle évolution des connexions Webkiosk ?</a></li>
+                <li><a href="/mediatheque/webkiosk/impressions">Quelle évolution des impressions ?</a></li>     
+                <li><a href="/mediatheque/etude/frequentation">Fréquentation de la salle d'étude ?</a></li>
                 <li><a href="/mediatheque/collections/emprunteurs">Qui sont les emprunteurs ? </a></li>
                 <li><a href="/mediatheque/collections/emprunteurs/details">Qui emprunte quoi ?</a></li>
-                <li><a href="/mediatheque/webkiosk/profils">Qui utilise le service Webkiosk ?</a></li>
-                <li><a href="/mediatheque/salle etude/profils">Qui fréquente la salle d'étude ?</a></li>
                 <li><a href="/mediatheque/action culturelle">Quels publics pour l'action culturelle ?</a></li>
             </ul>
             
@@ -43,11 +50,9 @@
 
             <ul class="nav nav-stacked">
                 <li class="nav-header"></li>
-                <li><a href="/zebre/activites">Quelle activité par mois dans le Zèbre ?</a></li>
-                <li><a href="/zebre/collections/documents">Quelles collections ?</a></li>
-                <li><a href="/zebre/collections/prets">Nombre de prêts ?</a></li>
-                <li><a href="/zebre/collections/emprunteurs">Qui sont les emprunteurs ?</a></li>
-                <li><a href="/zebre/collections/emprunteurs/details">Qui emprunte quoi ?</a></li>
+                <li><a href="/zebre/collections/prets">Quelle évolution des prêts ?</a></li>
+                <li><a href="/zebre/collections/retours">Quelle évolution des retours ?</a></li>
+                <li><a href="/zebre/collections/reservations">Quelle évolution des réservations ?</a></li>
             </ul>
 
             <hr>
@@ -61,7 +66,7 @@
 <!--
                 <li><a href="/collectivites/collections/emprunteurs">Qui sont les emprunteurs ?</a></li>
                 <li><a href="/collectivites/collections/emprunteurs/details">Qui emprunte quoi ?</a></li>
-																											 -->
+                                                                                                             -->
             </ul>
 
             <hr>

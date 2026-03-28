@@ -6,7 +6,7 @@ from os.path import join
 
 path = "data/collections"
 sites = ['grand-plage', 'mediatheque', 'zebre', 'collectivites']
-year = "2021"
+year = "2025"
 
 code_support = {
     "CA": "Carte routière",
@@ -41,7 +41,7 @@ for site in sites:
     s = pd.merge(s, p, on=['collection_code', 'support'], how='left')
     sheets.append((s, site))
     
-writer = pd.ExcelWriter(join(path,'2021_synthese.xlsx'), engine='xlsxwriter')
+writer = pd.ExcelWriter(join(path, f"{year}_synthese.xlsx"), engine='xlsxwriter')
 for sheet in sheets:
     df = sheet[0]
     df['support'] = df['support'].apply(lambda x: code_support[x] if x in code_support else np.nan)

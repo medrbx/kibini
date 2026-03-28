@@ -1,4 +1,4 @@
-    <div id="sidebar">
+﻿    <div id="sidebar">
         [% INCLUDE 'includes/sidebar.tt' %]
     </div>
     <div class="col-sm-9">
@@ -13,7 +13,52 @@
 
         <div class="panel panel-info">
                         <div class="panel-heading">
-                                <h3 class="panel-title">Indicateurs au 31 decembre 2022</h3>
+                                <h3 class="panel-title">Indicateurs au 31 décembre 2025</h3>
+                        </div>
+                        <div class="panel-body">
+                                    <div class="col-sm-9">
+                                                <form method="get" action="[% request.uri_base %][% file_2025 %]">
+                                                        <div class="form-group">
+                                                        <button class="btn btn-sm btn-primary" name="submit" type="submit"><span class="glyphicon glyphicon-save"></span> Télécharger le fichier de synthèse</button>
+                                                        </div>
+                                                </form>
+                                     </div>
+                        </div>
+        </div>
+
+        <div class="panel panel-info">
+                        <div class="panel-heading">
+                                <h3 class="panel-title">Indicateurs au 31 décembre 2024</h3>
+                        </div>
+                        <div class="panel-body">
+                                    <div class="col-sm-9">
+                                                <form method="get" action="[% request.uri_base %][% file_2024 %]">
+                                                        <div class="form-group">
+                                                        <button class="btn btn-sm btn-primary" name="submit" type="submit"><span class="glyphicon glyphicon-save"></span> Télécharger le fichier de synthèse</button>
+                                                        </div>
+                                                </form>
+                                     </div>
+                        </div>
+        </div>
+
+        <div class="panel panel-info">
+                        <div class="panel-heading">
+                                <h3 class="panel-title">Indicateurs au 31 décembre 2023</h3>
+                        </div>
+                        <div class="panel-body">
+                                    <div class="col-sm-9">
+                                                <form method="get" action="[% request.uri_base %][% file_2023 %]">
+                                                        <div class="form-group">
+                                                        <button class="btn btn-sm btn-primary" name="submit" type="submit"><span class="glyphicon glyphicon-save"></span> Télécharger le fichier de synthèse</button>
+                                                        </div>
+                                                </form>
+                                     </div>
+                        </div>
+        </div>
+
+        <div class="panel panel-info">
+                        <div class="panel-heading">
+                                <h3 class="panel-title">Indicateurs au 31 décembre 2022</h3>
                         </div>
                         <div class="panel-body">
                                     <div class="col-sm-9">
@@ -29,7 +74,7 @@
 
         <div class="panel panel-info">
                         <div class="panel-heading">
-                                <h3 class="panel-title">Indicateurs au 31 decembre 2021</h3>
+                                <h3 class="panel-title">Indicateurs au 31 décembre 2021</h3>
                         </div>
                         <div class="panel-body">
                                     <div class="col-sm-9">
@@ -44,7 +89,7 @@
 
         <div class="panel panel-info">
                         <div class="panel-heading">
-                                <h3 class="panel-title">Indicateurs au 31 decembre 2020</h3>
+                                <h3 class="panel-title">Indicateurs au 31 décembre 2020</h3>
                         </div>
                         <div class="panel-body">
                                     <div class="col-sm-9">
@@ -59,7 +104,7 @@
 
         <div class="panel panel-info">
                         <div class="panel-heading">
-                                <h3 class="panel-title">Indicateurs au 31 decembre 2019</h3>
+                                <h3 class="panel-title">Indicateurs au 31 décembre 2019</h3>
                         </div>
                         <div class="panel-body">
                                     <div class="col-sm-9">
@@ -74,7 +119,7 @@
 		
 	<div class="panel panel-info">
 			<div class="panel-heading">
-				<h3 class="panel-title">Indicateurs au 31 decembre 2018</h3>
+				<h3 class="panel-title">Indicateurs au 31 décembre 2018</h3>
 			</div>
 			<div class="panel-body">
 				    <div class="col-sm-9">
@@ -89,7 +134,7 @@
   
   	<div class="panel panel-info">
 			<div class="panel-heading">
-				<h3 class="panel-title">Indicateurs au 31 decembre 2017</h3>
+				<h3 class="panel-title">Indicateurs au 31 décembre 2017</h3>
 			</div>
 			<div class="panel-body">
 				    <div class="col-sm-9">
@@ -104,7 +149,7 @@
 		
 		<div class="panel panel-info">
 			<div class="panel-heading">
-				<h3 class="panel-title">Indicateurs au 31 decembre 2016</h3>
+				<h3 class="panel-title">Indicateurs au 31 décembre 2016</h3>
 			</div>
 			<div class="panel-body">
 				    <div class="col-sm-9">

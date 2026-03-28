@@ -37,7 +37,7 @@ while ( my $row = $csv->getline_hr ($fic) ) {
     $wk->get_wkuser_from_koha;
     $wk->get_wkuser_data;
     my $res = $wk->add_data_to_statdb_webkiosk;
-    $wk->add_data_to_es_webkiosk;
+    #$wk->add_data_to_es_webkiosk;
     print Dumper($wk);
     $i++;
 }
