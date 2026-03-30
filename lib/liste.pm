@@ -18,7 +18,7 @@ sub TestParams {
 
 sub GetListRows {
     my ($rapport ) = @_ ;
-    my $ws = "http://cataloguekoha.ntrbx.local/cgi-bin/koha/svc/report?id=$rapport" ;
+    my $ws = "https://ws-koha.ville-roubaix.fr/cgi-bin/koha/svc/report?id=$rapport" ;
     my $ua = LWP::UserAgent->new() ;
     my $request = HTTP::Request->new( GET => $ws ) ;
     my $rep = $ua->request($request)->{'_content'} ;
@@ -28,26 +28,26 @@ sub GetListRows {
 
 sub GetListData {
     my ($params) = @_;
-    
+
     my @p = qw ( type loc public wk resbranch );
     foreach my $p (@p) {
         $params->{$p} = 'z' if ( !defined $params->{$p} );
     }
-    
+
     # On forme une clé sur les positions suivantes :
     #    - 0 : type (d = dispo, t = en traitement, e = expiré, p = perdu, m = mis de côté)
     #    - 1 : localisation,
     #    - 2 : semaine,
     #    - 3 : public,
     #    - 4 : site de réservation
-    
+
     my $key = $params->{type} . $params->{loc} . $params->{public} . $params->{wk} . $params->{resbranch};
-    
+
     my %titre = (
         "d0azz" => "Réservations sur documents disponibles, public, RDC",
         "d0pzz" => "Réservations sur documents disponibles, personnel, RDC",
         "d1azz" => "Réservations sur documents disponibles, public, 1er étage",
-        "d1pzz" => "Réservations sur documents disponibles, personnel, 1er étage",        
+        "d1pzz" => "Réservations sur documents disponibles, personnel, 1er étage",
         "d2azz" => "Réservations sur documents disponibles, public, 2e étage",
         "d2pzz" => "Réservations sur documents disponibles, personnel, 2e étage",
         "d3azz" => "Réservations sur documents disponibles, public, 3e étage",
@@ -59,7 +59,7 @@ sub GetListData {
         "t0azz" => "Réservations sur documents en traitement, public, RDC",
         "t0pzz" => "Réservations sur documents en traitement, personnel, RDC",
         "t1azz" => "Réservations sur documents en traitement, public, 1er étage",
-        "t1pzz" => "Réservations sur documents en traitement, personnel, 1er étage",        
+        "t1pzz" => "Réservations sur documents en traitement, personnel, 1er étage",
         "t2azz" => "Réservations sur documents en traitement, public, 2e étage",
         "t2pzz" => "Réservations sur documents en traitement, personnel, 2e étage",
         "t3azz" => "Réservations sur documents en traitement, public, 3e étage",
@@ -75,7 +75,7 @@ sub GetListData {
         "p_et0_s1" => "Documents perdus depuis une semaine, RDC",
         "p_et1_s1" => "Documents perdus depuis une semaine, 1er étage",
         "p_et2_s1" => "Documents perdus depuis une semaine, 2e étage",
-        "p_et3_s1" => "Documents perdus depuis une semaine, 3e étage",    
+        "p_et3_s1" => "Documents perdus depuis une semaine, 3e étage",
         "p_et0_s3" => "Documents perdus depuis trois semaines, RDC",
         "p_et1_s3" => "Documents perdus depuis trois semaines, 1er étage",
         "p_et2_s3" => "Documents perdus depuis trois semaines, 2e étage",
@@ -120,7 +120,7 @@ sub GetListData {
         "p_et0_s1" => "140",
         "p_et1_s1" => "141",
         "p_et2_s1" => "142",
-        "p_et3_s1" => "143",    
+        "p_et3_s1" => "143",
         "p_et0_s1" => "149",
         "p_et1_s1" => "150",
         "p_et2_s1" => "151",
@@ -138,31 +138,31 @@ sub GetListData {
 		"b" => 'liste_contentieuxb',
         "d" => 'liste_reservations',
         "t" => 'liste_reservations',
-        "e" => 'liste_reservations',        
+        "e" => 'liste_reservations',
         "m" => 'liste_reservations',
         "p" => 'liste_perdus'
     );
-    
+
     # On récupère le titre
     my $titre = $titre{$key};
-    
+
     # On récupère le template
     my $template = $template{$params->{type}};
-    
+
     # On récupère les lignes
     my $rapport = $rap{$key};
-    my $ws = "http://cataloguekoha.ntrbx.local/cgi-bin/koha/svc/report?id=$rapport";
+    my $ws = "https://ws-koha.ville-roubaix.fr/cgi-bin/koha/svc/report?id=$rapport";
     my $ua = LWP::UserAgent->new();
     my $request = HTTP::Request->new( GET => $ws );
     my $rep = $ua->request($request)->{'_content'};
     my $rows = decode_json($rep);
-    
+
     my $data = {
         titre => $titre,
         template => $template,
         rows => $rows
     };
-    
+
     return $data;
 }
 
@@ -172,14 +172,14 @@ __END__
 
 sub GetListData {
     my ($type, $etage, $semaine ) = @_ ;
-    
+
     my $key ;
     if ( $semaine eq 's0' ) {
         $key = $type . "_" . $etage ;
     } else {
         $key = $type . "_" . $etage . "_" . $semaine ;
     }
-    
+
     my %titre = (
         "dispo_et0" => "Réservations sur documents disponibles, RDC",
         "dispo_et1" => "Réservations sur documents disponibles, 1er étage",
@@ -196,7 +196,7 @@ sub GetListData {
         "perdu_et0_s1" => "Documents perdus depuis une semaine, RDC",
         "perdu_et1_s1" => "Documents perdus depuis une semaine, 1er étage",
         "perdu_et2_s1" => "Documents perdus depuis une semaine, 2e étage",
-        "perdu_et3_s1" => "Documents perdus depuis une semaine, 3e étage",    
+        "perdu_et3_s1" => "Documents perdus depuis une semaine, 3e étage",
         "perdu_et0_s3" => "Documents perdus depuis trois semaines, RDC",
         "perdu_et1_s3" => "Documents perdus depuis trois semaines, 1er étage",
         "perdu_et2_s3" => "Documents perdus depuis trois semaines, 2e étage",
@@ -223,7 +223,7 @@ sub GetListData {
         "perdu_et0_s1" => "140",
         "perdu_et1_s1" => "141",
         "perdu_et2_s1" => "142",
-        "perdu_et3_s1" => "143",    
+        "perdu_et3_s1" => "143",
         "perdu_et0_s1" => "149",
         "perdu_et1_s1" => "150",
         "perdu_et2_s1" => "151",
@@ -237,17 +237,17 @@ sub GetListData {
     my %template = (
         "dispo" => 'liste_reservations',
         "trait" => 'liste_reservations',
-        "expir" => 'liste_reservations',        
+        "expir" => 'liste_reservations',
         "mcote" => 'liste_reservations',
         "perdu" => 'liste_perdus'
     ) ;
-    
+
     # On récupère le titre
     my $titre = $titre{$key} ;
-    
+
     # On récupère le template
     my $template = $template{$type} ;
-    
+
     # On récupère les lignes
     my $rapport = $rap{$key} ;
     my $ws = "http://webservice.mediathequederoubaix.fr/cgi-bin/koha/svc/report?id=$rapport" ;
@@ -255,7 +255,7 @@ sub GetListData {
     my $request = HTTP::Request->new( GET => $ws ) ;
     my $rep = $ua->request($request)->{'_content'} ;
     my $rows = decode_json($rep);
-    
+
     my @data = ($titre, $template, $rows) ;
     return @data ;
 }

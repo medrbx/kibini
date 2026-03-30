@@ -2,7 +2,7 @@ package adherents;
 
 use Exporter;
 @ISA = qw( Exporter );
-@EXPORT = qw( 
+@EXPORT = qw(
     getSex
     getBorrowerAttributes
     getUses
@@ -10,16 +10,16 @@ use Exporter;
     getBorrowerDataByBorrowernumber
     getBorrowerDataByUserid
     GetBorrowersForQA
-    GetAgeLib    
+    GetAgeLib
     GetCityFront
     GetCityLibrary
-    GetCategoryDesc    
-    GetRbxDistrict    
-    GetCardType    
-    GetTrFidelite    
-    GetTrVenue    
-    getTypeUse    
-    getEsAttribute    
+    GetCategoryDesc
+    GetRbxDistrict
+    GetCardType
+    GetTrFidelite
+    GetTrVenue
+    getTypeUse
+    getEsAttribute
     getPrixAdhesion
 );
 
@@ -35,7 +35,7 @@ use utf8;
 
 sub getBorrowerDataByBorrowernumber {
     my ($borrowernumber) = @_;
-    
+
     my $dbh = GetDbh();
     my $req = <<SQL;
 SELECT
@@ -54,24 +54,24 @@ SQL
     my $sth = $dbh->prepare($req);
     $sth->execute($borrowernumber);
     my $adherent = $sth->fetchrow_hashref;
-    
+
     $adherent->{sexe} = getSex($adherent->{title}, $adherent->{inscription_code_carte});
     $adherent->{attributes} = getBorrowerAttributes($dbh, $adherent->{adherent_id});
     $adherent->{nb_venues} = getUses($dbh, $adherent);
-    
+
     # sexe
         if ($adherent->{sexe} eq 'F' ) {
             $adherent->{sexe} = 'Femme';
         } elsif ($adherent->{sexe} eq 'M' ) {
             $adherent->{sexe} = 'Homme';
         }
-        
+
         #age
         $adherent->{age_lib1} = GetAgeLib($dbh, $adherent->{age}, "trmeda");
         $adherent->{age_lib2} = GetAgeLib($dbh, $adherent->{age}, "trmedb");
         $adherent->{age_lib3} = GetAgeLib($dbh, $adherent->{age}, "trinsee");
-        
-        
+
+
         # geo
         if ($adherent->{geo_ville} eq 'ROUBAIX') {
             $adherent->{gentile} = 'Roubaisien';
@@ -82,13 +82,13 @@ SQL
         if (defined $adherent->{geo_roubaix_iris}) {
             ($adherent->{geo_roubaix_nom_iris}, $adherent->{geo_roubaix_quartier}, $adherent->{geo_roubaix_secteur}) = GetRbxDistrict($dbh, $adherent->{geo_roubaix_iris});
         }
-        
+
         # inscription
         ( $adherent->{inscription_carte}, $adherent->{personnalite} ) = GetCategoryDesc( $dbh, $adherent->{inscription_code_carte} );
         $adherent->{type_carte} = GetCardType($adherent->{inscription_code_carte});
         if ( $adherent->{inscription_code_site} eq 'MED' ) {
             $adherent->{inscription_site_inscription} = "Médiathèque";
-        } elsif ( $adherent->{inscription_code_site} eq 'BUS' ) { 
+        } elsif ( $adherent->{inscription_code_site} eq 'BUS' ) {
             $adherent->{inscription_site_inscription} = "Zèbre";
         }
         $adherent->{inscription_fidelite_tr} = GetTrFidelite($adherent->{inscription_fidelite});
@@ -100,7 +100,7 @@ SQL
         $adherent->{nb_venues_wifi} = $adherent->{nb_venues}->{wifi};
         $adherent->{nb_venues_salle_etude} = $adherent->{nb_venues}->{salle_etude};
         $adherent->{nb_venues} = $adherent->{nb_venues}->{toutes_pratiques};
-            
+
         # venues
         $adherent->{nb_venues_tr} = GetTrVenue($adherent->{nb_venues});
         $adherent->{nb_venues_prets_mediatheque_tr} = GetTrVenue($adherent->{nb_venues_prets_mediatheque});
@@ -110,7 +110,7 @@ SQL
         $adherent->{nb_venues_postes_informatiques_tr} = GetTrVenue($adherent->{nb_venues_postes_informatiques});
         $adherent->{nb_venues_wifi_tr} = GetTrVenue($adherent->{nb_venues_wifi});
         $adherent->{nb_venues_salle_etude_tr} = GetTrVenue($adherent->{nb_venues_salle_etude});
-        
+
         # activité
         if ( $adherent->{nb_venues_prets_mediatheque} > 0 || $adherent->{nb_venues_prets_bus} > 0 ) {
             $adherent->{activite_emprunteur} = "Emprunteur";
@@ -142,19 +142,19 @@ SQL
         } else {
             $adherent->{activite_utilisateur_salle_etude} = "Non utilisateur Salle d'étude";
         }
-        
+
         $adherent->{type_use} = getTypeUse($adherent);
-        
+
         # prix inscription
         ($adherent->{inscription_gratuite}, $adherent->{inscription_prix}) = getPrixAdhesion($adherent->{inscription_code_carte});
-    
-    
+
+
     return $adherent;
 }
 
 sub getBorrowerDataByUserid {
     my ($userid) = @_;
-    
+
     my $dbh = GetDbh();
     my $req = <<SQL;
 SELECT
@@ -173,24 +173,24 @@ SQL
     my $sth = $dbh->prepare($req);
     $sth->execute($userid);
     my $adherent = $sth->fetchrow_hashref;
-    
+
     $adherent->{sexe} = getSex($adherent->{title}, $adherent->{inscription_code_carte});
     $adherent->{attributes} = getBorrowerAttributes($dbh, $adherent->{adherent_id});
     $adherent->{nb_venues} = getUses($dbh, $adherent);
-    
+
     # sexe
         if ($adherent->{sexe} eq 'F' ) {
             $adherent->{sexe} = 'Femme';
         } elsif ($adherent->{sexe} eq 'M' ) {
             $adherent->{sexe} = 'Homme';
         }
-        
+
         #age
         $adherent->{age_lib1} = GetAgeLib($dbh, $adherent->{age}, "trmeda");
         $adherent->{age_lib2} = GetAgeLib($dbh, $adherent->{age}, "trmedb");
         $adherent->{age_lib3} = GetAgeLib($dbh, $adherent->{age}, "trinsee");
-        
-        
+
+
         # geo
         if ($adherent->{geo_ville} eq 'ROUBAIX') {
             $adherent->{gentile} = 'Roubaisien';
@@ -201,13 +201,13 @@ SQL
         if (defined $adherent->{geo_roubaix_iris}) {
             ($adherent->{geo_roubaix_nom_iris}, $adherent->{geo_roubaix_quartier}, $adherent->{geo_roubaix_secteur}) = GetRbxDistrict($dbh, $adherent->{geo_roubaix_iris});
         }
-        
+
         # inscription
         ( $adherent->{inscription_carte}, $adherent->{personnalite} ) = GetCategoryDesc( $dbh, $adherent->{inscription_code_carte} );
         $adherent->{type_carte} = GetCardType($adherent->{inscription_code_carte});
         if ( $adherent->{inscription_code_site} eq 'MED' ) {
             $adherent->{inscription_site_inscription} = "Médiathèque";
-        } elsif ( $adherent->{inscription_code_site} eq 'BUS' ) { 
+        } elsif ( $adherent->{inscription_code_site} eq 'BUS' ) {
             $adherent->{inscription_site_inscription} = "Zèbre";
         }
         $adherent->{inscription_fidelite_tr} = GetTrFidelite($adherent->{inscription_fidelite});
@@ -219,7 +219,7 @@ SQL
         $adherent->{nb_venues_wifi} = $adherent->{nb_venues}->{wifi};
         $adherent->{nb_venues_salle_etude} = $adherent->{nb_venues}->{salle_etude};
         $adherent->{nb_venues} = $adherent->{nb_venues}->{toutes_pratiques};
-            
+
         # venues
         $adherent->{nb_venues_tr} = GetTrVenue($adherent->{nb_venues});
         $adherent->{nb_venues_prets_mediatheque_tr} = GetTrVenue($adherent->{nb_venues_prets_mediatheque});
@@ -229,7 +229,7 @@ SQL
         $adherent->{nb_venues_postes_informatiques_tr} = GetTrVenue($adherent->{nb_venues_postes_informatiques});
         $adherent->{nb_venues_wifi_tr} = GetTrVenue($adherent->{nb_venues_wifi});
         $adherent->{nb_venues_salle_etude_tr} = GetTrVenue($adherent->{nb_venues_salle_etude});
-        
+
         # activité
         if ( $adherent->{nb_venues_prets_mediatheque} > 0 || $adherent->{nb_venues_prets_bus} > 0 ) {
             $adherent->{activite_emprunteur} = "Emprunteur";
@@ -261,13 +261,13 @@ SQL
         } else {
             $adherent->{activite_utilisateur_salle_etude} = "Non utilisateur Salle d'étude";
         }
-        
+
         $adherent->{type_use} = getTypeUse($adherent);
-        
+
         # prix inscription
         ($adherent->{inscription_gratuite}, $adherent->{inscription_prix}) = getPrixAdhesion($adherent->{inscription_code_carte});
-    
-    
+
+
     return $adherent;
 }
 
@@ -307,30 +307,30 @@ sub getBorrowerAttributes {
 sub getUses {
     my ($dbh, $adherent) = @_;
     my $venues;
-    
+
     my @dates_issues_med = _getDateIssues($dbh, $adherent->{adherent_id}, 'MED', $adherent->{date_extraction});
     my @dates_issues_bus = _getDateIssues($dbh, $adherent->{adherent_id}, 'BUS', $adherent->{date_extraction});
     my @dates_conn_wk = _getDateWebkioskConn($dbh, $adherent->{adherent_id}, $adherent->{date_extraction});
     my @dates_conn_wifi = _getDateWifiConn($dbh, $adherent->{adherent_id}, $adherent->{date_extraction});
     my @dates_freq_salle_etude = _getDateFreqSalleEtude($dbh, $adherent->{adherent_id}, $adherent->{date_extraction});
-    
+
     $venues->{prets_mediatheque} = scalar(@dates_issues_med);
     $venues->{prets_bus} = scalar(@dates_issues_bus);
     $venues->{postes_informatiques} = scalar(@dates_conn_wk);
     $venues->{wifi} = scalar(@dates_conn_wifi);
     $venues->{salle_etude} = scalar(@dates_freq_salle_etude);
-    
+
     my @dates = (@dates_issues_med, @dates_issues_bus, @dates_conn_wk, @dates_conn_wifi, @dates_freq_salle_etude);
     @dates = uniq (@dates);
     $venues->{toutes_pratiques} = scalar(@dates);
-    
+
     return $venues;
 }
 
 sub _getDateIssues {
     my ($dbh, $borrowernumber, $branch, $date) = @_;
     my @dates;
-    
+
     my $req = "SELECT DISTINCT(DATE(issuedate)) FROM statdb.stat_issues WHERE borrowernumber = ? AND branch = ? AND DATE(issuedate) < ? AND DATE(issuedate) >= ? - INTERVAL 1 YEAR";
     my $sth = $dbh->prepare($req);
     $sth->execute($borrowernumber, $branch, $date, $date);
@@ -345,7 +345,7 @@ sub _getDateIssues {
 sub _getDateWebkioskConn {
     my ($dbh, $borrowernumber, $date) = @_;
     my @dates;
-    
+
     my $req = "SELECT DISTINCT(DATE(heure_deb)) FROM statdb.stat_webkiosk WHERE borrowernumber = ? AND DATE(heure_deb) < ? AND DATE(heure_deb) >= ? - INTERVAL 1 YEAR";
     my $sth = $dbh->prepare($req);
     $sth->execute($borrowernumber, $date, $date);
@@ -360,7 +360,7 @@ sub _getDateWebkioskConn {
 sub _getDateWifiConn {
     my ($dbh, $borrowernumber, $date) = @_;
     my @dates;
-    
+
     my $req = "SELECT DISTINCT(DATE(start_wifi)) FROM statdb.stat_wifi WHERE borrowernumber = ? AND DATE(start_wifi) < ? AND DATE(start_wifi) >= ? - INTERVAL 1 YEAR";
     my $sth = $dbh->prepare($req);
     $sth->execute($borrowernumber, $date, $date);
@@ -375,7 +375,7 @@ sub _getDateWifiConn {
 sub _getDateFreqSalleEtude {
     my ($dbh, $borrowernumber, $date) = @_;
     my @dates;
-    
+
     my $req = "SELECT DISTINCT(DATE(datetime_entree)) FROM statdb.stat_freq_etude WHERE borrowernumber = ? AND DATE(datetime_entree) < ? AND DATE(datetime_entree) >= ? - INTERVAL 1 YEAR";
     my $sth = $dbh->prepare($req);
     $sth->execute($borrowernumber, $date, $date);
@@ -413,7 +413,7 @@ sub insertAdherentIntoStatdb_adherent {
 
 sub GetBorrowersForQA {
     # On récupère par webservice tous les adhérents répondant aux conditions fixées dans la requête
-    my $ws = "http://cataloguekoha.ntrbx.local/cgi-bin/koha/svc/report?id=166";
+    my $ws = "https://ws-koha.ville-roubaix.fr/cgi-bin/koha/svc/report?id=166";
     my $ua = LWP::UserAgent->new();
     my $request = HTTP::Request->new( GET => $ws );
     my $rep = $ua->request($request)->{'_content'};
@@ -428,7 +428,7 @@ sub GetBorrowersForQA {
             if ( $b[$i] eq 'PB' ) {
                 $ko = 1;
                 last;
-            } 
+            }
         }
         if ($ko == 1) {
             push @ko, $borrower;
@@ -516,7 +516,7 @@ sub GetCardType {
 sub GetTrFidelite {
     my ($count) = @_;
     my $tr;
-    
+
     if ($count == 0 ) {
         $tr = "a/ 0";
     } elsif ($count == 1 ) {
@@ -531,15 +531,15 @@ sub GetTrFidelite {
         $tr = "f/ 5 - 10 ans";
     } else {
         $tr = "g/ Plus de 10 ans";
-    } 
-    
+    }
+
     return $tr;
 }
 
 sub GetTrVenue {
     my ($count) = @_;
     my $tr;
-    
+
     if ($count == 0 ) {
         $tr = "a/ Jamais";
     } elsif ($count == 1 ) {
@@ -554,31 +554,31 @@ sub GetTrVenue {
         $tr = "f/entre 21 et 50 fois par an";
     } else {
         $tr = "g/ plus de 50 fois par an";
-    } 
-    
+    }
+
     return $tr;
 }
 
 sub getTypeUse {
     my ($adherent) = @_;
-        
+
     my @use;
     if ( $adherent->{activite_emprunteur} eq 'Emprunteur' ) {
         push @use, 'prêt';
     }
-        
+
     if ( $adherent->{activite_utilisateur_salle_etude} eq "Utilisateur Salle d'étude" ) {
         push @use, 'étude';
     }
-        
+
     if ( $adherent->{activite_utilisateur_postes_informatiques} eq "Utilisateur postes informatiques" ) {
         push @use, 'postes';
     }
-        
+
     if ( $adherent->{activite_utilisateur_wifi} eq "Utilisateur Wifi" ) {
         push @use, 'wifi';
     }
-        
+
     if ( scalar(@use) == 0 ) {
         push @use, 'aucune trace';
     }
@@ -589,21 +589,21 @@ sub getTypeUse {
 
 sub getEsAttribute {
     my ($inscription_attribut) = @_;
-    
+
     my @attributes = split /\|/, $inscription_attribut;
     my $es_attribute = {};
-    
+
     foreach my $attribute (@attributes) {
         my ($lib_attribute, $code) = _getEsAttributeLib($attribute);
         $es_attribute->{$code} = $lib_attribute;
     }
-    
+
     return $es_attribute;
 }
 
 sub _getEsAttributeLib {
     my ($attribute) = @_;
-    
+
     my %lib_attributes = (
         "AM01" => "Action éducative",
         "AM02" => "Apéro culture",
@@ -655,9 +655,9 @@ sub _getEsAttributeLib {
         "PCS09" => "Etudiants",
         "PCS10" => "Autres personnes sans activité professionnelle"
     );
-    
+
     my $lib_attribute = $lib_attributes{$attribute};
-    
+
     my $code;
     if ( $attribute =~ m/^A/ ) {
         $code = 'action';
@@ -668,7 +668,7 @@ sub _getEsAttributeLib {
     } elsif ( $attribute =~ m/^P/ ) {
         $code = 'PCS';
     }
-    
+
     my @res = ($lib_attribute, $code);
     return @res;
 }
@@ -676,7 +676,7 @@ sub _getEsAttributeLib {
 sub getPrixAdhesion {
     my ($categorycode) = @_;
     my ($gratuit, $prix);
-    
+
     if ( $categorycode eq 'MEDA' ) {
         $gratuit = "payante";
         $prix = 35;
@@ -690,7 +690,7 @@ sub getPrixAdhesion {
         $gratuit = "gratuite";
         $prix = 0;
     }
-    
+
     my @results = ($gratuit, $prix);
 }
 

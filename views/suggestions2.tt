@@ -1,5 +1,5 @@
     <div class="col-sm-12">
-    
+
         <div class="panel panel-primary">
             <div class="panel-heading">
                 <strong>
@@ -7,9 +7,9 @@
                 </strong>
             </div>
         </div>
-        
+
         <table class="table table-bordered" id="mytable">
-        
+
             <thead>
                 <tr>
                     <th>Responsable</th>
@@ -20,7 +20,7 @@
                     <th>Site</th>
                 </tr>
             </thead>
-            
+
             <tbody>
                 [% FOREACH suggestion IN suggestions %]
                 <tr>
@@ -31,11 +31,11 @@
                             <input type="hidden" name="title" value="[% suggestion.title %]">
                             <select name="borrnummanagedby">
                                     <option selected="selected"></option>
-                                    
+
                                     [% FOREACH acquereur IN acquereurs %]
                                         <option value="[% acquereur.key %]">[% acquereur.value %]</option>
                                     [% END %]
-                                    
+
 
                             </select>
                                 <input type="submit" value="Valider">
@@ -43,7 +43,7 @@
                     </td>
                     <td>[% suggestion.suggestion_date%]</td>
                     <td>
-                        <a href="http://koha.ntrbx.local/cgi-bin/koha/suggestion/suggestion.pl?suggestionid=[% suggestion.suggestion_id %]&op=edit">[% suggestion.title %]</a>
+                        <a href="https://koha.ville-roubaix.fr/cgi-bin/koha/suggestion/suggestion.pl?suggestionid=[% suggestion.suggestion_id %]&op=edit">[% suggestion.title %]</a>
                         [% IF ( suggestion.author ) %]<br>auteur : [% suggestion.author %][% END %]
                         [% IF ( suggestion.publisher_code ) %]<br>éditeur : [% suggestion.publisher_code %][% END %]
                         [% IF ( suggestion.collection_title ) %]<br>collection : [% suggestion.collection_title %][% END %]
@@ -55,10 +55,10 @@
                 </tr>
                 [% END %]
             </tbody>
-            
+
         </table>
     <div>
-    
+
     <script type="text/javascript">
 
         $(document).ready(function() {
@@ -88,5 +88,5 @@
                 }
             });
         } );
-    
+
     </script>

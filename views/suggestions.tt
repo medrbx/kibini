@@ -1,5 +1,5 @@
     <div class="col-sm-12">
-    
+
         <div class="panel panel-primary">
             <div class="panel-heading">
                 <strong>
@@ -7,9 +7,9 @@
                 </strong>
             </div>
         </div>
-        
+
         <table class="table table-bordered" id="mytable">
-        
+
             <thead>
                 <tr>
                     <th>Responsable</th>
@@ -21,7 +21,7 @@
                     <th>Site</th>
                 </tr>
             </thead>
-            
+
             <tbody>
                 [% FOREACH suggestion IN suggestions %]
                 <tr>
@@ -32,11 +32,11 @@
                             <input type="hidden" name="title" value="[% suggestion.title %]">
                             <select name="borrnummanagedby">
                                     <option selected="selected"></option>
-                                    
+
                                     [% FOREACH acquereur IN acquereurs %]
                                         <option value="[% acquereur.key %]">[% acquereur.value %]</option>
                                     [% END %]
-                                    
+
 
                             </select>
                                 <input type="submit" value="Valider">
@@ -44,23 +44,23 @@
                     </td>
                     <td>[% suggestion.date%]</td>
                     <td>
-                        <a href="http://koha.ntrbx.local/cgi-bin/koha/suggestion/suggestion.pl?suggestionid=[% suggestion.suggestionid %]&op=edit">[% suggestion.title %]</a>
+                        <a href="https://koha.ville-roubaix.fr/cgi-bin/koha/suggestion/suggestion.pl?suggestionid=[% suggestion.suggestionid %]&op=edit">[% suggestion.title %]</a>
                         [% IF ( suggestion.author ) %]<br>auteur : [% suggestion.author %][% END %]
                         [% IF ( suggestion.publishercode ) %]<br>éditeur : [% suggestion.publishercode %][% END %]
                         [% IF ( suggestion.collectiontitle ) %]<br>collection : [% suggestion.collectiontitle %][% END %]
                         [% IF ( suggestion.copyrightdate ) %]<br>date de publication : [% suggestion.copyrightdate %][% END %]
                         [% IF ( suggestion.isbn ) %]<br>isbn : [% suggestion.isbn %] [% END %]
                     </td>
-                    <td><a href="http://koha.ntrbx.local/cgi-bin/koha/members/moremember.pl?borrowernumber=[% suggestion.borrnumsuggestedby %]">[% suggestion.surnamesuggestedby %] [% suggestion.firstnamesuggestedby %]</a></td>
+                    <td><a href="https://koha.ville-roubaix.fr/cgi-bin/koha/members/moremember.pl?borrowernumber=[% suggestion.borrnumsuggestedby %]">[% suggestion.surnamesuggestedby %] [% suggestion.firstnamesuggestedby %]</a></td>
                     <td>[% suggestion.note %]</td>
                     <td>[% suggestion.branchcode %]</td>
                 </tr>
                 [% END %]
             </tbody>
-            
+
         </table>
     <div>
-    
+
     <script type="text/javascript">
 
         $(document).ready(function() {
@@ -90,5 +90,5 @@
                 }
             });
         } );
-    
+
     </script>

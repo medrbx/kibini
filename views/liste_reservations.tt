@@ -1,5 +1,5 @@
     <div class="col-sm-12">
-    
+
         <div class="panel panel-primary">
             <div class="panel-heading">
                 <strong>
@@ -7,9 +7,9 @@
                 </strong>
             </div>
         </div>
-        
+
         <table class="table table-bordered" id="mytable">
-        
+
             <thead>
                 <tr>
 					<th>Titre</th>
@@ -25,11 +25,11 @@
 					<th>Note</th>
                 </tr>
             </thead>
-            
+
             <tbody>
                 [% FOREACH row IN rows %]
                 <tr>
-					<td><a href="http://koha.ntrbx.local/cgi-bin/koha/catalogue/detail.pl?biblionumber=[% row.8 %]">[% row.0 %]</td>
+					<td><a href="https://koha.ville-roubaix.fr/cgi-bin/koha/catalogue/detail.pl?biblionumber=[% row.8 %]">[% row.0 %]</td>
 					<td>[% row.10 %]</td>
 					<td>[% row.1 %]</td>
 					<td>[% row.2 %]</td>
@@ -37,17 +37,17 @@
 					<td>[% row.4 %]</td>
 					<td>[% row.5 %]</td>
 					<td>[% row.6 %]</td>
-					<td><a href="http://koha.ntrbx.local/cgi-bin/koha/members/moremember.pl?borrowernumber=[% row.9 %]">[% row.7 %]</td>
+					<td><a href="https://koha.ville-roubaix.fr/cgi-bin/koha/members/moremember.pl?borrowernumber=[% row.9 %]">[% row.7 %]</td>
 					<td>[% row.11 %]</td>
 					<td>[% row.12 %]</td>
                 </tr>
                 [% END %]
             </tbody>
-            
+
         </table>
     <div>
-	
-	    
+
+
     <script type="text/javascript">
 
         $(document).ready(function() {
@@ -77,5 +77,5 @@
                 }
             });
         } );
-    
+
 </script>

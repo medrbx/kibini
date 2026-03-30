@@ -1,5 +1,5 @@
     <div class="col-sm-12">
-    
+
         <div class="panel panel-primary">
             <div class="panel-heading">
                 <strong>
@@ -7,9 +7,9 @@
                 </strong>
             </div>
         </div>
-        
+
         <table class="table table-bordered" id="mytable">
-        
+
             <thead>
                 <tr>
                     <th>Carte</th>
@@ -17,20 +17,20 @@
                     <th>Date de retour prévue</th>
                 </tr>
             </thead>
-            
+
             <tbody>
                 [% FOREACH row IN rows %]
                 <tr>
 				    <td>[% row.1 %]</td>
-                    <td><a href='http://koha.ntrbx.local/cgi-bin/koha/members/moremember.pl?borrowernumber=[% row.0 %]'>[% row.2 %] [% row.3 %]</td>
+                    <td><a href='https://koha.ville-roubaix.fr/cgi-bin/koha/members/moremember.pl?borrowernumber=[% row.0 %]'>[% row.2 %] [% row.3 %]</td>
                     <td>[% row.4 %]</td>
                 </tr>
                 [% END %]
             </tbody>
-            
+
         </table>
     <div>
-    
+
     <script type="text/javascript">
 
         $(document).ready(function() {
@@ -61,5 +61,5 @@
                 }
             });
         } );
-    
+
     </script>
