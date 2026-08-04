@@ -2,7 +2,7 @@ package collections::suggestions ;
 
 use Exporter ;
 @ISA = qw( Exporter ) ;
-@EXPORT = qw( suggestions suggestions2 modSuggestion modSuggestion2 constructionCourriel acquereurs ) ;
+@EXPORT = qw( suggestions suggestions2 suggestions3 modSuggestion modSuggestion2 constructionCourriel acquereurs ) ;
 
 use strict ;
 use warnings ;
@@ -34,6 +34,39 @@ sub suggestions {
         push @suggestions, $suggestions ;
         $suggestions = \@suggestions ;
     }
+	
+    return $suggestions ;
+}
+
+sub suggestions3 {
+    # On récupère par webservice toutes les suggestions
+    my $ws = "https://ws-koha.ville-roubaix.fr/cgi-bin/koha/svc/report?id=309" ;
+    my $ua = LWP::UserAgent->new() ;
+    my $request = HTTP::Request->new( GET => $ws ) ;
+    my $rep = $ua->request($request)->{'_content'} ;
+    my $suggestions_ = decode_json($rep);
+	
+	my @suggestions = map {
+		{
+			suggestionid      => $_->[0],
+			title             => $_->[1],
+			date              => $_->[2],
+			author            => $_->[3],
+			publishercode     => $_->[4],
+			collectiontitle   => $_->[5],
+			copyrightdate     => $_->[6],
+			isbn              => $_->[7],
+			suggestedby       => $_->[8],
+			managedby         => $_->[9],
+			note              => $_->[10],
+			branchcode        => $_->[11],
+			firstnamemanagedby => $_->[12],
+			firstnamesuggestedby => $_->[13],
+			surnamesuggestedby => $_->[14]
+		}
+	} @$suggestions_;
+
+    my $suggestions = \@suggestions;
 	
     return $suggestions ;
 }

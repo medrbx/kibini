@@ -26,7 +26,7 @@
                 [% FOREACH borrower IN borrowers %]
                 <tr>
                     <td>[% borrower.0 %]</td>
-                    <td class="borrower"><a href="https://koha.ville-roubaix.fr/cgi-bin/koha/members/memberentry.pl?op=modify&destination=circ&borrowernumber=[% borrower.2 %]">[% borrower.1 %]</td>
+                    <td class="borrower"><a href="https://koha.ville-roubaix.fr/cgi-bin/koha/members/memberentry.pl?op=edit_form&destination=circ&borrowernumber=[% borrower.2 %]">[% borrower.1 %]</td>
                     <td>[% borrower.3 %]</td>
                     <td>[% borrower.4 %]</td>
                     <td>[% borrower.5 %]</td>

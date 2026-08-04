@@ -25,8 +25,9 @@ my $dir = "$Bin/../data";
 my $file = "$dir/koha_prod_$date.sql";
 
 # script initialement écrit en bash : on récupère tel quel...
-system( "gunzip $file.gz" );
-system( "mysql -u $user -p$pwd koha_prod < $file" );
+#system( "gunzip $file.gz" );
+#system( "sed -i 's|\\-||g' $file" );
+system( "mysql -u $user -p$pwd --init-command=\"SET FOREIGN_KEY_CHECKS=0; SET UNIQUE_CHECKS=0;\" koha_prod < $file" );
 
 system( "rm $file" );
 

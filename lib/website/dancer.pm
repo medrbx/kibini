@@ -625,9 +625,9 @@ get '/qa/inscrits' => sub {
 
 # Suggestions
 get '/suggestions' => sub {
-    my $suggestions = suggestions2();
+    my $suggestions = suggestions3();
     my $acquereurs = acquereurs();
-    template 'suggestions2', {
+    template 'suggestions', {
         label1 => 'Suggestions',
         suggestions => $suggestions,
         acquereurs => $acquereurs

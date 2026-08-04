@@ -37,6 +37,9 @@ fi
 # CHAQUE JOUR
 # On charge sur preprod la version de koha_prod du jour
 cp $dir_data/dumps_koha/dumps/koha_prod_$date_dump.sql.gz $dir_data/.
+gunzip $dir_data/koha_prod_$date_dump.sql.gz
+sed -i 's|\\-||g' $dir_data/koha_prod_$date_dump.sql
+sed -i "s|\\\'||g" $dir_data/koha_prod_$date_dump.sql
 perl $dir/statdb_load_koha_prod.pl
 
 # CHAQUE MERCREDI
@@ -44,19 +47,19 @@ if [ $dayofweek -eq 3 ]
 then
     # On liste les exemplaires sortis des collections non abîmés, non perdus, non restitués à supprimer
     python $dir_kib2/kibini/adm_items2del2adm.py
-	
+
     # On liste les exemplaires sortis des collections abîmés, perdus, non restitués à supprimer
     python $dir_kib2/kibini/adm_items2delb2adm.py
-	
+
     # On liste les exemplaires non restitués depuis plus de 180 jours
     python $dir_kib2/kibini/adm_itemsRetards2adm.py
-	
+
 	# On liste les exemplaires perdus ou prétendus rendus à sortir des collections
 	python $dir_kib2/kibini/adm_itemsPerdus2adm.py
-	
+
     # On liste les prétendus rendus à traiter
     python $dir_kib2/kibini/adm_itemsPretendusRendus2adm.py
-	
+
 	# On liste les documents à passer en retard supérieur à 90 jours
 	python $dir_kib2/kibini/adm_itemsNonRestituesPlus.py
 
@@ -76,7 +79,7 @@ then
 fi
 
 # CHAQUE PREMIER DU MOIS
-if [ `date +%d` == "01" ] 
+if [ `date +%d` == "01" ]
 then
     # On envoie aux acquereurs la liste des documents sortis des collections car perdus, pretendus rendus ou non restitués
 	python $dir_kib2/kibini/adm_itemsPerdusPretendusRendus2acquereurs.py

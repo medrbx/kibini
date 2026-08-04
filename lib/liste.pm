@@ -85,7 +85,8 @@ sub GetListData {
         "p_et2_s5" => "Documents perdus depuis cinq semaines, 2e étage",
         "p_et3_s5" => "Documents perdus depuis cinq semaines, 3e étage",
 		"aazzz" => "Contentieux, personnes à appeler",
-		"bbzzz" => "Contentieux, titres de recettes à créer"
+		"bbzzz" => "Contentieux, titres de recettes à créer",
+		"tzzzz" => "Réservations reparties en rayons"
     );
 
     my %rap = (
@@ -130,7 +131,8 @@ sub GetListData {
         "p_et2_s1" => "154",
         "p_et3_s1" => "155",
 		"aazzz" => "207",
-		"bbzzz" => "208"
+		"bbzzz" => "208",
+		"tzzzz" => "307"
     );
 
     my %template = (
