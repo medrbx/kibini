@@ -37,9 +37,9 @@ fi
 # CHAQUE JOUR
 # On charge sur preprod la version de koha_prod du jour
 cp $dir_data/dumps_koha/dumps/koha_prod_$date_dump.sql.gz $dir_data/.
-gunzip $dir_data/koha_prod_$date_dump.sql.gz
-sed -i 's|\\-||g' $dir_data/koha_prod_$date_dump.sql
-sed -i "s|\\\'||g" $dir_data/koha_prod_$date_dump.sql
+#gunzip $dir_data/koha_prod_$date_dump.sql.gz
+#sed -i "s|\\\'||g" $dir_data/koha_prod_$date_dump.sql
+tail -n +2 $dir_data/koha_prod_$date_dump.sql
 perl $dir/statdb_load_koha_prod.pl
 
 # CHAQUE MERCREDI
