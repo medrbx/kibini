@@ -10,6 +10,7 @@ dir='/home/kibini/kibini_prod/bin/'
 dir_log='/home/kibini/kibini_prod/log/crontab/'
 dir_kib2='/home/kibini/kibini2'
 dir_data='/home/kibini/kibini_prod/data'
+dir_dump='/home/kibini/kibini2/data/dumps_koha'
 
 # POUR KIBINI2 : on active l'environnement conda
 conda activate kibini
@@ -36,10 +37,8 @@ fi
 
 # CHAQUE JOUR
 # On charge sur preprod la version de koha_prod du jour
-cp $dir_data/dumps_koha/dumps/koha_prod_$date_dump.sql.gz $dir_data/.
-#gunzip $dir_data/koha_prod_$date_dump.sql.gz
-#sed -i "s|\\\'||g" $dir_data/koha_prod_$date_dump.sql
-tail -n +2 $dir_data/koha_prod_$date_dump.sql
+cp $dir_data/dumps_koha/dumps/koha_prod_$date_dump.sql.gz $dir_dump/.
+gunzip $dir_dump/koha_prod_$date_dump.sql.gz
 perl $dir/statdb_load_koha_prod.pl
 
 # CHAQUE MERCREDI
