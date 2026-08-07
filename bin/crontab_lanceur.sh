@@ -39,7 +39,7 @@ fi
 # On charge sur preprod la version de koha_prod du jour
 cp $dir_data/dumps_koha/dumps/koha_prod_$date_dump.sql.gz $dir_dump/.
 gunzip $dir_dump/koha_prod_$date_dump.sql.gz
-perl $dir_kib2/kibini/statdb_load_koha_prod.py
+python $dir_kib2/kibini/statdb_load_koha_prod.py
 
 # CHAQUE MERCREDI
 if [ $dayofweek -eq 3 ]
@@ -66,7 +66,7 @@ fi
 
 # CHAQUE JOUR :
 # on finit le chargement de koha_prod (correction périos)
-perl $dir_kib2/kibini/statdb_load_koha_prod_end.py
+python $dir_kib2/kibini/statdb_load_koha_prod_end.py
 
 
 # CHAQUE VENDREDI
@@ -97,10 +97,10 @@ fi
 #perl $dir/data_bib.pl # test statdb.data_bib
 
 # On incorpore dans statdb les prêts et retours de la veille
-perl $dir_kib2/kibini/statdb_issues.py
+python $dir_kib2/kibini/statdb_issues.py
 
 # On incorpore dans statdb et ES les r�servations de la veille
-perl $dir_kib2/kibini/statdb_reserves.py
+python $dir_kib2/kibini/statdb_reserves.py
 #perl $dir/es_reservations.pl
 
 # On incorpore dans statdb et ES les statisques nedap de la journ�e précédente => désormais impossible
@@ -108,7 +108,7 @@ perl $dir_kib2/kibini/statdb_reserves.py
 #perl $dir/es_rfid.pl
 
 # On traite les donn�es li�es � la fr�quentation de la salle d'�tude
-perl $dir_kib2/kibini/statdb_freq_etude.py
+python $dir_kib2/kibini/statdb_freq_etude.py
 #perl $dir/es_freq_etude.pl
 
 # On incorpore les entr�es
