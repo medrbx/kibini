@@ -63,7 +63,7 @@ get '/grand-plage/activites' => sub {
             height => '1400px'
         }
 
-     };     
+     };
 };
 
 get '/grand-plage/inscrits/profils' => sub {
@@ -85,7 +85,7 @@ get '/grand-plage/inscrits/usages' => sub {
         label3 => 'Usages des inscrits',
         dashboard => {
             src => "http://129.1.0.237:1789/data/notebook_kibini2_lgp_que_font_les_inscrits.html",
-            height => '1400px'            
+            height => '1400px'
         }
     };
 };
@@ -97,7 +97,7 @@ get '/grand-plage/collections/prets' => sub {
         label3 => 'Prêts',
         dashboard => {
             src => "http://129.1.0.237:1789/data/notebook_kibini2_lgp_evolution_prets.html",
-            height => '1400px'         
+            height => '1400px'
         }
     };
 };
@@ -109,7 +109,7 @@ get '/grand-plage/collections/retours' => sub {
         label3 => 'Retours',
         dashboard => {
             src => "http://129.1.0.237:1789/data/notebook_kibini2_lgp_evolution_retours.html",
-            height => '1400px'         
+            height => '1400px'
         }
     };
 };
@@ -197,7 +197,7 @@ get 'grand-plage/dimanche25' => sub {
          src => 'http://129.1.0.237:1789/data/notebook_dimanche25.html',
 	 height => '2600px'
      }
-    }; 
+    };
 };
 
 get '/grand-plage/synthese_pluriannuelle' => sub {
@@ -209,13 +209,13 @@ get '/grand-plage/synthese_pluriannuelle' => sub {
             src => "http://129.1.0.237:1789/data/notebook_kibini2_lgp_syntheses_pluriannuelles.html",
             height => '1500px'
         }
-    
+
     };
 };
 
 
 # PARTIE 2 - La Médiathèque
- 
+
 get '/mediatheque/activites' => sub {
     template 'kibana', {
         label1 => 'La Médiathèque',
@@ -306,7 +306,7 @@ get '/mediatheque/webkiosk/impressions' => sub {
             src => "http://129.1.0.237:1789/data/notebook_kibini2_med_evolution_impressions.html",
             height => '1500px'
         }
-    
+
     };
 };
 
@@ -314,7 +314,7 @@ get '/mediatheque/collections/emprunteurs' => sub {
     template 'kibana', {
         label1 => 'La Médiathèque',
         label2 => 'Collections',
-        label3 => 'Emprunteurs', 
+        label3 => 'Emprunteurs',
         dashboard => {
             src => 'http://129.1.0.237:1789/data/notebook_kibini2_med_qui_sont_les_emprunteurs.html',
             height => '1300px'
@@ -326,7 +326,7 @@ get '/mediatheque/collections/emprunteurs/details' => sub {
     template 'kibana', {
         label1 => 'La Médiathèque',
         label2 => 'Collections',
-        label3 => 'Qui emprunte quoi ?', 
+        label3 => 'Qui emprunte quoi ?',
         dashboard => {
             src => '...',
             height => '1200px'
@@ -339,12 +339,12 @@ get '/mediatheque/webkiosk/profils' => sub {
         label1 => 'La Médiathèque',
         label2 => 'Qui utilise le service webkiosk?',
         dashboard => {
-            src => 'http://129.1.0.237:5601/goto/e2054a9d9694884fe341c1580b50c75e?embed=true', 
+            src => 'http://129.1.0.237:5601/goto/e2054a9d9694884fe341c1580b50c75e?embed=true',
             height => '1500px'
         }
     };
 };
-    
+
 get '/mediatheque/suggestions/profils' => sub {
     template 'kibana', {
         label1 => 'La Médiathèque',
@@ -375,7 +375,7 @@ get '/mediatheque/action culturelle' => sub {
             src => "http://129.1.0.237:1789/data/notebook_kibini2_med_quels_publics_action_culturelle.html",
             height => '1500px'
         }
-    
+
     };
 };
 
@@ -485,9 +485,9 @@ get '/collectivites/collections/prets' => sub {
         label2 => 'Collections',
         label3 => 'Prêts',
         dashboard => {
-            src => 'http://129.1.0.237:5601/app/kibana#/dashboard/Pr%C3%AAts-Collectivit%C3%A9s?embed=true&_g=(refreshInterval:(display:Off,pause:!f,value:0),time:(from:now-1y,mode:relative,to:now))&_a=(filters:!(),options:(darkTheme:!f),panels:!((col:1,id:Nombre-de-pr%C3%AAts-par-collection,panelIndex:24,row:3,size_x:12,size_y:9,type:visualization),(col:1,id:Pr%C3%AAts-Collectivit%C3%A9s,panelIndex:28,row:1,size_x:6,size_y:2,type:visualization),(col:7,id:\'Nombre-d!\'emprunteurs-totaux-Collectivit%C3%A9s\',panelIndex:29,row:1,size_x:6,size_y:2,type:visualization)),query:(query_string:(analyze_wildcard:!t,query:\'doc_localisation:%20%22Magasin%20collectivit%C3%A9s%22\')),title:\'Pr%C3%AAts%20Collectivit%C3%A9s\',uiState:())',
+            src => 'http://129.1.0.237:1789/data/notebook_kibini2_collectivites_evolution_prets.html',
             height => '1400px'
-        }    
+        }
     };
 };
 
@@ -521,13 +521,13 @@ get '/collectivites/collections/prets' => sub {
 
 # Collections
 get '/grand-plage/collections/ensemble' => sub {
-#    my $indicateurs = GetDataCollections(0);    
+#    my $indicateurs = GetDataCollections(0);
     template 'collections2', {
         label1 => 'La Grand-Plage',
         label2 => 'Collections',
         label3 => 'Principaux indicateurs',
         file_2016 => '/data/Statistiques_collections_2016_v20170506.xlsx',
-        file_2017 => '/data/Statistiques_collections_2017.xlsx', 
+        file_2017 => '/data/Statistiques_collections_2017.xlsx',
         file_2018 => '/data/Statistiques_collections_2018.xlsx',
         file_2019 => '/data/Statistiques_collections_2019_VM.xlsx',
         file_2020 => '/data/Statistiques_collections_2020_VM.xlsx',
@@ -541,7 +541,7 @@ get '/grand-plage/collections/ensemble' => sub {
 };
 
 get '/mediatheque/collections/ensemble' => sub {
-    my $indicateurs = GetDataCollections(1);    
+    my $indicateurs = GetDataCollections(1);
     template 'collections', {
         label1 => 'Médiathèque',
         label2 => 'Collections',
@@ -551,7 +551,7 @@ get '/mediatheque/collections/ensemble' => sub {
 };
 
 get '/zebre/collections/ensemble' => sub {
-    my $indicateurs = GetDataCollections(2);    
+    my $indicateurs = GetDataCollections(2);
     template 'collections', {
         label1 => 'Le Zèbre',
         label2 => 'Collections',
@@ -561,7 +561,7 @@ get '/zebre/collections/ensemble' => sub {
 };
 
 get '/collectivites/collections/ensemble' => sub {
-    my $indicateurs = GetDataCollections(3);    
+    my $indicateurs = GetDataCollections(3);
     template 'collections', {
         label1 => 'Collectivités',
         label2 => 'Collections',
@@ -594,7 +594,7 @@ get '/grand-plage/syntheses/collections' => sub {
             src => 'http://129.1.0.237:5601/app/kibana#/dashboard/AWHc5g3Ppw5wXLtt1uz6?embed=true&_g=(refreshInterval%3A(display%3AOff%2Cpause%3A!f%2Cvalue%3A0)%2Ctime%3A(from%3Anow-1y%2Fy%2Cmode%3Aquick%2Cto%3Anow-1y%2Fy))',
             height => '1100px'
         }
-    
+
     };
 };
 
@@ -604,7 +604,7 @@ get '/grand-plage/syntheses/prets' => sub {
         label2 => 'Synthèses',
         label3 => 'Prêts',
         dashboard => {
-            src => 'http://129.1.0.237:5601/app/kibana#/dashboard/AWHc8EI_pw5wXLtt1uz_?embed=true&_g=(refreshInterval%3A(display%3AOff%2Cpause%3A!f%2Cvalue%3A0)%2Ctime%3A(from%3Anow-1y%2Fy%2Cmode%3Aquick%2Cto%3Anow-1y%2Fy))',
+            src => 'http://129.1.0.237:1789/data/notebook_kibini2_synthese_prets.html',
             height => '1500px'
         }
     };
@@ -639,10 +639,10 @@ post '/suggestions/mod' => sub {
     my $managedby = param "borrnummanagedby";
     my $title = param "title";
     modSuggestion2($suggestionid, $managedby);
-            
+
     my ($from, $to, $subject, $msg) = constructionCourriel($managedby, $title);
     SendEmail($from, $to, $subject, $msg);
-        
+
     redirect '/suggestions';
 };
 
@@ -696,9 +696,9 @@ post '/form/action_culturelle/post' => sub {
     my $public = params->{'public'};
     my $partenariat = params->{'partenariat'};
     my $participants = params->{'participants'};
-        
+
     insert_action_culturelle( $date, $action, $lieu, $type, $public, $partenariat, $participants );
-        
+
     my $list_actions = list_actions();
     template 'action_culturelle', {
         label1 => "Action culturelle",
@@ -725,9 +725,9 @@ post '/form/action_coop/post' => sub {
         my $participants = params->{'participants'};
         my $referent_action = params->{'referent_action'};
 
-        
+
         AddActionCooperation( $date, $lieu, $type, $nom, $type_structure, $nom_structure, $participants, $referent_action );
-        
+
         my $list_actions = GetListActionsCooperation();
         template 'action_coop', {
                 label1 => "Action de coopération",
