@@ -21,7 +21,6 @@ if [ $dayofweek -eq 3 ] && [ $dayofmonthnextweek -lt $dayofmonth ]
 then
     # On fait un clich� des donn�es adh�rents
     python $dir_kib2/kibini/statdb_adherents.py
-
 fi
 
 # CHAQUE MERCREDI
@@ -124,7 +123,6 @@ python $dir_kib2/kibini/statdb_exemplaires.py
 
 # On anonymise statdb
 python $dir_kib2/kibini/statdb_ano.py
-
 
 # On met � jour les index Elasticsearch
 #perl $dir/es_update.pl
