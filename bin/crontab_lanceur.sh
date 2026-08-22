@@ -20,8 +20,8 @@ conda activate kibini
 if [ $dayofweek -eq 3 ] && [ $dayofmonthnextweek -lt $dayofmonth ]
 then
     # On fait un clich� des donn�es adh�rents
-    perl $dir/statdb_adherents.pl
-    #perl $dir/es_adherents.pl
+    python $dir_kib2/kibini/statdb_adherents.py
+
 fi
 
 # CHAQUE MERCREDI
@@ -120,10 +120,11 @@ python $dir_kib2/kibini/statdb_freq_etude.py
 
 # NOUVELLE VERSION
 # On met � jour les donn�es exemplaires
-perl $dir/statdb_exemplaires.pl
+python $dir_kib2/kibini/statdb_exemplaires.py
 
 # On anonymise statdb
-perl $dir/statdb_ano.pl
+python $dir_kib2/kibini/statdb_ano.py
+
 
 # On met � jour les index Elasticsearch
 #perl $dir/es_update.pl
